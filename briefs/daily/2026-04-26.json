@@ -1,0 +1,24 @@
+{
+  "date": "2026-04-26",
+  "threadCount": 2,
+  "storyCount": 2,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [],
+    "sec": [],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Data Warehouse vs Data Lake vs Data Mesh: Trade-offs Summarised",
+        "body": "Data warehouses enforce schema-on-write for fast, consistent queries but are slow to onboard new sources. Data lakes store raw everything (schema-on-read) but degrade into unmanageable swamps without strict governance. Data mesh distributes ownership to domain teams with shared standards — effective at scale but demands engineering maturity in every business unit.",
+        "signal": "med",
+        "sources": [
+          "substack.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep212-data-warehouse-vs-data-lake"
+      }
+    ],
+    "mkt": []
+  },
+  "deepDives": []
+}

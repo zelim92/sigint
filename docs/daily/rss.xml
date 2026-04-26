@@ -6,5 +6,13 @@
     <description>Daily intelligence brief — AI, IAM &amp; cybersecurity, fintech &amp; fraud, SWE, market intel</description>
     <language>en</language>
     <ttl>60</ttl>
+    <item>
+      <title>SIGINT // Sun 26 Apr 2026</title>
+      <link>https://zelim92.github.io/sigint/daily/2026-04-26.html</link>
+      <pubDate>Sun, 26 Apr 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">sigint-daily-2026-04-26</guid>
+      <description><![CDATA[<p><small>SIGINT // daily intelligence brief · Sun 26 Apr 2026</small></p><p><a href="https://zelim92.github.io/sigint/daily/2026-04-26.html">Open full interactive brief ↗</a></p><p><small>2 threads · 2 stories · ~1 min read · 2 sources</small></p><h2>Distributed systems &amp; SWE</h2><h3><a href="https://blog.bytebytego.com/p/ep212-data-warehouse-vs-data-lake">Data Warehouse vs Data Lake vs Data Mesh: Trade-offs Summarised</a></h3><p>Data warehouses enforce schema-on-write for fast, consistent queries but are slow to onboard new sources. Data lakes store raw everything (schema-on-read) but degrade into unmanageable swamps without strict governance. Data mesh distributes ownership to domain teams with shared standards — effective at scale but demands engineering maturity in every business unit.</p><p><small>substack.com · <a href="https://blog.bytebytego.com/p/ep212-data-warehouse-vs-data-lake">blog.bytebytego.com ↗</a></small></p><hr><p><small>generated 26 Apr 2026 · sources: substack.com · sigint pipeline v0.2</small></p>]]></description>
+    </item>
+
   </channel>
 </rss>
