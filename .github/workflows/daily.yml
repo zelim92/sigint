@@ -36,8 +36,8 @@ jobs:
 
       - name: Commit and push outputs
         run: |
-          git config user.name "sigint-bot"
-          git config user.email "sigint@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/daily/ briefs/daily/
           if git diff --staged --quiet; then
             echo "No changes to commit."

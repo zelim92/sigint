@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --border: #e5e5e5; --muted: #888; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: #f7f7f5; border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: #f7f7f5; }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: #1D9E75; }
+  .story.med  { border-left-color: #BA7517; }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: #1D9E75; color: #1D9E75; }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: #f7f7f5; padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #1D9E75; padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: #1D9E75; color: #1D9E75; }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SUN 26 APR 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">11</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">13</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">3</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <!-- AI -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://openai.com/index/gpt-5-5/" target="_blank">GPT-5.5 ships with Mythos-level hacking capability — open to all</a></div>
+        <div class="story-body">OpenAI released GPT-5.5 with improved agentic reasoning, tool use, and token efficiency — matching prior latency while lifting performance across coding and knowledge tasks. The security implication is significant: GPT-5.5 delivers Mythos-like automated vulnerability detection and penetration testing, previously restricted to Anthropic's limited enterprise cohort, now available to any API user. This sets a new baseline for what adversaries can access off the shelf.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span><span class="chip">TLDR Dev</span>
+          <div class="ref-links">
+            <a class="ref-link ai" href="https://openai.com/index/gpt-5-5/" target="_blank">openai.com ↗</a>
+            <a class="ref-link sec" href="https://xbow.com/blog/mythos-like-hacking-open-to-all" target="_blank">xbow hacking analysis ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techfundingnews.com/deepseek-20b-valuation-tencent-alibaba-first-funding-round/" target="_blank">DeepSeek V4 + $20B valuation: Tencent and Alibaba circling</a></div>
+        <div class="story-body">DeepSeek V4 Flash and Pro ship with a 1M token context window and architecture upgrades — V4 Pro capacity constrained until Huawei Ascend 950 clusters ship. Simultaneously, DeepSeek is raising at a $20B valuation (up from $10B in days) with Tencent seeking a 20% stake. The convergence of frontier model capability and Chinese tech giant backing makes DeepSeek the most consequential non-US AI development this cycle — directly relevant to NVDA's export-constrained China strategy and TSMC's geopolitical exposure.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span>
+          <div class="ref-links">
+            <a class="ref-link ai" href="https://techfundingnews.com/deepseek-20b-valuation-tencent-alibaba-first-funding-round/" target="_blank">techfundingnews ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://12gramsofcarbon.com/p/agentics-configuring-agents-is-still" target="_blank">Enterprises need managed agent runtimes — current tooling is insecure and unintuitive</a></div>
+        <div class="story-body">Enterprise AI agent deployments are failing not on model capability but on runtime infrastructure — configuration is manual, unintuitive, and creating security gaps. Ramp and Stripe have built custom agent runtimes; the broader market has no managed equivalent. This is the agentic infrastructure gap: credential handling, permission scoping, and execution isolation are unsolved at scale — directly relevant to evaluating any agentic deployment in a fintech context.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span>
+          <div class="ref-links">
+            <a class="ref-link ai" href="https://12gramsofcarbon.com/p/agentics-configuring-agents-is-still" target="_blank">12gramsofcarbon ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/MHVIXA" target="_blank">OpenAI Privacy Filter: open-weight PII detection model for local filtering pipelines</a></div>
+        <div class="story-body">OpenAI released a lightweight open-weight model for detecting and redacting PII in text — designed for fast, local, context-aware privacy filtering. Useful for any team building document ingestion pipelines, RAG systems, or data processing workflows where PII must be stripped before hitting an LLM — a common pattern in fintech data handling.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span>
+          <div class="ref-links">
+            <a class="ref-link ai" href="https://links.tldrnewsletter.com/MHVIXA" target="_blank">openai privacy filter ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEC -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM & cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/nmExdO" target="_blank">npm worm: self-propagating supply chain attack steals credentials and API keys, spreads to PyPI</a></div>
+        <div class="story-body">A worm-like malware targeting Namastex Labs npm packages steals developer credentials, API keys, and crypto wallets — then injects itself into new package versions to self-propagate. The attack also targets PyPI, crossing runtime boundaries. Action required: rotate all secrets in any repo that ingested affected packages, audit CI/CD dependency lockfiles, and verify no compromised versions reached production.</div>
+        <div class="story-meta"><span class="chip">TLDR IT</span>
+          <div class="ref-links">
+            <a class="ref-link sec" href="https://links.tldrnewsletter.com/nmExdO" target="_blank">full disclosure ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-113a" target="_blank">CISA: nation-state actors building covert botnets from compromised edge and IoT devices</a></div>
+        <div class="story-body">Nation-state actors are systematically compromising edge devices and IoT infrastructure to build covert, persistent networks for long-term access. CISA's advisory highlights that unmanaged assets, remote access paths, and edge devices are the primary blind spot — standard EDR doesn't cover them. For fintech environments with third-party integrations and legacy network edge, this is an active and undermonitored threat vector.</div>
+        <div class="story-meta"><span class="chip">TLDR IT</span>
+          <div class="ref-links">
+            <a class="ref-link sec" href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-113a" target="_blank">cisa advisory ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://scotthelme.co.uk/security-considerations-when-using-passkeys-on-your-website/" target="_blank">Passkeys don't secure the session — XSS and CSRF gaps remain post-authentication</a></div>
+        <div class="story-body">Passkeys via WebAuthn eliminate shared secrets and phishing risk at the authentication layer, but the application session after login remains fully exposed to XSS and CSRF. Developers must still enforce CSP, SameSite cookie attributes, and step-up authentication challenges for high-risk operations — a gap that's easy to miss when passkey adoption is framed as a security silver bullet. Directly relevant to any IAM or authentication implementation.</div>
+        <div class="story-meta"><span class="chip">TLDR IT</span>
+          <div class="ref-links">
+            <a class="ref-link sec" href="https://scotthelme.co.uk/security-considerations-when-using-passkeys-on-your-website/" target="_blank">scotthelme.co.uk ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://github.com/Infisical/agent-vault" target="_blank">Agent Vault: open-source HTTP credential proxy — prevents AI agents from touching API keys directly</a></div>
+        <div class="story-body">Agent Vault is an open-source HTTP proxy that intercepts AI agent requests and injects credentials at the network layer, so agents never handle API keys directly. This eliminates the primary attack surface for credential exfiltration and prompt injection in agentic systems — a pattern directly applicable to any team deploying AI agents with production system access in a fintech context.</div>
+        <div class="story-meta"><span class="chip">TLDR Dev</span>
+          <div class="ref-links">
+            <a class="ref-link sec" href="https://github.com/Infisical/agent-vault" target="_blank">github ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FIN -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech & fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cio.com/article/4160390/why-ai-projects-stall-and-how-cios-can-respond.html" target="_blank">AI adoption in regulated industries stalling on governance, not capability</a></div>
+        <div class="story-body">Security, legal, and compliance teams are the primary blocker for enterprise AI adoption — citing data leakage risk, model risk, and regulatory ambiguity. The structural problem: existing governance frameworks weren't built for AI, forcing organisations to retrofit risk models onto a fundamentally different technology. For fintech specifically, where model risk management and data residency requirements are strict, this friction is structural and won't resolve quickly without deliberate governance re-design.</div>
+        <div class="story-meta"><span class="chip">TLDR IT</span>
+          <div class="ref-links">
+            <a class="ref-link fin" href="https://www.cio.com/article/4160390/why-ai-projects-stall-and-how-cios-can-respond.html" target="_blank">cio.com ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SWE -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems & SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.pragmaticengineer.com/the-pulse-tokenmaxxing-as-a-weird-new-trend/" target="_blank">Tokenmaxxing: AI usage leaderboards at Meta, Microsoft, and Salesforce are producing waste, not value</a></div>
+        <div class="story-body">Internal AI token usage leaderboards at large tech companies are incentivising quantity over quality — resulting in financial waste, system outages, and shallow AI use. Meta abolished its leaderboard after media backlash; Shopify's model (usage dashboard with human review and circuit breakers) is the reference implementation worth studying. Relevant signal for any engineering org rolling out internal AI tooling — metric design shapes behaviour.</div>
+        <div class="story-meta"><span class="chip">TLDR Dev</span>
+          <div class="ref-links">
+            <a class="ref-link swe" href="https://blog.pragmaticengineer.com/the-pulse-tokenmaxxing-as-a-weird-new-trend/" target="_blank">pragmaticengineer ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.seangoedecke.com/bad-code-at-big-companies/" target="_blank">Why good engineers write bad code: frequent reorgs create systems maintained outside expertise</a></div>
+        <div class="story-body">Repeated internal reorganisations mean most systems at large tech companies are owned and maintained by engineers who didn't build them and lack domain context. The resulting technical debt isn't accidental — it's an explicit trade-off for organisational flexibility and rapid redeployment. Sharp framing for understanding why code quality degrades at scale and what structural conditions, not individual failures, drive it.</div>
+        <div class="story-meta"><span class="chip">TLDR Dev</span>
+          <div class="ref-links">
+            <a class="ref-link swe" href="https://www.seangoedecke.com/bad-code-at-big-companies/" target="_blank">seangoedecke.com ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MKT -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Anthropic hits $1T valuation, surpassing OpenAI — AMZN $25B commitment now looks asymmetrically well-timed</div>
+        <div class="story-body">Anthropic reached a $1 trillion valuation on Forge Global, exceeding OpenAI's $880B — driven by scarce secondary shares and accelerating Claude Code enterprise adoption. Amazon's $25B commitment (with $100B AWS infrastructure lock-in over 10 years) was made at a fraction of this valuation. For AMZN holders, this is the clearest validation yet that the Anthropic bet is paying out — and that AWS's AI infrastructure position is structurally stronger than its public cloud multiple suggests.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span>
+          <div class="ref-links">
+            <a class="ref-link mkt" href="https://finance.yahoo.com/markets/stocks/articles/anthropic-just-overtook-openai-1-155312239.html" target="_blank">yahoo finance ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Oracle's $300B OpenAI debt deal is clogging bank balance sheets — AI datacenter financing hitting limits</div>
+        <div class="story-body">Banks that financed Oracle's massive OpenAI datacenter buildout in Texas and Wisconsin are struggling to syndicate the risk — balance sheets are clogged, constraining future AI infrastructure financing. Silicon Valley's AI capex ambitions depend on continued debt access, but Wall Street is now applying greater scrutiny to non-top-tier borrowers. A leading indicator of where the AI infrastructure financing cycle could slow — relevant for assessing AMZN, MSFT, and GOOGL's relative advantage in self-funding capex vs. cloud competitors.</div>
+        <div class="story-meta"><span class="chip">TLDR AI</span>
+          <div class="ref-links">
+            <a class="ref-link mkt" href="https://links.tldrnewsletter.com/bSJjPc" target="_blank">oracle debt analysis ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DEEP DIVES -->
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://github.com/Infisical/agent-vault" target="_blank">Agent Vault — Infisical (GitHub) ↗</a></div>
+          <div class="dive-why">The credential proxy pattern is the right architectural answer to agentic credential risk — worth understanding the implementation before it becomes a compliance requirement for AI agent deployments in fintech.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://scotthelme.co.uk/security-considerations-when-using-passkeys-on-your-website/" target="_blank">Security Considerations When Using Passkeys — Scott Helme ↗</a></div>
+          <div class="dive-why">A precise technical breakdown of where passkeys end and session security begins — essential reading for anyone implementing or reviewing authentication in a system handling financial data.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://xbow.com/blog/mythos-like-hacking-open-to-all" target="_blank">GPT-5.5: Mythos-Like Hacking, Open to All — XBOW ↗</a></div>
+          <div class="dive-why">The threat model just changed: automated, frontier-level penetration testing is now available to any adversary with an API key — understanding the capability baseline is necessary for calibrating your detection and response posture.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 26 Apr 2026 · sources: TLDR AI, TLDR IT, TLDR Dev, ByteByteGo · sigint pipeline v0.2 · sections: [ai, sec, fin, swe, mkt]</span>
+</div>
+
+</body>
+</html>

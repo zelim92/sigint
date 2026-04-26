@@ -161,9 +161,6 @@ venv.bak/
 credentials.json
 token.json
 
-# Reference design (kept locally for visual comparison)
-sigint_apr26.html
-
 # macOS
 .DS_Store
 
