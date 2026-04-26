@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>SIGINT Daily</title>
+    <link>https://zelim92.github.io/sigint/daily/</link>
+    <description>Daily intelligence brief — AI, IAM &amp; cybersecurity, fintech &amp; fraud, SWE, market intel</description>
+    <language>en</language>
+    <ttl>60</ttl>
+  </channel>
+</rss>

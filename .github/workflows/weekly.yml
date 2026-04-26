@@ -1,0 +1,29 @@
+name: SIGINT Weekly Brief
+
+# Disabled stub — wire up the weekly digest by enabling the schedule below
+# and implementing scripts/generate_weekly.py.
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 0 * * 6'   # 00:00 UTC Saturday = 08:00 MYT
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: false   # remove this guard when ready to ship
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_CREDENTIALS: ${{ secrets.GMAIL_CREDENTIALS }}
+          GMAIL_TOKEN: ${{ secrets.GMAIL_TOKEN }}
+        run: python scripts/generate_weekly.py

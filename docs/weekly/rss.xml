@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>SIGINT Weekly</title>
+    <link>https://zelim92.github.io/sigint/weekly/</link>
+    <description>Weekly intelligence digest — themes, patterns, and consolidated signal</description>
+    <language>en</language>
+    <ttl>60</ttl>
+  </channel>
+</rss>
