@@ -482,116 +482,50 @@ def render_full_html(brief: dict, run_dt: datetime) -> str:
 
 
 # ────────────────────────────────────────────────────────────────
-# RSS embedded HTML (inline-styled, no JS, no CSS variables)
+# RSS embedded HTML (semantic only — let the reader theme it)
 # ────────────────────────────────────────────────────────────────
-
-TAG_COLORS = {
-    "ai":   ("#E1F5EE", "#0F6E56", "#9FE1CB"),
-    "sec":  ("#FCEBEB", "#A32D2D", "#F7C1C1"),
-    "fin":  ("#E6F1FB", "#185FA5", "#A8C8F0"),
-    "swe":  ("#EEEDFE", "#534AB7", "#CECBF6"),
-    "mkt":  ("#FAEEDA", "#854F0B", "#FAC775"),
-    "dive": ("#F1EFE8", "#5F5E5A", "#D3D1C7"),
-}
 
 
 def rss_section_html(key: str, title: str, stories: list[dict]) -> str:
     if not stories:
         return ""
-    bg, fg, _ = TAG_COLORS[key]
-    items_label = "1 item" if len(stories) == 1 else f"{len(stories)} items"
-    parts = [
-        f'<div style="border:0.5px solid #e5e5e5;border-radius:12px;background:#fff;margin-bottom:16px;">'
-        f'<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;'
-        f'border-bottom:0.5px solid #e5e5e5;background:#f7f7f5;">'
-        f'<span style="font-family:monospace;font-size:10px;font-weight:500;padding:3px 8px;'
-        f'border-radius:3px;letter-spacing:0.06em;background:{bg};color:{fg};">'
-        f'{SECTION_TAG_LABEL[key]}</span>'
-        f'<span style="font-size:13px;font-weight:500;flex:1;">{esc(title)}</span>'
-        f'<span style="font-family:monospace;font-size:11px;color:#888;">{items_label}</span>'
-        f'</div>'
-        f'<div style="padding:16px;">'
-    ]
-
+    parts = [f"<h2>{esc(title)}</h2>"]
     for s in stories:
-        border = "#1D9E75" if s.get("signal") == "high" else "#BA7517"
         url = s.get("url")
         headline = esc(s.get("headline", ""))
         if url:
-            headline = f'<a href="{esc(url)}" style="color:inherit;text-decoration:none;border-bottom:1px solid #d0d0d0;">{headline}</a>'
+            headline = f'<a href="{esc(url)}">{headline}</a>'
+        marker = "★ " if s.get("signal") == "high" else ""
+        body = esc(s.get("body", ""))
 
-        chips = "".join(
-            f'<span style="font-family:monospace;font-size:10px;color:#888;background:#f7f7f5;'
-            f'padding:2px 7px;border-radius:3px;border:0.5px solid #e5e5e5;margin-right:6px;">'
-            f'{esc(src)}</span>'
-            for src in (s.get("sources") or [])
-        )
-
-        ref_link = ""
+        meta_bits = list(esc(src) for src in (s.get("sources") or []))
         if url:
             domain = domain_from_url(url) or url
-            lbg, lfg, lbd = TAG_COLORS[key]
-            ref_link = (
-                f'<a href="{esc(url)}" style="font-family:monospace;font-size:10px;'
-                f'text-decoration:none;padding:2px 8px;border-radius:3px;'
-                f'color:{lfg};background:{lbg};border:0.5px solid {lbd};">'
-                f'{esc(domain)} ↗</a>'
-            )
+            meta_bits.append(f'<a href="{esc(url)}">{esc(domain)} ↗</a>')
+        meta = " · ".join(meta_bits)
+        meta_html = f"<p><small>{meta}</small></p>" if meta else ""
 
-        parts.append(
-            f'<div style="border-left:2px solid {border};padding-left:12px;margin-bottom:16px;">'
-            f'<div style="font-size:13px;font-weight:500;margin-bottom:5px;line-height:1.4;">{headline}</div>'
-            f'<div style="font-size:13px;line-height:1.68;color:#333;">{esc(s.get("body", ""))}</div>'
-            f'<div style="margin-top:8px;">{chips}{ref_link}</div>'
-            f'</div>'
-        )
-
-    parts.append("</div></div>")
+        parts.append(f"<h3>{marker}{headline}</h3><p>{body}</p>{meta_html}")
     return "".join(parts)
 
 
 def rss_deep_dives_html(dives: list[dict]) -> str:
     if not dives:
         return ""
-    bg, fg, _ = TAG_COLORS["dive"]
-    items_label = "1 item" if len(dives) == 1 else f"{len(dives)} items"
-    parts = [
-        f'<div style="border:0.5px solid #e5e5e5;border-radius:12px;background:#fff;margin-bottom:16px;">'
-        f'<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;'
-        f'border-bottom:0.5px solid #e5e5e5;background:#f7f7f5;">'
-        f'<span style="font-family:monospace;font-size:10px;font-weight:500;padding:3px 8px;'
-        f'border-radius:3px;letter-spacing:0.06em;background:{bg};color:{fg};">DEEP DIVES</span>'
-        f'<span style="font-size:13px;font-weight:500;flex:1;">Recommended deep dives</span>'
-        f'<span style="font-family:monospace;font-size:11px;color:#888;">{items_label}</span>'
-        f'</div>'
-        f'<div style="padding:16px;">'
-    ]
-    for i, d in enumerate(dives, 1):
+    parts = ["<h2>Recommended deep dives</h2>", "<ol>"]
+    for d in dives:
         title = esc(d.get("title", ""))
         url = d.get("url")
-        title_html = (
-            f'<a href="{esc(url)}" style="color:inherit;text-decoration:none;'
-            f'border-bottom:1px solid #d0d0d0;">{title} ↗</a>'
-            if url else title
-        )
-        parts.append(
-            f'<div style="display:flex;gap:10px;padding-bottom:14px;'
-            f'border-bottom:0.5px solid #e5e5e5;margin-bottom:14px;">'
-            f'<span style="font-family:monospace;font-size:11px;color:#1D9E75;'
-            f'padding-top:2px;width:20px;flex-shrink:0;">{i:02d}</span>'
-            f'<div>'
-            f'<div style="font-size:13px;font-weight:500;margin-bottom:4px;">{title_html}</div>'
-            f'<div style="font-size:12px;color:#888;line-height:1.55;">{esc(d.get("why", ""))}</div>'
-            f'</div></div>'
-        )
-    parts.append("</div></div>")
+        title_html = f'<a href="{esc(url)}">{title} ↗</a>' if url else title
+        parts.append(f"<li><strong>{title_html}</strong> — {esc(d.get('why', ''))}</li>")
+    parts.append("</ol>")
     return "".join(parts)
 
 
 def render_rss_html(brief: dict, run_dt: datetime) -> str:
     date_str = brief["date"]
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    date_stamp = date_obj.strftime("%a %d %b %Y").upper()
+    date_stamp = date_obj.strftime("%a %d %b %Y")
     sources = all_sources(brief)
     sources_label = ", ".join(sources) if sources else "—"
     page_url = f"{SITE_BASE}/daily/{date_str}.html"
@@ -599,27 +533,12 @@ def render_rss_html(brief: dict, run_dt: datetime) -> str:
     is_empty = brief.get("_noContent") or brief.get("storyCount", 0) == 0
 
     header = (
-        f'<p style="font-family:monospace;font-size:12px;color:#888;">'
-        f'<a href="{esc(page_url)}">Open full interactive brief ↗</a>'
-        f'</p>'
-        f'<div style="font-family:sans-serif;color:#111;max-width:720px;">'
-        f'<div style="border-bottom:1px solid #e5e5e5;padding-bottom:0.75rem;margin-bottom:1.25rem;'
-        f'display:flex;align-items:baseline;justify-content:space-between;">'
-        f'<div><span style="font-family:monospace;font-size:13px;font-weight:500;'
-        f'letter-spacing:0.08em;color:#1D9E75;">SIGINT</span>'
-        f'<span style="font-family:monospace;font-size:12px;color:#888;margin-left:12px;">'
-        f'// daily intelligence brief</span></div>'
-        f'<span style="font-family:monospace;font-size:11px;color:#888;">{date_stamp}</span>'
-        f'</div>'
+        f"<p><small>SIGINT // daily intelligence brief · {date_stamp}</small></p>"
+        f'<p><a href="{esc(page_url)}">Open full interactive brief ↗</a></p>'
     )
 
     if is_empty:
-        body = (
-            '<div style="padding:32px;text-align:center;font-size:13px;color:#888;'
-            'border:0.5px solid #e5e5e5;border-radius:12px;">'
-            'no meaningful signal in the inbox window — quiet day.'
-            '</div>'
-        )
+        body = "<p><em>No meaningful signal in the inbox window — quiet day.</em></p>"
         meta = ""
     else:
         threads = brief.get("threadCount", 0)
@@ -627,21 +546,8 @@ def render_rss_html(brief: dict, run_dt: datetime) -> str:
         read_min = estimate_read_minutes(brief)
         source_count = brief.get("sourceCount", 0)
         meta = (
-            f'<div style="display:flex;gap:10px;margin-bottom:1.25rem;flex-wrap:wrap;">'
-            + "".join(
-                f'<div style="background:#f7f7f5;border-radius:8px;padding:10px 16px;'
-                f'flex:1;min-width:110px;">'
-                f'<div style="font-family:monospace;font-size:20px;font-weight:500;">{val}</div>'
-                f'<div style="font-size:11px;color:#888;font-family:monospace;margin-top:2px;">{lbl}</div>'
-                f'</div>'
-                for val, lbl in [
-                    (threads, "threads fetched"),
-                    (stories, "stories surfaced"),
-                    (f"~{read_min} min", "est. read time"),
-                    (source_count, "sources"),
-                ]
-            )
-            + '</div>'
+            f"<p><small>{threads} threads · {stories} stories · "
+            f"~{read_min} min read · {source_count} sources</small></p>"
         )
         section_blocks = [
             rss_section_html(key, title, brief.get("sections", {}).get(key, []))
@@ -652,10 +558,9 @@ def render_rss_html(brief: dict, run_dt: datetime) -> str:
 
     footer_date = run_dt.strftime("%d %b %Y")
     footer = (
-        f'<div style="margin-top:1.25rem;padding-top:0.75rem;border-top:0.5px solid #e5e5e5;">'
-        f'<span style="font-family:monospace;font-size:11px;color:#888;">'
-        f'generated {footer_date} · sources: {esc(sources_label)} · sigint pipeline {PIPELINE_VERSION}'
-        f'</span></div></div>'
+        f"<hr>"
+        f"<p><small>generated {footer_date} · sources: {esc(sources_label)} · "
+        f"sigint pipeline {PIPELINE_VERSION}</small></p>"
     )
 
     return header + meta + body + footer
