@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // MON 27 APR 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">MON 27 APR 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">13</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">11</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">6 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">GPT-5.5 Released with Enhanced Agentic Capabilities and &#x27;High&#x27; Risk Classification</div>
+        <div class="story-body">OpenAI has rolled out GPT-5.5 to paid subscribers, with improvements in agentic reasoning, tool use, coding, and autonomous research while matching prior model latency. OpenAI&#x27;s own safety evaluation places it at &#x27;High&#x27; cybersecurity risk — meaning it can amplify existing pathways to severe harm, though it does not cross the &#x27;Critical&#x27; threshold of introducing novel attack vectors. This is the first public model release to carry an explicit &#x27;High&#x27; risk classification, setting a precedent for how frontier labs communicate risk.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">DeepSeek V4 Flash and Pro Launch with 1M-Token Context; Pricing Drop Expected on Huawei Ascend 950 Clusters</div>
+        <div class="story-body">DeepSeek&#x27;s V4 series introduces a Hybrid Attention Architecture for improved long-context retention and claims top-tier coding benchmark performance. V4 Pro capacity is severely constrained by a compute crunch, but DeepSeek expects significant price drops once Huawei&#x27;s Ascend 950-powered clusters ship in H2 2026 — a direct signal that Chinese domestic AI hardware is becoming a competitive inference platform. Tencent and Alibaba are in talks to back DeepSeek at a $20B+ valuation, with Tencent seeking a 20% stake.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Anthropic Mythos Cybersecurity Model Flags Thousands of OS/Browser Vulnerabilities, Raises Government Alarm</div>
+        <div class="story-body">Anthropic&#x27;s limited-release Mythos model, designed for defensive security, autonomously surfaced thousands of significant vulnerabilities across major operating systems and browsers — enough to prompt Australia to engage directly with Anthropic and other vendors. The core concern is dual-use: the same autonomous coding capability that accelerates patching could be weaponised for offensive campaigns at scale. This is a concrete example of AI-accelerated vulnerability discovery becoming a regulatory flashpoint.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Anthropic Hits $1T Valuation on Secondary Market, Surpassing OpenAI</div>
+        <div class="story-body">Anthropic&#x27;s valuation reached $1 trillion on Forge Global, exceeding OpenAI&#x27;s $880B secondary market price, driven by scarce share supply and accelerating adoption of Claude Code in enterprise agentic workflows. The gap is partly a secondary-market artefact, but it reflects genuine demand concentration in the agentic coding tool space. Portfolio-relevant: MSFT&#x27;s OpenAI partnership is now competing against a $1T-valued rival with strong enterprise traction.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Google Launches &#x27;Agentic Data Cloud&#x27; — Signals Agent Success Depends on Data Architecture, Not Just Models</div>
+        <div class="story-body">Google is positioning a new Agentic Data Cloud to connect structured and unstructured enterprise data to AI agents, reframing the agent bottleneck as a data governance and interoperability problem rather than a model capability gap. This aligns with a broader industry pattern: enterprise AI agents stall not due to model limitations but due to missing context, lineage, and schema — the &#x27;data products&#x27; layer. Relevant for GOOGL and AMZN (AWS competing in the same space).</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Perplexity Publishes Staged Post-Training Approach for Search LLM Accuracy</div>
+        <div class="story-body">Perplexity detailed a multi-stage post-training pipeline that teaches models tool use, evidence gathering, and structured citation evaluation — a concrete architectural pattern for building reliable search-grounded agents. The staged approach mirrors what leading labs use for RLHF but applies it specifically to retrieval fidelity, reducing hallucination in tool-augmented generation. Useful reference architecture for teams building RAG or agentic search systems.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Self-Propagating npm Worm Targets Namastex Labs Packages, Steals Auth Tokens and Crypto Wallets, Spreads to PyPI</div>
+        <div class="story-body">A newly identified supply-chain worm injected into npm packages from Namastex Labs steals developer credentials, API keys, and cryptocurrency wallets, then self-propagates by modifying new package versions — a rare worm-class behaviour in the npm ecosystem. It also targets PyPI, making this a cross-registry threat requiring immediate secret rotation and removal of affected dependencies from CI/CD pipelines. Any fintech or IAM team consuming third-party npm/PyPI packages in automated pipelines should treat this as a high-urgency incident response trigger.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">JetBlue Faces Class-Action Over Surveillance Pricing After Official X Account Advised Clearing Cookies to Avoid Higher Fares</div>
+        <div class="story-body">A class-action lawsuit filed against JetBlue cites a now-deleted post from the airline&#x27;s own X account advising a customer to clear cookies and use incognito mode to avoid a $230 fare increase — an implicit admission of session-based or behavioural pricing. JetBlue denies using personal data for pricing, attributing changes to availability dynamics, but the incident illustrates regulatory and litigation risk for firms using behavioural data in real-time pricing algorithms. Directly relevant to fintech and payments teams building dynamic pricing or personalisation engines under evolving data-use scrutiny.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">npm &#x27;Tokenmaxxing&#x27; Culture at Meta, Microsoft, Salesforce Driving Financial Waste and Outages; Shopify&#x27;s Circuit-Breaker Approach Succeeds</div>
+        <div class="story-body">Internal AI-token leaderboards at Meta, Microsoft, and Salesforce incentivised employees to maximise token consumption regardless of output quality, leading to budget overruns and system outages. Meta scrapped its leaderboard after press exposure; Shopify replaced it with a usage dashboard with human review and circuit breakers, achieving productive AI use without runaway spend. For engineering leads: governance tooling around AI token consumption is now an operational necessity, not a nice-to-have.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Intel Surges 23%+ on Earnings; Nvidia Reclaims $5T; Texas Instruments Best Day Since 2000 on AI Data Centre Demand</div>
+        <div class="story-body">Intel&#x27;s Q1 2026 earnings showed a credible turnaround narrative, sending shares to their best single-day gain since 1987 and dragging Nvidia back above $5 trillion market cap. Texas Instruments posted its strongest day since 2000, driven by demand for analogue chips in AI data centre power and signal-processing infrastructure. Portfolio signal: NVDA&#x27;s $5T recovery is relevant; the broader semiconductor uplift confirms AI capex build-out is still accelerating across the supply chain including TSMC.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Musk v. Altman Trial Begins; $100B+ Damages Claim and OpenAI&#x27;s Nonprofit Conversion Status at Stake</div>
+        <div class="story-body">Jury selection for the Musk v. OpenAI/Altman trial started 28 April in California, with Musk seeking $100B+ in damages, removal of Altman and Brockman, and reversal of OpenAI&#x27;s for-profit conversion. The case could structurally constrain OpenAI&#x27;s ability to raise capital or execute its corporate restructuring, with downstream implications for MSFT&#x27;s multi-billion-dollar OpenAI partnership. OpenAI characterises the suit as competitively motivated; the trial outcome is a binary risk event for the OpenAI-MSFT ecosystem.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">China&#x27;s 14th Five-Year Plan (2026–2030) Concentrates Capital on AI, Semiconductors, and Advanced Manufacturing</div>
+        <div class="story-body">China&#x27;s latest five-year plan signals a deliberate shift from volume growth to quality-led industrialisation, with priority sectors including AI, domestic semiconductors, and advanced manufacturing — directly targeting reduction of foreign technology dependence. Historical precedent shows five-year plan designations reliably direct state capital and policy tailwinds, creating asymmetric performance in named sectors. Portfolio-relevant: TSMC&#x27;s geopolitical exposure and NVDA&#x27;s China export restrictions sit at the centre of this structural shift.</div>
+        <div class="story-meta"><span class="chip">simplywall.st</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title">Anthropic Mythos Cybersecurity Model — Autonomous Vulnerability Discovery at Scale</div>
+          <div class="dive-why">A defensive AI model surfacing thousands of OS/browser CVEs autonomously is the clearest proof-point yet that AI-accelerated offensive/defensive parity is arriving faster than regulatory frameworks; directly actionable for an IAM/security engineering lead.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title">Self-Propagating npm/PyPI Worm Targeting Developer Credentials in CI/CD Pipelines</div>
+          <div class="dive-why">Cross-registry, worm-class supply-chain malware stealing API keys and auth tokens is a direct operational threat to any fintech CI/CD pipeline consuming open-source dependencies; requires immediate audit of Namastex Labs packages and secret rotation.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title">Musk v. Altman Trial — Structural Risk to OpenAI&#x27;s For-Profit Conversion and MSFT Partnership</div>
+          <div class="dive-why">The trial outcome is a binary event that could freeze OpenAI&#x27;s capital raise and restructuring, materially affecting Microsoft&#x27;s AI strategy and the MSFT investment thesis.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 27 Apr 2026 · sources: tldrnewsletter.com, morningbrew.com, simplywall.st · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

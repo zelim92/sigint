@@ -1,0 +1,143 @@
+{
+  "date": "2026-04-27",
+  "threadCount": 13,
+  "storyCount": 11,
+  "sourceCount": 5,
+  "sections": {
+    "ai": [
+      {
+        "headline": "GPT-5.5 Released with Enhanced Agentic Capabilities and 'High' Risk Classification",
+        "body": "OpenAI has rolled out GPT-5.5 to paid subscribers, with improvements in agentic reasoning, tool use, coding, and autonomous research while matching prior model latency. OpenAI's own safety evaluation places it at 'High' cybersecurity risk — meaning it can amplify existing pathways to severe harm, though it does not cross the 'Critical' threshold of introducing novel attack vectors. This is the first public model release to carry an explicit 'High' risk classification, setting a precedent for how frontier labs communicate risk.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "DeepSeek V4 Flash and Pro Launch with 1M-Token Context; Pricing Drop Expected on Huawei Ascend 950 Clusters",
+        "body": "DeepSeek's V4 series introduces a Hybrid Attention Architecture for improved long-context retention and claims top-tier coding benchmark performance. V4 Pro capacity is severely constrained by a compute crunch, but DeepSeek expects significant price drops once Huawei's Ascend 950-powered clusters ship in H2 2026 — a direct signal that Chinese domestic AI hardware is becoming a competitive inference platform. Tencent and Alibaba are in talks to back DeepSeek at a $20B+ valuation, with Tencent seeking a 20% stake.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic Mythos Cybersecurity Model Flags Thousands of OS/Browser Vulnerabilities, Raises Government Alarm",
+        "body": "Anthropic's limited-release Mythos model, designed for defensive security, autonomously surfaced thousands of significant vulnerabilities across major operating systems and browsers — enough to prompt Australia to engage directly with Anthropic and other vendors. The core concern is dual-use: the same autonomous coding capability that accelerates patching could be weaponised for offensive campaigns at scale. This is a concrete example of AI-accelerated vulnerability discovery becoming a regulatory flashpoint.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic Hits $1T Valuation on Secondary Market, Surpassing OpenAI",
+        "body": "Anthropic's valuation reached $1 trillion on Forge Global, exceeding OpenAI's $880B secondary market price, driven by scarce share supply and accelerating adoption of Claude Code in enterprise agentic workflows. The gap is partly a secondary-market artefact, but it reflects genuine demand concentration in the agentic coding tool space. Portfolio-relevant: MSFT's OpenAI partnership is now competing against a $1T-valued rival with strong enterprise traction.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Google Launches 'Agentic Data Cloud' — Signals Agent Success Depends on Data Architecture, Not Just Models",
+        "body": "Google is positioning a new Agentic Data Cloud to connect structured and unstructured enterprise data to AI agents, reframing the agent bottleneck as a data governance and interoperability problem rather than a model capability gap. This aligns with a broader industry pattern: enterprise AI agents stall not due to model limitations but due to missing context, lineage, and schema — the 'data products' layer. Relevant for GOOGL and AMZN (AWS competing in the same space).",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Perplexity Publishes Staged Post-Training Approach for Search LLM Accuracy",
+        "body": "Perplexity detailed a multi-stage post-training pipeline that teaches models tool use, evidence gathering, and structured citation evaluation — a concrete architectural pattern for building reliable search-grounded agents. The staged approach mirrors what leading labs use for RLHF but applies it specifically to retrieval fidelity, reducing hallucination in tool-augmented generation. Useful reference architecture for teams building RAG or agentic search systems.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Self-Propagating npm Worm Targets Namastex Labs Packages, Steals Auth Tokens and Crypto Wallets, Spreads to PyPI",
+        "body": "A newly identified supply-chain worm injected into npm packages from Namastex Labs steals developer credentials, API keys, and cryptocurrency wallets, then self-propagates by modifying new package versions — a rare worm-class behaviour in the npm ecosystem. It also targets PyPI, making this a cross-registry threat requiring immediate secret rotation and removal of affected dependencies from CI/CD pipelines. Any fintech or IAM team consuming third-party npm/PyPI packages in automated pipelines should treat this as a high-urgency incident response trigger.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [
+      {
+        "headline": "JetBlue Faces Class-Action Over Surveillance Pricing After Official X Account Advised Clearing Cookies to Avoid Higher Fares",
+        "body": "A class-action lawsuit filed against JetBlue cites a now-deleted post from the airline's own X account advising a customer to clear cookies and use incognito mode to avoid a $230 fare increase — an implicit admission of session-based or behavioural pricing. JetBlue denies using personal data for pricing, attributing changes to availability dynamics, but the incident illustrates regulatory and litigation risk for firms using behavioural data in real-time pricing algorithms. Directly relevant to fintech and payments teams building dynamic pricing or personalisation engines under evolving data-use scrutiny.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "npm 'Tokenmaxxing' Culture at Meta, Microsoft, Salesforce Driving Financial Waste and Outages; Shopify's Circuit-Breaker Approach Succeeds",
+        "body": "Internal AI-token leaderboards at Meta, Microsoft, and Salesforce incentivised employees to maximise token consumption regardless of output quality, leading to budget overruns and system outages. Meta scrapped its leaderboard after press exposure; Shopify replaced it with a usage dashboard with human review and circuit breakers, achieving productive AI use without runaway spend. For engineering leads: governance tooling around AI token consumption is now an operational necessity, not a nice-to-have.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Intel Surges 23%+ on Earnings; Nvidia Reclaims $5T; Texas Instruments Best Day Since 2000 on AI Data Centre Demand",
+        "body": "Intel's Q1 2026 earnings showed a credible turnaround narrative, sending shares to their best single-day gain since 1987 and dragging Nvidia back above $5 trillion market cap. Texas Instruments posted its strongest day since 2000, driven by demand for analogue chips in AI data centre power and signal-processing infrastructure. Portfolio signal: NVDA's $5T recovery is relevant; the broader semiconductor uplift confirms AI capex build-out is still accelerating across the supply chain including TSMC.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Musk v. Altman Trial Begins; $100B+ Damages Claim and OpenAI's Nonprofit Conversion Status at Stake",
+        "body": "Jury selection for the Musk v. OpenAI/Altman trial started 28 April in California, with Musk seeking $100B+ in damages, removal of Altman and Brockman, and reversal of OpenAI's for-profit conversion. The case could structurally constrain OpenAI's ability to raise capital or execute its corporate restructuring, with downstream implications for MSFT's multi-billion-dollar OpenAI partnership. OpenAI characterises the suit as competitively motivated; the trial outcome is a binary risk event for the OpenAI-MSFT ecosystem.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "China's 14th Five-Year Plan (2026–2030) Concentrates Capital on AI, Semiconductors, and Advanced Manufacturing",
+        "body": "China's latest five-year plan signals a deliberate shift from volume growth to quality-led industrialisation, with priority sectors including AI, domestic semiconductors, and advanced manufacturing — directly targeting reduction of foreign technology dependence. Historical precedent shows five-year plan designations reliably direct state capital and policy tailwinds, creating asymmetric performance in named sectors. Portfolio-relevant: TSMC's geopolitical exposure and NVDA's China export restrictions sit at the centre of this structural shift.",
+        "signal": "med",
+        "sources": [
+          "simplywall.st"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Anthropic Mythos Cybersecurity Model — Autonomous Vulnerability Discovery at Scale",
+      "why": "A defensive AI model surfacing thousands of OS/browser CVEs autonomously is the clearest proof-point yet that AI-accelerated offensive/defensive parity is arriving faster than regulatory frameworks; directly actionable for an IAM/security engineering lead.",
+      "url": null
+    },
+    {
+      "title": "Self-Propagating npm/PyPI Worm Targeting Developer Credentials in CI/CD Pipelines",
+      "why": "Cross-registry, worm-class supply-chain malware stealing API keys and auth tokens is a direct operational threat to any fintech CI/CD pipeline consuming open-source dependencies; requires immediate audit of Namastex Labs packages and secret rotation.",
+      "url": null
+    },
+    {
+      "title": "Musk v. Altman Trial — Structural Risk to OpenAI's For-Profit Conversion and MSFT Partnership",
+      "why": "The trial outcome is a binary event that could freeze OpenAI's capital raise and restructuring, materially affecting Microsoft's AI strategy and the MSFT investment thesis.",
+      "url": null
+    }
+  ]
+}
