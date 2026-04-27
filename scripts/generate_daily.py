@@ -146,6 +146,31 @@ def extract_body(payload: dict) -> str:
     return ""
 
 
+FOOTNOTE_LINE_RE = re.compile(r"^\s*\[(\d+)\]\s+(https?://\S+)\s*$", re.MULTILINE)
+FOOTNOTE_REF_RE = re.compile(r"\[(\d+)\]")
+
+
+def inline_footnote_urls(body: str) -> str:
+    """Inline TLDR-style footnote URLs.
+
+    Many newsletters reference links via `[N]` markers in the body and list
+    `[N] URL` lines at the bottom. After body truncation, the trailing URL list
+    gets dropped and the model loses the mapping. This rewrites references in
+    the body to `[N: URL]` so the association survives any later truncation.
+    """
+    footnotes = {n: u for n, u in FOOTNOTE_LINE_RE.findall(body)}
+    if not footnotes:
+        return body
+
+    body_no_list = FOOTNOTE_LINE_RE.sub("", body)
+
+    def sub(m: re.Match) -> str:
+        n = m.group(1)
+        return f"[{n}: {footnotes[n]}]" if n in footnotes else m.group(0)
+
+    return FOOTNOTE_REF_RE.sub(sub, body_no_list)
+
+
 def fetch_threads(service) -> list[dict]:
     hours = get_fetch_hours()
     since = int((datetime.now(timezone.utc) - timedelta(hours=hours)).timestamp())
@@ -172,7 +197,7 @@ def fetch_threads(service) -> list[dict]:
         threads.append({
             "subject": subject,
             "sender": sender,
-            "body": body[:3000],
+            "body": inline_footnote_urls(body)[:12000],
         })
     return threads
 

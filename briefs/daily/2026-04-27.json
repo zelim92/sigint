@@ -12,7 +12,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://www.cnbc.com/2026/04/23/openai-announces-latest-artificial-intelligence-model.html?utm_source=tldrnewsletter"
       },
       {
         "headline": "DeepSeek V4 Flash and Pro Launch with 1M-Token Context; Pricing Drop Expected on Huawei Ascend 950 Clusters",
@@ -21,7 +21,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://links.tldrnewsletter.com/B2Awl5"
       },
       {
         "headline": "Anthropic Mythos Cybersecurity Model Flags Thousands of OS/Browser Vulnerabilities, Raises Government Alarm",
@@ -30,7 +30,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://www.yahoo.com/news/articles/australia-government-working-anthropic-over-054009671.html?utm_source=tldrit"
       },
       {
         "headline": "Anthropic Hits $1T Valuation on Secondary Market, Surpassing OpenAI",
@@ -39,7 +39,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://finance.yahoo.com/markets/stocks/articles/anthropic-just-overtook-openai-1-155312239.html?utm_source=tldrai"
       },
       {
         "headline": "Google Launches 'Agentic Data Cloud' — Signals Agent Success Depends on Data Architecture, Not Just Models",
@@ -48,7 +48,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://moderndata101.substack.com/p/data-products-the-essential-context?utm_source=tldrit"
       },
       {
         "headline": "Perplexity Publishes Staged Post-Training Approach for Search LLM Accuracy",
@@ -57,7 +57,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://links.tldrnewsletter.com/ZehF5z"
       }
     ],
     "sec": [
@@ -68,7 +68,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://links.tldrnewsletter.com/nmExdO"
       }
     ],
     "fin": [
@@ -90,7 +90,7 @@
         "sources": [
           "tldrnewsletter.com"
         ],
-        "url": null
+        "url": "https://blog.pragmaticengineer.com/the-pulse-tokenmaxxing-as-a-weird-new-trend/?utm_source=tldrdev"
       }
     ],
     "mkt": [
@@ -127,12 +127,12 @@
     {
       "title": "Anthropic Mythos Cybersecurity Model — Autonomous Vulnerability Discovery at Scale",
       "why": "A defensive AI model surfacing thousands of OS/browser CVEs autonomously is the clearest proof-point yet that AI-accelerated offensive/defensive parity is arriving faster than regulatory frameworks; directly actionable for an IAM/security engineering lead.",
-      "url": null
+      "url": "https://www.yahoo.com/news/articles/australia-government-working-anthropic-over-054009671.html?utm_source=tldrit"
     },
     {
       "title": "Self-Propagating npm/PyPI Worm Targeting Developer Credentials in CI/CD Pipelines",
       "why": "Cross-registry, worm-class supply-chain malware stealing API keys and auth tokens is a direct operational threat to any fintech CI/CD pipeline consuming open-source dependencies; requires immediate audit of Namastex Labs packages and secret rotation.",
-      "url": null
+      "url": "https://links.tldrnewsletter.com/nmExdO"
     },
     {
       "title": "Musk v. Altman Trial — Structural Risk to OpenAI's For-Profit Conversion and MSFT Partnership",

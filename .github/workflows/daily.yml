@@ -2,7 +2,7 @@ name: SIGINT Daily Brief
 
 on:
   schedule:
-    - cron: '0 0 * * 1-5'   # 00:00 UTC = 08:00 MYT, Mon-Fri
+    - cron: '17 0 * * 1-5'  # 00:17 UTC = 08:17 MYT, Mon-Fri (off-hour to avoid GitHub scheduler contention)
   workflow_dispatch:
 
 permissions:
