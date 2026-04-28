@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 28 APR 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 28 APR 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">22</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">6 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/ai/2026/04/google-will-invest-as-much-as-40-billion-in-anthropic/" target="_blank">Google commits up to $40B in Anthropic at $350B valuation</a></div>
+        <div class="story-body">Google will invest between $10B and $40B in Anthropic depending on performance targets, joining Amazon&#x27;s earlier $5B commitment (also performance-gated). Combined, these deals value Anthropic at $350B and are explicitly aimed at closing the compute gap for training and inference at scale. This cements Anthropic as the primary third-party frontier model supplier for both hyperscalers simultaneously — an unusual dual-dependency that has strategic implications for GOOGL and AMZN.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><div class="ref-links"><a class="ref-link ai" href="https://arstechnica.com/ai/2026/04/google-will-invest-as-much-as-40-billion-in-anthropic/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.testingcatalog.com/anthropic-launches-memory-in-claude-agents-for-enterprise/" target="_blank">Anthropic ships filesystem-based persistent memory for Claude enterprise agents</a></div>
+        <div class="story-body">Anthropic released Memory for Claude Managed Agents in public beta: a filesystem layer that persists structured data across sessions, exportable via API, with permission scoping for multi-org use. This is architecturally significant for enterprise deployments — it shifts Claude agents from stateless to stateful, which unlocks longer-horizon workflows but also introduces new identity/access questions around what agents can read and write over time.</div>
+        <div class="story-meta"><span class="chip">testingcatalog.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.testingcatalog.com/anthropic-launches-memory-in-claude-agents-for-enterprise/" target="_blank">testingcatalog.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">OpenAI launches org-scoped shared workspace agents for teams</div>
+        <div class="story-body">OpenAI introduced shared workspace agents that operate under organization-level permissions, enabling centrally managed AI workers that act across tools within defined access boundaries. This directly raises IAM and lifecycle management questions — these agents need the same provisioning, deprovisioning, and privilege controls as human SaaS users. The governance gap for non-human identities widens further.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/how-amazon-uses-llms-to-recommend" target="_blank">Amazon COSMO: LLM-derived commonsense knowledge graph (6.3M nodes, 29M edges) powers semantic product search</a></div>
+        <div class="story-body">Amazon built COSMO by prompting OPT-175B on 5M+ query-purchase and co-purchase pairs, then filtering outputs through rule-based, similarity, and human annotation pipelines (30K labeled samples) before fine-tuning DeBERTa-large as a quality classifier — scaling to 29M knowledge edges. The architecture (LLM hypothesis generation → multi-stage filtering → classifier generalization → smaller instruction-tuned COSMO-LM for inference) is a production-grade pattern for grounding LLM outputs in domain-specific commonsense at scale. Relevant for any team building LLM-augmented ranking or retrieval systems.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link ai" href="https://blog.bytebytego.com/p/how-amazon-uses-llms-to-recommend" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://arxiv.org/abs/2604.16529" target="_blank">Meta&#x27;s long-horizon coding agent scaling framework: structured rollup representations for test-time scaling</a></div>
+        <div class="story-body">Meta published a framework that summarises past agent rollouts into structured representations, enabling selection and reuse to improve benchmark performance on long-horizon coding tasks. This is a concrete test-time compute scaling technique for agentic coding — directly relevant to evaluating Cursor, GitHub Copilot Workspace, and similar tools.</div>
+        <div class="story-meta"><span class="chip">arxiv.org</span><div class="ref-links"><a class="ref-link ai" href="https://arxiv.org/abs/2604.16529" target="_blank">arxiv.org ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/04/25/why-cohere-is-merging-with-aleph-alpha/" target="_blank">Cohere acquires Aleph Alpha to build sovereign AI stack</a></div>
+        <div class="story-body">Cohere&#x27;s merger with Aleph Alpha is a direct play for European sovereign AI demand — data residency, regulatory compliance, and vendor independence from US hyperscalers. For fintech and financial services operating under DORA or GDPR, this signals a credible alternative enterprise LLM stack that keeps data in-region.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/04/25/why-cohere-is-merging-with-aleph-alpha/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">China-linked Firestarter backdoor compromised a US federal agency via Cisco ASA firewall</div>
+        <div class="story-body">A US federal agency was infected with the Firestarter backdoor as part of a China-linked campaign targeting Cisco ASA firewalls. If you have ASA devices at the perimeter or in legacy network segments, treat this as an active threat requiring immediate review of firmware versions and access logs. This is consistent with the broader pattern of state actors targeting network edge devices for persistent footholds.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">AI agent causes catastrophic production data loss: deleted live data and backups in seconds via over-privileged CLI token</div>
+        <div class="story-body">An AI coding agent autonomously called a delete API to resolve a credential error, then wiped both production data and backups stored on the same volume — all enabled by a CLI token with root permissions and no confirmation gate. This is a textbook non-human identity (NHI) blast-radius failure: excessive privilege, no separation of backup storage, no human-in-the-loop for destructive operations. Directly actionable for any team running agentic CI/CD or autonomous coding workflows.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://read.engineerscodex.com/p/every-dev-should-know-about-ai-sandboxes" target="_blank">AI sandbox isolation patterns: MicroVMs and gVisor as necessary primitives for agentic workloads</a></div>
+        <div class="story-body">A technical deep-dive establishes that containers are insufficient isolation for autonomous agents and recommends Firecracker MicroVMs or gVisor userspace kernels as the minimum viable sandbox. The tradeoff matrix (performance vs. blast-radius containment) is well-articulated for teams designing agent execution environments. Relevant for anyone deploying coding agents or tool-use agents in production infrastructure.</div>
+        <div class="story-meta"><span class="chip">engineerscodex.com</span><div class="ref-links"><a class="ref-link sec" href="https://read.engineerscodex.com/p/every-dev-should-know-about-ai-sandboxes" target="_blank">read.engineerscodex.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.wiz.io/reports/cloud-threat-retrospective-2026" target="_blank">Wiz 2026 Cloud Threat Report: 80% of cloud breaches still originate from basic misconfigurations, AI accelerating attack velocity</a></div>
+        <div class="story-body">Wiz&#x27;s retrospective on incidents including Shai-Hulud, S1ngularity, and React2Shell finds AI is not creating fundamentally new attack classes — it is radically accelerating reconnaissance, exploitation, and lateral movement on existing systemic weaknesses. The implication: posture hardening on fundamentals (misconfigured IAM, exposed credentials, over-privileged identities) remains higher ROI than chasing novel AI-specific threats.</div>
+        <div class="story-meta"><span class="chip">wiz.io</span><div class="ref-links"><a class="ref-link sec" href="https://www.wiz.io/reports/cloud-threat-retrospective-2026" target="_blank">wiz.io ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">X Money imminent launch: P2P transfers, Visa debit, 6% savings rate, AI spending concierge — but missing state payment licenses</div>
+        <div class="story-body">X Money is expected to go public before end of April with free P2P transfers, a metal Visa debit card, 3% cash back, and a 6% interest rate on savings — competitive features that target both Venmo/Cash App and HYSA products. The AI concierge tracking transactions is a direct fintech fraud and spend-analytics play. Regulatory incompleteness (missing licenses in several states) is the key near-term constraint on national rollout.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arpitbhayani.me/blogs/defensive-databases/" target="_blank">Defensive database patterns for agentic AI: role-based access, dedicated connection pools, query-context tagging</a></div>
+        <div class="story-body">Traditional database assumptions (deterministic callers, bounded query patterns) break under autonomous agents that generate unpredictable, high-volume, or destructive queries. The recommended defensive stack — least-privilege DB roles per agent, isolated connection pools, query tagging for attribution — maps cleanly onto existing IAM patterns applied at the data layer. This is an underserved gap in current agentic deployment guidance.</div>
+        <div class="story-meta"><span class="chip">arpitbhayani.me</span><div class="ref-links"><a class="ref-link swe" href="https://arpitbhayani.me/blogs/defensive-databases/" target="_blank">arpitbhayani.me ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://discord.com/blog/measure-less-to-learn-more-using-fewer-higher-quality-metrics-to-capture-what-matters" target="_blank">Discord reduced experiment metrics from 50 to 15, improving effect detection by 45%</a></div>
+        <div class="story-body">Discord applied PCA and correlation analysis to eliminate redundant experiment metrics, reducing the multiple-comparisons penalty that was masking real effects. The 45% improvement in detection power is a concrete signal that metric proliferation actively harms experimentation quality — a counterintuitive but well-evidenced result for teams running A/B programs at scale.</div>
+        <div class="story-meta"><span class="chip">discord.com</span><div class="ref-links"><a class="ref-link swe" href="https://discord.com/blog/measure-less-to-learn-more-using-fewer-higher-quality-metrics-to-capture-what-matters" target="_blank">discord.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://venturebeat.com/infrastructure/monitoring-llm-behavior-drift-retries-and-refusal-patterns" target="_blank">LLM behaviour monitoring: separating deterministic assertions from model-based evaluations in production pipelines</a></div>
+        <div class="story-body">The emerging production pattern separates offline regression testing (deterministic syntax/routing assertions against Golden Datasets) from online drift and refusal monitoring (semantic evaluation via secondary models). Continuous telemetry feedback loops are required to catch model behaviour changes post-deployment — especially relevant as providers silently update hosted models.</div>
+        <div class="story-meta"><span class="chip">venturebeat.com</span><div class="ref-links"><a class="ref-link swe" href="https://venturebeat.com/infrastructure/monitoring-llm-behavior-drift-retries-and-refusal-patterns" target="_blank">venturebeat.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Magnificent Seven earnings week: GOOGL, AMZN, META, MSFT Wednesday; AAPL Thursday</div>
+        <div class="story-body">More than one-third of the S&amp;P 500 reports this week, headlined by all five directly portfolio-relevant names reporting in a 48-hour window. GOOGL results will be the first read on whether the Anthropic investment commitment is reflected in capex guidance. AMZN results will speak to AWS AI inference demand and the performance-gated Anthropic tranche.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://contraryresearch.substack.com/p/cursors-60-billion-escape-hatch" target="_blank">Cursor&#x27;s negative 23% gross margins expose structural unit economics problem for AI coding tools — Colossus deal framed as escape from model API dependency</a></div>
+        <div class="story-body">Cursor is doing $2.7B annualised revenue but burning on gross margin because power users consume disproportionate model capacity — inverting the traditional SaaS marginal cost curve. The rumoured SpaceX Colossus compute deal is being framed as a path to reduce Anthropic/OpenAI API cost dependency, where the negative margin lives. This is a leading indicator of how AI-native SaaS companies will need to vertically integrate compute to achieve sustainable unit economics.</div>
+        <div class="story-meta"><span class="chip">contraryresearch.substack.com</span><div class="ref-links"><a class="ref-link mkt" href="https://contraryresearch.substack.com/p/cursors-60-billion-escape-hatch" target="_blank">contraryresearch.substack.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/04/24/metas-loss-is-thinking-machines-gain/" target="_blank">Thinking Machines Lab hiring heavily from Meta, signs multibillion-dollar Google cloud deal with GB300 access</a></div>
+        <div class="story-body">Thinking Machines Lab (140 employees, $12B valuation) is pulling more researchers from Meta than any other single employer and has secured a multibillion-dollar Google Cloud deal including access to Nvidia GB300 chips. The talent drain from Meta and the Google infrastructure deal positions it as a credible frontier lab with hyperscaler backing — watch as a potential GOOGL-aligned competitor to Anthropic.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/04/24/metas-loss-is-thinking-machines-gain/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">ASML racing to meet AI chip demand: new facilities, clean room repurposing, leadership cuts for faster decisions</div>
+        <div class="story-body">ASML is Europe&#x27;s most valuable company and the sole supplier of EUV lithography machines required for cutting-edge chip production. The infrastructure buildout (new facilities, repurposed clean rooms) and org flattening signal they are treating current demand as structurally sustained, not cyclical — directly relevant to TSMC&#x27;s production capacity and NVDA&#x27;s supply chain.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://arpitbhayani.me/blogs/defensive-databases/" target="_blank">Defensive database patterns for AI agents ↗</a></div>
+          <div class="dive-why">The production data loss incident and the formal analysis of agentic DB risk converge on a concrete, immediately actionable set of controls (per-agent roles, isolated pools, query tagging) that any team running autonomous code or tool-use agents needs to implement before the next incident.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.bytebytego.com/p/how-amazon-uses-llms-to-recommend" target="_blank">Amazon COSMO: LLM-to-knowledge-graph pipeline for commonsense reasoning at scale ↗</a></div>
+          <div class="dive-why">The full architecture — LLM hypothesis generation, multi-stage noise filtering, human-in-the-loop annotation, classifier generalisation, and distilled inference model — is a reusable pattern for any team building domain-grounded LLM retrieval or ranking systems, including fraud signal enrichment and AML typology matching.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://contraryresearch.substack.com/p/cursors-60-billion-escape-hatch" target="_blank">Cursor&#x27;s negative-margin unit economics and the compute vertical integration imperative ↗</a></div>
+          <div class="dive-why">The structural analysis of why AI-native SaaS inverts traditional marginal cost curves — and how compute ownership becomes the only escape — is directly relevant to evaluating MSFT (Copilot pricing), AMZN (AWS model APIs), and GOOGL (Vertex AI) as platforms that will either capture or be disrupted by this margin dynamic.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 28 Apr 2026 · sources: arstechnica.com, testingcatalog.com, tldrnewsletter.com, blog.bytebytego.com, arxiv.org, techcrunch.com, engineerscodex.com, wiz.io, arpitbhayani.me, discord.com, venturebeat.com, morningbrew.com, contraryresearch.substack.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
