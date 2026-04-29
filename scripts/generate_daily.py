@@ -49,6 +49,8 @@ SITE_BASE = f"https://{GITHUB_USER}.github.io/{REPO_NAME}"
 MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 4000
 PIPELINE_VERSION = "v0.2"
+FETCH_HOURS = 24
+LOCAL_TZ = timezone(timedelta(hours=8))  # MYT — used for the brief's user-facing date stamp
 
 SECTIONS: list[tuple[str, str]] = [
     ("ai", "Artificial intelligence"),
@@ -127,11 +129,6 @@ def get_gmail_service():
     return build("gmail", "v1", credentials=creds, cache_discovery=False)
 
 
-def get_fetch_hours() -> int:
-    """72h on Monday (UTC) to seamlessly cover the weekend gap, 24h otherwise."""
-    return 72 if datetime.now(timezone.utc).weekday() == 0 else 24
-
-
 def extract_body(payload: dict) -> str:
     """Recursively pull the first text/plain body from a Gmail payload."""
     if payload.get("mimeType") == "text/plain":
@@ -172,8 +169,7 @@ def inline_footnote_urls(body: str) -> str:
 
 
 def fetch_threads(service) -> list[dict]:
-    hours = get_fetch_hours()
-    since = int((datetime.now(timezone.utc) - timedelta(hours=hours)).timestamp())
+    since = int((datetime.now(timezone.utc) - timedelta(hours=FETCH_HOURS)).timestamp())
     query = f"category:forums after:{since}"
 
     result = service.users().messages().list(
@@ -221,16 +217,64 @@ def distil(threads: list[dict], date_str: str) -> dict:
             "role": "user",
             "content": (
                 f"Today's date is {date_str}. Distil this corpus from the last "
-                f"{get_fetch_hours()} hours:\n\n{corpus}"
+                f"{FETCH_HOURS} hours:\n\n{corpus}"
             ),
         }],
     )
 
     raw = response.content[0].text
+    return _parse_model_json(raw)
+
+
+def _parse_model_json(raw: str) -> dict:
+    """Parse the model's JSON output, tolerating common LLM-induced glitches.
+
+    Claude usually returns valid JSON, but occasionally emits literal control
+    characters inside strings, trailing commas, or a missing comma between
+    adjacent objects/arrays. A single hiccup nukes the whole pipeline, so we
+    try strict parsing first, then a small set of conservative repairs. On
+    final failure the raw output is dumped to disk so the bad sample can be
+    inspected after the fact (CI logs don't preserve it).
+    """
     match = re.search(r"\{[\s\S]*\}", raw)
     if not match:
+        _dump_raw(raw, reason="no-json-found")
         raise ValueError(f"No JSON found in Claude response. Raw output:\n{raw[:500]}")
-    return json.loads(match.group())
+
+    candidate = match.group()
+
+    try:
+        return json.loads(candidate)
+    except json.JSONDecodeError:
+        pass
+
+    # Repair 1: drop trailing commas before closers; allow literal control
+    # chars (newlines/tabs) inside strings via strict=False.
+    repaired = re.sub(r",(\s*[}\]])", r"\1", candidate)
+    try:
+        return json.loads(repaired, strict=False)
+    except json.JSONDecodeError:
+        pass
+
+    # Repair 2: insert missing commas between adjacent objects/arrays — the
+    # most common cause of "Expecting ',' delimiter" in LLM output.
+    repaired = re.sub(r"([}\]])(\s*)([{\[])", r"\1,\2\3", repaired)
+    try:
+        return json.loads(repaired, strict=False)
+    except json.JSONDecodeError as e:
+        debug_path = _dump_raw(raw, reason="parse-failed")
+        raise ValueError(
+            f"Failed to parse model JSON ({e}). Raw output saved to {debug_path}."
+        ) from e
+
+
+def _dump_raw(raw: str, reason: str) -> Path:
+    debug_dir = BRIEFS_DAILY / ".debug"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H%M%SZ")
+    path = debug_dir / f"{stamp}_{reason}.raw.txt"
+    path.write_text(raw, encoding="utf-8")
+    return path
 
 
 def empty_brief(date_str: str) -> dict:
@@ -624,7 +668,7 @@ def prepend_rss_item(brief: dict, rss_item_html: str, run_dt: datetime) -> bool:
         return False
 
     date_obj = datetime.strptime(date_str, "%Y-%m-%d").replace(
-        hour=0, minute=0, second=0, tzinfo=timezone(timedelta(hours=8))  # MYT
+        hour=0, minute=0, second=0, tzinfo=LOCAL_TZ
     )
     pub_date = format_datetime(date_obj)
     title_date = date_obj.strftime("%a %d %b %Y")
@@ -663,7 +707,7 @@ def prepend_rss_item(brief: dict, rss_item_html: str, run_dt: datetime) -> bool:
 
 def main() -> int:
     run_dt = datetime.now(timezone.utc)
-    date_str = run_dt.strftime("%Y-%m-%d")
+    date_str = run_dt.astimezone(LOCAL_TZ).strftime("%Y-%m-%d")
 
     DOCS_DAILY.mkdir(parents=True, exist_ok=True)
     BRIEFS_DAILY.mkdir(parents=True, exist_ok=True)
@@ -675,7 +719,7 @@ def main() -> int:
         print(f"[skip] {html_path.name} already exists — nothing to do.")
         return 0
 
-    print(f"[gmail] fetching last {get_fetch_hours()}h of category:forums…")
+    print(f"[gmail] fetching last {FETCH_HOURS}h of category:forums…")
     service = get_gmail_service()
     threads = fetch_threads(service)
     print(f"[gmail] {len(threads)} thread(s) after filtering")
