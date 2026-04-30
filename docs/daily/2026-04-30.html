@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 30 APR 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 30 APR 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">9</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">22</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">7 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://stratechery.com/2026/an-interview-with-openai-ceo-sam-altman-and-aws-ceo-matt-garman-about-bedrock-managed-agents/" target="_blank">OpenAI ends Azure exclusivity, deploys models on AWS Bedrock</a></div>
+        <div class="story-body">Microsoft amended its OpenAI agreement to allow OpenAI to serve models on other cloud providers after Azure exclusivity was actively damaging Microsoft&#x27;s investment. OpenAI models and the Codex agent are now available via Amazon Bedrock, with a new &#x27;Bedrock Managed Agents powered by OpenAI&#x27; service for building customised agents with persistent memory. The AGI clause was also released, locking the agreement to 2032 regardless of AGI achievement.</div>
+        <div class="story-meta"><span class="chip">stratechery.com</span><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link ai" href="https://stratechery.com/2026/an-interview-with-openai-ceo-sam-altman-and-aws-ceo-matt-garman-about-bedrock-managed-agents/" target="_blank">stratechery.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">OpenAI misses user and revenue KPIs; CFO flagged funding gap for $600B infrastructure commitments</div>
+        <div class="story-body">WSJ reported OpenAI failed to hit its 1 billion weekly active users target and missed yearly and monthly revenue goals as Gemini and Anthropic gained ground. CFO Sarah Friar has internally questioned whether revenue growth can cover ~$600B in data center contracts. Shares of Oracle, CoreWeave, ARM, AMD, Broadcom, and NVDA fell on the news; NVDA recovered but CoreWeave dropped ~6%.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://davefriedman.substack.com/p/openais-q4-2026-ipo-might-not-happen" target="_blank">OpenAI IPO in Q4 2026 increasingly unlikely due to governance and funding concerns</a></div>
+        <div class="story-body">OpenAI&#x27;s CFO reportedly does not report to the CEO and has been excluded from server procurement financial discussions, creating board-level uncertainty about whether infrastructure commitments can be funded. The compressed timeline combined with the ongoing for-profit restructuring trial makes a 2026 IPO improbable.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://davefriedman.substack.com/p/openais-q4-2026-ipo-might-not-happen" target="_blank">davefriedman.substack.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence" target="_blank">NVIDIA Nemotron 3 Nano Omni: hybrid Mamba-Transformer multimodal model for long-context document/audio/video agents</a></div>
+        <div class="story-body">The model uses a hybrid Mamba-Transformer architecture with specialised vision and audio encoders, achieving best-in-class scores on MMlongbench-Doc and VoiceBench. Designed for real-world agentic document analysis, ASR, and video understanding with improved throughput and reasoning speed.</div>
+        <div class="story-meta"><span class="chip">huggingface.co</span><div class="ref-links"><a class="ref-link ai" href="https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence" target="_blank">huggingface.co ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://poolside.ai/blog/laguna-a-deeper-dive" target="_blank">Poolside releases Laguna XS.2 (Apache 2.0) and M.1 agentic coding models for long-horizon tasks</a></div>
+        <div class="story-body">Laguna M.1 is the flagship foundation model; Laguna XS.2 is a smaller but highly capable derivative with weights released under Apache 2.0. Both are free via Poolside&#x27;s API and OpenRouter for a limited period, targeting long-horizon coding workflows.</div>
+        <div class="story-meta"><span class="chip">poolside.ai</span><div class="ref-links"><a class="ref-link ai" href="https://poolside.ai/blog/laguna-a-deeper-dive" target="_blank">poolside.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/04/28/meta-muse-spark-has-promise-wall-street-wants-zuckerberg-ai-strategy.html" target="_blank">Meta shifts Muse Spark AI model to paid access, signalling end of pure open-source strategy</a></div>
+        <div class="story-body">Meta&#x27;s new Muse Spark model marks a strategic pivot from open-source to paid access, aimed at monetising AI through its ad business. Analysts note it trails Anthropic&#x27;s Claude on key benchmarks but see it as an infrastructure commitment signal.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.cnbc.com/2026/04/28/meta-muse-spark-has-promise-wall-street-wants-zuckerberg-ai-strategy.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://venturebeat.com/technology/mistral-ai-launches-workflows-a-temporal-powered-orchestration-engine-already-running-millions-of-daily-executions" target="_blank">Mistral Workflows: Temporal-powered agentic orchestration engine targeting regulated/sovereignty-sensitive enterprises</a></div>
+        <div class="story-body">Already running millions of daily executions, Mistral Workflows separates control plane and data plane execution — a key architectural decision for regulated sectors. Positions Mistral directly against AWS Step Functions and Google Workflows for enterprise multi-step AI pipelines.</div>
+        <div class="story-meta"><span class="chip">venturebeat.com</span><div class="ref-links"><a class="ref-link ai" href="https://venturebeat.com/technology/mistral-ai-launches-workflows-a-temporal-powered-orchestration-engine-already-running-millions-of-daily-executions" target="_blank">venturebeat.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">6 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html" target="_blank">GitHub Actions identified as the primary open-source supply chain attack vector — insecure defaults persist</a></div>
+        <div class="story-body">Nearly every open-source supply chain incident in the past 18 months exploited GitHub Actions features working as documented: no lockfile, no integrity hashes, no transitive visibility into action dependencies. GitHub acknowledges fixes are needed but refuses to change defaults to avoid breaking existing workflows, leaving maintainers reliant on third-party tooling and manual hardening.</div>
+        <div class="story-meta"><span class="chip">nesbitt.io</span><div class="ref-links"><a class="ref-link sec" href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html" target="_blank">nesbitt.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.apideck.com/blog/agent-auth-oauth-ai-agents" target="_blank">Agent Auth: OAuth 2.0 structurally unfit for AI agent delegation; MCP, A2A, and AAuth emerging as replacements</a></div>
+        <div class="story-body">Standard OAuth 2.0 cannot support runtime-decision agents that delegate tasks dynamically — no cryptographic agent identity, no signed requests, no token attenuation. MCP, A2A, and AAuth address these gaps with scoped, auditable delegation chains. Critical consideration for any IAM team building or procuring agentic systems.</div>
+        <div class="story-meta"><span class="chip">apideck.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.apideck.com/blog/agent-auth-oauth-ai-agents" target="_blank">apideck.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Microsoft Windows April 2026 update blocks malicious RDP files used in phishing campaigns</div>
+        <div class="story-body">The update adds protections against a known phishing vector where malicious .rdp files are distributed to establish unauthorised Remote Desktop sessions. Relevant for any enterprise with Windows endpoints and remote access policies.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Outlook.com sign-in outage forced iPhone Mail app re-authentication; root cause undisclosed</div>
+        <div class="story-body">A widespread Outlook.com sign-in failure required manual credential re-entry for iPhone users on the native Mail app. Microsoft confirmed service restoration but has not disclosed root cause, affected regions, or user count — an opacity concern for enterprise incident response planning.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Hybrid NER + Regex masking architecture proposed for secure LLM adoption in regulated sectors</div>
+        <div class="story-body">The pattern combines Regex for structured PII (SSNs, card numbers) with NER for contextual entity detection, replacing sensitive data with semantic placeholders before sending to LLMs. Maintains utility for downstream model tasks while meeting privacy and compliance requirements — directly applicable to fintech LLM integration.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.buchodi.com/how-chatgpt-serves-ads-heres-the-full-attribution-loop/" target="_blank">ChatGPT ad platform uses Fernet-encrypted click tokens and merchant-side tracking SDK for attribution</a></div>
+        <div class="story-body">OpenAI injects structured ad objects into conversations during model response generation; a merchant-side JavaScript SDK reports product views back to OpenAI, tied together via Fernet-encrypted click tokens. Understanding this attribution loop is relevant for fraud teams assessing AI-driven ad fraud vectors and for privacy engineers auditing data flows.</div>
+        <div class="story-meta"><span class="chip">buchodi.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.buchodi.com/how-chatgpt-serves-ads-heres-the-full-attribution-loop/" target="_blank">buchodi.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">Wise engineering deep-dive: canary deployments with business-metric validation prevented hundreds of production incidents in 2024</a></div>
+        <div class="story-body">Wise migrated from Octopus (simple push deploys) to Spinnaker with automated canary analysis routing 5% of traffic to new versions, monitoring both technical metrics (latency, error rates) and business metrics (transaction success, conversion) over 30 minutes before auto-rollback. This system blocked hundreds of potentially incident-causing deployments at a company moving £36B/quarter with 65% instant settlement. SLSA supply-chain security was rolled out across 700+ Java repositories via a single Gradle plugin version bump.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link fin" href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">UAE exits OPEC effective Friday, targeting 5M barrel/day production by 2027</div>
+        <div class="story-body">The UAE — OPEC&#x27;s third-largest producer at 3.6M bbl/day — is leaving to exceed its quota and expand production capacity, citing its regional rivalry with Saudi Arabia and current high oil prices providing cover for the exit. Near-term price impact limited but long-term volatility risk increases as OPEC loses coordination leverage; macro input for energy-sensitive portfolio positioning.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">Wise&#x27;s ML/data architecture: Kafka → Iceberg/Snowflake pipeline with 100B+ record archive and automated data governance for compliance</a></div>
+        <div class="story-body">Wise uses Kafka for real-time data movement, funnelling into Apache Iceberg on S3 with Trino as federated query engine across Iceberg, Snowflake, and Kafka streams. A comprehensive data governance portal with automated discovery feeds directly into deletion, compliance, and audit workflows — load-bearing infrastructure for a regulated payments company.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link fin" href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">Wise&#x27;s microservice chassis as versioned artifact (not fork) enables org-wide security patch propagation across 1000+ services</a></div>
+        <div class="story-body">By shipping the chassis as a dependency rather than a template, security patches and observability improvements propagate downstream when teams bump the version — no manual migrations across 700+ repos. A language-agnostic automation service creates PRs for complex cross-repo changes at scale, with SLSA rollout executed as a single plugin version update.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.mendral.com/blog/frontier-model-lower-costs" target="_blank">Multi-agent cost optimisation: cheap triage model handling 80% of tasks cuts LLM costs while frontier model handles orchestration</a></div>
+        <div class="story-body">Mendral&#x27;s architecture uses a cheap &#x27;Haiku triager&#x27; to classify and resolve routine CI log failures, escalating only complex cases to an Opus-class frontier model. This tiered delegation pattern significantly reduces per-task LLM cost and is directly replicable for any team running high-volume agentic workflows.</div>
+        <div class="story-meta"><span class="chip">mendral.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.mendral.com/blog/frontier-model-lower-costs" target="_blank">mendral.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://addyosmani.com/blog/long-running-agents/" target="_blank">Long-running agents: architecture patterns for multi-context-window persistence, failure recovery, and resumption</a></div>
+        <div class="story-body">Addy Osmani&#x27;s deep-dive covers how agents maintain progress across context window boundaries using structural artifacts, checkpointing, and sandboxed execution. Covers practical approaches available today without building from scratch — relevant for teams designing agentic pipelines for fraud investigation or IAM automation.</div>
+        <div class="story-meta"><span class="chip">addyosmani.com</span><div class="ref-links"><a class="ref-link swe" href="https://addyosmani.com/blog/long-running-agents/" target="_blank">addyosmani.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">Wise Kubernetes evolution: 6 to 20+ clusters with RKE2, Rancher, ArgoCD, Helm replacing Terraform/JSONNET/ConcourseCI</a></div>
+        <div class="story-body">The Compute Runtime Platform (CRP) rebuild replaced JSONNET with Helm for upstream compatibility, added ArgoCD with custom plugins for fully automated provisioning, and introduced KEDA for traffic-pattern-based horizontal scaling. VPA-driven CPU rightsizing and fully managed Envoy sidecars reduced operational overhead while supporting growth from 6 to 20+ clusters.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">OpenAI revenue/user miss triggers broad AI infrastructure sell-off: Oracle -4%, CoreWeave -6%, NVDA dipped then recovered</div>
+        <div class="story-body">Public-market AI infrastructure valuations are now tightly coupled to OpenAI&#x27;s growth trajectory. Oracle and CoreWeave — which have significant data centre contract exposure to OpenAI — saw the largest drops. NVDA&#x27;s quick recovery suggests the market still views GPU demand as structurally intact but OpenAI-specific execution risk is now priced as a distinct variable.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.ctvnews.ca/world/article/google-gets-pointers-from-eu-regulators-on-helping-ai-rivals-access-services/" target="_blank">EU regulators push to open Android AI integration layer to Gemini rivals, Google pushes back on privacy grounds</a></div>
+        <div class="story-body">EU regulators proposed measures requiring Google to give rival AI services deeper access to Android capabilities currently tied to Gemini, including the ability to execute tasks through users&#x27; preferred apps. Google argues compliance would raise costs and weaken security — a DMA-style intervention that could affect GOOGL&#x27;s Android moat and AI distribution advantage.</div>
+        <div class="story-meta"><span class="chip">ctvnews.ca</span><div class="ref-links"><a class="ref-link mkt" href="https://www.ctvnews.ca/world/article/google-gets-pointers-from-eu-regulators-on-helping-ai-rivals-access-services/" target="_blank">ctvnews.ca ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/04/28/google-expands-pentagons-access-to-its-ai-after-anthropics-refusal/" target="_blank">Google grants US DoD broad AI access on classified networks after Anthropic declined</a></div>
+        <div class="story-body">Google agreed to provide classified-network AI access for broad lawful DoD uses, filling a gap left by Anthropic&#x27;s refusal. Signals Google&#x27;s continued willingness to serve defence customers — a strategic differentiator vs. Anthropic and a revenue channel with significant long-term contract value.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/04/28/google-expands-pentagons-access-to-its-ai-after-anthropics-refusal/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Musk v. OpenAI trial underway; $150B damages sought over for-profit restructuring</div>
+        <div class="story-body">Musk testified that OpenAI &#x27;stole from a charity&#x27; by pivoting from nonprofit to for-profit after leveraging his funding and reputation. OpenAI&#x27;s defence characterises the suit as competitive interference by xAI&#x27;s founder. Outcome could constrain how AI nonprofits restructure, with downstream implications for sector governance and investor protections.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.apideck.com/blog/agent-auth-oauth-ai-agents" target="_blank">Agent Auth: Why OAuth Wasn&#x27;t Built for AI Agents ↗</a></div>
+          <div class="dive-why">Directly actionable for an IAM engineer — maps the structural gaps in OAuth 2.0 for agentic delegation and explains how MCP, A2A, and AAuth fill them with cryptographic identity and token attenuation.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html" target="_blank">GitHub Actions Is the Weakest Link ↗</a></div>
+          <div class="dive-why">Every open-source supply chain incident in the past 18 months traces back to GitHub Actions defaults — critical reading for any team maintaining CI/CD pipelines with third-party action dependencies.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.bytebytego.com/p/the-tech-stack-powering-wise" target="_blank">The Tech Stack Powering Wise ↗</a></div>
+          <div class="dive-why">The most detailed public engineering case study from a regulated fintech at scale — the canary deployment with business-metric validation and the versioned chassis pattern are directly transferable to fintech platform engineering.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 30 Apr 2026 · sources: stratechery.com, cnbc.com, morningbrew.com, tldrnewsletter.com, huggingface.co, poolside.ai, venturebeat.com, nesbitt.io, apideck.com, buchodi.com, blog.bytebytego.com, mendral.com, addyosmani.com, ctvnews.ca, techcrunch.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

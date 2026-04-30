@@ -1,0 +1,254 @@
+{
+  "date": "2026-04-30",
+  "threadCount": 9,
+  "storyCount": 22,
+  "sourceCount": 6,
+  "sections": {
+    "ai": [
+      {
+        "headline": "OpenAI ends Azure exclusivity, deploys models on AWS Bedrock",
+        "body": "Microsoft amended its OpenAI agreement to allow OpenAI to serve models on other cloud providers after Azure exclusivity was actively damaging Microsoft's investment. OpenAI models and the Codex agent are now available via Amazon Bedrock, with a new 'Bedrock Managed Agents powered by OpenAI' service for building customised agents with persistent memory. The AGI clause was also released, locking the agreement to 2032 regardless of AGI achievement.",
+        "signal": "high",
+        "sources": [
+          "stratechery.com",
+          "cnbc.com"
+        ],
+        "url": "https://stratechery.com/2026/an-interview-with-openai-ceo-sam-altman-and-aws-ceo-matt-garman-about-bedrock-managed-agents/"
+      },
+      {
+        "headline": "OpenAI misses user and revenue KPIs; CFO flagged funding gap for $600B infrastructure commitments",
+        "body": "WSJ reported OpenAI failed to hit its 1 billion weekly active users target and missed yearly and monthly revenue goals as Gemini and Anthropic gained ground. CFO Sarah Friar has internally questioned whether revenue growth can cover ~$600B in data center contracts. Shares of Oracle, CoreWeave, ARM, AMD, Broadcom, and NVDA fell on the news; NVDA recovered but CoreWeave dropped ~6%.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "OpenAI IPO in Q4 2026 increasingly unlikely due to governance and funding concerns",
+        "body": "OpenAI's CFO reportedly does not report to the CEO and has been excluded from server procurement financial discussions, creating board-level uncertainty about whether infrastructure commitments can be funded. The compressed timeline combined with the ongoing for-profit restructuring trial makes a 2026 IPO improbable.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://davefriedman.substack.com/p/openais-q4-2026-ipo-might-not-happen"
+      },
+      {
+        "headline": "NVIDIA Nemotron 3 Nano Omni: hybrid Mamba-Transformer multimodal model for long-context document/audio/video agents",
+        "body": "The model uses a hybrid Mamba-Transformer architecture with specialised vision and audio encoders, achieving best-in-class scores on MMlongbench-Doc and VoiceBench. Designed for real-world agentic document analysis, ASR, and video understanding with improved throughput and reasoning speed.",
+        "signal": "med",
+        "sources": [
+          "huggingface.co"
+        ],
+        "url": "https://huggingface.co/blog/nvidia/nemotron-3-nano-omni-multimodal-intelligence"
+      },
+      {
+        "headline": "Poolside releases Laguna XS.2 (Apache 2.0) and M.1 agentic coding models for long-horizon tasks",
+        "body": "Laguna M.1 is the flagship foundation model; Laguna XS.2 is a smaller but highly capable derivative with weights released under Apache 2.0. Both are free via Poolside's API and OpenRouter for a limited period, targeting long-horizon coding workflows.",
+        "signal": "med",
+        "sources": [
+          "poolside.ai"
+        ],
+        "url": "https://poolside.ai/blog/laguna-a-deeper-dive"
+      },
+      {
+        "headline": "Meta shifts Muse Spark AI model to paid access, signalling end of pure open-source strategy",
+        "body": "Meta's new Muse Spark model marks a strategic pivot from open-source to paid access, aimed at monetising AI through its ad business. Analysts note it trails Anthropic's Claude on key benchmarks but see it as an infrastructure commitment signal.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/04/28/meta-muse-spark-has-promise-wall-street-wants-zuckerberg-ai-strategy.html"
+      },
+      {
+        "headline": "Mistral Workflows: Temporal-powered agentic orchestration engine targeting regulated/sovereignty-sensitive enterprises",
+        "body": "Already running millions of daily executions, Mistral Workflows separates control plane and data plane execution — a key architectural decision for regulated sectors. Positions Mistral directly against AWS Step Functions and Google Workflows for enterprise multi-step AI pipelines.",
+        "signal": "med",
+        "sources": [
+          "venturebeat.com"
+        ],
+        "url": "https://venturebeat.com/technology/mistral-ai-launches-workflows-a-temporal-powered-orchestration-engine-already-running-millions-of-daily-executions"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "GitHub Actions identified as the primary open-source supply chain attack vector — insecure defaults persist",
+        "body": "Nearly every open-source supply chain incident in the past 18 months exploited GitHub Actions features working as documented: no lockfile, no integrity hashes, no transitive visibility into action dependencies. GitHub acknowledges fixes are needed but refuses to change defaults to avoid breaking existing workflows, leaving maintainers reliant on third-party tooling and manual hardening.",
+        "signal": "high",
+        "sources": [
+          "nesbitt.io"
+        ],
+        "url": "https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html"
+      },
+      {
+        "headline": "Agent Auth: OAuth 2.0 structurally unfit for AI agent delegation; MCP, A2A, and AAuth emerging as replacements",
+        "body": "Standard OAuth 2.0 cannot support runtime-decision agents that delegate tasks dynamically — no cryptographic agent identity, no signed requests, no token attenuation. MCP, A2A, and AAuth address these gaps with scoped, auditable delegation chains. Critical consideration for any IAM team building or procuring agentic systems.",
+        "signal": "high",
+        "sources": [
+          "apideck.com"
+        ],
+        "url": "https://www.apideck.com/blog/agent-auth-oauth-ai-agents"
+      },
+      {
+        "headline": "Microsoft Windows April 2026 update blocks malicious RDP files used in phishing campaigns",
+        "body": "The update adds protections against a known phishing vector where malicious .rdp files are distributed to establish unauthorised Remote Desktop sessions. Relevant for any enterprise with Windows endpoints and remote access policies.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Outlook.com sign-in outage forced iPhone Mail app re-authentication; root cause undisclosed",
+        "body": "A widespread Outlook.com sign-in failure required manual credential re-entry for iPhone users on the native Mail app. Microsoft confirmed service restoration but has not disclosed root cause, affected regions, or user count — an opacity concern for enterprise incident response planning.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Hybrid NER + Regex masking architecture proposed for secure LLM adoption in regulated sectors",
+        "body": "The pattern combines Regex for structured PII (SSNs, card numbers) with NER for contextual entity detection, replacing sensitive data with semantic placeholders before sending to LLMs. Maintains utility for downstream model tasks while meeting privacy and compliance requirements — directly applicable to fintech LLM integration.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "ChatGPT ad platform uses Fernet-encrypted click tokens and merchant-side tracking SDK for attribution",
+        "body": "OpenAI injects structured ad objects into conversations during model response generation; a merchant-side JavaScript SDK reports product views back to OpenAI, tied together via Fernet-encrypted click tokens. Understanding this attribution loop is relevant for fraud teams assessing AI-driven ad fraud vectors and for privacy engineers auditing data flows.",
+        "signal": "med",
+        "sources": [
+          "buchodi.com"
+        ],
+        "url": "https://www.buchodi.com/how-chatgpt-serves-ads-heres-the-full-attribution-loop/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Wise engineering deep-dive: canary deployments with business-metric validation prevented hundreds of production incidents in 2024",
+        "body": "Wise migrated from Octopus (simple push deploys) to Spinnaker with automated canary analysis routing 5% of traffic to new versions, monitoring both technical metrics (latency, error rates) and business metrics (transaction success, conversion) over 30 minutes before auto-rollback. This system blocked hundreds of potentially incident-causing deployments at a company moving £36B/quarter with 65% instant settlement. SLSA supply-chain security was rolled out across 700+ Java repositories via a single Gradle plugin version bump.",
+        "signal": "high",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/the-tech-stack-powering-wise"
+      },
+      {
+        "headline": "UAE exits OPEC effective Friday, targeting 5M barrel/day production by 2027",
+        "body": "The UAE — OPEC's third-largest producer at 3.6M bbl/day — is leaving to exceed its quota and expand production capacity, citing its regional rivalry with Saudi Arabia and current high oil prices providing cover for the exit. Near-term price impact limited but long-term volatility risk increases as OPEC loses coordination leverage; macro input for energy-sensitive portfolio positioning.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Wise's ML/data architecture: Kafka → Iceberg/Snowflake pipeline with 100B+ record archive and automated data governance for compliance",
+        "body": "Wise uses Kafka for real-time data movement, funnelling into Apache Iceberg on S3 with Trino as federated query engine across Iceberg, Snowflake, and Kafka streams. A comprehensive data governance portal with automated discovery feeds directly into deletion, compliance, and audit workflows — load-bearing infrastructure for a regulated payments company.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/the-tech-stack-powering-wise"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Wise's microservice chassis as versioned artifact (not fork) enables org-wide security patch propagation across 1000+ services",
+        "body": "By shipping the chassis as a dependency rather than a template, security patches and observability improvements propagate downstream when teams bump the version — no manual migrations across 700+ repos. A language-agnostic automation service creates PRs for complex cross-repo changes at scale, with SLSA rollout executed as a single plugin version update.",
+        "signal": "high",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/the-tech-stack-powering-wise"
+      },
+      {
+        "headline": "Multi-agent cost optimisation: cheap triage model handling 80% of tasks cuts LLM costs while frontier model handles orchestration",
+        "body": "Mendral's architecture uses a cheap 'Haiku triager' to classify and resolve routine CI log failures, escalating only complex cases to an Opus-class frontier model. This tiered delegation pattern significantly reduces per-task LLM cost and is directly replicable for any team running high-volume agentic workflows.",
+        "signal": "med",
+        "sources": [
+          "mendral.com"
+        ],
+        "url": "https://www.mendral.com/blog/frontier-model-lower-costs"
+      },
+      {
+        "headline": "Long-running agents: architecture patterns for multi-context-window persistence, failure recovery, and resumption",
+        "body": "Addy Osmani's deep-dive covers how agents maintain progress across context window boundaries using structural artifacts, checkpointing, and sandboxed execution. Covers practical approaches available today without building from scratch — relevant for teams designing agentic pipelines for fraud investigation or IAM automation.",
+        "signal": "med",
+        "sources": [
+          "addyosmani.com"
+        ],
+        "url": "https://addyosmani.com/blog/long-running-agents/"
+      },
+      {
+        "headline": "Wise Kubernetes evolution: 6 to 20+ clusters with RKE2, Rancher, ArgoCD, Helm replacing Terraform/JSONNET/ConcourseCI",
+        "body": "The Compute Runtime Platform (CRP) rebuild replaced JSONNET with Helm for upstream compatibility, added ArgoCD with custom plugins for fully automated provisioning, and introduced KEDA for traffic-pattern-based horizontal scaling. VPA-driven CPU rightsizing and fully managed Envoy sidecars reduced operational overhead while supporting growth from 6 to 20+ clusters.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/the-tech-stack-powering-wise"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "OpenAI revenue/user miss triggers broad AI infrastructure sell-off: Oracle -4%, CoreWeave -6%, NVDA dipped then recovered",
+        "body": "Public-market AI infrastructure valuations are now tightly coupled to OpenAI's growth trajectory. Oracle and CoreWeave — which have significant data centre contract exposure to OpenAI — saw the largest drops. NVDA's quick recovery suggests the market still views GPU demand as structurally intact but OpenAI-specific execution risk is now priced as a distinct variable.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "EU regulators push to open Android AI integration layer to Gemini rivals, Google pushes back on privacy grounds",
+        "body": "EU regulators proposed measures requiring Google to give rival AI services deeper access to Android capabilities currently tied to Gemini, including the ability to execute tasks through users' preferred apps. Google argues compliance would raise costs and weaken security — a DMA-style intervention that could affect GOOGL's Android moat and AI distribution advantage.",
+        "signal": "high",
+        "sources": [
+          "ctvnews.ca"
+        ],
+        "url": "https://www.ctvnews.ca/world/article/google-gets-pointers-from-eu-regulators-on-helping-ai-rivals-access-services/"
+      },
+      {
+        "headline": "Google grants US DoD broad AI access on classified networks after Anthropic declined",
+        "body": "Google agreed to provide classified-network AI access for broad lawful DoD uses, filling a gap left by Anthropic's refusal. Signals Google's continued willingness to serve defence customers — a strategic differentiator vs. Anthropic and a revenue channel with significant long-term contract value.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/04/28/google-expands-pentagons-access-to-its-ai-after-anthropics-refusal/"
+      },
+      {
+        "headline": "Musk v. OpenAI trial underway; $150B damages sought over for-profit restructuring",
+        "body": "Musk testified that OpenAI 'stole from a charity' by pivoting from nonprofit to for-profit after leveraging his funding and reputation. OpenAI's defence characterises the suit as competitive interference by xAI's founder. Outcome could constrain how AI nonprofits restructure, with downstream implications for sector governance and investor protections.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Agent Auth: Why OAuth Wasn't Built for AI Agents",
+      "why": "Directly actionable for an IAM engineer — maps the structural gaps in OAuth 2.0 for agentic delegation and explains how MCP, A2A, and AAuth fill them with cryptographic identity and token attenuation.",
+      "url": "https://www.apideck.com/blog/agent-auth-oauth-ai-agents"
+    },
+    {
+      "title": "GitHub Actions Is the Weakest Link",
+      "why": "Every open-source supply chain incident in the past 18 months traces back to GitHub Actions defaults — critical reading for any team maintaining CI/CD pipelines with third-party action dependencies.",
+      "url": "https://nesbitt.io/2026/04/28/github-actions-is-the-weakest-link.html"
+    },
+    {
+      "title": "The Tech Stack Powering Wise",
+      "why": "The most detailed public engineering case study from a regulated fintech at scale — the canary deployment with business-metric validation and the versioned chassis pattern are directly transferable to fintech platform engineering.",
+      "url": "https://blog.bytebytego.com/p/the-tech-stack-powering-wise"
+    }
+  ]
+}
