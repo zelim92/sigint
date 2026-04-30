@@ -1,0 +1,261 @@
+{
+  "date": "2026-05-01",
+  "threadCount": 7,
+  "storyCount": 28,
+  "sourceCount": 7,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Google to sell TPUs to select customers, enters direct competition with Nvidia",
+        "body": "Alphabet will sell custom TPU chips for installation in customers' own data centres, having already signed deals with Anthropic and Meta. Two new TPUs (training and inference variants) were recently announced. This directly challenges Nvidia's data-centre dominance and signals Google is monetising its silicon investment beyond cloud-only access.",
+        "signal": "high",
+        "sources": [
+          "finance.yahoo.com"
+        ],
+        "url": "https://finance.yahoo.com/markets/stocks/article/google-to-sell-tpu-chips-to-select-customers-in-latest-shot-at-nvidia-214900221.html"
+      },
+      {
+        "headline": "Mistral Medium 3.5 (128B dense) powers async remote coding agents via CLI",
+        "body": "Mistral Medium 3.5 runs long asynchronous coding tasks ('Vibe remote agents') starting from the CLI or Le Chat's new Work mode, operating on four GPUs and scoring highly on SWE-Bench Verified. The dense 128B architecture with strong instruction-following is a notable alternative to MoE models for agentic coding workloads.",
+        "signal": "high",
+        "sources": [
+          "mistral.ai"
+        ],
+        "url": "https://mistral.ai/news/vibe-remote-agents-mistral-medium-3-5"
+      },
+      {
+        "headline": "AI evaluation costs now rival training costs, creating a new compute bottleneck",
+        "body": "HuggingFace analysis shows some eval runs cost tens of thousands of dollars, with uneven distribution across models and tasks. Without standardised documentation and data reuse, costs block external validation and widen access inequity in AI research. Relevant for any team building LLM-based products that require ongoing quality assurance.",
+        "signal": "high",
+        "sources": [
+          "huggingface.co"
+        ],
+        "url": "https://huggingface.co/blog/evaleval/eval-costs-bottleneck"
+      },
+      {
+        "headline": "Apple's LaDiR: latent diffusion reasoning framework improves LLM accuracy and diversity",
+        "body": "LaDiR (Latent Diffusion Reasoner) unifies continuous latent representations with iterative diffusion refinement on top of existing LLMs, enabling parallel generation of diverse reasoning trajectories. It outperforms autoregressive, diffusion-based, and latent reasoning baselines on accuracy, diversity, and interpretability.",
+        "signal": "med",
+        "sources": [
+          "machinelearning.apple.com"
+        ],
+        "url": "https://machinelearning.apple.com/research/ladir"
+      },
+      {
+        "headline": "Anthropic's shared responsibility model for AI agents: organisations own 3 of 4 security layers",
+        "body": "Anthropic's framework splits AI agent security into Model, Harness, Tools, and Environment layers; enterprises own everything except the model. A critical finding: 93% of prompts are currently auto-approved, meaning human oversight is near-absent in practice. Security posture must shift from per-action approval to continuous policy monitoring.",
+        "signal": "high",
+        "sources": [
+          "backslash.security"
+        ],
+        "url": "https://www.backslash.security/blog/anthropics-shared-responsibility-security-model-for-ai-agents"
+      },
+      {
+        "headline": "Netflix production LLM-as-a-Judge system achieves 83–92% accuracy on synopsis quality scoring",
+        "body": "Netflix built a golden set of ~600 expert-labelled examples and uses tiered reasoning plus consensus scoring to evaluate show synopses across four quality dimensions. The system flags weak synopses weeks before a title ships, demonstrating a replicable pattern for domain-specific LLM evaluation at scale.",
+        "signal": "med",
+        "sources": [
+          "netflixtechblog.com"
+        ],
+        "url": "https://netflixtechblog.com/evaluating-netflix-show-synopses-with-llm-as-a-judge-6269251e6f28"
+      },
+      {
+        "headline": "OWASP FinBot CTF live: hands-on agentic AI security training mapped to OWASP Top 10 for Agents 2026",
+        "body": "FinBot is a capture-the-flag platform simulating a financial-services AI application, with challenges covering prompt injection, tool misuse, and other agentic risks. Directly maps to the OWASP Top 10 for Agentic Applications 2026, making it immediately useful for fintech security teams hardening AI deployments.",
+        "signal": "high",
+        "sources": [
+          "genai.owasp.org"
+        ],
+        "url": "https://genai.owasp.org/2026/04/28/finbot-ctf-is-live-a-hands-on-companion-to-the-owasp-genai-security-project/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Malicious npm packages compromise SAP maintainer accounts, steal cloud tokens via OIDC abuse",
+        "body": "Attackers hijacked SAP npm maintainer accounts on April 29 to publish four packages containing an 11MB credential stealer targeting AWS, Azure, GCP, and GitHub tokens via preinstall hooks. Persistence was established through VS Code tasks, and OIDC token abuse was used to bypass CI/CD security controls — a highly targeted supply chain attack against enterprise cloud environments.",
+        "signal": "high",
+        "sources": [
+          "safedep.io"
+        ],
+        "url": "https://safedep.io/mini-shai-hulud-and-sap-compromise/"
+      },
+      {
+        "headline": "CVE-2026-3854: High-severity GitHub Enterprise RCE via manipulated git push options (AI-assisted discovery)",
+        "body": "GitHub disclosed a high-severity RCE vulnerability in GitHub Enterprise Server, discovered through AI-assisted reverse engineering. Attack vector is manipulated git push options — organisations running self-hosted GHES should prioritise patching immediately.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "CVE-2026-31431: Critical Linux kernel privilege escalation (since 2017) via algif_aead module",
+        "body": "'Copy Fail' is a local privilege escalation flaw present in the Linux kernel since 2017, exploitable by unprivileged users to gain root via a simple Python script. Multi-tenant environments — container clusters especially — are at severe risk; mitigation requires kernel update or disabling the algif_aead module.",
+        "signal": "high",
+        "sources": [
+          "copy.fail"
+        ],
+        "url": "https://copy.fail/"
+      },
+      {
+        "headline": "Critical cPanel authentication bypass: update to 11.136.0.5 / 11.134.0.20 immediately",
+        "body": "A critical authentication vulnerability affects all supported cPanel versions, allowing unauthorised control panel access. Namecheap temporarily blocked TCP ports 2083 and 2087 as a stopgap. Administrators must patch to the named versions without delay.",
+        "signal": "high",
+        "sources": [
+          "davidpoblador.com"
+        ],
+        "url": "https://davidpoblador.com/blog/despite-everything-a-small-praise-of-github.html"
+      },
+      {
+        "headline": "Vercel breach via third-party AI tools; LMDeploy SSRF enabling rapid credential theft",
+        "body": "AWS Security Digest #258 highlights a Vercel breach originating through a third-party AI toolchain and SSRF vulnerabilities in LMDeploy that enable fast credential exfiltration. Both incidents reinforce the risk of indirect attack surfaces introduced by AI tooling integrated into cloud environments.",
+        "signal": "high",
+        "sources": [
+          "awssecuritydigest.com"
+        ],
+        "url": "https://awssecuritydigest.com/past-issues/aws-security-digest-258"
+      },
+      {
+        "headline": "MCP server architecture: models grab the most probable next tool, not the planned one — has security implications",
+        "body": "A practitioner post on building MCP toolchains notes that models don't plan ahead — they scan the tool list and take the highest-probability next action. For security, this means tool descriptions and sequencing directly control agent behaviour and can be manipulated via prompt injection to redirect execution.",
+        "signal": "med",
+        "sources": [
+          "taoofmac.com"
+        ],
+        "url": "https://taoofmac.com/space/blog/2026/04/29/2341"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "PayPal separates Venmo into standalone business unit amid takeover interest",
+        "body": "PayPal CEO is structuring Venmo as an independent unit to track its performance separately and facilitate a potential sale, with a digital banking executive to be recruited to run it. Venmo is considered PayPal's most acquirable asset as the parent faces M&A approaches.",
+        "signal": "high",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/04/29/paypal-restructures-venmo-standalone-unit.html"
+      },
+      {
+        "headline": "Stripe's Link CLI: agent-driven purchases with one-time-use credentials, zero stored card data",
+        "body": "Stripe's Link CLI lets AI agents complete purchases without storing card details by issuing secure, single-use payment credentials from a Link wallet. Every request can be configured to require a push notification or email approval from the user, providing a compliance-friendly human-in-the-loop payment pattern for agentic systems.",
+        "signal": "high",
+        "sources": [
+          "github.com"
+        ],
+        "url": "https://github.com/stripe/link-cli"
+      },
+      {
+        "headline": "SaaStr case study: AI agents drove Salesforce API usage up 80% in cost despite fewer seats",
+        "body": "Real-world evidence that agentic workloads break seat-based SaaS pricing models: API-heavy agent workflows pushed Salesforce costs up ~80% even with fewer human users. Weaker SaaS tools (Marketo broke compliance, Notion was silently churned) became irrelevant as agents routed around non-critical systems.",
+        "signal": "high",
+        "sources": [
+          "saastr.com"
+        ],
+        "url": "https://www.saastr.com/our-salesforce-bill-went-up-80-marketo-cant-honor-its-own-unsubscribes-and-we-stealth-churned-off-notion-the-agents-003/"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Cursor SDK (public beta): build programmatic agents with Cursor's own runtime, harness, and frontier models",
+        "body": "The Cursor TypeScript SDK exposes the same agent runtime powering the Cursor desktop, CLI, and web app, runnable locally or on Cursor's cloud with a dedicated VM. A few lines of TypeScript can spin up a full agentic coding loop using any frontier model.",
+        "signal": "med",
+        "sources": [
+          "cursor.com"
+        ],
+        "url": "https://cursor.com/blog/typescript-sdk"
+      },
+      {
+        "headline": "AutoSP automates sequence-parallel LLM training conversion for long-context workloads on multi-GPU",
+        "body": "PyTorch's AutoSP (integrated with DeepSpeed) automatically converts standard transformer training code to sequence-parallel code, enabling longer context training across multiple GPUs without manual refactoring. It adds an advanced activation-checkpointing strategy for memory management with minimal runtime overhead.",
+        "signal": "med",
+        "sources": [
+          "pytorch.org"
+        ],
+        "url": "https://pytorch.org/blog/introducing-autosp/"
+      },
+      {
+        "headline": "Agent 'intent debt': AI agents lack persistent institutional memory, perpetuating patterns without understanding rationale",
+        "body": "Unlike human engineers who carry tacit knowledge, agents operate only within their context window and forget intent between sessions. This creates 'intent debt' — compounding incorrect decisions as agents replicate patterns they cannot reason about — demanding that documentation be redesigned as execution context rather than human reference.",
+        "signal": "med",
+        "sources": [
+          "simme.dev"
+        ],
+        "url": "https://simme.dev/posts/the-end-of-just-ask-sarah/"
+      },
+      {
+        "headline": "Cloudflare agents can now autonomously create accounts, buy domains, and deploy — with optional human approval gate",
+        "body": "Cloudflare's new agent integration with Stripe Projects allows end-to-end autonomous provisioning: account creation, domain purchase, and deployment with no required human steps beyond optional permission grants. Demonstrates how identity and payment authorisation for non-human actors is becoming a first-class infrastructure concern.",
+        "signal": "med",
+        "sources": [
+          "blog.cloudflare.com"
+        ],
+        "url": "https://blog.cloudflare.com/agents-stripe-projects/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Magnificent Seven Q1 earnings: $112B combined hyperscaler capex; Alphabet profit +81%, AWS cloud +28%",
+        "body": "Alphabet, Amazon, Meta, and Microsoft all beat top- and bottom-line expectations. Google Cloud hit $20B (vs $18.4B expected); AWS cloud grew 28% YoY; Microsoft announced ~$190B capex for 2026 and 20M Copilot paid users. Alphabet stock surged 7% after-hours; Meta fell ~6% on vague spending rationale; Microsoft fell ~2% on demand concerns for Copilot. Nasdaq up 14% for April — best month since April 2020.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tomtunguz.com"
+        ],
+        "url": "https://tomtunguz.com/2026-04-29-the-112-billion-quarter-hyperscalers-bet-the-farm-on-ai/"
+      },
+      {
+        "headline": "Amazon custom chips now a $20B business, ranking it in the global top 3 for data centre silicon",
+        "body": "Amazon's Trainium and Inferentia chip lines have scaled to $20B in revenue, placing Amazon alongside Nvidia and AMD in data-centre chip significance. Combined with Google's TPU commercialisation move, the hyperscaler silicon push is structurally eroding Nvidia's captive market.",
+        "signal": "high",
+        "sources": [
+          "theregister.com"
+        ],
+        "url": "https://www.theregister.com/2026/04/29/amazon_chips_20b_business/"
+      },
+      {
+        "headline": "OpenAI abandons first-party Stargate data centres, pivots to leasing compute; cash runway concern",
+        "body": "OpenAI and its Stargate partners could not agree on control of planned data centres, so OpenAI has shifted to leasing compute from third parties. The company has never turned a profit and some analysts estimate it could exhaust cash by mid-2027, adding strategic uncertainty to its $800B valuation.",
+        "signal": "high",
+        "sources": [
+          "tomshardware.com"
+        ],
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-has-effectively-abandoned-first-party-stargate-data-centers-in-favor-of-more-flexible-deals-company-now-prefers-to-lease-compute-and-says-stargate-is-an-umbrella-term"
+      },
+      {
+        "headline": "Fed holds rates at 3.5–3.75%; Powell stays as governor; Warsh confirmed as next chair, supports rate cuts",
+        "body": "The Fed held rates steady with four dissenters — the most since 1992 — signalling the board is primed for cuts. Kevin Warsh (rate-cut advocate) is confirmed as incoming chair before Powell's term ends May 15. Iran-war inflation 'hasn't peaked yet' per Powell, adding macro risk to the outlook.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Inference market fragmenting into latency tiers, multimodal, and edge segments — multiple winners likely",
+        "body": "Analysis from Tom Tunguz argues that divergent serving requirements across model types (latency-sensitive, multimodal, edge) are creating distinct infrastructure markets rather than a winner-take-all dynamic. Relevant for evaluating NVDA's position as specialised silicon and serving frameworks compete per workload tier.",
+        "signal": "med",
+        "sources": [
+          "tomtunguz.com"
+        ],
+        "url": "https://tomtunguz.com/inference-market-segmentation/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "SAP npm supply chain attack: OIDC token abuse to bypass CI/CD",
+      "why": "A live, sophisticated supply chain attack directly relevant to IAM and CI/CD security — OIDC token abuse is an underappreciated vector for cloud credential theft that fintech engineering teams should model against.",
+      "url": "https://safedep.io/mini-shai-hulud-and-sap-compromise/"
+    },
+    {
+      "title": "Anthropic's shared responsibility model for AI agents (93% auto-approved prompts)",
+      "why": "The 93% auto-approval statistic is a concrete risk quantification for agentic deployments; the four-layer framework provides an actionable control model for IAM and security teams governing AI in production.",
+      "url": "https://www.backslash.security/blog/anthropics-shared-responsibility-security-model-for-ai-agents"
+    },
+    {
+      "title": "AI eval costs as a compute bottleneck: HuggingFace analysis",
+      "why": "Evaluation cost inflation is directly relevant to any team running LLM-powered fraud or risk systems at scale — understanding where eval spend concentrates is essential for sustainable ML operations.",
+      "url": "https://huggingface.co/blog/evaleval/eval-costs-bottleneck"
+    }
+  ]
+}
