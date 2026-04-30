@@ -47,7 +47,7 @@ REPO_NAME = "sigint"
 SITE_BASE = f"https://{GITHUB_USER}.github.io/{REPO_NAME}"
 
 MODEL = "claude-sonnet-4-6"
-MAX_TOKENS = 4000
+MAX_TOKENS = 8000
 PIPELINE_VERSION = "v0.2"
 FETCH_HOURS = 24
 LOCAL_TZ = timezone(timedelta(hours=8))  # MYT — used for the brief's user-facing date stamp
