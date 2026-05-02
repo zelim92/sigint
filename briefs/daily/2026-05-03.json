@@ -1,0 +1,128 @@
+{
+  "date": "2026-05-03",
+  "threadCount": 4,
+  "storyCount": 9,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "MCP vs Agent Skills: Architectural Decision Framework",
+        "body": "MCP is a JSON-RPC client-server protocol connecting N agents to M backends via a separate runtime process — suited for live system/data integration. Agent Skills are lightweight instruction directories (SKILL.md + scripts) that run in the agent's own environment with zero extra infra. The key decision axis: reach external systems → MCP; encode reusable procedural know-how → Skills.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep213-mcp-vs-skills-clearly-explained"
+      },
+      {
+        "headline": "Prompt Injection Defense-in-Depth: Five Production Patterns",
+        "body": "ByteByteGo outlines a layered stack: model-level defenses (Spotlighting with <UNTRUSTED> tags, Instruction Hierarchy fine-tuning) plus system-level controls (least-privilege tool grants, human-in-the-loop approval gates, Planner/Executor split where the planner never sees untrusted content). The Planner/Executor split is the architecturally novel pattern — isolating tool-access from untrusted-content ingestion across two separate LLMs. Gmail is cited as a production example of stacked defenses.",
+        "signal": "high",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep213-mcp-vs-skills-clearly-explained"
+      },
+      {
+        "headline": "Netflix Publishes ML Model Serving Routing Architecture (Part 1)",
+        "body": "Netflix TechBlog opens a multi-part series on its centralized ML model serving platform, covering a domain-independent API abstraction and traffic routing layer used across recommendations and commerce at scale. The routing layer sits between domain-specific microservices and model inference backends, enabling traffic splitting, canary routing, and platform-wide observability. Architecturally relevant for anyone building internal AI inference infrastructure.",
+        "signal": "high",
+        "sources": [
+          "medium.com"
+        ],
+        "url": "https://medium.com/netflix-techblog/16e22fe18741"
+      },
+      {
+        "headline": "Pentagon Awards AI Contracts to OpenAI, Google, Microsoft, Amazon, Nvidia, xAI — Excludes Anthropic on Supply Chain Risk Grounds",
+        "body": "The DoD inked deals with seven AI vendors for use of their tools in classified settings; Anthropic was explicitly excluded after being deemed a supply chain risk. This is a significant procurement signal: supply chain risk classification is now being applied to AI model providers at the federal level, not just infrastructure vendors. MSFT, GOOGL, AMZN, NVDA all benefit directly.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Prompt Injection Tops OWASP LLM Top 10 — Planner/Executor Split Emerging as Structural Mitigation",
+        "body": "The Planner/Executor split (two LLMs: one with tool access but no untrusted content visibility, one with untrusted content access but no tools) represents a zero-trust-style privilege separation applied to agentic AI systems. This maps directly to least-privilege and separation-of-duties principles familiar in IAM. Relevant for any fintech team deploying LLM agents with access to payment or identity APIs.",
+        "signal": "high",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep213-mcp-vs-skills-clearly-explained"
+      },
+      {
+        "headline": "DoD Labels Anthropic a Supply Chain Risk — Sets Precedent for AI Vendor Classification",
+        "body": "The Defense Department's decision to exclude Anthropic from classified AI contracts on supply chain risk grounds is the first high-profile application of supply chain risk management (SCRM) frameworks to frontier AI model providers. This signals that SCRM evaluation criteria — previously focused on hardware and infrastructure — are expanding to encompass LLM vendors and their training data/model provenance. Expect this framing to influence federal contractor and financial sector AI procurement policies.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Netflix ML Serving Platform: Domain-Independent Routing Abstraction at Scale",
+        "body": "Netflix's centralized serving platform exposes a domain-agnostic API to domain-specific microservices (recommendations, commerce), handling routing, canary splits, and inference backend selection transparently. This decouples ML model lifecycle management from domain service logic — a pattern directly applicable to fintech AI feature serving (fraud scoring, identity risk models). Part 1 of a series; subsequent posts will likely cover caching, load balancing, and failover strategies.",
+        "signal": "high",
+        "sources": [
+          "medium.com"
+        ],
+        "url": "https://medium.com/netflix-techblog/16e22fe18741"
+      },
+      {
+        "headline": "Redis as Real-Time Compute Layer for High-Frequency Counters",
+        "body": "Using Redis atomic increments (INCR/INCRBY) instead of DB row locks for API usage tracking, leaderboards, and rate limiting eliminates contention at high write concurrency — relevant for fintech rate-limiting and fraud signal aggregation pipelines. The article contrasts DB-based counter patterns (lock contention, replication lag) against Redis atomic ops with TTL-based windowing. Useful implementation reference for real-time fraud feature stores.",
+        "signal": "med",
+        "sources": [
+          "medium.com"
+        ],
+        "url": "https://medium.com/p/742854b9c8ea"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Pentagon AI Contracts Benefit MSFT, GOOGL, AMZN, NVDA Directly",
+        "body": "DoD classified AI contracts awarded to Microsoft, Google, Amazon, and Nvidia (alongside OpenAI, xAI, Reflection) represent a new classified-sector revenue channel for all four portfolio holdings. Government AI spend at the classified level tends to be sticky, high-margin, and multi-year — a durable tailwind distinct from commercial cloud cycles.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Berkshire Hathaway's Greg Abel Era Begins: $373B Cash Pile and Strategy Overhang",
+        "body": "Greg Abel takes the chair at Berkshire's first post-Buffett AGM, with Berkshire shares down 5% YTD vs S&P +4% and underperforming by 30pp since Buffett's retirement announcement. Key open questions: deployment strategy for $373B cash, Kraft Heinz stake, and AI positioning — Abel is operations-focused rather than capital-allocation visionary. Q1 earnings release this weekend will set the tone for market confidence in the transition.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Trump Threatens 25% Tariff on EU Vehicles; Iran War Adds Macro Uncertainty",
+        "body": "Trump signaled a 25% tariff on EU cars and trucks next week, accusing the EU of violating a prior 15% cap deal — adding to trade friction with the bloc amid an ongoing Iran conflict that is already pressuring oil prices and global supply chains. S&P and Nasdaq hit new records despite this backdrop, suggesting markets are discounting tariff escalation risk. Relevant macro context for portfolio stress-testing.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Netflix: State of Routing in Model Serving",
+      "why": "First-party production architecture for centralized ML inference routing at scale — directly applicable to designing fraud/identity risk model serving infrastructure at a fintech.",
+      "url": "https://medium.com/netflix-techblog/16e22fe18741"
+    },
+    {
+      "title": "ByteByteGo: 5 Ways to Defend Prompt Injection",
+      "why": "The Planner/Executor split is an architecturally novel zero-trust pattern for agentic systems accessing sensitive APIs — directly relevant for any LLM agent touching IAM or payment workflows.",
+      "url": "https://blog.bytebytego.com/p/ep213-mcp-vs-skills-clearly-explained"
+    }
+  ]
+}
