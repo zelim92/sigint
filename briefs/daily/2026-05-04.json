@@ -1,0 +1,67 @@
+{
+  "date": "2026-05-04",
+  "threadCount": 3,
+  "storyCount": 7,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "AI chatbots linked to at least a dozen wrongful death/harm lawsuits; ~1 in 6 adults using AI for mental health advice",
+        "body": "A recent KFF poll found ~16% of US adults have used AI tools for mental health information or advice, with higher rates among younger and uninsured adults. OpenAI faces at least a dozen lawsuits alleging wrongful death or serious harm after ChatGPT users were hospitalised or died by suicide. The gap between AI chatbot availability and clinical safety guardrails is becoming a material liability surface for AI platform operators.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [],
+    "fin": [],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "Strait of Hormuz closure (9 weeks): second-order economic shocks spreading beyond energy into fertilisers, food, and supply chains",
+        "body": "Oil at ~$120/barrel is now cascading into fertiliser shortages, higher farm input costs, and tighter food producer margins — beginning to show in Q1 2026 earnings. Energy and fertiliser players are outperforming while downstream food, retail, and hospitality face margin compression. Structural accelerants include faster EV adoption and supply-chain re-routing investment.",
+        "signal": "high",
+        "sources": [
+          "simplywall.st"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Google Cloud growth reshapes AI race; Big Tech combined capex tops $700 billion",
+        "body": "Google Cloud results are cited as a standout in reshaping the competitive AI infrastructure race, with aggregate Big Tech AI spending crossing $700B. This is directly relevant to GOOGL, MSFT, and AMZN capex trajectories and cloud revenue mix. Continued spend at this scale supports NVDA and TSMC demand visibility.",
+        "signal": "high",
+        "sources": [
+          "simplywall.st"
+        ],
+        "url": null
+      },
+      {
+        "headline": "TSMC exits Arm investment with $231M share sale",
+        "body": "TSMC has divested its stake in Arm Holdings for $231M, signalling a portfolio rationalisation rather than a strategic shift in the semiconductor ecosystem. For TSMC holders, it removes a modest cross-holding but has no impact on core foundry operations or AI chip demand. Huawei separately forecasts a 60% surge in AI chip revenue, reinforcing non-US AI silicon competition.",
+        "signal": "med",
+        "sources": [
+          "simplywall.st"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Atlassian jumps 25% after-hours on earnings beat; Paramount nears Warner Bros. Discovery acquisition after shareholder approval",
+        "body": "Atlassian's outsized after-hours move suggests enterprise software spend remains resilient despite macro headwinds. Paramount-WBD deal progression, if completed, would create a major consolidated streaming/media entity and further concentrate the advertising market relevant to Alphabet's competitive landscape.",
+        "signal": "med",
+        "sources": [
+          "simplywall.st"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Strait of Hormuz second-order economic impact: full earnings and industry analysis",
+      "why": "Oil at $120 with fertiliser and food chain contagion is a macro input directly relevant to inflation expectations, Fed/rate trajectory, and portfolio sector positioning across AMZN (retail cost pressure) and VOO/VEA (broad market exposure).",
+      "url": "https://simplywall.st"
+    }
+  ]
+}
