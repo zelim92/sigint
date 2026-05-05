@@ -88,6 +88,10 @@ PRIORITISE (in order):
 
 Each story body: 2-3 crisp sentences. No filler. No "in conclusion". Lead with the signal.
 
+Cap each section at 5 items. If more than 5 qualify, keep the highest-signal; drop the rest.
+
+URLs: only include if literally present in the source corpus. If unsure, set null. Never reconstruct, guess, or synthesize URLs.
+
 Output ONLY valid JSON. No markdown fences. No preamble. Schema:
 
 {
@@ -108,8 +112,8 @@ Output ONLY valid JSON. No markdown fences. No preamble. Schema:
 }
 
 If a section has nothing worth surfacing, use [].
-deepDives: 2-3 items max. Only recommend if there is a genuine URL to read.
-signal: "high" = novel, actionable, or architecturally significant. "med" = useful context but not urgent."""
+deepDives: 2-3 items max. Select only items where the linked content is a primary source (research paper, engineering post-mortem, official announcement, technical deep dive) — NOT newsletter summaries, news aggregators, or opinion pieces. Must have a genuine URL. Prioritise items a senior engineer or investor would bookmark.
+signal: "high" = novel, actionable, or architecturally significant. "med" = useful context but not urgent. Aim for ~30% high / 70% med across the brief. If everything looks high, you've miscalibrated — re-rank."""
 
 
 # ────────────────────────────────────────────────────────────────
@@ -168,6 +172,17 @@ def inline_footnote_urls(body: str) -> str:
     return FOOTNOTE_REF_RE.sub(sub, body_no_list)
 
 
+def smart_truncate(body: str, head: int = 8000, tail: int = 2000) -> str:
+    """Keep the head and tail of a long body, with an elision marker between.
+
+    Long-form newsletters (e.g. ByteByteGo) often place the thesis or takeaway
+    in the closing paragraphs. A naive head-only cut drops it.
+    """
+    if len(body) <= head + tail:
+        return body
+    return body[:head] + "\n\n[…]\n\n" + body[-tail:]
+
+
 def fetch_threads(service) -> list[dict]:
     since = int((datetime.now(timezone.utc) - timedelta(hours=FETCH_HOURS)).timestamp())
     query = f"category:forums after:{since}"
@@ -193,7 +208,7 @@ def fetch_threads(service) -> list[dict]:
         threads.append({
             "subject": subject,
             "sender": sender,
-            "body": inline_footnote_urls(body)[:12000],
+            "body": smart_truncate(inline_footnote_urls(body)),
         })
     return threads
 
@@ -287,6 +302,23 @@ def empty_brief(date_str: str) -> dict:
         "deepDives": [],
         "_noContent": True,
     }
+
+
+def compute_counts(brief: dict) -> None:
+    """Override model-reported counts with values derived from actual sections.
+
+    The model occasionally miscounts; this keeps the meta-row honest.
+    """
+    stories = 0
+    domains: set[str] = set()
+    for items in brief.get("sections", {}).values():
+        for s in items or []:
+            stories += 1
+            for src in s.get("sources") or []:
+                if src:
+                    domains.add(src.lower())
+    brief["storyCount"] = stories
+    brief["sourceCount"] = len(domains)
 
 
 # ────────────────────────────────────────────────────────────────
@@ -732,6 +764,7 @@ def main() -> int:
         brief = distil(threads, date_str)
         brief.setdefault("date", date_str)
         brief.setdefault("threadCount", len(threads))
+        compute_counts(brief)
 
     json_path.write_text(json.dumps(brief, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"[write] {json_path.relative_to(REPO_ROOT)}")
