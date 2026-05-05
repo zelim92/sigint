@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 06 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 06 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">9</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">11</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://jack-clark.net/2026/05/04/import-ai-455-automating-ai-research/" target="_blank">AI R&amp;D Self-Automation: ~60% Probability of Self-Improving Systems by 2028</a></div>
+        <div class="story-body">Jack Clark&#x27;s Import AI #455 argues AI is approaching end-to-end automation of its own R&amp;D pipeline, with models now handling complex engineering workflows, managing sub-agents, and outperforming humans on key scientific subproblems. Benchmarks show major gains in coding, experiment execution, and long-horizon task autonomy. If trends hold, recursive self-improvement and a capital-heavy &#x27;machine economy&#x27; could emerge within two years.</div>
+        <div class="story-meta"><span class="chip">jack-clark.net</span><div class="ref-links"><a class="ref-link ai" href="https://jack-clark.net/2026/05/04/import-ai-455-automating-ai-research/" target="_blank">jack-clark.net ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Model-Harness-Fit: Frontier Models Post-Trained Against Specific Tool Schemas</div>
+        <div class="story-body">Terminal-Bench 2.0 data shows Claude Opus 4.6 scored 79.8% with ForgeCode vs 75.3% with Capy — the same model, different harness. OpenAI models default to patch-based file edits; Anthropic models to string replacement. Harness mismatches create meaningful capability gaps, meaning agentic system design choices directly determine effective model performance.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">OpenAI Redesigned WebRTC Stack for Low-Latency Voice at 900M-User Scale</div>
+        <div class="story-body">OpenAI detailed a &#x27;split relay plus transceiver&#x27; WebRTC architecture: a stateless relay handles efficient packet routing while a stateful transceiver manages session state, decoupling concerns for Kubernetes compatibility and port management. This design supports real-time voice AI globally without sacrificing latency. Relevant for any team building real-time, stateful AI infrastructure at scale.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.testingcatalog.com/anthropic-is-working-on-orbit-its-upcoming-proactive-assistant/" target="_blank">Anthropic &#x27;Orbit&#x27;: Proactive Briefing Agent Pulling from Connected Work Tools</a></div>
+        <div class="story-body">Orbit is an emerging briefing and insights layer in Claude/Claude Code that produces personalized, actionable briefings from integrated work tools — a step toward proactive rather than reactive AI assistants. Anthropic&#x27;s Code with Claude developer conference runs May 6 (SF), May 19 (London), June 10 (Tokyo). Formal unveiling of Orbit is unconfirmed but possible at the SF event.</div>
+        <div class="story-meta"><span class="chip">testingcatalog.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.testingcatalog.com/anthropic-is-working-on-orbit-its-upcoming-proactive-assistant/" target="_blank">testingcatalog.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank">Anthropic and OpenAI Both Launch Separate Enterprise AI Joint Ventures Backed by Financial Firms</a></div>
+        <div class="story-body">Anthropic&#x27;s enterprise AI venture is valued at $1.5B; OpenAI&#x27;s targets $10B, both backed by major financial institutions. This signals a structured, PE-style capital deployment into enterprise AI services — distinct from product licensing. Watch for implications on pricing power, margin structure, and who controls the enterprise relationship layer.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.networkworld.com/article/4166695/cisco-grabs-astrix-to-secure-ai-agents.html" target="_blank">Cisco Acquires Astrix Security to Govern Non-Human Identities: AI Agents, MCP Servers, OAuth Tokens</a></div>
+        <div class="story-body">Cisco is acquiring Astrix Security specifically to discover and secure AI agents, MCP servers, API keys, service accounts, and OAuth tokens before they become unmanaged backdoors. Astrix will be integrated into Cisco Identity Intelligence, Secure Access, and Duo IAM — a clear signal that non-human identity governance is becoming a first-class enterprise control plane. Direct relevance to anyone building IAM or zero-trust architecture around agentic systems.</div>
+        <div class="story-meta"><span class="chip">networkworld.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.networkworld.com/article/4166695/cisco-grabs-astrix-to-secure-ai-agents.html" target="_blank">networkworld.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://workspaceupdates.googleblog.com/2026/05/securely-manage-AI-and-agent-access-to-Workspace-data-with-the-AI-control-center.html" target="_blank">Google Workspace AI Control Center: Per-Agent Access Governance for Gmail, Drive, Calendar</a></div>
+        <div class="story-body">Google launched an AI Control Center giving Workspace admins visibility into which AI agents can access which Workspace data, with approve/restrict/revoke controls per agent. This is the first major productivity-suite vendor shipping purpose-built agent access governance as a native admin function. Sets a precedent for how enterprise AI access management will be expected to work.</div>
+        <div class="story-meta"><span class="chip">workspaceupdates.googleblog.com</span><div class="ref-links"><a class="ref-link sec" href="https://workspaceupdates.googleblog.com/2026/05/securely-manage-AI-and-agent-access-to-Workspace-data-with-the-AI-control-center.html" target="_blank">workspaceupdates.googleblog.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.helpnetsecurity.com/2026/05/04/pipelock-open-source-ai-agent-firewall/" target="_blank">Pipelock: Open-Source Firewall for AI Agent Traffic — Blocks Prompt Injection, Credential Leaks, SSRF</a></div>
+        <div class="story-body">Pipelock is an open-source network-layer firewall sitting between AI agents and the internet, targeting credential leakage, prompt injection, SSRF, and poisoned tool responses. The latest release adds request redaction and streaming-response scanning. First serious attempt at infrastructure-level security specifically designed for agent egress traffic rather than model-level guardrails.</div>
+        <div class="story-meta"><span class="chip">helpnetsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.helpnetsecurity.com/2026/05/04/pipelock-open-source-ai-agent-firewall/" target="_blank">helpnetsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base" target="_blank">Vercel DeepSec: Agentic Security Tool Scanning Large Codebases in Parallel Cloud Sandboxes</a></div>
+        <div class="story-body">Vercel&#x27;s DeepSec is an agent-driven static analysis tool that scans large codebases locally or across parallel cloud sandboxes to surface complex, multi-file vulnerabilities. Positions AI agents as the delivery mechanism for security reviews that previously required senior AppSec engineers. Relevant as a pattern for integrating continuous security scanning into CI/CD without dedicated security headcount.</div>
+        <div class="story-meta"><span class="chip">vercel.com</span><div class="ref-links"><a class="ref-link sec" href="https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base" target="_blank">vercel.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/how-instacart-built-a-search-for" target="_blank">Instacart Migrated Search from Elasticsearch to Postgres, Achieving 10x Write Reduction</a></div>
+        <div class="story-body">Instacart replaced Elasticsearch with Postgres for its search infrastructure after Elasticsearch&#x27;s denormalized document model made billions of daily write updates (price, inventory, availability) catastrophically expensive. A normalized relational model means only the changed table (e.g. price) is touched, reducing write load 10x and enabling hundreds of GB of ML features to be stored alongside search data. The tradeoff: analytical, search, and transactional workloads now share a cluster, creating noisy-neighbor risk.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/how-instacart-built-a-search-for" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://stripe.dev/blog/formatting-an-entire-25-million-line-codebase-overnight-the-rubyfmt-story" target="_blank">Stripe Formatted 42M Lines of Ruby Overnight Using Rubyfmt Rewritten in Rust</a></div>
+        <div class="story-body">Stripe&#x27;s rubyfmt story details how two infrastructure engineers spent time rewriting a Ruby autoformatter in Rust to handle their 25M+ line (now 42M line) codebase with zero configuration. The tool now runs on 100% of Stripe&#x27;s Ruby at commit time, eliminating a persistent source of diff noise and review friction. Primary engineering lesson: invisible zero-config tooling at the formatter layer has outsized leverage in large codebases.</div>
+        <div class="story-meta"><span class="chip">stripe.dev</span><div class="ref-links"><a class="ref-link swe" href="https://stripe.dev/blog/formatting-an-entire-25-million-line-codebase-overnight-the-rubyfmt-story" target="_blank">stripe.dev ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Amazon Launches Supply Chain Services as External Product — Targeting $1.3T Third-Party Logistics Market</div>
+        <div class="story-body">Amazon Supply Chain Services opens Amazon&#x27;s fulfillment, ocean/air freight, and trucking infrastructure to third-party companies, competing directly with DSV and DHL. The strategic bet mirrors AWS: a capability built for internal scale, now productized for external revenue. At $1.3T TAM, even modest share capture is material for AMZN.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://openrouter.ai/announcements/gpt55-cost-analysis" target="_blank">GPT-5.5 Pricing: 49–92% Effective Cost Increase Over GPT-5.4</a></div>
+        <div class="story-body">GPT-5.5 launched at nominally 2x the price of GPT-5.4, but OpenRouter&#x27;s analysis shows the effective increase is 49–92% due to the model generating fewer completion tokens on longer prompts. Still a significant pricing inflection point for teams running high-volume inference workloads; budgeting models built on GPT-5.4 cost assumptions need revision.</div>
+        <div class="story-meta"><span class="chip">openrouter.ai</span><div class="ref-links"><a class="ref-link mkt" href="https://openrouter.ai/announcements/gpt55-cost-analysis" target="_blank">openrouter.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">GameStop Makes Unsolicited $56B Offer for eBay — 20% Premium, TD Bank Backing $20B in Debt</div>
+        <div class="story-body">GameStop, valued at ~$12B with $9B cash, has offered to acquire eBay for $56B using a commitment letter from TD Bank for up to $20B in debt financing, leaving a significant funding gap unexplained. The move is strategically incoherent on its face but signals GameStop&#x27;s intent to redeploy its meme-era cash hoard aggressively. eBay&#x27;s response and whether this forces a strategic review are the key watch items.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title">Inside OpenAI&#x27;s Low-Latency Voice Infrastructure (WebRTC Split Relay + Transceiver Architecture)</div>
+          <div class="dive-why">Primary technical deep-dive from OpenAI on stateful/stateless WebRTC architecture at 900M-user scale — directly applicable to any engineer building real-time AI or streaming IAM session infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://stripe.dev/blog/formatting-an-entire-25-million-line-codebase-overnight-the-rubyfmt-story" target="_blank">Stripe: Formatting a 25M-Line Ruby Codebase Overnight — The Rubyfmt Story ↗</a></div>
+          <div class="dive-why">Official Stripe Engineering post-mortem on large-scale codebase tooling; concrete case study on infrastructure investment paying down developer experience debt at scale.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base" target="_blank">Vercel DeepSec: Agentic Security Scanning Across Large Codebases ↗</a></div>
+          <div class="dive-why">Official product announcement with technical detail on agent-driven parallel security scanning — a novel architecture pattern for AppSec teams considering AI-native vulnerability detection pipelines.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 05 May 2026 · sources: jack-clark.net, tldrnewsletter.com, testingcatalog.com, techcrunch.com, networkworld.com, workspaceupdates.googleblog.com, helpnetsecurity.com, vercel.com, blog.bytebytego.com, stripe.dev, openrouter.ai · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

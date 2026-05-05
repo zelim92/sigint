@@ -1,0 +1,160 @@
+{
+  "date": "2026-05-06",
+  "threadCount": 9,
+  "storyCount": 14,
+  "sourceCount": 11,
+  "sections": {
+    "ai": [
+      {
+        "headline": "AI R&D Self-Automation: ~60% Probability of Self-Improving Systems by 2028",
+        "body": "Jack Clark's Import AI #455 argues AI is approaching end-to-end automation of its own R&D pipeline, with models now handling complex engineering workflows, managing sub-agents, and outperforming humans on key scientific subproblems. Benchmarks show major gains in coding, experiment execution, and long-horizon task autonomy. If trends hold, recursive self-improvement and a capital-heavy 'machine economy' could emerge within two years.",
+        "signal": "high",
+        "sources": [
+          "jack-clark.net"
+        ],
+        "url": "https://jack-clark.net/2026/05/04/import-ai-455-automating-ai-research/"
+      },
+      {
+        "headline": "Model-Harness-Fit: Frontier Models Post-Trained Against Specific Tool Schemas",
+        "body": "Terminal-Bench 2.0 data shows Claude Opus 4.6 scored 79.8% with ForgeCode vs 75.3% with Capy — the same model, different harness. OpenAI models default to patch-based file edits; Anthropic models to string replacement. Harness mismatches create meaningful capability gaps, meaning agentic system design choices directly determine effective model performance.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "OpenAI Redesigned WebRTC Stack for Low-Latency Voice at 900M-User Scale",
+        "body": "OpenAI detailed a 'split relay plus transceiver' WebRTC architecture: a stateless relay handles efficient packet routing while a stateful transceiver manages session state, decoupling concerns for Kubernetes compatibility and port management. This design supports real-time voice AI globally without sacrificing latency. Relevant for any team building real-time, stateful AI infrastructure at scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic 'Orbit': Proactive Briefing Agent Pulling from Connected Work Tools",
+        "body": "Orbit is an emerging briefing and insights layer in Claude/Claude Code that produces personalized, actionable briefings from integrated work tools — a step toward proactive rather than reactive AI assistants. Anthropic's Code with Claude developer conference runs May 6 (SF), May 19 (London), June 10 (Tokyo). Formal unveiling of Orbit is unconfirmed but possible at the SF event.",
+        "signal": "med",
+        "sources": [
+          "testingcatalog.com"
+        ],
+        "url": "https://www.testingcatalog.com/anthropic-is-working-on-orbit-its-upcoming-proactive-assistant/"
+      },
+      {
+        "headline": "Anthropic and OpenAI Both Launch Separate Enterprise AI Joint Ventures Backed by Financial Firms",
+        "body": "Anthropic's enterprise AI venture is valued at $1.5B; OpenAI's targets $10B, both backed by major financial institutions. This signals a structured, PE-style capital deployment into enterprise AI services — distinct from product licensing. Watch for implications on pricing power, margin structure, and who controls the enterprise relationship layer.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/04/anthropic-and-openai-are-both-launching-joint-ventures-for-enterprise-ai-services/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Cisco Acquires Astrix Security to Govern Non-Human Identities: AI Agents, MCP Servers, OAuth Tokens",
+        "body": "Cisco is acquiring Astrix Security specifically to discover and secure AI agents, MCP servers, API keys, service accounts, and OAuth tokens before they become unmanaged backdoors. Astrix will be integrated into Cisco Identity Intelligence, Secure Access, and Duo IAM — a clear signal that non-human identity governance is becoming a first-class enterprise control plane. Direct relevance to anyone building IAM or zero-trust architecture around agentic systems.",
+        "signal": "high",
+        "sources": [
+          "networkworld.com"
+        ],
+        "url": "https://www.networkworld.com/article/4166695/cisco-grabs-astrix-to-secure-ai-agents.html"
+      },
+      {
+        "headline": "Google Workspace AI Control Center: Per-Agent Access Governance for Gmail, Drive, Calendar",
+        "body": "Google launched an AI Control Center giving Workspace admins visibility into which AI agents can access which Workspace data, with approve/restrict/revoke controls per agent. This is the first major productivity-suite vendor shipping purpose-built agent access governance as a native admin function. Sets a precedent for how enterprise AI access management will be expected to work.",
+        "signal": "high",
+        "sources": [
+          "workspaceupdates.googleblog.com"
+        ],
+        "url": "https://workspaceupdates.googleblog.com/2026/05/securely-manage-AI-and-agent-access-to-Workspace-data-with-the-AI-control-center.html"
+      },
+      {
+        "headline": "Pipelock: Open-Source Firewall for AI Agent Traffic — Blocks Prompt Injection, Credential Leaks, SSRF",
+        "body": "Pipelock is an open-source network-layer firewall sitting between AI agents and the internet, targeting credential leakage, prompt injection, SSRF, and poisoned tool responses. The latest release adds request redaction and streaming-response scanning. First serious attempt at infrastructure-level security specifically designed for agent egress traffic rather than model-level guardrails.",
+        "signal": "high",
+        "sources": [
+          "helpnetsecurity.com"
+        ],
+        "url": "https://www.helpnetsecurity.com/2026/05/04/pipelock-open-source-ai-agent-firewall/"
+      },
+      {
+        "headline": "Vercel DeepSec: Agentic Security Tool Scanning Large Codebases in Parallel Cloud Sandboxes",
+        "body": "Vercel's DeepSec is an agent-driven static analysis tool that scans large codebases locally or across parallel cloud sandboxes to surface complex, multi-file vulnerabilities. Positions AI agents as the delivery mechanism for security reviews that previously required senior AppSec engineers. Relevant as a pattern for integrating continuous security scanning into CI/CD without dedicated security headcount.",
+        "signal": "med",
+        "sources": [
+          "vercel.com"
+        ],
+        "url": "https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Instacart Migrated Search from Elasticsearch to Postgres, Achieving 10x Write Reduction",
+        "body": "Instacart replaced Elasticsearch with Postgres for its search infrastructure after Elasticsearch's denormalized document model made billions of daily write updates (price, inventory, availability) catastrophically expensive. A normalized relational model means only the changed table (e.g. price) is touched, reducing write load 10x and enabling hundreds of GB of ML features to be stored alongside search data. The tradeoff: analytical, search, and transactional workloads now share a cluster, creating noisy-neighbor risk.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/how-instacart-built-a-search-for"
+      },
+      {
+        "headline": "Stripe Formatted 42M Lines of Ruby Overnight Using Rubyfmt Rewritten in Rust",
+        "body": "Stripe's rubyfmt story details how two infrastructure engineers spent time rewriting a Ruby autoformatter in Rust to handle their 25M+ line (now 42M line) codebase with zero configuration. The tool now runs on 100% of Stripe's Ruby at commit time, eliminating a persistent source of diff noise and review friction. Primary engineering lesson: invisible zero-config tooling at the formatter layer has outsized leverage in large codebases.",
+        "signal": "med",
+        "sources": [
+          "stripe.dev"
+        ],
+        "url": "https://stripe.dev/blog/formatting-an-entire-25-million-line-codebase-overnight-the-rubyfmt-story"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Amazon Launches Supply Chain Services as External Product — Targeting $1.3T Third-Party Logistics Market",
+        "body": "Amazon Supply Chain Services opens Amazon's fulfillment, ocean/air freight, and trucking infrastructure to third-party companies, competing directly with DSV and DHL. The strategic bet mirrors AWS: a capability built for internal scale, now productized for external revenue. At $1.3T TAM, even modest share capture is material for AMZN.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "GPT-5.5 Pricing: 49–92% Effective Cost Increase Over GPT-5.4",
+        "body": "GPT-5.5 launched at nominally 2x the price of GPT-5.4, but OpenRouter's analysis shows the effective increase is 49–92% due to the model generating fewer completion tokens on longer prompts. Still a significant pricing inflection point for teams running high-volume inference workloads; budgeting models built on GPT-5.4 cost assumptions need revision.",
+        "signal": "med",
+        "sources": [
+          "openrouter.ai"
+        ],
+        "url": "https://openrouter.ai/announcements/gpt55-cost-analysis"
+      },
+      {
+        "headline": "GameStop Makes Unsolicited $56B Offer for eBay — 20% Premium, TD Bank Backing $20B in Debt",
+        "body": "GameStop, valued at ~$12B with $9B cash, has offered to acquire eBay for $56B using a commitment letter from TD Bank for up to $20B in debt financing, leaving a significant funding gap unexplained. The move is strategically incoherent on its face but signals GameStop's intent to redeploy its meme-era cash hoard aggressively. eBay's response and whether this forces a strategic review are the key watch items.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Inside OpenAI's Low-Latency Voice Infrastructure (WebRTC Split Relay + Transceiver Architecture)",
+      "why": "Primary technical deep-dive from OpenAI on stateful/stateless WebRTC architecture at 900M-user scale — directly applicable to any engineer building real-time AI or streaming IAM session infrastructure.",
+      "url": null
+    },
+    {
+      "title": "Stripe: Formatting a 25M-Line Ruby Codebase Overnight — The Rubyfmt Story",
+      "why": "Official Stripe Engineering post-mortem on large-scale codebase tooling; concrete case study on infrastructure investment paying down developer experience debt at scale.",
+      "url": "https://stripe.dev/blog/formatting-an-entire-25-million-line-codebase-overnight-the-rubyfmt-story"
+    },
+    {
+      "title": "Vercel DeepSec: Agentic Security Scanning Across Large Codebases",
+      "why": "Official product announcement with technical detail on agent-driven parallel security scanning — a novel architecture pattern for AppSec teams considering AI-native vulnerability detection pipelines.",
+      "url": "https://vercel.com/blog/introducing-deepsec-find-and-fix-vulnerabilities-in-your-code-base"
+    }
+  ]
+}
