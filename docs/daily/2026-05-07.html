@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 07 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 07 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">9</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thenewstack.io/subquadratic-12-million-context-window/" target="_blank">Subquadratic debuts 12M-token context window with near-linear compute scaling</a></div>
+        <div class="story-body">Subquadratic claims its model reduces attention compute by ~1,000x versus frontier models by achieving fully subquadratic (linear) scaling with context length, outperforming GPT-5.5 on retrieval benchmarks. A 50M-token context window is roadmapped next. Independent researchers are demanding proof, making third-party validation the key watch signal.</div>
+        <div class="story-meta"><span class="chip">thenewstack.io</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://thenewstack.io/subquadratic-12-million-context-window/" target="_blank">thenewstack.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.theregister.com/2026/05/05/servicenow_clears_agents_for_landing/" target="_blank">ServiceNow AI Control Tower adds cross-cloud agent governance with kill switch</a></div>
+        <div class="story-body">ServiceNow expanded its AI Control Tower to discover, govern, and monitor AI agents across AWS, GCP, Azure, SAP, Oracle, and Workday environments. A new kill switch can terminate compromised agents during live attacks — directly relevant to non-human identity and agentic blast-radius containment in enterprise environments.</div>
+        <div class="story-meta"><span class="chip">theregister.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.theregister.com/2026/05/05/servicenow_clears_agents_for_landing/" target="_blank">theregister.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://reflex.dev/blog/computer-use-is-45x-more-expensive-than-structured-apis/" target="_blank">Vision agents cost 45x more than structured APIs — quantified benchmark</a></div>
+        <div class="story-body">A benchmark study from Reflex shows AI agents using computer vision to navigate web UIs consume 45x more tokens and cost than agents backed by structured APIs, driven by screenshot volume rather than model quality. The implication for agentic fintech workflows: investing in MCP or REST surfaces for internal tooling pays back rapidly at scale.</div>
+        <div class="story-meta"><span class="chip">reflex.dev</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://reflex.dev/blog/computer-use-is-45x-more-expensive-than-structured-apis/" target="_blank">reflex.dev ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">GPT-5.5 Instant released as ChatGPT default; Meta targets agentic assistant launch before Q4</div>
+        <div class="story-body">OpenAI updated ChatGPT&#x27;s default model to GPT-5.5 Instant with improved factual accuracy, reduced hallucinations, and user-context personalization. Meta separately is building a highly personalized agentic assistant powered by its Muse Spark model, targeting launch before Q4 2026, capable of connecting hardware/software tools and learning with less human intervention.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.macrumors.com/2026/05/05/openai-fast-tracking-ai-phone-2027/" target="_blank">Apple to open iOS 27 AI features to third-party providers; OpenAI fast-tracking AI phone for 2027</a></div>
+        <div class="story-body">iOS/iPadOS/macOS 27 this fall will let users select rival AI providers (Google, Anthropic) to power system features — a structural shift that fragments Apple&#x27;s AI moat and benefits GOOGL/Anthropic. OpenAI is simultaneously targeting H1 2027 mass production of an &#x27;AI agent phone&#x27; with dedicated AI processors, putting it in direct hardware competition with Apple.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">macrumors.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.macrumors.com/2026/05/05/openai-fast-tracking-ai-phone-2027/" target="_blank">macrumors.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/05/05/hackers-steal-students-data-during-breach-at-education-tech-giant-instructure/" target="_blank">Instructure (Canvas) breach exposes student names, emails, ID numbers, and private messages</a></div>
+        <div class="story-body">Hackers exfiltrated student PII including private messages from Instructure, the LMS giant behind Canvas. Passwords and financial data were reportedly not exposed, but the incident illustrates how peripheral SaaS platforms accumulate sensitive data that typically sits outside core security perimeters — a pattern directly applicable to fintech third-party risk.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://techcrunch.com/2026/05/05/hackers-steal-students-data-during-breach-at-education-tech-giant-instructure/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Microsoft phases out legacy printer drivers in Windows 11 with Protected Print Mode</div>
+        <div class="story-body">Windows Protected Print Mode mandates a driverless printing architecture, eliminating third-party kernel-mode drivers that have historically been a privileged attack vector for endpoint compromise. Enterprises should plan driver deprecation timelines now to avoid compatibility gaps that create security exceptions.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.wiz.io/blog/practical-package-security-the-unofficial-guide" target="_blank">Supply chain security: practical controls against Trivy-action and Axios-style compromises</a></div>
+        <div class="story-body">Wiz published a practical guide recommending cooldown periods before adopting new package versions, disabling install scripts, enforcing lockfiles, and deploying honeytokens to detect compromise early. The Trivy-action and Axios incidents are cited as evidence that even widely trusted CI/CD and HTTP dependencies are active attack surfaces.</div>
+        <div class="story-meta"><span class="chip">wiz.io</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.wiz.io/blog/practical-package-security-the-unofficial-guide" target="_blank">wiz.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.thatprivacyguy.com/blog/chrome-silent-nano-install/" target="_blank">Google Chrome silently installs 4 GB Gemini Nano model without user consent</a></div>
+        <div class="story-body">Chrome is reportedly pushing the Gemini Nano model to millions of devices without explicit opt-in, raising enterprise endpoint management and data sovereignty concerns. For regulated fintech environments, this represents an uncontrolled AI model installation on managed devices that may conflict with DLP and compliance policies.</div>
+        <div class="story-meta"><span class="chip">thatprivacyguy.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.thatprivacyguy.com/blog/chrome-silent-nano-install/" target="_blank">thatprivacyguy.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Coinbase cuts 14% of staff, cites AI efficiency and crypto market downturn</div>
+        <div class="story-body">Coinbase is eliminating ~700 roles and flattening management to five layers, explicitly framing AI-driven productivity as enabling smaller teams. The move signals crypto-sector revenue pressure alongside a broader pattern of fintech companies using AI automation narratives to justify headcount reductions that investors are receiving positively.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank">Anthropic launches $1.5B enterprise deployment venture with Goldman Sachs and Blackstone</a></div>
+        <div class="story-body">The venture will acquire AI services firms and embed engineers directly into customer workflows — mirroring OpenAI&#x27;s deployment push. Enterprise AI revenue tied to deeply embedded workflows is structurally stickier than consumer subscriptions, making this a meaningful competitive moat-building move versus OpenAI&#x27;s consumer-heavy revenue mix.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/05/04/anthropic-goldman-blackstone-ai-venture.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">SEC formally proposes semiannual reporting — shift from quarterly filings</div>
+        <div class="story-body">The SEC introduced a rule proposal moving public company reporting from quarterly to twice-yearly, following Trump&#x27;s directive. Reduced reporting frequency could increase information asymmetry between retail and institutional investors, increase short-term volatility windows, and affect how portfolio companies like AMZN, MSFT, and GOOGL manage earnings guidance cadence.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.databricks.com/blog/10-trillion-samples-day-scaling-beyond-traditional-monitoring-infra-databricks" target="_blank">Databricks rebuilt monitoring infra to handle 10 trillion samples/day across 5B active timeseries</a></div>
+        <div class="story-body">Databricks replaced traditional monitoring with Pantheon (a custom self-healing timeseries DB with tiered storage), an advanced cardinality aggregation pipeline, and Hydra (a Lakehouse-native platform for high-cardinality troubleshooting at 50x lower storage cost). The architecture decouples high-frequency metric collection from long-term analytical storage — a production case study directly applicable to fintech observability at scale.</div>
+        <div class="story-meta"><span class="chip">databricks.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.databricks.com/blog/10-trillion-samples-day-scaling-beyond-traditional-monitoring-infra-databricks" target="_blank">databricks.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Airbnb&#x27;s observability reliability pattern: isolated clusters, separated telemetry mesh, dead man&#x27;s switch</div>
+        <div class="story-body">Airbnb runs monitoring on dedicated isolated clusters to prevent circular dependencies from taking down observability during production failures, and implemented a meta-monitoring dead man&#x27;s switch to catch silent failures in the observability stack itself. Separating telemetry from the standard service mesh is the key architectural decision that prevented cascading blind spots.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://idiallo.com/blog/ai-didnt-delete-your-database-you-did" target="_blank">AI-generated code accountability: production DB deletion blamed on AI highlights missing architectural controls</a></div>
+        <div class="story-body">A case study of an AI agent deleting a production database reframes blame from the model to the human-designed system — specifically a destructive public-facing API that should never have been callable by an agent. The pattern is critical for fintech agentic systems: blast radius must be constrained at the architecture layer, not the prompt layer.</div>
+        <div class="story-meta"><span class="chip">idiallo.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://idiallo.com/blog/ai-didnt-delete-your-database-you-did" target="_blank">idiallo.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://news.sap.com/2026/05/sap-to-acquire-prior-labs-establish-frontier-ai-lab-europe/" target="_blank">SAP acquires Prior Labs for €1B+ to build frontier tabular AI lab in Europe</a></div>
+        <div class="story-body">Prior Labs, creators of the open-source TabPFN tabular foundation model, will become an independent SAP-backed research lab focused on structured business data for enterprise predictions (churn, risk). SAP&#x27;s €1B+ four-year commitment signals serious investment in AI differentiation for ERP data — relevant as MSFT/Copilot competes in the same enterprise workflow space.</div>
+        <div class="story-meta"><span class="chip">news.sap.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://news.sap.com/2026/05/sap-to-acquire-prior-labs-establish-frontier-ai-lab-europe/" target="_blank">news.sap.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Shopify drops 15%+ on slowing revenue growth; markets otherwise hit fresh records</div>
+        <div class="story-body">Shopify tanked over 15% after signaling decelerating revenue growth, standing out against a broader market rally (Nasdaq +1%, S&amp;P +0.8%). The divergence between infrastructure-layer AI beneficiaries and application-layer commerce players is sharpening — relevant context for assessing AMZN&#x27;s commerce vs. AWS mix.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Amazon narrative: AWS and AI already driving margin inflection despite heavy capex</div>
+        <div class="story-body">Community analysis frames AMZN at ~$280 fair value (~3% undervalued) with ~11.7% annual revenue growth assumed for 5 years, underpinned by AWS and AI margin expansion. The investment thesis is that Amazon&#x27;s layered ecosystem (commerce + cloud + AI infrastructure) creates durable margin expansion — consistent with the portfolio holding thesis.</div>
+        <div class="story-meta"><span class="chip">simplywall.st</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.databricks.com/blog/10-trillion-samples-day-scaling-beyond-traditional-monitoring-infra-databricks" target="_blank">10 Trillion Samples a Day: Scaling Beyond Traditional Monitoring Infra at Databricks ↗</a></div>
+          <div class="dive-why">Primary engineering post-mortem from Databricks detailing a novel timeseries database architecture (Pantheon + Hydra) at extreme scale — directly applicable to fintech observability system design.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://reflex.dev/blog/computer-use-is-45x-more-expensive-than-structured-apis/" target="_blank">Computer Use is 45x More Expensive Than Structured APIs ↗</a></div>
+          <div class="dive-why">Quantified benchmark with architectural implications for anyone building agentic fintech workflows — makes the economic case for investing in MCP/REST surfaces over vision-based automation.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.wiz.io/blog/practical-package-security-the-unofficial-guide" target="_blank">Practical Package Security: The Unofficial Guide (Wiz) ↗</a></div>
+          <div class="dive-why">Actionable supply chain security controls from a primary security vendor, with concrete mitigations (honeytokens, lockfiles, cooldown periods) relevant to fintech CI/CD pipeline hardening.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 06 May 2026 · sources: thenewstack.io, tldrnewsletter.com, theregister.com, reflex.dev, macrumors.com, techcrunch.com, wiz.io, thatprivacyguy.com, morningbrew.com, cnbc.com, databricks.com, idiallo.com, news.sap.com, simplywall.st · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
