@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 08 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 08 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">7</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">17</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">13</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.anthropic.com/news/higher-limits-spacex" target="_blank">Anthropic secures 220,000 NVIDIA GPUs via SpaceX Colossus 1 deal, doubles Claude Code rate limits</a></div>
+        <div class="story-body">Anthropic has signed a compute agreement with SpaceX giving it access to the Colossus 1 data center in Memphis (300+ MW, 220,000+ NVIDIA GPUs). The deal immediately translates to doubled 5-hour rate limits for Claude Code Pro/Max/Team plans and substantially raised API limits for Opus models. This follows prior compute deals with Amazon, Google, Broadcom, Microsoft, NVIDIA, and Fluidstack — signalling Anthropic is aggressively shoring up infrastructure for agentic workloads ahead of enterprise expansion.</div>
+        <div class="story-meta"><span class="chip">anthropic.com</span><span class="chip">teslarati.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/news/higher-limits-spacex" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://claude.com/blog/new-in-claude-managed-agents" target="_blank">Claude Managed Agents launch &#x27;dreaming&#x27; self-improvement, outcomes-based self-correction, and multiagent orchestration</a></div>
+        <div class="story-body">Anthropic&#x27;s Claude Managed Agents now ship three production features: &#x27;dreaming&#x27; (agent analyzes past sessions to identify improvement patterns), &#x27;outcomes&#x27; (self-correction against predefined success criteria), and multiagent orchestration (delegation to specialized subagents). Early adopters include Harvey, Netflix, and Spiral by Every — indicating real enterprise uptake in regulated and high-stakes domains relevant to fintech and legal.</div>
+        <div class="story-meta"><span class="chip">claude.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://claude.com/blog/new-in-claude-managed-agents" target="_blank">claude.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Netflix publishes Model Lifecycle Graph for democratizing ML platform governance</div>
+        <div class="story-body">Netflix TechBlog describes a &#x27;Model Lifecycle Graph&#x27; — a metadata and lineage system that tracks ML models from training through deployment, enabling platform-wide governance and reuse. This is a production-grade ML platform engineering post from a team operating at massive scale, relevant to anyone building internal ML infrastructure or model observability tooling.</div>
+        <div class="story-meta"><span class="chip">medium.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">DeepSeek in talks to raise at $50B valuation from China&#x27;s state AI fund</div>
+        <div class="story-body">DeepSeek is negotiating a multi-billion dollar raise from China&#x27;s National AI Industry Investment Fund (~$8.8B capital), targeting a ~$50B valuation. The funding is explicitly framed as a hedge against US GPU export controls and a bid for China to anchor global AI supply chains with homegrown frontier models.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Netflix applies LLM-as-a-Judge to evaluate show synopsis quality at scale</div>
+        <div class="story-body">Netflix TechBlog details using LLMs as automated evaluators (&#x27;LLM-as-a-Judge&#x27;) to score the quality and accuracy of show synopses, replacing expensive human annotation pipelines. The architecture is directly applicable to any team needing scalable evaluation of AI-generated text in production — including fraud narrative summarization or compliance document review.</div>
+        <div class="story-meta"><span class="chip">medium.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/05/the-back-door-attackers-know-about-and.html" target="_blank">Persistent OAuth token abuse: Drift incident impacted 700+ orgs, bypassing MFA via trusted integrations</a></div>
+        <div class="story-body">A detailed breakdown of the Drift OAuth incident shows attackers weaponizing long-lived OAuth grants to maintain persistent access across 700+ organizations — entirely bypassing MFA because the tokens were scoped to trusted integrations. Point-in-time security reviews are insufficient; effective defense requires continuous behavioral monitoring of API usage patterns, blast radius scoping per token, and automated revocation on anomaly detection. Critical signal for any IAM team managing third-party SaaS OAuth grants.</div>
+        <div class="story-meta"><span class="chip">thehackernews.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/05/the-back-door-attackers-know-about-and.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/de-tld-outage-dnssec/" target="_blank">DNSSEC misconfiguration by DENIC caused .de TLD-wide SERVFAIL; Cloudflare had to disable validation</a></div>
+        <div class="story-body">DENIC published invalid DNSSEC signatures for the entire .de TLD, causing validating resolvers (including Cloudflare) to return SERVFAIL for all .de domains. Cloudflare&#x27;s mitigation required temporarily disabling DNSSEC validation for .de — a concrete example of how integrity-first security controls can create availability failures at global scale when upstream trust anchors break.</div>
+        <div class="story-meta"><span class="chip">blog.cloudflare.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://blog.cloudflare.com/de-tld-outage-dnssec/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">ServiceNow AI Control Tower adds Veza access graph integration and automated agent kill switches</div>
+        <div class="story-body">ServiceNow&#x27;s updated AI Control Tower integrates Veza&#x27;s access graph for identity-aware governance of AI agents, plus Traceloop monitoring, automated kill switches for compromised agents, and cost tracking across hyperscalers. This is a notable convergence of IGA (identity governance) tooling with AI agent runtime security — directly relevant to non-human identity threat management.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Trojanized Daemon Tools versions linked to supply chain attack targeting government and manufacturing</div>
+        <div class="story-body">Kaspersky identified trojanized versions of Daemon Tools being distributed to target government, scientific, manufacturing, and retail organizations. This is a classic supply chain vector — compromised tooling silently deployed via trusted software channels — warranting review of any environments using Daemon Tools.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/" target="_blank">Microsoft Agent 365 GA: Defender + Intune signals now surface shadow AI agents on Windows endpoints</a></div>
+        <div class="story-body">Microsoft&#x27;s Agent 365 is now generally available, with preview features for discovering and policy-gating shadow AI agents running locally on Windows devices via integrated Defender and Intune signals. This closes a meaningful visibility gap as locally-run agentic tools proliferate outside sanctioned IT channels.</div>
+        <div class="story-meta"><span class="chip">microsoft.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/" target="_blank">microsoft.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://dev.to/pat9000/your-ai-agent-will-eventually-delete-prod-3k4a" target="_blank">AI coding agent destroys production DB and backups at PocketOS — illustrates privileged access risk in agentic systems</a></div>
+        <div class="story-body">A Cursor AI agent tasked with cleaning up unused files misinterpreted scope and deleted both the production database and its backups, which were co-located on the same host. The incident is a direct analogue to fintech risk: agentic systems with overprivileged credentials and no blast-radius limits can cause irreversible data loss. Mitigations: minimum-credential agents, isolated offsite backups, PR-gated schema changes, and mandatory human confirmation on destructive operations.</div>
+        <div class="story-meta"><span class="chip">dev.to</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://dev.to/pat9000/your-ai-agent-will-eventually-delete-prod-3k4a" target="_blank">dev.to ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.val.town/better-auth" target="_blank">Val Town migrates auth from Clerk to Better Auth for reliability and data sovereignty</a></div>
+        <div class="story-body">Val Town moved off Clerk to self-hosted Better Auth after hitting third-party reliability and performance bottlenecks, keeping session and user data within their own infrastructure. This is a recurring pattern in fintech where regulatory and data residency requirements make third-party auth SaaS untenable at scale.</div>
+        <div class="story-meta"><span class="chip">blog.val.town</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://blog.val.town/better-auth" target="_blank">blog.val.town ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/container-design-patterns-for-distributed" target="_blank">ByteByteGo: Container design patterns for distributed systems — sidecar, ambassador, adapter, scatter-gather, and more</a></div>
+        <div class="story-body">ByteByteGo&#x27;s deep-dive codifies the six canonical container composition patterns (three single-host: sidecar, ambassador, adapter; three multi-host: scatter-gather, event-driven, work-queue) that have crystallized from a decade of distributed systems engineering. Framed as a distributed-systems equivalent to OOP design patterns — useful vocabulary for architecture reviews and platform engineering decisions.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/container-design-patterns-for-distributed" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Airbnb publishes privacy-first social connection architecture — relevant model for IAM-aware feature design</div>
+        <div class="story-body">Airbnb&#x27;s engineering blog details how they built social features (follows, connections) while treating privacy as a first-class constraint — including data minimization, consent flows, and access controls baked into the feature architecture rather than bolted on. Directly applicable pattern for any IAM or identity-adjacent product team designing user-facing social or sharing features.</div>
+        <div class="story-meta"><span class="chip">medium.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">AMD soars 18%+ on massive CPU demand; S&amp;P and Nasdaq hit record highs on AI confidence</div>
+        <div class="story-body">AMD closed up 18.62% after reporting surging CPU demand, contributing to both the S&amp;P 500 and Nasdaq closing at all-time highs. Market sentiment is being driven by AI infrastructure investment conviction — relevant to NVDA positioning and the broader AI compute supply chain in which TSMC is a key node.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.pymnts.com/news/b2b-payments/2026/tech-giants-just-made-every-company-their-business/" target="_blank">Big Tech shifts to portfolio-level AI distribution, bypassing enterprise sales cycles</a></div>
+        <div class="story-body">Amazon, OpenAI, and Anthropic are moving to deploy AI tooling across entire company networks simultaneously via platform-level agreements rather than product-by-product enterprise sales. This consolidation strategy directly threatens point-solution vendors and accelerates the moat for hyperscalers — relevant to MSFT, AMZN, and GOOGL positions.</div>
+        <div class="story-meta"><span class="chip">pymnts.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.pymnts.com/news/b2b-payments/2026/tech-giants-just-made-every-company-their-business/" target="_blank">pymnts.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Sony in advanced talks to acquire Blackstone&#x27;s Recognition Music Group (45,000 songs, ~$4B) including Bieber catalog</div>
+        <div class="story-body">Sony Music is reportedly near a deal to acquire Blackstone-owned Recognition Music Group for up to $4B, covering 45,000 songs including Justin Bieber, Neil Young, and Red Hot Chili Peppers. Part of a wave of multibillion-dollar catalog consolidations; signals continued institutional appetite for IP as a durable asset class.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://thehackernews.com/2026/05/the-back-door-attackers-know-about-and.html" target="_blank">Securing Enterprise OAuth Grants Against Persistent Token Abuse (The Hacker News) ↗</a></div>
+          <div class="dive-why">Primary-source breakdown of the Drift OAuth incident — directly actionable for an IAM engineer managing third-party SaaS integrations and non-human identity risk at a fintech.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://claude.com/blog/new-in-claude-managed-agents" target="_blank">Claude Managed Agents: Dreaming, Outcomes, and Multiagent Orchestration (Anthropic Official) ↗</a></div>
+          <div class="dive-why">Official Anthropic announcement of agentic self-improvement primitives — architecturally significant for anyone evaluating Claude-based automation in regulated workflows.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.cloudflare.com/de-tld-outage-dnssec/" target="_blank">When DNSSEC Goes Wrong: Cloudflare&#x27;s Response to the .de TLD Outage ↗</a></div>
+          <div class="dive-why">Cloudflare engineering post-mortem on a real DNSSEC failure causing global availability impact — high-signal case study on the availability vs. integrity tradeoff in security infrastructure design.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 07 May 2026 · sources: anthropic.com, teslarati.com, tldrnewsletter.com, claude.com, medium.com, thehackernews.com, blog.cloudflare.com, microsoft.com, dev.to, blog.val.town, blog.bytebytego.com, morningbrew.com, pymnts.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

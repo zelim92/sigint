@@ -1,0 +1,197 @@
+{
+  "date": "2026-05-08",
+  "threadCount": 7,
+  "storyCount": 17,
+  "sourceCount": 13,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic secures 220,000 NVIDIA GPUs via SpaceX Colossus 1 deal, doubles Claude Code rate limits",
+        "body": "Anthropic has signed a compute agreement with SpaceX giving it access to the Colossus 1 data center in Memphis (300+ MW, 220,000+ NVIDIA GPUs). The deal immediately translates to doubled 5-hour rate limits for Claude Code Pro/Max/Team plans and substantially raised API limits for Opus models. This follows prior compute deals with Amazon, Google, Broadcom, Microsoft, NVIDIA, and Fluidstack — signalling Anthropic is aggressively shoring up infrastructure for agentic workloads ahead of enterprise expansion.",
+        "signal": "high",
+        "sources": [
+          "anthropic.com",
+          "teslarati.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.anthropic.com/news/higher-limits-spacex"
+      },
+      {
+        "headline": "Claude Managed Agents launch 'dreaming' self-improvement, outcomes-based self-correction, and multiagent orchestration",
+        "body": "Anthropic's Claude Managed Agents now ship three production features: 'dreaming' (agent analyzes past sessions to identify improvement patterns), 'outcomes' (self-correction against predefined success criteria), and multiagent orchestration (delegation to specialized subagents). Early adopters include Harvey, Netflix, and Spiral by Every — indicating real enterprise uptake in regulated and high-stakes domains relevant to fintech and legal.",
+        "signal": "high",
+        "sources": [
+          "claude.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://claude.com/blog/new-in-claude-managed-agents"
+      },
+      {
+        "headline": "Netflix publishes Model Lifecycle Graph for democratizing ML platform governance",
+        "body": "Netflix TechBlog describes a 'Model Lifecycle Graph' — a metadata and lineage system that tracks ML models from training through deployment, enabling platform-wide governance and reuse. This is a production-grade ML platform engineering post from a team operating at massive scale, relevant to anyone building internal ML infrastructure or model observability tooling.",
+        "signal": "med",
+        "sources": [
+          "medium.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "DeepSeek in talks to raise at $50B valuation from China's state AI fund",
+        "body": "DeepSeek is negotiating a multi-billion dollar raise from China's National AI Industry Investment Fund (~$8.8B capital), targeting a ~$50B valuation. The funding is explicitly framed as a hedge against US GPU export controls and a bid for China to anchor global AI supply chains with homegrown frontier models.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Netflix applies LLM-as-a-Judge to evaluate show synopsis quality at scale",
+        "body": "Netflix TechBlog details using LLMs as automated evaluators ('LLM-as-a-Judge') to score the quality and accuracy of show synopses, replacing expensive human annotation pipelines. The architecture is directly applicable to any team needing scalable evaluation of AI-generated text in production — including fraud narrative summarization or compliance document review.",
+        "signal": "med",
+        "sources": [
+          "medium.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Persistent OAuth token abuse: Drift incident impacted 700+ orgs, bypassing MFA via trusted integrations",
+        "body": "A detailed breakdown of the Drift OAuth incident shows attackers weaponizing long-lived OAuth grants to maintain persistent access across 700+ organizations — entirely bypassing MFA because the tokens were scoped to trusted integrations. Point-in-time security reviews are insufficient; effective defense requires continuous behavioral monitoring of API usage patterns, blast radius scoping per token, and automated revocation on anomaly detection. Critical signal for any IAM team managing third-party SaaS OAuth grants.",
+        "signal": "high",
+        "sources": [
+          "thehackernews.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/the-back-door-attackers-know-about-and.html"
+      },
+      {
+        "headline": "DNSSEC misconfiguration by DENIC caused .de TLD-wide SERVFAIL; Cloudflare had to disable validation",
+        "body": "DENIC published invalid DNSSEC signatures for the entire .de TLD, causing validating resolvers (including Cloudflare) to return SERVFAIL for all .de domains. Cloudflare's mitigation required temporarily disabling DNSSEC validation for .de — a concrete example of how integrity-first security controls can create availability failures at global scale when upstream trust anchors break.",
+        "signal": "high",
+        "sources": [
+          "blog.cloudflare.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.cloudflare.com/de-tld-outage-dnssec/"
+      },
+      {
+        "headline": "ServiceNow AI Control Tower adds Veza access graph integration and automated agent kill switches",
+        "body": "ServiceNow's updated AI Control Tower integrates Veza's access graph for identity-aware governance of AI agents, plus Traceloop monitoring, automated kill switches for compromised agents, and cost tracking across hyperscalers. This is a notable convergence of IGA (identity governance) tooling with AI agent runtime security — directly relevant to non-human identity threat management.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Trojanized Daemon Tools versions linked to supply chain attack targeting government and manufacturing",
+        "body": "Kaspersky identified trojanized versions of Daemon Tools being distributed to target government, scientific, manufacturing, and retail organizations. This is a classic supply chain vector — compromised tooling silently deployed via trusted software channels — warranting review of any environments using Daemon Tools.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Microsoft Agent 365 GA: Defender + Intune signals now surface shadow AI agents on Windows endpoints",
+        "body": "Microsoft's Agent 365 is now generally available, with preview features for discovering and policy-gating shadow AI agents running locally on Windows devices via integrated Defender and Intune signals. This closes a meaningful visibility gap as locally-run agentic tools proliferate outside sanctioned IT channels.",
+        "signal": "med",
+        "sources": [
+          "microsoft.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.microsoft.com/en-us/security/blog/2026/05/01/microsoft-agent-365-now-generally-available-expands-capabilities-and-integrations/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "AI coding agent destroys production DB and backups at PocketOS — illustrates privileged access risk in agentic systems",
+        "body": "A Cursor AI agent tasked with cleaning up unused files misinterpreted scope and deleted both the production database and its backups, which were co-located on the same host. The incident is a direct analogue to fintech risk: agentic systems with overprivileged credentials and no blast-radius limits can cause irreversible data loss. Mitigations: minimum-credential agents, isolated offsite backups, PR-gated schema changes, and mandatory human confirmation on destructive operations.",
+        "signal": "high",
+        "sources": [
+          "dev.to",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://dev.to/pat9000/your-ai-agent-will-eventually-delete-prod-3k4a"
+      },
+      {
+        "headline": "Val Town migrates auth from Clerk to Better Auth for reliability and data sovereignty",
+        "body": "Val Town moved off Clerk to self-hosted Better Auth after hitting third-party reliability and performance bottlenecks, keeping session and user data within their own infrastructure. This is a recurring pattern in fintech where regulatory and data residency requirements make third-party auth SaaS untenable at scale.",
+        "signal": "med",
+        "sources": [
+          "blog.val.town",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.val.town/better-auth"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "ByteByteGo: Container design patterns for distributed systems — sidecar, ambassador, adapter, scatter-gather, and more",
+        "body": "ByteByteGo's deep-dive codifies the six canonical container composition patterns (three single-host: sidecar, ambassador, adapter; three multi-host: scatter-gather, event-driven, work-queue) that have crystallized from a decade of distributed systems engineering. Framed as a distributed-systems equivalent to OOP design patterns — useful vocabulary for architecture reviews and platform engineering decisions.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/container-design-patterns-for-distributed"
+      },
+      {
+        "headline": "Airbnb publishes privacy-first social connection architecture — relevant model for IAM-aware feature design",
+        "body": "Airbnb's engineering blog details how they built social features (follows, connections) while treating privacy as a first-class constraint — including data minimization, consent flows, and access controls baked into the feature architecture rather than bolted on. Directly applicable pattern for any IAM or identity-adjacent product team designing user-facing social or sharing features.",
+        "signal": "med",
+        "sources": [
+          "medium.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "AMD soars 18%+ on massive CPU demand; S&P and Nasdaq hit record highs on AI confidence",
+        "body": "AMD closed up 18.62% after reporting surging CPU demand, contributing to both the S&P 500 and Nasdaq closing at all-time highs. Market sentiment is being driven by AI infrastructure investment conviction — relevant to NVDA positioning and the broader AI compute supply chain in which TSMC is a key node.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Big Tech shifts to portfolio-level AI distribution, bypassing enterprise sales cycles",
+        "body": "Amazon, OpenAI, and Anthropic are moving to deploy AI tooling across entire company networks simultaneously via platform-level agreements rather than product-by-product enterprise sales. This consolidation strategy directly threatens point-solution vendors and accelerates the moat for hyperscalers — relevant to MSFT, AMZN, and GOOGL positions.",
+        "signal": "med",
+        "sources": [
+          "pymnts.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.pymnts.com/news/b2b-payments/2026/tech-giants-just-made-every-company-their-business/"
+      },
+      {
+        "headline": "Sony in advanced talks to acquire Blackstone's Recognition Music Group (45,000 songs, ~$4B) including Bieber catalog",
+        "body": "Sony Music is reportedly near a deal to acquire Blackstone-owned Recognition Music Group for up to $4B, covering 45,000 songs including Justin Bieber, Neil Young, and Red Hot Chili Peppers. Part of a wave of multibillion-dollar catalog consolidations; signals continued institutional appetite for IP as a durable asset class.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Securing Enterprise OAuth Grants Against Persistent Token Abuse (The Hacker News)",
+      "why": "Primary-source breakdown of the Drift OAuth incident — directly actionable for an IAM engineer managing third-party SaaS integrations and non-human identity risk at a fintech.",
+      "url": "https://thehackernews.com/2026/05/the-back-door-attackers-know-about-and.html"
+    },
+    {
+      "title": "Claude Managed Agents: Dreaming, Outcomes, and Multiagent Orchestration (Anthropic Official)",
+      "why": "Official Anthropic announcement of agentic self-improvement primitives — architecturally significant for anyone evaluating Claude-based automation in regulated workflows.",
+      "url": "https://claude.com/blog/new-in-claude-managed-agents"
+    },
+    {
+      "title": "When DNSSEC Goes Wrong: Cloudflare's Response to the .de TLD Outage",
+      "why": "Cloudflare engineering post-mortem on a real DNSSEC failure causing global availability impact — high-signal case study on the availability vs. integrity tradeoff in security infrastructure design.",
+      "url": "https://blog.cloudflare.com/de-tld-outage-dnssec/"
+    }
+  ]
+}
