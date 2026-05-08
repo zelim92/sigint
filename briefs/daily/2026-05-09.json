@@ -1,0 +1,198 @@
+{
+  "date": "2026-05-09",
+  "threadCount": 8,
+  "storyCount": 18,
+  "sourceCount": 16,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Google Cloud launches first-class agent identity & access management for AI workloads",
+        "body": "Google Cloud introduced dedicated agent identities with agent-specific authorization, OAuth handling, certificates, and runtime defence features for enterprise AI governance. This is a significant IAM architecture shift: AI agents now get their own identity primitives rather than inheriting human user credentials. Directly relevant to non-human identity threat surface management.",
+        "signal": "high",
+        "sources": [
+          "cloud.google.com"
+        ],
+        "url": "https://cloud.google.com/blog/products/identity-security/whats-new-in-iam-security-governance-and-runtime-defense"
+      },
+      {
+        "headline": "Anthropic's unreleased Mythos cybersecurity model found thousands of Firefox vulns; CEO warns <1 year to patch before rivals catch up",
+        "body": "Anthropic CEO Dario Amodei warned companies may have less than a year to remediate AI-discovered vulnerabilities before adversarial models reach the same capability. Mozilla published a technical post-mortem on using Claude Mythos Preview to find and fix an unprecedented number of latent Firefox security bugs, many requiring chaining with other exploits for full compromise. This compresses the defender-attacker timeline asymmetry in a material way.",
+        "signal": "high",
+        "sources": [
+          "hacks.mozilla.org",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/"
+      },
+      {
+        "headline": "AWS managed MCP Server now GA: AI agents authenticate to AWS services via IAM credentials",
+        "body": "AWS's MCP Server is generally available, enabling AI agents to securely access AWS services using authenticated IAM credentials with real-time documentation retrieval and sandboxed Python execution. Integrates with Claude Code, Cursor, and Kiro. Marks a production-ready pattern for scoped, credentialed non-human agent access to cloud control planes.",
+        "signal": "high",
+        "sources": [
+          "aws.amazon.com"
+        ],
+        "url": "https://aws.amazon.com/blogs/aws/the-aws-mcp-server-is-now-generally-available/"
+      },
+      {
+        "headline": "OpenAI releases GPT-Realtime-2 suite: conversational reasoning, live multilingual translation (70+ languages), and streaming transcription",
+        "body": "OpenAI's API now supports GPT-Realtime-2 (GPT-5-class reasoning for voice), GPT-Realtime-Translate (speech input in 70+ languages, output in 13), and GPT-Realtime-Whisper for streaming transcription. Enables live voice agents, real-time captioning, and multilingual call centre automation at scale. Key infrastructure layer for fintech voice and compliance use cases.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "DeepMind AlphaEvolve upgraded: Gemini-powered coding agent now accelerates physics/science discovery beyond maths and CS",
+        "body": "AlphaEvolve, Google DeepMind's algorithm-design agent, has been extended beyond open mathematical problems to help explain physical phenomena and accelerate scientific R&D. The agent autonomously designs and evolves algorithms, with documented impact across multiple fields. Signals broadening of agentic AI from narrow code tasks to open-ended research loops.",
+        "signal": "med",
+        "sources": [
+          "deepmind.google"
+        ],
+        "url": "https://deepmind.google/blog/alphaevolve-impact/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Malicious code bypassed Anthropic Skill scanners by hiding in test file — supply-chain gap in agent/plugin ecosystems",
+        "body": "VentureBeat reports malicious code passed Anthropic's skill scanners by embedding in a test file rather than production code. Highlights that prompt-level safety checks are insufficient; agent and plugin ecosystems require software supply-chain defences (e.g., SAST, dependency scanning) applied to all artefacts including test scaffolding. Critical gap for enterprises deploying AI agent marketplaces.",
+        "signal": "high",
+        "sources": [
+          "venturebeat.com"
+        ],
+        "url": "https://venturebeat.com/security/anthropic-skill-scanners-passed-every-check-malicious-code-test-file"
+      },
+      {
+        "headline": "Jenkins threat landscape: 59% of environments have critical CVEs, 87% run end-of-life instances",
+        "body": "Wiz research found 59% of Jenkins environments contain critical vulnerabilities and 87% run EOL versions, enabling attackers to achieve RCE, steal credentials, and pivot to cloud control planes via misconfigurations and excessive privileges. Jenkins remains a high-value CI/CD target for supply chain attacks given its broad enterprise footprint. Operational hygiene (patching, least-privilege, network segmentation) is the primary defence.",
+        "signal": "high",
+        "sources": [
+          "wiz.io"
+        ],
+        "url": "https://www.wiz.io/blog/jenkins-threat-risk-insights"
+      },
+      {
+        "headline": "Hackers hijacking already-compromised systems from rival threat actors (TeamPCP takeovers)",
+        "body": "An unidentified group is breaking into systems previously compromised by the TeamPCP threat actor, removing existing implants and taking over the environments. Indicates an emerging adversarial economy where compromised infrastructure is contested real estate. Complicates incident response since multiple threat actors may have had access.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/07/hackers-hack-victims-hacked-by-other-hackers/"
+      },
+      {
+        "headline": "Linux kernel vulnerabilities prompt recommended moratorium on new software installs amid elevated supply-chain risk",
+        "body": "Newly disclosed Linux kernel vulnerabilities combined with heightened supply chain attack risk prompted a public recommendation for a one-week freeze on non-essential software installation. Excludes critical security patches. A practical signal for teams running Linux-based CI/CD or container infrastructure to pause non-essential dependency updates.",
+        "signal": "med",
+        "sources": [
+          "xeiaso.net"
+        ],
+        "url": "https://xeiaso.net/blog/2026/abstain-from-install/"
+      },
+      {
+        "headline": "Salesforce Marketing Cloud patched high-impact vulnerabilities allowing unauthorized access to subscriber data and marketing emails",
+        "body": "Salesforce patched high-severity flaws in Marketing Cloud that could expose sensitive subscriber data and email content to unauthorized parties. No CVE details in source but flagged as high-impact. Relevant for any fintech or enterprise stack using Salesforce Marketing Cloud for customer communications.",
+        "signal": "med",
+        "sources": [
+          "gbhackers.com"
+        ],
+        "url": "https://gbhackers.com/salesforce-marketing-cloud-vulnerability/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Anthropic deepens financial services push: finance-specific AI tools, middle-market enterprise partnerships",
+        "body": "Anthropic is building finance-vertical AI tooling and partnering with investors to expand into middle-market enterprise adoption, shifting from general-purpose assistants toward compliance-aware, domain-specific workflows. Signals that AI providers are treating regulated industries as a distinct product tier requiring specialised trust and governance controls. Watch for impact on fintech IAM and AML/KYC automation workflows.",
+        "signal": "med",
+        "sources": [
+          "ciodive.com"
+        ],
+        "url": "https://www.ciodive.com/news/Anthropic-deepens-financial-services/819638/"
+      },
+      {
+        "headline": "Whirlpool Q1 revenue -10% YoY; cites Iran-war-driven fuel prices causing 'recession-level' consumer confidence collapse",
+        "body": "Whirlpool reported Q1 revenue down 10% and warned of a 'collapse' in consumer confidence driven by higher fuel costs from the Middle East conflict, suppressing big-ticket purchases. US consumer confidence hit a record low last month. Macro signal relevant to portfolio positioning: durable goods demand contraction and energy-price-driven consumer stress are live risks.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Netflix engineering: Nebula ArchRules scales ArchUnit architecture enforcement across tens of thousands of Java polyrepo services",
+        "body": "Netflix's JVM Ecosystem team built Nebula ArchRules as a Gradle plugin layer on top of ArchUnit, enabling consistent architecture policy enforcement and technical debt detection at build time across their entire Java polyrepo estate. The pattern addresses a real scaling problem: how to maintain architectural invariants without a monorepo. Directly applicable to large-scale Java microservice shops.",
+        "signal": "med",
+        "sources": [
+          "medium.com"
+        ],
+        "url": "https://medium.com/p/b4642c464c5a"
+      },
+      {
+        "headline": "AI coding agent traffic caused GitHub outages in early May — infrastructure reliability gap for agent-heavy workflows",
+        "body": "GitHub experienced outages in early May attributed to a sharp spike in AI coding agent traffic stressing Git operations and infrastructure at unusual load patterns. The question of why GitHub struggled while competitors did not is unresolved, raising a concrete reliability concern for teams running agent-heavy CI/CD pipelines. Signals that agent traffic patterns are architecturally distinct from human developer traffic and require separate capacity planning.",
+        "signal": "med",
+        "sources": [
+          "blog.pragmaticengineer.com"
+        ],
+        "url": "https://blog.pragmaticengineer.com/the-pulse-ai-load-breaks-github/"
+      },
+      {
+        "headline": "Temporal announces serverless workers, standalone activities, and workflow streams at Replay 2026; adds external payload storage for AI data",
+        "body": "Temporal's Replay 2026 announcements include serverless workers (removing always-on worker management), standalone activities, and workflow streams for large data flows, plus integrations with Google ADK and OpenAI. External payload storage for AI data addresses the blob-size constraints that make durable orchestration painful for LLM-heavy workflows. Material upgrade for teams using Temporal to orchestrate AI agents.",
+        "signal": "med",
+        "sources": [
+          "temporal.io"
+        ],
+        "url": "https://temporal.io/blog/replay-2026-product-announcements"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Cloudflare cuts 1,100 jobs (~15% headcount) in 'agentic AI-first' restructuring; expects $140–150M charge",
+        "body": "Cloudflare announced a significant restructuring framed around adopting an agentic AI operating model, with layoffs substantially complete by Q3. The $140–150M charge is material; signals that even high-growth infrastructure companies are using AI to restructure headcount, not just add capability. Watch for margin expansion narrative in next earnings and competitive implications for AMZN/MSFT edge and security services.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "OpenAI in advanced talks to acquire AI enterprise services/consulting firms via PE-backed venture",
+        "body": "OpenAI's private equity-backed vehicle is reportedly near acquisition of firms specialising in connecting LLMs to enterprise internal data and workflows — the systems integration and consulting layer. Signals OpenAI moving to own the full enterprise deployment stack, not just model access. Competitive pressure on incumbents like MSFT (Azure AI services), AMZN (Bedrock consulting ecosystem), and Accenture/Deloitte.",
+        "signal": "high",
+        "sources": [
+          "pymnts.com"
+        ],
+        "url": "https://www.pymnts.com/artificial-intelligence-2/2026/openai-venture-in-talks-to-buy-ai-services-firms"
+      },
+      {
+        "headline": "US Court of International Trade rules Trump's 10% across-the-board tariff illegal; administration to appeal and reroute",
+        "body": "A federal panel struck down the 10% blanket tariff issued under Section 122 of the International Trade Act of 1974, a provision never previously used at this scale. Trump indicated the administration will pursue alternative legal mechanisms. The ruling adds uncertainty to supply chain cost models for hardware-dependent companies (TSMC, NVDA) and tech procurement broadly pending appeal outcome.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Behind the Scenes: Hardening Firefox with Claude Mythos Preview",
+      "why": "Primary Mozilla engineering post-mortem on using AI-assisted vulnerability discovery at scale — directly actionable for security teams evaluating AI-augmented code auditing and directly evidences Anthropic's 'sub-one-year' patch window thesis.",
+      "url": "https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/"
+    },
+    {
+      "title": "Google Cloud IAM: What's New in Agent Identity, Security Governance, and Runtime Defense",
+      "why": "Official Google Cloud announcement of first-class agent identity primitives — the canonical reference for anyone designing IAM architecture for non-human AI agents in an enterprise environment.",
+      "url": "https://cloud.google.com/blog/products/identity-security/whats-new-in-iam-security-governance-and-runtime-defense"
+    },
+    {
+      "title": "Temporal Replay 2026 Product Announcements",
+      "why": "Official Temporal engineering announcement of serverless workers and AI-specific payload storage — primary source for evaluating durable orchestration infrastructure changes relevant to production AI agent systems.",
+      "url": "https://temporal.io/blog/replay-2026-product-announcements"
+    }
+  ]
+}
