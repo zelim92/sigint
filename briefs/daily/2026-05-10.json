@@ -1,0 +1,78 @@
+{
+  "date": "2026-05-10",
+  "threadCount": 2,
+  "storyCount": 6,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Claude Code vs. OpenClaw: Agentic Architecture Divergence — Ephemeral vs. Persistent Daemon",
+        "body": "Claude Code is a short-lived process using a single async think-tool-observe loop, while OpenClaw runs as a persistent background daemon with a WebSocket gateway, per-session RPC queues, and a manifest-first plugin registry. Memory handling also diverges sharply: Claude Code uses a flat CLAUDE.md file, whereas OpenClaw separates structured memory from daily notes and adds hybrid vector/keyword search. The lead-to-subagent vs. route-and-delegate routing patterns represent a meaningful architectural fork for teams building production agentic systems.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design"
+      },
+      {
+        "headline": "Deepfake Pipeline Anatomy: Single Selfie to Synthetic Video in 5 Stages",
+        "body": "ByteByteGo outlines the full technical pipeline: VAE-encoded reference image → diffusion denoiser conditioned on prompt, latent, and audio → VAE decode to frames → upscale/color-correct/NSFW-screen → phoneme-aligned lip-sync. The pipeline is now commodity-accessible enough to synthesize a convincing executive video from a single photo and voice clip. Directly relevant to liveness detection and KYC identity verification threat modeling.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "ShinyHunters Claims Canvas/Instructure Breach: 275M Records, 8,800 Institutions",
+        "body": "Hacking group ShinyHunters took credit for a cyberattack on Instructure (Canvas LMS), disrupting ~half of all North American colleges and universities during final exam period. Claimed scope is 275 million individuals' data across 8,800 institutions globally. Instructure reported service restoration within hours but has not confirmed the data exfiltration scope.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [
+      {
+        "headline": "US Jobs +115K in April, But Real Wage Growth Trails Projected Tariff-Driven Inflation",
+        "body": "April payrolls roughly doubled analyst expectations at 115K, with healthcare, transportation, and warehousing leading gains. Wage growth of 3.6% came in below the 4.2% all-items inflation forecast economists attribute to tariffs and the Iran war, meaning real wages are likely contracting. Consumer sentiment hit a new record low alongside gas prices near four-year highs — a stagflationary signal that could constrain Fed rate cut timing.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "Intel Surges 14% on Reported Preliminary Apple Chip Manufacturing Deal",
+        "body": "WSJ reported Intel has clinched a preliminary deal to manufacture chips for Apple, sending Intel stock up ~14% to $124.92. This would mark a significant customer win for Intel Foundry Services and validates its fab-for-hire pivot. Nasdaq and S&P 500 both closed at record highs for a sixth consecutive winning week, with chipmakers broadly leading.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Tech 'Information Employment' Down 11% Since ChatGPT Launch Peak in Nov 2022",
+        "body": "BLS data shows the information employment category — which broadly tracks tech sector jobs — has shed 11% of positions since its November 2022 peak, coinciding precisely with ChatGPT's release. Federal government payrolls and manufacturing also contracted in April. This structural shift in tech hiring is a key labour market signal for the sector.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Claude Code vs. OpenClaw: 5 Design Dimensions (ByteByteGo EP214)",
+      "why": "Primary technical breakdown of two divergent agentic runtime architectures — directly relevant for any team evaluating production agent design patterns including memory, plugin extension, and multi-agent routing.",
+      "url": "https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design"
+    }
+  ]
+}

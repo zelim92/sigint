@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // SUN 10 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SUN 10 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">2</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~3 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">2</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design" target="_blank">Claude Code vs. OpenClaw: Agentic Architecture Divergence — Ephemeral vs. Persistent Daemon</a></div>
+        <div class="story-body">Claude Code is a short-lived process using a single async think-tool-observe loop, while OpenClaw runs as a persistent background daemon with a WebSocket gateway, per-session RPC queues, and a manifest-first plugin registry. Memory handling also diverges sharply: Claude Code uses a flat CLAUDE.md file, whereas OpenClaw separates structured memory from daily notes and adds hybrid vector/keyword search. The lead-to-subagent vs. route-and-delegate routing patterns represent a meaningful architectural fork for teams building production agentic systems.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link ai" href="https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design" target="_blank">Deepfake Pipeline Anatomy: Single Selfie to Synthetic Video in 5 Stages</a></div>
+        <div class="story-body">ByteByteGo outlines the full technical pipeline: VAE-encoded reference image → diffusion denoiser conditioned on prompt, latent, and audio → VAE decode to frames → upscale/color-correct/NSFW-screen → phoneme-aligned lip-sync. The pipeline is now commodity-accessible enough to synthesize a convincing executive video from a single photo and voice clip. Directly relevant to liveness detection and KYC identity verification threat modeling.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link ai" href="https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">ShinyHunters Claims Canvas/Instructure Breach: 275M Records, 8,800 Institutions</div>
+        <div class="story-body">Hacking group ShinyHunters took credit for a cyberattack on Instructure (Canvas LMS), disrupting ~half of all North American colleges and universities during final exam period. Claimed scope is 275 million individuals&#x27; data across 8,800 institutions globally. Instructure reported service restoration within hours but has not confirmed the data exfiltration scope.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">US Jobs +115K in April, But Real Wage Growth Trails Projected Tariff-Driven Inflation</div>
+        <div class="story-body">April payrolls roughly doubled analyst expectations at 115K, with healthcare, transportation, and warehousing leading gains. Wage growth of 3.6% came in below the 4.2% all-items inflation forecast economists attribute to tariffs and the Iran war, meaning real wages are likely contracting. Consumer sentiment hit a new record low alongside gas prices near four-year highs — a stagflationary signal that could constrain Fed rate cut timing.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Intel Surges 14% on Reported Preliminary Apple Chip Manufacturing Deal</div>
+        <div class="story-body">WSJ reported Intel has clinched a preliminary deal to manufacture chips for Apple, sending Intel stock up ~14% to $124.92. This would mark a significant customer win for Intel Foundry Services and validates its fab-for-hire pivot. Nasdaq and S&amp;P 500 both closed at record highs for a sixth consecutive winning week, with chipmakers broadly leading.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Tech &#x27;Information Employment&#x27; Down 11% Since ChatGPT Launch Peak in Nov 2022</div>
+        <div class="story-body">BLS data shows the information employment category — which broadly tracks tech sector jobs — has shed 11% of positions since its November 2022 peak, coinciding precisely with ChatGPT&#x27;s release. Federal government payrolls and manufacturing also contracted in April. This structural shift in tech hiring is a key labour market signal for the sector.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.bytebytego.com/p/ep214-claude-code-vs-openclaw-5-design" target="_blank">Claude Code vs. OpenClaw: 5 Design Dimensions (ByteByteGo EP214) ↗</a></div>
+          <div class="dive-why">Primary technical breakdown of two divergent agentic runtime architectures — directly relevant for any team evaluating production agent design patterns including memory, plugin extension, and multi-agent routing.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 09 May 2026 · sources: bytebytego.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
