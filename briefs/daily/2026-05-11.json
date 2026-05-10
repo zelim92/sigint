@@ -1,0 +1,24 @@
+{
+  "date": "2026-05-11",
+  "threadCount": 1,
+  "storyCount": 1,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [],
+    "sec": [],
+    "fin": [],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "Retail investors outperform S&P 500 for third consecutive year; SpaceX IPO imminent",
+        "body": "Goldman Sachs' 2025 retail-favorites basket gained 30.5% vs S&P 500's 16.4%, the third straight year of outperformance. Retail concentration is in NVDA, AMZN, AppLovin, and Palantir — all high-beta tech. SpaceX IPO reportedly possible as early as next month, with SPV proliferation (170+ SpaceX SPVs since 2020) creating opaque secondary-market exposure for retail.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/PdZ?mbcid=45632484.4117589&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ]
+  },
+  "deepDives": []
+}
