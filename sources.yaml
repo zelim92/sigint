@@ -1,0 +1,20 @@
+# SIGINT RSS sources.
+#
+# Add one entry per feed. KtN (https://kill-the-newsletter.com/) gives you
+# an RSS feed per newsletter — re-subscribe each newsletter to its KtN address.
+# Native RSS feeds from blogs work the same way.
+#
+# `name` is a short label used in logs and as a fallback sender if the feed
+# omits a <title>. `url` must be a valid RSS or Atom feed URL.
+
+feeds:
+  - name: tldr
+    url: https://kill-the-newsletter.com/feeds/4mlcln371y9x3o3b6f8x.xml
+  - name: the-rundown-ai
+    url: https://kill-the-newsletter.com/feeds/o1asgpptoy4h9qqd6kt3.xml
+  - name: tech-brew
+    url: https://kill-the-newsletter.com/feeds/t2olffhzq2jccn9t0a93.xml
+  - name: krebs-on-security
+    url: https://krebsonsecurity.com/feed/
+  - name: bytebytego
+    url: https://blog.bytebytego.com/feed

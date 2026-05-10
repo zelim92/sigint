@@ -36,6 +36,8 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
+import ingest_rss
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS_DAILY = REPO_ROOT / "docs" / "daily"
@@ -90,7 +92,7 @@ Each story body: 2-3 crisp sentences. No filler. No "in conclusion". Lead with t
 
 Cap each section at 5 items. If more than 5 qualify, keep the highest-signal; drop the rest.
 
-URLs: only include if literally present in the source corpus. If unsure, set null. Never reconstruct, guess, or synthesize URLs.
+URLs: when a story has a URL in the source corpus, include it as-is. Set null only when no URL is given. Never invent, modify, or reconstruct URLs.
 
 Output ONLY valid JSON. No markdown fences. No preamble. Schema:
 
@@ -172,7 +174,7 @@ def inline_footnote_urls(body: str) -> str:
     return FOOTNOTE_REF_RE.sub(sub, body_no_list)
 
 
-def smart_truncate(body: str, head: int = 8000, tail: int = 2000) -> str:
+def smart_truncate(body: str, head: int = 10000, tail: int = 2000) -> str:
     """Keep the head and tail of a long body, with an elision marker between.
 
     Long-form newsletters (e.g. ByteByteGo) often place the thesis or takeaway
@@ -751,10 +753,14 @@ def main() -> int:
         print(f"[skip] {html_path.name} already exists — nothing to do.")
         return 0
 
-    print(f"[gmail] fetching last {FETCH_HOURS}h of category:forums…")
-    service = get_gmail_service()
-    threads = fetch_threads(service)
-    print(f"[gmail] {len(threads)} thread(s) after filtering")
+    print("[rss] polling feeds from sources.yaml…")
+    threads, new_state, feed_failures = ingest_rss.fetch_all()
+    print(
+        f"[rss] {len(threads)} item(s); "
+        f"{len(feed_failures)} feed failure(s)"
+    )
+    for f in feed_failures:
+        print(f"[rss]   ! {f['name']}: {f['error']}")
 
     if not threads:
         print("[claude] skipped — no threads. Writing 'no content' brief.")
@@ -765,6 +771,9 @@ def main() -> int:
         brief.setdefault("date", date_str)
         brief.setdefault("threadCount", len(threads))
         compute_counts(brief)
+
+    if feed_failures:
+        brief["feedFailures"] = feed_failures
 
     json_path.write_text(json.dumps(brief, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"[write] {json_path.relative_to(REPO_ROOT)}")
@@ -777,6 +786,11 @@ def main() -> int:
         print(f"[write] {RSS_PATH.relative_to(REPO_ROOT)} (prepended)")
     else:
         print(f"[skip] {RSS_PATH.relative_to(REPO_ROOT)} already has guid for {date_str}")
+
+    # Persist RSS state only after the brief is committed to disk, so a
+    # crash mid-run doesn't lose items we never published.
+    ingest_rss.save_state(new_state)
+    print(f"[state] saved {len(new_state)} feed(s) → {ingest_rss.STATE_PATH.relative_to(REPO_ROOT)}")
 
     return 0
 
