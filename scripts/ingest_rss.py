@@ -1,7 +1,7 @@
 """RSS ingest for SIGINT.
 
-Polls feeds listed in `sources.yaml` and returns items in the same shape the
-Gmail path produced: `{"subject": ..., "sender": ..., "body": ...}`.
+Polls feeds listed in `sources.yaml` and returns items shaped as
+`{"subject": ..., "sender": ..., "body": ...}` for the brief generator.
 
 State (last-seen guid + pubdate per feed) is persisted to `briefs/.state.json`
 so missed runs don't drop content and so newly-added feeds are bootstrapped
@@ -29,15 +29,12 @@ STATE_PATH = REPO_ROOT / "briefs" / ".state.json"
 BOOTSTRAP_HOURS = 24
 MIN_BODY_CHARS = 100
 
-# TODO: dedupe with generate_daily.py — FOOTNOTE_*_RE, inline_footnote_urls,
-# and smart_truncate are copy-pasted from there. Pull into scripts/_text.py
-# (or import from generate_daily) once the RSS path is exercised in prod.
-
 
 # ────────────────────────────────────────────────────────────────
-# Footnote inlining (mirrors the Gmail path so KtN-forwarded
-# plain-text newsletters keep their `[N] URL` mappings after
-# truncation).
+# Footnote inlining — handles KtN-forwarded plain-text newsletters
+# that reference links via `[N]` markers and a trailing `[N] URL`
+# list. Rewrites references to `[N: URL]` so the mapping survives
+# truncation.
 # ────────────────────────────────────────────────────────────────
 
 FOOTNOTE_LINE_RE = re.compile(r"^\s*\[(\d+)\]\s+(https?://\S+)\s*$", re.MULTILINE)

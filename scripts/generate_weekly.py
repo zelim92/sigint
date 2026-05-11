@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """SIGINT — weekly brief generator (stub, not implemented).
 
-Placeholder for a future weekly digest. Reuses the same Gmail/Claude/HTML
-plumbing as scripts/generate_daily.py with a wider fetch window and a
-different system prompt focused on themes and pattern-level signal.
+Placeholder for a future weekly digest. Will reuse the same ingest/Claude/HTML
+plumbing as scripts/generate_daily.py with a wider window and a different
+system prompt focused on themes and pattern-level signal.
 """
 
 import sys

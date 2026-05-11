@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """SIGINT — daily intelligence brief generator.
 
-Pulls newsletter threads from Gmail (`category:forums`), distils them via the
-Claude API into a structured brief, then writes:
+Polls RSS feeds listed in `sources.yaml`, distils them via the Claude API into
+a structured brief, then writes:
 
   - briefs/daily/YYYY-MM-DD.json   raw model output
   - docs/daily/YYYY-MM-DD.html     full styled brief
@@ -13,10 +13,8 @@ Designed to run in GitHub Actions; also runnable locally with a .env file.
 
 from __future__ import annotations
 
-import base64
 import html
 import json
-import os
 import re
 import sys
 from datetime import datetime, timedelta, timezone
@@ -32,9 +30,6 @@ except ImportError:
     pass
 
 import anthropic
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
 
 import ingest_rss
 
@@ -51,7 +46,6 @@ SITE_BASE = f"https://{GITHUB_USER}.github.io/{REPO_NAME}"
 MODEL = "claude-sonnet-4-6"
 MAX_TOKENS = 8000
 PIPELINE_VERSION = "v0.2"
-FETCH_HOURS = 24
 LOCAL_TZ = timezone(timedelta(hours=8))  # MYT — used for the brief's user-facing date stamp
 
 SECTIONS: list[tuple[str, str]] = [
@@ -119,103 +113,6 @@ signal: "high" = novel, actionable, or architecturally significant. "med" = usef
 
 
 # ────────────────────────────────────────────────────────────────
-# Gmail
-# ────────────────────────────────────────────────────────────────
-
-def get_gmail_service():
-    token_json = json.loads(os.environ["GMAIL_TOKEN"])
-    creds = Credentials.from_authorized_user_info(token_json)
-    if not creds.valid:
-        if creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            raise RuntimeError(
-                "Gmail credentials invalid and not refreshable — re-run the local OAuth flow."
-            )
-    return build("gmail", "v1", credentials=creds, cache_discovery=False)
-
-
-def extract_body(payload: dict) -> str:
-    """Recursively pull the first text/plain body from a Gmail payload."""
-    if payload.get("mimeType") == "text/plain":
-        data = payload.get("body", {}).get("data", "")
-        if data:
-            return base64.urlsafe_b64decode(data).decode("utf-8", errors="ignore")
-
-    for part in payload.get("parts", []) or []:
-        body = extract_body(part)
-        if body:
-            return body
-    return ""
-
-
-FOOTNOTE_LINE_RE = re.compile(r"^\s*\[(\d+)\]\s+(https?://\S+)\s*$", re.MULTILINE)
-FOOTNOTE_REF_RE = re.compile(r"\[(\d+)\]")
-
-
-def inline_footnote_urls(body: str) -> str:
-    """Inline TLDR-style footnote URLs.
-
-    Many newsletters reference links via `[N]` markers in the body and list
-    `[N] URL` lines at the bottom. After body truncation, the trailing URL list
-    gets dropped and the model loses the mapping. This rewrites references in
-    the body to `[N: URL]` so the association survives any later truncation.
-    """
-    footnotes = {n: u for n, u in FOOTNOTE_LINE_RE.findall(body)}
-    if not footnotes:
-        return body
-
-    body_no_list = FOOTNOTE_LINE_RE.sub("", body)
-
-    def sub(m: re.Match) -> str:
-        n = m.group(1)
-        return f"[{n}: {footnotes[n]}]" if n in footnotes else m.group(0)
-
-    return FOOTNOTE_REF_RE.sub(sub, body_no_list)
-
-
-def smart_truncate(body: str, head: int = 10000, tail: int = 2000) -> str:
-    """Keep the head and tail of a long body, with an elision marker between.
-
-    Long-form newsletters (e.g. ByteByteGo) often place the thesis or takeaway
-    in the closing paragraphs. A naive head-only cut drops it.
-    """
-    if len(body) <= head + tail:
-        return body
-    return body[:head] + "\n\n[…]\n\n" + body[-tail:]
-
-
-def fetch_threads(service) -> list[dict]:
-    since = int((datetime.now(timezone.utc) - timedelta(hours=FETCH_HOURS)).timestamp())
-    query = f"category:forums after:{since}"
-
-    result = service.users().messages().list(
-        userId="me", q=query, maxResults=25
-    ).execute()
-
-    threads: list[dict] = []
-    for msg_ref in result.get("messages", []):
-        msg = service.users().messages().get(
-            userId="me", id=msg_ref["id"], format="full"
-        ).execute()
-
-        headers = {h["name"]: h["value"] for h in msg["payload"].get("headers", [])}
-        subject = headers.get("Subject", "")
-        sender = headers.get("From", "")
-        body = extract_body(msg["payload"])
-
-        if not body or len(body.strip()) < 100:
-            continue
-
-        threads.append({
-            "subject": subject,
-            "sender": sender,
-            "body": smart_truncate(inline_footnote_urls(body)),
-        })
-    return threads
-
-
-# ────────────────────────────────────────────────────────────────
 # Claude distillation
 # ────────────────────────────────────────────────────────────────
 
@@ -232,10 +129,7 @@ def distil(threads: list[dict], date_str: str) -> dict:
         system=SYSTEM_PROMPT,
         messages=[{
             "role": "user",
-            "content": (
-                f"Today's date is {date_str}. Distil this corpus from the last "
-                f"{FETCH_HOURS} hours:\n\n{corpus}"
-            ),
+            "content": f"Today's date is {date_str}. Distil this corpus:\n\n{corpus}",
         }],
     )
 
