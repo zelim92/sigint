@@ -1,10 +1,16 @@
 {
-  "https://blog.bytebytego.com/feed": {},
-  "https://kill-the-newsletter.com/feeds/4mlcln371y9x3o3b6f8x.xml": {},
+  "https://blog.bytebytego.com/feed": {
+    "last_seen_guid": "https://blog.bytebytego.com/p/how-pinterest-built-a-production",
+    "last_seen_pubdate": "2026-05-11T15:31:17+00:00"
+  },
+  "https://kill-the-newsletter.com/feeds/4mlcln371y9x3o3b6f8x.xml": {
+    "last_seen_guid": "urn:kill-the-newsletter:4klvwdmduvq0h96olzap",
+    "last_seen_pubdate": "2026-05-11T13:44:31+00:00"
+  },
   "https://kill-the-newsletter.com/feeds/o1asgpptoy4h9qqd6kt3.xml": {},
   "https://kill-the-newsletter.com/feeds/t2olffhzq2jccn9t0a93.xml": {
-    "last_seen_guid": "urn:kill-the-newsletter:looy4nwicc9cjefq4480",
-    "last_seen_pubdate": "2026-05-10T10:36:25+00:00"
+    "last_seen_guid": "urn:kill-the-newsletter:482hub4yiqqpfjc1hk63",
+    "last_seen_pubdate": "2026-05-11T09:41:51+00:00"
   },
   "https://krebsonsecurity.com/feed/": {}
 }
