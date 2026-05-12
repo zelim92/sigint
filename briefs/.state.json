@@ -1,16 +1,22 @@
 {
   "https://blog.bytebytego.com/feed": {
-    "last_seen_guid": "https://blog.bytebytego.com/p/how-pinterest-built-a-production",
-    "last_seen_pubdate": "2026-05-11T15:31:17+00:00"
+    "last_seen_guid": "https://blog.bytebytego.com/p/how-figma-upgraded-data-pipeline",
+    "last_seen_pubdate": "2026-05-12T15:31:03+00:00"
   },
   "https://kill-the-newsletter.com/feeds/4mlcln371y9x3o3b6f8x.xml": {
-    "last_seen_guid": "urn:kill-the-newsletter:4klvwdmduvq0h96olzap",
-    "last_seen_pubdate": "2026-05-11T13:44:31+00:00"
+    "last_seen_guid": "urn:kill-the-newsletter:08vptg05yy6d64naxgdg",
+    "last_seen_pubdate": "2026-05-12T13:32:55+00:00"
   },
-  "https://kill-the-newsletter.com/feeds/o1asgpptoy4h9qqd6kt3.xml": {},
+  "https://kill-the-newsletter.com/feeds/o1asgpptoy4h9qqd6kt3.xml": {
+    "last_seen_guid": "urn:kill-the-newsletter:o68zrbn8k6gwzmnthwkk",
+    "last_seen_pubdate": "2026-05-12T10:06:09+00:00"
+  },
   "https://kill-the-newsletter.com/feeds/t2olffhzq2jccn9t0a93.xml": {
-    "last_seen_guid": "urn:kill-the-newsletter:482hub4yiqqpfjc1hk63",
-    "last_seen_pubdate": "2026-05-11T09:41:51+00:00"
+    "last_seen_guid": "urn:kill-the-newsletter:wd1lnbkgs2sh0vkbglpb",
+    "last_seen_pubdate": "2026-05-12T10:04:15+00:00"
   },
-  "https://krebsonsecurity.com/feed/": {}
+  "https://krebsonsecurity.com/feed/": {
+    "last_seen_guid": "https://krebsonsecurity.com/?p=73582",
+    "last_seen_pubdate": "2026-05-12T21:46:45+00:00"
+  }
 }

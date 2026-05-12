@@ -1,0 +1,181 @@
+{
+  "date": "2026-05-13",
+  "threadCount": 6,
+  "storyCount": 16,
+  "sourceCount": 6,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Thinking Machines Lab 'Interaction Models': Real-Time Multi-Modal AI with Dual-Model Architecture",
+        "body": "Mira Murati's Thinking Machines Lab released a research preview of interaction models that ingest voice, video, and text in 200ms streaming chunks — eliminating turn-based latency. A fast foreground model handles real-time presence while an async background model handles reasoning, search, and tool calls. This dual-model split is a direct architectural counter to the agentic-first (long-horizon, async) direction dominating the field.",
+        "signal": "high",
+        "sources": [
+          "thinkingmachines.ai",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thinkingmachines.ai/blog/interaction-models/"
+      },
+      {
+        "headline": "Google Confirms First Known AI-Assisted Zero-Day Discovery and Weaponisation by Criminal Actor",
+        "body": "A criminal hacking group used an AI model to discover and weaponise a zero-day in a widely used open-source web admin tool — Google confirmed this is the first documented case of malicious AI-enabled zero-day exploitation. The software vendor was notified in time to patch before broad damage, but the incident signals AI is now lowering the bar for offensive vulnerability research. Directly corroborated by the MCP-based autonomous vuln hunting workflow also covered this cycle.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundownai.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic Project Glasswing: AI Vuln Discovery Driving Record Patch Volumes Across Apple, Google, Microsoft, Mozilla, Oracle",
+        "body": "Anthropic's 'Project Glasswing' AI capability, shared with major vendors, is credited with a dramatic surge in patch volumes: Mozilla fixed 271 Firefox zero-days in one release, Oracle patched 450+ flaws (300+ remotely exploitable unauthenticated), Google fixed 127 Chrome bugs in one update, and Microsoft shipped 118 fixes this Patch Tuesday. This represents a structural shift in the economics of vulnerability discovery — AI is finding bugs faster than humans can ship fixes, compressing patch cycles industry-wide.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/"
+      },
+      {
+        "headline": "Inference Hardware Split: Cerebras WSE-3 Signals 'Answer Inference' vs 'Agentic Inference' Architectural Divergence",
+        "body": "Stratechery argues Cerebras' surging IPO signals a coming bifurcation: 'answer inference' (optimised for token speed, low-latency, voice/wearables) vs 'agentic inference' (optimised for memory hierarchy with large KV caches). The WSE-3 delivers 44GB on-chip SRAM at 21 PB/s — ~6,000× the memory bandwidth of an H100 — but is capacity-constrained for large agentic workloads. Relevant for NVDA positioning and cloud AI infrastructure investment thesis.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://stratechery.com/2026/the-inference-shift/"
+      },
+      {
+        "headline": "AWS Foundation Model Scaling Deep Dive: Post-Training and Test-Time Compute Now Dominate",
+        "body": "AWS published a detailed breakdown of how foundation model scaling has shifted beyond pre-training into post-training and test-time compute, covering the distributed infrastructure required at each stage. Relevant context for AMZN's AI infrastructure positioning and Anthropic partnership economics.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://huggingface.co/blog/amazon/foundation-model-building-blocks"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "CVE-2026-41103: Critical Entra ID Credential Impersonation via Forged Credentials — Exploitation Likely",
+        "body": "Microsoft May Patch Tuesday includes CVE-2026-41103, a critical EoP that allows an unauthenticated attacker to impersonate any existing user by presenting forged credentials, bypassing Entra ID — Microsoft rates exploitation as 'more likely.' Also notable: CVE-2026-41089, a critical stack-based buffer overflow in Windows Netlogon granting SYSTEM on domain controllers with no privileges or user interaction required. IAM teams should prioritise these patches immediately given the identity-bypass nature of the Entra ID flaw.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103"
+      },
+      {
+        "headline": "CVE-2026-7482: Unauthenticated Heap Dump in Ollama — 300K Exposed Servers at Risk",
+        "body": "Cyera disclosed 'Bleeding Llama' (CVE-2026-7482), a critical unauthenticated memory leak in Ollama where an attacker uploads a malformed GGUF file with inflated tensor shape values, triggering out-of-bounds reads via Go's unsafe package that dump the entire process heap. Ollama has 300,000 exposed servers, 170K GitHub stars, and 100M+ Docker pulls — significant exposure for any org running local LLM inference. Patch immediately and block unauthenticated access to Ollama endpoints.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.cyera.com/research/bleeding-llama-critical-unauthenticated-memory-leak-in-ollama"
+      },
+      {
+        "headline": "ScarCruft (APT37) Supply Chain Attack: Trojanised Gaming Platform Deploys BirdCall Backdoor with Android Port",
+        "body": "North Korea's ScarCruft compromised sqgame[.]net (a gaming platform targeting ethnic Koreans in China), trojanising its Windows updater and two Android card games to deliver the BirdCall backdoor — the Android variant is new to the group's known arsenal. Android BirdCall uses Zoho WorkDrive over HTTPS for C&C and exfiltrates contacts, SMS, call logs, screenshots, and documents; audio recording is limited to 7–10 PM local time. IOCs: mono.dll SHA-1 95BDB94F6767A3CCE6D92363BBF5BC84B786BDB0; C2 via compromised South Korean domains including 1980food.co[.]kr and lawwell.co[.]kr.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.welivesecurity.com/en/eset-research/rigged-game-scarcruft-compromises-gaming-platform-supply-chain-attack/"
+      },
+      {
+        "headline": "Fake OpenAI Hugging Face Repo (244K Downloads) Distributes ValleyRAT Infostealer via Multi-OS Loader Chain",
+        "body": "A malicious Hugging Face repo impersonating OpenAI's 'Privacy Filter' model reached #1 and amassed 244K downloads before takedown, delivering an infostealer targeting crypto wallets, Discord, and browsers via Windows/macOS/Linux loaders with Defender exclusions and scheduled tasks. Infrastructure links the campaign to Silver Fox operations and the trevlo npm package. A reminder that Hugging Face model cards are an active supply chain attack surface — treat downloaded models as untrusted binaries.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/fake-openai-privacy-filter-repo-hits-1.html"
+      },
+      {
+        "headline": "Operation HookedWing: 4-Year Phishing Campaign Steals 2,000+ Credentials from 500+ Orgs in Critical Infrastructure",
+        "body": "A persistent phishing operation used HR/colleague-themed emails linking to GitHub-hosted Outlook-lookalike pages, with loaders customised per victim organisation capturing credentials, IP, and geolocation. Targets span aviation, energy, finance, government, logistics, and tech. GitHub-hosted phishing infrastructure and per-org customisation indicate a sophisticated, semi-automated operation — relevant for fintech AML/fraud teams monitoring account takeover vectors.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Figma Data Pipeline Overhaul: CDC + Kafka Reduces Latency from 30+ Hours to <3 Hours, Saves Millions in Replica Costs",
+        "body": "Figma replaced daily full-table S3 dumps (taking days for large tables) with a custom CDC pipeline using RDS WAL → Kafka → Snowflake incremental merge, cutting data freshness from 30+ hours to under 3 hours (configurable to minutes). Eliminating dedicated export replicas saved millions annually; billing pipeline runs on 30-minute cycles while other tables default to 3-hour merges. The key engineering detail: CDC stream start offset must precede the snapshot timestamp to avoid a silent 2-hour data gap during bootstrap.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://www.figma.com/blog/figmas-data-pipeline-upgrade/"
+      },
+      {
+        "headline": "WorkOS 'Project Horizon': Autonomous Code Factory Using Cloudflare Sandboxes and Webhook-Triggered Agents",
+        "body": "WorkOS shipped Horizon, an agentic code factory where webhooks trigger isolated Cloudflare sandbox agents that plan, code, and verify work end-to-end via a shared context server and orchestrator. Each run both ships code and improves the platform in a compounding loop — a production-grade agentic SWE architecture worth studying for teams evaluating autonomous coding pipelines.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://workos.com/blog/project-horizon"
+      },
+      {
+        "headline": "AI Vibe-Coding Post-Mortem: k10s Kubernetes Dashboard Rewrite Reveals 'God Object' and Data Race Failures",
+        "body": "The author of the k10s Kubernetes dashboard found that AI-assisted development without human architectural oversight produced a fragile god-object structure and data races, forcing a full rewrite in Rust. Compiler-enforced languages give AI self-correction feedback loops that dynamic languages cannot — a concrete production case study validating the AI-prefers-Rust/Go thesis emerging across the industry.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.k10s.dev/im-going-back-to-writing-code-by-hand/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "May 2026 Patch Tuesday: Record Patch Volumes Signal AI-Driven Structural Shift in Software Security Economics",
+        "body": "Microsoft (118 CVEs), Apple (52 iOS vulns), Mozilla (271 Firefox), Google (127 Chrome), and Oracle (450+) all shipped unusually large patch releases this cycle, driven by Anthropic's Project Glasswing AI vuln-discovery program. First Patch Tuesday in nearly two years with zero active zero-days from Microsoft. The acceleration of AI-driven bug discovery compresses the window between disclosure and exploitation and raises baseline security engineering costs across the industry.",
+        "signal": "med",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/"
+      },
+      {
+        "headline": "xAI Dissolves Into SpaceX as 'SpaceXAI' Division — Grok and X Rebranded Under SpaceX Umbrella",
+        "body": "Elon Musk announced xAI will dissolve and integrate into SpaceX as a new division, absorbing Grok and the X social platform under SpaceX branding. Vertical integration consolidates Musk's AI efforts under SpaceX's operational and capital structure — relevant for monitoring competitive AI infrastructure positioning and any downstream MSFT/OpenAI dynamics.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.notateslaapp.com/news/4116/elon-musk-announces-xai-will-dissolve-form-spacexai-subdivision"
+      },
+      {
+        "headline": "Microsoft CEO Satya Nadella Testifies in Musk vs. OpenAI Trial Over Nonprofit Mission and Control Claims",
+        "body": "Elon Musk's lawyers submitted evidence that Satya Nadella intervened in Sam Altman's reinstatement five days after his ouster, citing it as evidence of Microsoft's control over OpenAI. The trial directly bears on OpenAI's for-profit conversion and Microsoft's strategic position as a major investor — any adverse finding could affect MSFT's AI partnership terms and GOOGL/AMZN's competitive positioning if OpenAI's governance is restructured.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com",
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Bleeding Llama: Critical Unauthenticated Memory Leak in Ollama (CVE-2026-7482)",
+      "why": "Primary vendor security research with full technical details on the Go unsafe package exploit path — immediately actionable for any org running Ollama in dev or production environments.",
+      "url": "https://www.cyera.com/research/bleeding-llama-critical-unauthenticated-memory-leak-in-ollama"
+    },
+    {
+      "title": "ScarCruft Supply Chain Attack: Rigged Game (ESET Research)",
+      "why": "Full ESET threat intelligence report with IOCs, malware hashes, C2 infrastructure, and novel Android BirdCall analysis — primary source for hunting and blocking this APT37 campaign.",
+      "url": "https://www.welivesecurity.com/en/eset-research/rigged-game-scarcruft-compromises-gaming-platform-supply-chain-attack/"
+    },
+    {
+      "title": "Figma's Data Pipeline Upgrade: From Multi-Day Latency to Near Real-Time",
+      "why": "Primary Figma engineering blog post documenting the full CDC+Kafka+Snowflake architecture decision, bootstrap timing pitfall, and cost/latency outcomes — a staff-level reference for real-time data pipeline design.",
+      "url": "https://www.figma.com/blog/figmas-data-pipeline-upgrade/"
+    }
+  ]
+}

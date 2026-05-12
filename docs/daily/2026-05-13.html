@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 13 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 13 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">16</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank">Thinking Machines Lab &#x27;Interaction Models&#x27;: Real-Time Multi-Modal AI with Dual-Model Architecture</a></div>
+        <div class="story-body">Mira Murati&#x27;s Thinking Machines Lab released a research preview of interaction models that ingest voice, video, and text in 200ms streaming chunks — eliminating turn-based latency. A fast foreground model handles real-time presence while an async background model handles reasoning, search, and tool calls. This dual-model split is a direct architectural counter to the agentic-first (long-horizon, async) direction dominating the field.</div>
+        <div class="story-meta"><span class="chip">thinkingmachines.ai</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank">thinkingmachines.ai ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Google Confirms First Known AI-Assisted Zero-Day Discovery and Weaponisation by Criminal Actor</div>
+        <div class="story-body">A criminal hacking group used an AI model to discover and weaponise a zero-day in a widely used open-source web admin tool — Google confirmed this is the first documented case of malicious AI-enabled zero-day exploitation. The software vendor was notified in time to patch before broad damage, but the incident signals AI is now lowering the bar for offensive vulnerability research. Directly corroborated by the MCP-based autonomous vuln hunting workflow also covered this cycle.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">therundownai.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">Anthropic Project Glasswing: AI Vuln Discovery Driving Record Patch Volumes Across Apple, Google, Microsoft, Mozilla, Oracle</a></div>
+        <div class="story-body">Anthropic&#x27;s &#x27;Project Glasswing&#x27; AI capability, shared with major vendors, is credited with a dramatic surge in patch volumes: Mozilla fixed 271 Firefox zero-days in one release, Oracle patched 450+ flaws (300+ remotely exploitable unauthenticated), Google fixed 127 Chrome bugs in one update, and Microsoft shipped 118 fixes this Patch Tuesday. This represents a structural shift in the economics of vulnerability discovery — AI is finding bugs faster than humans can ship fixes, compressing patch cycles industry-wide.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link ai" href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://stratechery.com/2026/the-inference-shift/" target="_blank">Inference Hardware Split: Cerebras WSE-3 Signals &#x27;Answer Inference&#x27; vs &#x27;Agentic Inference&#x27; Architectural Divergence</a></div>
+        <div class="story-body">Stratechery argues Cerebras&#x27; surging IPO signals a coming bifurcation: &#x27;answer inference&#x27; (optimised for token speed, low-latency, voice/wearables) vs &#x27;agentic inference&#x27; (optimised for memory hierarchy with large KV caches). The WSE-3 delivers 44GB on-chip SRAM at 21 PB/s — ~6,000× the memory bandwidth of an H100 — but is capacity-constrained for large agentic workloads. Relevant for NVDA positioning and cloud AI infrastructure investment thesis.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://stratechery.com/2026/the-inference-shift/" target="_blank">stratechery.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://huggingface.co/blog/amazon/foundation-model-building-blocks" target="_blank">AWS Foundation Model Scaling Deep Dive: Post-Training and Test-Time Compute Now Dominate</a></div>
+        <div class="story-body">AWS published a detailed breakdown of how foundation model scaling has shifted beyond pre-training into post-training and test-time compute, covering the distributed infrastructure required at each stage. Relevant context for AMZN&#x27;s AI infrastructure positioning and Anthropic partnership economics.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://huggingface.co/blog/amazon/foundation-model-building-blocks" target="_blank">huggingface.co ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103" target="_blank">CVE-2026-41103: Critical Entra ID Credential Impersonation via Forged Credentials — Exploitation Likely</a></div>
+        <div class="story-body">Microsoft May Patch Tuesday includes CVE-2026-41103, a critical EoP that allows an unauthenticated attacker to impersonate any existing user by presenting forged credentials, bypassing Entra ID — Microsoft rates exploitation as &#x27;more likely.&#x27; Also notable: CVE-2026-41089, a critical stack-based buffer overflow in Windows Netlogon granting SYSTEM on domain controllers with no privileges or user interaction required. IAM teams should prioritise these patches immediately given the identity-bypass nature of the Entra ID flaw.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://msrc.microsoft.com/update-guide/en-US/vulnerability/CVE-2026-41103" target="_blank">msrc.microsoft.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cyera.com/research/bleeding-llama-critical-unauthenticated-memory-leak-in-ollama" target="_blank">CVE-2026-7482: Unauthenticated Heap Dump in Ollama — 300K Exposed Servers at Risk</a></div>
+        <div class="story-body">Cyera disclosed &#x27;Bleeding Llama&#x27; (CVE-2026-7482), a critical unauthenticated memory leak in Ollama where an attacker uploads a malformed GGUF file with inflated tensor shape values, triggering out-of-bounds reads via Go&#x27;s unsafe package that dump the entire process heap. Ollama has 300,000 exposed servers, 170K GitHub stars, and 100M+ Docker pulls — significant exposure for any org running local LLM inference. Patch immediately and block unauthenticated access to Ollama endpoints.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.cyera.com/research/bleeding-llama-critical-unauthenticated-memory-leak-in-ollama" target="_blank">cyera.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.welivesecurity.com/en/eset-research/rigged-game-scarcruft-compromises-gaming-platform-supply-chain-attack/" target="_blank">ScarCruft (APT37) Supply Chain Attack: Trojanised Gaming Platform Deploys BirdCall Backdoor with Android Port</a></div>
+        <div class="story-body">North Korea&#x27;s ScarCruft compromised sqgame[.]net (a gaming platform targeting ethnic Koreans in China), trojanising its Windows updater and two Android card games to deliver the BirdCall backdoor — the Android variant is new to the group&#x27;s known arsenal. Android BirdCall uses Zoho WorkDrive over HTTPS for C&amp;C and exfiltrates contacts, SMS, call logs, screenshots, and documents; audio recording is limited to 7–10 PM local time. IOCs: mono.dll SHA-1 95BDB94F6767A3CCE6D92363BBF5BC84B786BDB0; C2 via compromised South Korean domains including 1980food.co[.]kr and lawwell.co[.]kr.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.welivesecurity.com/en/eset-research/rigged-game-scarcruft-compromises-gaming-platform-supply-chain-attack/" target="_blank">welivesecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/05/fake-openai-privacy-filter-repo-hits-1.html" target="_blank">Fake OpenAI Hugging Face Repo (244K Downloads) Distributes ValleyRAT Infostealer via Multi-OS Loader Chain</a></div>
+        <div class="story-body">A malicious Hugging Face repo impersonating OpenAI&#x27;s &#x27;Privacy Filter&#x27; model reached #1 and amassed 244K downloads before takedown, delivering an infostealer targeting crypto wallets, Discord, and browsers via Windows/macOS/Linux loaders with Defender exclusions and scheduled tasks. Infrastructure links the campaign to Silver Fox operations and the trevlo npm package. A reminder that Hugging Face model cards are an active supply chain attack surface — treat downloaded models as untrusted binaries.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/05/fake-openai-privacy-filter-repo-hits-1.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Operation HookedWing: 4-Year Phishing Campaign Steals 2,000+ Credentials from 500+ Orgs in Critical Infrastructure</div>
+        <div class="story-body">A persistent phishing operation used HR/colleague-themed emails linking to GitHub-hosted Outlook-lookalike pages, with loaders customised per victim organisation capturing credentials, IP, and geolocation. Targets span aviation, energy, finance, government, logistics, and tech. GitHub-hosted phishing infrastructure and per-org customisation indicate a sophisticated, semi-automated operation — relevant for fintech AML/fraud teams monitoring account takeover vectors.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.figma.com/blog/figmas-data-pipeline-upgrade/" target="_blank">Figma Data Pipeline Overhaul: CDC + Kafka Reduces Latency from 30+ Hours to &lt;3 Hours, Saves Millions in Replica Costs</a></div>
+        <div class="story-body">Figma replaced daily full-table S3 dumps (taking days for large tables) with a custom CDC pipeline using RDS WAL → Kafka → Snowflake incremental merge, cutting data freshness from 30+ hours to under 3 hours (configurable to minutes). Eliminating dedicated export replicas saved millions annually; billing pipeline runs on 30-minute cycles while other tables default to 3-hour merges. The key engineering detail: CDC stream start offset must precede the snapshot timestamp to avoid a silent 2-hour data gap during bootstrap.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.figma.com/blog/figmas-data-pipeline-upgrade/" target="_blank">figma.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://workos.com/blog/project-horizon" target="_blank">WorkOS &#x27;Project Horizon&#x27;: Autonomous Code Factory Using Cloudflare Sandboxes and Webhook-Triggered Agents</a></div>
+        <div class="story-body">WorkOS shipped Horizon, an agentic code factory where webhooks trigger isolated Cloudflare sandbox agents that plan, code, and verify work end-to-end via a shared context server and orchestrator. Each run both ships code and improves the platform in a compounding loop — a production-grade agentic SWE architecture worth studying for teams evaluating autonomous coding pipelines.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://workos.com/blog/project-horizon" target="_blank">workos.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.k10s.dev/im-going-back-to-writing-code-by-hand/" target="_blank">AI Vibe-Coding Post-Mortem: k10s Kubernetes Dashboard Rewrite Reveals &#x27;God Object&#x27; and Data Race Failures</a></div>
+        <div class="story-body">The author of the k10s Kubernetes dashboard found that AI-assisted development without human architectural oversight produced a fragile god-object structure and data races, forcing a full rewrite in Rust. Compiler-enforced languages give AI self-correction feedback loops that dynamic languages cannot — a concrete production case study validating the AI-prefers-Rust/Go thesis emerging across the industry.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.k10s.dev/im-going-back-to-writing-code-by-hand/" target="_blank">blog.k10s.dev ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">May 2026 Patch Tuesday: Record Patch Volumes Signal AI-Driven Structural Shift in Software Security Economics</a></div>
+        <div class="story-body">Microsoft (118 CVEs), Apple (52 iOS vulns), Mozilla (271 Firefox), Google (127 Chrome), and Oracle (450+) all shipped unusually large patch releases this cycle, driven by Anthropic&#x27;s Project Glasswing AI vuln-discovery program. First Patch Tuesday in nearly two years with zero active zero-days from Microsoft. The acceleration of AI-driven bug discovery compresses the window between disclosure and exploitation and raises baseline security engineering costs across the industry.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link mkt" href="https://krebsonsecurity.com/2026/05/patch-tuesday-may-2026-edition/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.notateslaapp.com/news/4116/elon-musk-announces-xai-will-dissolve-form-spacexai-subdivision" target="_blank">xAI Dissolves Into SpaceX as &#x27;SpaceXAI&#x27; Division — Grok and X Rebranded Under SpaceX Umbrella</a></div>
+        <div class="story-body">Elon Musk announced xAI will dissolve and integrate into SpaceX as a new division, absorbing Grok and the X social platform under SpaceX branding. Vertical integration consolidates Musk&#x27;s AI efforts under SpaceX&#x27;s operational and capital structure — relevant for monitoring competitive AI infrastructure positioning and any downstream MSFT/OpenAI dynamics.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.notateslaapp.com/news/4116/elon-musk-announces-xai-will-dissolve-form-spacexai-subdivision" target="_blank">notateslaapp.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Microsoft CEO Satya Nadella Testifies in Musk vs. OpenAI Trial Over Nonprofit Mission and Control Claims</div>
+        <div class="story-body">Elon Musk&#x27;s lawyers submitted evidence that Satya Nadella intervened in Sam Altman&#x27;s reinstatement five days after his ouster, citing it as evidence of Microsoft&#x27;s control over OpenAI. The trial directly bears on OpenAI&#x27;s for-profit conversion and Microsoft&#x27;s strategic position as a major investor — any adverse finding could affect MSFT&#x27;s AI partnership terms and GOOGL/AMZN&#x27;s competitive positioning if OpenAI&#x27;s governance is restructured.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.cyera.com/research/bleeding-llama-critical-unauthenticated-memory-leak-in-ollama" target="_blank">Bleeding Llama: Critical Unauthenticated Memory Leak in Ollama (CVE-2026-7482) ↗</a></div>
+          <div class="dive-why">Primary vendor security research with full technical details on the Go unsafe package exploit path — immediately actionable for any org running Ollama in dev or production environments.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.welivesecurity.com/en/eset-research/rigged-game-scarcruft-compromises-gaming-platform-supply-chain-attack/" target="_blank">ScarCruft Supply Chain Attack: Rigged Game (ESET Research) ↗</a></div>
+          <div class="dive-why">Full ESET threat intelligence report with IOCs, malware hashes, C2 infrastructure, and novel Android BirdCall analysis — primary source for hunting and blocking this APT37 campaign.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.figma.com/blog/figmas-data-pipeline-upgrade/" target="_blank">Figma&#x27;s Data Pipeline Upgrade: From Multi-Day Latency to Near Real-Time ↗</a></div>
+          <div class="dive-why">Primary Figma engineering blog post documenting the full CDC+Kafka+Snowflake architecture decision, bootstrap timing pitfall, and cost/latency outcomes — a staff-level reference for real-time data pipeline design.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 12 May 2026 · sources: thinkingmachines.ai, tldrnewsletter.com, therundownai.com, krebsonsecurity.com, bytebytego.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
