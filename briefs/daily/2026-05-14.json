@@ -1,0 +1,199 @@
+{
+  "date": "2026-05-14",
+  "threadCount": 6,
+  "storyCount": 18,
+  "sourceCount": 15,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Google launches Gemini Intelligence platform: Googlebooks, agentic Android, AI cursor",
+        "body": "Google's Android Show pre-I/O event unveiled Googlebooks (Android-native laptops shipping fall 2026 with Dell/HP/Lenovo/Acer/Asus), a Gemini Intelligence cross-device agentic platform with on-screen context awareness, and a 'Magic Pointer' AI cursor. Gemini will handle in-app agentic task execution, custom widgets, and Chrome auto-browse — delivered via Play Services updates rather than waiting for Android 17. Google is positioning this as a unified AI intelligence layer across hardware, a direct answer to Apple's stalled Siri AI ambitions.",
+        "signal": "high",
+        "sources": [
+          "arstechnica.com",
+          "mail.beehiiv.com"
+        ],
+        "url": "https://arstechnica.com/gadgets/2026/05/googles-android-powered-laptops-are-called-googlebooks-and-theyre-coming-this-year/"
+      },
+      {
+        "headline": "GTIG: First criminal AI-developed zero-day used in the wild; PRC actors scale CVE analysis with LLMs",
+        "body": "Google's Threat Intelligence Group documented the first observed criminal use of an AI-developed zero-day — a 2FA-bypass exploit against an open-source sysadmin tool, disrupted before deployment. Separately, PRC actors chained persona jailbreaks with a Claude plugin and 85,000 historical bug cases to automate CVE analysis at scale, and Russia-nexus groups are using LLM-generated decoy logic to pad malware payloads and evade static signatures. The PROMPTSPY Android backdoor autonomously interprets on-screen UI and issues actions, signalling a new class of agentic malware.",
+        "signal": "high",
+        "sources": [
+          "cloud.google.com"
+        ],
+        "url": "https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access"
+      },
+      {
+        "headline": "Claude Opus 4.7 Fast mode enters research preview; OpenAI publishes self-repairing agent loop cookbook",
+        "body": "Anthropic's Fast mode for Claude Opus 4.7 is now opt-in in the API, Claude Code, Cursor, Warp, and Windsurf, with plans to make it the default. OpenAI simultaneously published a Codex cookbook for iterative agent loops that review, repair, and validate their own output — a concrete agentic architecture pattern for production use.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://developers.openai.com/cookbook/examples/codex/build_iterative_repair_loops_with_codex"
+      },
+      {
+        "headline": "Modal Engineering: AI inference cold-start reduced from kiloseconds to tens of seconds via serverless GPU architecture",
+        "body": "Modal published a detailed engineering post on achieving truly serverless GPU inference, cutting replica spin-up time from multiple kiloseconds to tens of seconds. The piece dissects the storage, image caching, and scheduling layers that make variable inference demand tractable without pre-provisioned capacity — directly relevant for anyone building or evaluating inference infrastructure.",
+        "signal": "med",
+        "sources": [
+          "modal.com"
+        ],
+        "url": "https://modal.com/blog/truly-serverless-gpus"
+      },
+      {
+        "headline": "Statewright: State machine guardrails for AI agent tool access improve coding benchmark success rates",
+        "body": "Statewright is an open-source framework that constrains which tools an AI coding agent can access based on its current workflow phase (planning, testing, etc.), using deterministic state machines rather than letting the model decide. The narrowed action space measurably increases benchmark success rates and reduces wasted tool calls — a practical architectural pattern for production agentic systems.",
+        "signal": "med",
+        "sources": [
+          "github.com"
+        ],
+        "url": "https://github.com/statewright/statewright"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Shai-Hulud/TeamPCP supply chain campaign: TanStack 42 npm packages compromised via OIDC token theft from GitHub Actions runner memory",
+        "body": "On May 11, TeamPCP used a pull_request_target misconfiguration, GitHub Actions cache poisoning, and live OIDC token extraction from the Runner.Worker process to push 84 malicious versions across 42 @tanstack/* packages. The payload harvested AWS, GCP, Kubernetes, Vault, npm, GitHub, and SSH credentials and exfiltrated via Session/Oxen network; a dead-man's switch ('IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner') triggered destructive actions if the token was revoked before persistence was removed. Defenders must remove launchd/systemd units and Claude Code SessionStart hooks BEFORE rotating tokens, block egress to api.masscan.cloud, and audit pull_request_target workflows.",
+        "signal": "high",
+        "sources": [
+          "tanstack.com",
+          "cybersecurityreach.org"
+        ],
+        "url": "https://tanstack.com/blog/npm-supply-chain-compromise-postmortem"
+      },
+      {
+        "headline": "CheckMarx Jenkins AST plugin backdoored by TeamPCP via unrotated Trivy breach credentials",
+        "body": "TeamPCP pivoted from their March Trivy scanner compromise — using credentials Checkmarx never rotated — to push a rogue version (2026.5.09) of the official Checkmarx Jenkins AST plugin to the Jenkins Marketplace on May 9, delivering an infostealer. The malicious build sat outside the release pipeline, lacked a Git tag, and broke the date-based versioning scheme. Roll back to 2.0.13-829.vc72453fa_1c16, rotate all secrets on Jenkins runners that executed the plugin, and treat any vendor breach involving stolen repo credentials as a standing supply-chain risk until rotation is independently confirmed.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/razrHv"
+      },
+      {
+        "headline": "Dirty Frag: Public LPE exploit chains two Linux kernel bugs (CVE-2026-43284, CVE-2026-43500) to root via esp4/esp6 and rxrpc paths",
+        "body": "Dirty Frag chains two kernel vulnerabilities in the esp4/esp6 and rxrpc networking subsystems to allow low-privilege users to corrupt page cache data and gain root. Exploit code is already public and has been tested in attacks; Debian, AlmaLinux, and Fedora ship fixes but protection requires patching and rebooting — especially critical on shared servers and VMs. Prioritise patching any multi-tenant Linux infrastructure immediately.",
+        "signal": "high",
+        "sources": [
+          "arstechnica.com"
+        ],
+        "url": "https://arstechnica.com/security/2026/05/linux-bitten-by-second-severe-vulnerability-in-as-many-weeks/"
+      },
+      {
+        "headline": "Instructure pays undisclosed ransom to ShinyHunters after dual Canvas LMS breaches exposing ~275M users",
+        "body": "Canvas LMS operator Instructure paid ShinyHunters an undisclosed ransom following two separate breaches that compromised personal data for approximately 275 million users and caused service disruptions. The company received a guarantee the data was destroyed — a guarantee security experts say is unverifiable and that the payment itself incentivises repeat attacks.",
+        "signal": "med",
+        "sources": [
+          "insidehighered.com"
+        ],
+        "url": "https://www.insidehighered.com/news/tech-innovation/administrative-tech/2026/05/11/instructure-pays-ransom-canvas-hackers"
+      },
+      {
+        "headline": "Windows kernel EDR technique: detecting cross-process thread injection with PsSetCreateThreadNotifyRoutine",
+        "body": "A detailed walkthrough shows how EDRs use the PsSetCreateThreadNotifyRoutine kernel callback — which fires in the creator's context — to flag cross-process thread creation by comparing PsGetCurrentProcessId() against the notification's ProcessId. The PoC WDF driver logs creator/target PID pairs and filters PID 4 to suppress legitimate kernel threads; production use requires layering in thread start-address inspection (unbacked memory), creator process reputation, and image-load correlation to reduce noise.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [
+      {
+        "headline": "US inflation hits 3.8% YoY in April — first time cost of living outpaces wage growth since 2023; rate hike odds rise",
+        "body": "April CPI came in at 3.8% year-over-year (up from 3.3% in March and 2.4% in February), driven by energy prices (+18% YoY) and fresh produce, while wage growth slowed to 3.6% — the first real-wage decline in three years. Core CPI remained at 2.8%, well above the Fed's 2% target; traders are now pricing in a rate hike by year-end despite incoming Fed chair Kevin Warsh's general preference for lower rates. Stagflationary pressure is a meaningful headwind for fintech credit and BNPL credit quality.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Databricks high-performance rate limiting: sharded in-memory counters + async batch-reporting cut tail latency 10×",
+        "body": "Databricks rebuilt its rate limiter from Redis-backed synchronous checks (10–20ms P99 due to two network hops) to a three-layer architecture: Dicer-routed sharded in-memory counters eliminating Redis, then client-side batch-reporting where clients make zero synchronous calls on the hot path and instead report counts every ~100ms asynchronously. The inversion — the rate limiter is told after decisions rather than consulted before — accepts ~5% overshoot in exchange for ~10× tail latency reduction and predictable server load; token bucket replaced fixed-window counting once the in-memory state layer was stable.",
+        "signal": "high",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://www.databricks.com/blog/high-performance-ratelimiting-databricks"
+      },
+      {
+        "headline": "Discord replaces manual ScyllaDB scripts with idempotent YAML-defined control plane, cutting multi-day ops to hours",
+        "body": "Discord built a Scylla Control Plane using idempotent tasks and YAML-defined workflows to replace fragile manual shell scripts for cluster management. High-stakes database operations that previously took several days now complete in a few hours, with the system designed for safety and repeatability at scale.",
+        "signal": "med",
+        "sources": [
+          "discord.com"
+        ],
+        "url": "https://discord.com/blog/how-discord-automates-scylladb-clusters-at-scale"
+      },
+      {
+        "headline": "Cloudflare post-mortem: Linux kernel idle-time optimisation caused QUIC CUBIC congestion window death spiral",
+        "body": "A Linux kernel optimisation for idle periods inadvertently triggered a QUIC death spiral in Cloudflare's quiche CUBIC implementation: the congestion window got stuck at minimum because idle time was measured from last packet sent rather than last ACK received. Fix: measure idle from the most recent acknowledgement, allowing the controller to distinguish true idleness from congestion — a subtle but critical distinction for any team running QUIC at scale.",
+        "signal": "med",
+        "sources": [
+          "blog.cloudflare.com"
+        ],
+        "url": "https://blog.cloudflare.com/quic-death-spiral-fix/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Google/SpaceX in talks for orbital AI data centres; Project Suncatcher positioned as compute frontier",
+        "body": "Google is in active discussions with SpaceX and other launch providers to place data centres in orbit as part of Project Suncatcher, its moonshot for orbital compute. SpaceX is simultaneously pitching orbital data centres to its own investors ahead of a planned IPO. The strategic framing — orbit as a solution to terrestrial data centre land/power constraints — signals that GOOGL and the broader hyperscaler infrastructure build-out is pushing into genuinely new physical frontiers.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/"
+      },
+      {
+        "headline": "Kevin Warsh confirmed as Fed governor; chair vote imminent with inflation data shifting market to rate-hike pricing",
+        "body": "The Senate confirmed Kevin Warsh 51-45 as a Fed governor, clearing the path for an imminent chair vote; he is expected to assume the chair role this Friday. With April CPI at 3.8% — well above target — traders have shifted to pricing in a rate hike by year-end, a significant macro reversal with direct implications for growth-stock valuations (MSFT, GOOGL, AMZN, NVDA) and fixed-income positioning.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "AI semiconductor supply chain: analog/power semis benefiting from AI infrastructure build; TI and NXP raising prices over capacity expansion",
+        "body": "The AI infrastructure boom is driving demand for analog and power semiconductors (notably MLCCs), absorbing capacity previously built for EV and solar markets. Texas Instruments and NXP are deliberately avoiding new capacity expansion and instead raising prices to improve margins — a disciplined posture that improves near-term profitability but signals potential supply tightness as AI data centre buildout accelerates.",
+        "signal": "med",
+        "sources": [
+          "citriniresearch.com"
+        ],
+        "url": "https://www.citriniresearch.com/p/semis-memo-supply-chain-inheritance"
+      },
+      {
+        "headline": "Sam Altman testifies at OpenAI trial: Musk demanded total control of for-profit arm and succession to his children",
+        "body": "Altman took the stand in the OpenAI nonprofit conversion trial, testifying that Musk demanded full control of OpenAI's for-profit arm and rights to pass it to his children — demands Altman called 'hair-raising.' Altman also stated Musk's management style 'demotivated' employees and his departure was a 'morale boost.' The trial's outcome affects OpenAI's ability to complete its for-profit restructuring, with downstream implications for MSFT's $13B+ investment.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "TanStack npm Supply Chain Compromise Postmortem",
+      "why": "Primary incident postmortem from the maintainers detailing the exact OIDC token extraction technique, persistence mechanisms, and remediation sequence — directly actionable for any team using GitHub Actions CI/CD with pull_request_target workflows.",
+      "url": "https://tanstack.com/blog/npm-supply-chain-compromise-postmortem"
+    },
+    {
+      "title": "High Performance Rate Limiting at Databricks",
+      "why": "Primary engineering post from Databricks detailing the full architectural progression from Redis to sharded in-memory to async batch-reporting, including the explicit accuracy tradeoff — a senior-level distributed systems design reference for any team building high-QPS control planes.",
+      "url": "https://www.databricks.com/blog/high-performance-ratelimiting-databricks"
+    },
+    {
+      "title": "GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation",
+      "why": "Primary threat intelligence report from Google's GTIG documenting the first criminal AI-developed zero-day, PRC LLM-assisted CVE scaling, and the PROMPTSPY agentic Android backdoor — foundational reading for anyone responsible for AI tooling security posture.",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access"
+    }
+  ]
+}

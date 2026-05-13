@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 14 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 14 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~9 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/gadgets/2026/05/googles-android-powered-laptops-are-called-googlebooks-and-theyre-coming-this-year/" target="_blank">Google launches Gemini Intelligence platform: Googlebooks, agentic Android, AI cursor</a></div>
+        <div class="story-body">Google&#x27;s Android Show pre-I/O event unveiled Googlebooks (Android-native laptops shipping fall 2026 with Dell/HP/Lenovo/Acer/Asus), a Gemini Intelligence cross-device agentic platform with on-screen context awareness, and a &#x27;Magic Pointer&#x27; AI cursor. Gemini will handle in-app agentic task execution, custom widgets, and Chrome auto-browse — delivered via Play Services updates rather than waiting for Android 17. Google is positioning this as a unified AI intelligence layer across hardware, a direct answer to Apple&#x27;s stalled Siri AI ambitions.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><span class="chip">mail.beehiiv.com</span><div class="ref-links"><a class="ref-link ai" href="https://arstechnica.com/gadgets/2026/05/googles-android-powered-laptops-are-called-googlebooks-and-theyre-coming-this-year/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access" target="_blank">GTIG: First criminal AI-developed zero-day used in the wild; PRC actors scale CVE analysis with LLMs</a></div>
+        <div class="story-body">Google&#x27;s Threat Intelligence Group documented the first observed criminal use of an AI-developed zero-day — a 2FA-bypass exploit against an open-source sysadmin tool, disrupted before deployment. Separately, PRC actors chained persona jailbreaks with a Claude plugin and 85,000 historical bug cases to automate CVE analysis at scale, and Russia-nexus groups are using LLM-generated decoy logic to pad malware payloads and evade static signatures. The PROMPTSPY Android backdoor autonomously interprets on-screen UI and issues actions, signalling a new class of agentic malware.</div>
+        <div class="story-meta"><span class="chip">cloud.google.com</span><div class="ref-links"><a class="ref-link ai" href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access" target="_blank">cloud.google.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://developers.openai.com/cookbook/examples/codex/build_iterative_repair_loops_with_codex" target="_blank">Claude Opus 4.7 Fast mode enters research preview; OpenAI publishes self-repairing agent loop cookbook</a></div>
+        <div class="story-body">Anthropic&#x27;s Fast mode for Claude Opus 4.7 is now opt-in in the API, Claude Code, Cursor, Warp, and Windsurf, with plans to make it the default. OpenAI simultaneously published a Codex cookbook for iterative agent loops that review, repair, and validate their own output — a concrete agentic architecture pattern for production use.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://developers.openai.com/cookbook/examples/codex/build_iterative_repair_loops_with_codex" target="_blank">developers.openai.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://modal.com/blog/truly-serverless-gpus" target="_blank">Modal Engineering: AI inference cold-start reduced from kiloseconds to tens of seconds via serverless GPU architecture</a></div>
+        <div class="story-body">Modal published a detailed engineering post on achieving truly serverless GPU inference, cutting replica spin-up time from multiple kiloseconds to tens of seconds. The piece dissects the storage, image caching, and scheduling layers that make variable inference demand tractable without pre-provisioned capacity — directly relevant for anyone building or evaluating inference infrastructure.</div>
+        <div class="story-meta"><span class="chip">modal.com</span><div class="ref-links"><a class="ref-link ai" href="https://modal.com/blog/truly-serverless-gpus" target="_blank">modal.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.com/statewright/statewright" target="_blank">Statewright: State machine guardrails for AI agent tool access improve coding benchmark success rates</a></div>
+        <div class="story-body">Statewright is an open-source framework that constrains which tools an AI coding agent can access based on its current workflow phase (planning, testing, etc.), using deterministic state machines rather than letting the model decide. The narrowed action space measurably increases benchmark success rates and reduces wasted tool calls — a practical architectural pattern for production agentic systems.</div>
+        <div class="story-meta"><span class="chip">github.com</span><div class="ref-links"><a class="ref-link ai" href="https://github.com/statewright/statewright" target="_blank">github.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://tanstack.com/blog/npm-supply-chain-compromise-postmortem" target="_blank">Shai-Hulud/TeamPCP supply chain campaign: TanStack 42 npm packages compromised via OIDC token theft from GitHub Actions runner memory</a></div>
+        <div class="story-body">On May 11, TeamPCP used a pull_request_target misconfiguration, GitHub Actions cache poisoning, and live OIDC token extraction from the Runner.Worker process to push 84 malicious versions across 42 @tanstack/* packages. The payload harvested AWS, GCP, Kubernetes, Vault, npm, GitHub, and SSH credentials and exfiltrated via Session/Oxen network; a dead-man&#x27;s switch (&#x27;IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner&#x27;) triggered destructive actions if the token was revoked before persistence was removed. Defenders must remove launchd/systemd units and Claude Code SessionStart hooks BEFORE rotating tokens, block egress to api.masscan.cloud, and audit pull_request_target workflows.</div>
+        <div class="story-meta"><span class="chip">tanstack.com</span><span class="chip">cybersecurityreach.org</span><div class="ref-links"><a class="ref-link sec" href="https://tanstack.com/blog/npm-supply-chain-compromise-postmortem" target="_blank">tanstack.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/razrHv" target="_blank">CheckMarx Jenkins AST plugin backdoored by TeamPCP via unrotated Trivy breach credentials</a></div>
+        <div class="story-body">TeamPCP pivoted from their March Trivy scanner compromise — using credentials Checkmarx never rotated — to push a rogue version (2026.5.09) of the official Checkmarx Jenkins AST plugin to the Jenkins Marketplace on May 9, delivering an infostealer. The malicious build sat outside the release pipeline, lacked a Git tag, and broke the date-based versioning scheme. Roll back to 2.0.13-829.vc72453fa_1c16, rotate all secrets on Jenkins runners that executed the plugin, and treat any vendor breach involving stolen repo credentials as a standing supply-chain risk until rotation is independently confirmed.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/razrHv" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/security/2026/05/linux-bitten-by-second-severe-vulnerability-in-as-many-weeks/" target="_blank">Dirty Frag: Public LPE exploit chains two Linux kernel bugs (CVE-2026-43284, CVE-2026-43500) to root via esp4/esp6 and rxrpc paths</a></div>
+        <div class="story-body">Dirty Frag chains two kernel vulnerabilities in the esp4/esp6 and rxrpc networking subsystems to allow low-privilege users to corrupt page cache data and gain root. Exploit code is already public and has been tested in attacks; Debian, AlmaLinux, and Fedora ship fixes but protection requires patching and rebooting — especially critical on shared servers and VMs. Prioritise patching any multi-tenant Linux infrastructure immediately.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><div class="ref-links"><a class="ref-link sec" href="https://arstechnica.com/security/2026/05/linux-bitten-by-second-severe-vulnerability-in-as-many-weeks/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.insidehighered.com/news/tech-innovation/administrative-tech/2026/05/11/instructure-pays-ransom-canvas-hackers" target="_blank">Instructure pays undisclosed ransom to ShinyHunters after dual Canvas LMS breaches exposing ~275M users</a></div>
+        <div class="story-body">Canvas LMS operator Instructure paid ShinyHunters an undisclosed ransom following two separate breaches that compromised personal data for approximately 275 million users and caused service disruptions. The company received a guarantee the data was destroyed — a guarantee security experts say is unverifiable and that the payment itself incentivises repeat attacks.</div>
+        <div class="story-meta"><span class="chip">insidehighered.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.insidehighered.com/news/tech-innovation/administrative-tech/2026/05/11/instructure-pays-ransom-canvas-hackers" target="_blank">insidehighered.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Windows kernel EDR technique: detecting cross-process thread injection with PsSetCreateThreadNotifyRoutine</div>
+        <div class="story-body">A detailed walkthrough shows how EDRs use the PsSetCreateThreadNotifyRoutine kernel callback — which fires in the creator&#x27;s context — to flag cross-process thread creation by comparing PsGetCurrentProcessId() against the notification&#x27;s ProcessId. The PoC WDF driver logs creator/target PID pairs and filters PID 4 to suppress legitimate kernel threads; production use requires layering in thread start-address inspection (unbacked memory), creator process reputation, and image-load correlation to reduce noise.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">US inflation hits 3.8% YoY in April — first time cost of living outpaces wage growth since 2023; rate hike odds rise</div>
+        <div class="story-body">April CPI came in at 3.8% year-over-year (up from 3.3% in March and 2.4% in February), driven by energy prices (+18% YoY) and fresh produce, while wage growth slowed to 3.6% — the first real-wage decline in three years. Core CPI remained at 2.8%, well above the Fed&#x27;s 2% target; traders are now pricing in a rate hike by year-end despite incoming Fed chair Kevin Warsh&#x27;s general preference for lower rates. Stagflationary pressure is a meaningful headwind for fintech credit and BNPL credit quality.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.databricks.com/blog/high-performance-ratelimiting-databricks" target="_blank">Databricks high-performance rate limiting: sharded in-memory counters + async batch-reporting cut tail latency 10×</a></div>
+        <div class="story-body">Databricks rebuilt its rate limiter from Redis-backed synchronous checks (10–20ms P99 due to two network hops) to a three-layer architecture: Dicer-routed sharded in-memory counters eliminating Redis, then client-side batch-reporting where clients make zero synchronous calls on the hot path and instead report counts every ~100ms asynchronously. The inversion — the rate limiter is told after decisions rather than consulted before — accepts ~5% overshoot in exchange for ~10× tail latency reduction and predictable server load; token bucket replaced fixed-window counting once the in-memory state layer was stable.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.databricks.com/blog/high-performance-ratelimiting-databricks" target="_blank">databricks.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://discord.com/blog/how-discord-automates-scylladb-clusters-at-scale" target="_blank">Discord replaces manual ScyllaDB scripts with idempotent YAML-defined control plane, cutting multi-day ops to hours</a></div>
+        <div class="story-body">Discord built a Scylla Control Plane using idempotent tasks and YAML-defined workflows to replace fragile manual shell scripts for cluster management. High-stakes database operations that previously took several days now complete in a few hours, with the system designed for safety and repeatability at scale.</div>
+        <div class="story-meta"><span class="chip">discord.com</span><div class="ref-links"><a class="ref-link swe" href="https://discord.com/blog/how-discord-automates-scylladb-clusters-at-scale" target="_blank">discord.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/quic-death-spiral-fix/" target="_blank">Cloudflare post-mortem: Linux kernel idle-time optimisation caused QUIC CUBIC congestion window death spiral</a></div>
+        <div class="story-body">A Linux kernel optimisation for idle periods inadvertently triggered a QUIC death spiral in Cloudflare&#x27;s quiche CUBIC implementation: the congestion window got stuck at minimum because idle time was measured from last packet sent rather than last ACK received. Fix: measure idle from the most recent acknowledgement, allowing the controller to distinguish true idleness from congestion — a subtle but critical distinction for any team running QUIC at scale.</div>
+        <div class="story-meta"><span class="chip">blog.cloudflare.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.cloudflare.com/quic-death-spiral-fix/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/" target="_blank">Google/SpaceX in talks for orbital AI data centres; Project Suncatcher positioned as compute frontier</a></div>
+        <div class="story-body">Google is in active discussions with SpaceX and other launch providers to place data centres in orbit as part of Project Suncatcher, its moonshot for orbital compute. SpaceX is simultaneously pitching orbital data centres to its own investors ahead of a planned IPO. The strategic framing — orbit as a solution to terrestrial data centre land/power constraints — signals that GOOGL and the broader hyperscaler infrastructure build-out is pushing into genuinely new physical frontiers.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/05/12/report-google-and-spacex-in-talks-to-put-data-centers-into-orbit/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Kevin Warsh confirmed as Fed governor; chair vote imminent with inflation data shifting market to rate-hike pricing</div>
+        <div class="story-body">The Senate confirmed Kevin Warsh 51-45 as a Fed governor, clearing the path for an imminent chair vote; he is expected to assume the chair role this Friday. With April CPI at 3.8% — well above target — traders have shifted to pricing in a rate hike by year-end, a significant macro reversal with direct implications for growth-stock valuations (MSFT, GOOGL, AMZN, NVDA) and fixed-income positioning.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.citriniresearch.com/p/semis-memo-supply-chain-inheritance" target="_blank">AI semiconductor supply chain: analog/power semis benefiting from AI infrastructure build; TI and NXP raising prices over capacity expansion</a></div>
+        <div class="story-body">The AI infrastructure boom is driving demand for analog and power semiconductors (notably MLCCs), absorbing capacity previously built for EV and solar markets. Texas Instruments and NXP are deliberately avoiding new capacity expansion and instead raising prices to improve margins — a disciplined posture that improves near-term profitability but signals potential supply tightness as AI data centre buildout accelerates.</div>
+        <div class="story-meta"><span class="chip">citriniresearch.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.citriniresearch.com/p/semis-memo-supply-chain-inheritance" target="_blank">citriniresearch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Sam Altman testifies at OpenAI trial: Musk demanded total control of for-profit arm and succession to his children</div>
+        <div class="story-body">Altman took the stand in the OpenAI nonprofit conversion trial, testifying that Musk demanded full control of OpenAI&#x27;s for-profit arm and rights to pass it to his children — demands Altman called &#x27;hair-raising.&#x27; Altman also stated Musk&#x27;s management style &#x27;demotivated&#x27; employees and his departure was a &#x27;morale boost.&#x27; The trial&#x27;s outcome affects OpenAI&#x27;s ability to complete its for-profit restructuring, with downstream implications for MSFT&#x27;s $13B+ investment.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://tanstack.com/blog/npm-supply-chain-compromise-postmortem" target="_blank">TanStack npm Supply Chain Compromise Postmortem ↗</a></div>
+          <div class="dive-why">Primary incident postmortem from the maintainers detailing the exact OIDC token extraction technique, persistence mechanisms, and remediation sequence — directly actionable for any team using GitHub Actions CI/CD with pull_request_target workflows.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.databricks.com/blog/high-performance-ratelimiting-databricks" target="_blank">High Performance Rate Limiting at Databricks ↗</a></div>
+          <div class="dive-why">Primary engineering post from Databricks detailing the full architectural progression from Redis to sharded in-memory to async batch-reporting, including the explicit accuracy tradeoff — a senior-level distributed systems design reference for any team building high-QPS control planes.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://cloud.google.com/blog/topics/threat-intelligence/ai-vulnerability-exploitation-initial-access" target="_blank">GTIG AI Threat Tracker: Adversaries Leverage AI for Vulnerability Exploitation ↗</a></div>
+          <div class="dive-why">Primary threat intelligence report from Google&#x27;s GTIG documenting the first criminal AI-developed zero-day, PRC LLM-assisted CVE scaling, and the PROMPTSPY agentic Android backdoor — foundational reading for anyone responsible for AI tooling security posture.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 13 May 2026 · sources: arstechnica.com, mail.beehiiv.com, cloud.google.com, tldr.tech, modal.com, github.com, tanstack.com, cybersecurityreach.org, insidehighered.com, morningbrew.com, blog.bytebytego.com, discord.com, blog.cloudflare.com, techcrunch.com, citriniresearch.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
