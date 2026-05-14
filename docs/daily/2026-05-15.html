@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 15 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 15 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">13</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://econlab.substack.com/p/anthropic-beats-openai?utm_source=tldrai" target="_blank">Anthropic overtakes OpenAI in business spend for first time — Claude Code key driver</a></div>
+        <div class="story-body">Ramp&#x27;s AI Index (50K+ US business card/invoice spend data) shows Anthropic at 34.4% paid business adoption vs OpenAI&#x27;s 32.3% in April — a 4x surge for Anthropic YoY while OpenAI was nearly flat (+0.3%). Claude Code is credited with expanding Anthropic from dev teams into finance, legal, and research workflows, likely triggering OpenAI&#x27;s &#x27;code red&#x27; enterprise pivot and its new Codex/deployment company push.</div>
+        <div class="story-meta"><span class="chip">econlab.substack.com</span><span class="chip">rundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://econlab.substack.com/p/anthropic-beats-openai?utm_source=tldrai" target="_blank">econlab.substack.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://vercel.com/blog/ai-gateway-production-index?utm_source=tldrai" target="_blank">Vercel AI Gateway production index: agentic workloads now 59% of all token volume</a></div>
+        <div class="story-body">Analysis of 7 months of production traffic across 200K+ teams shows agentic workloads carrying 59% of token volume, rapid open-source model adoption, and heavy multi-model routing in large deployments. Anthropic leads in spend despite higher unit price; Google leads in volume; no lab loyalty observed.</div>
+        <div class="story-meta"><span class="chip">vercel.com</span><div class="ref-links"><a class="ref-link ai" href="https://vercel.com/blog/ai-gateway-production-index?utm_source=tldrai" target="_blank">vercel.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/LurP3s" target="_blank">Cerebras IPO raises $5.55B at ~$40B valuation — year&#x27;s largest IPO, 20x oversubscribed</a></div>
+        <div class="story-body">AI chipmaker Cerebras priced its Nasdaq IPO at ~$40B market cap, raising $5.55B — the largest US IPO of 2026 so far with 20x+ demand. This is a direct NVDA/TSMC ecosystem signal: demand for alternative AI inference silicon is institutionally validated at scale.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/LurP3s" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/9DLcY9" target="_blank">OpenAI details Codex Windows sandbox architecture: constrained file, network, and command permissions for coding agents on developer machines</a></div>
+        <div class="story-body">OpenAI published the engineering design behind Codex&#x27;s Windows sandbox, which enforces least-privilege constraints on local commands, file access, and networking while keeping coding agents functional. Directly relevant to anyone deploying agentic workloads in enterprise or regulated environments where lateral movement risk from AI agents is a concern.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/9DLcY9" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/objCxW" target="_blank">Recursive Superintelligence raises $650M+ at $4B valuation to build self-improving AI</a></div>
+        <div class="story-body">Seven co-founders from leading AI labs are targeting AI that improves itself with minimal human involvement, specialising in long-running goal-directed systems. The current technology still requires humans in the loop, but the $4B valuation signals institutional appetite for recursive self-improvement research as a credible near-term bet.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/objCxW" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.kaspersky.com/blog/llmjacking-2026-private-ai-server-security/55768/?utm_source=tldrinfosec" target="_blank">LLMjacking honeypot study: AI infrastructure scanned within 3 hours of Shodan indexing, 23% of traffic targeting model capability endpoints</a></div>
+        <div class="story-body">A Raspberry Pi running Ollama/LM Studio/AutoGPT/LangServe/MCP attracted 113K+ requests in a month, with 23% probing AI-specific endpoints (/api/tags, /v1/models, /.well-known/mcp.json) and 175 active hijacking attempts in the final week targeting compute theft and .env credential exfiltration. Shared LLM-Scanner tooling updated mid-experiment to detect honeypots, signalling a maturing attacker ecosystem. Mitigations: bind model servers to localhost, gate remote access with OIDC/OAuth2 short-lived tokens, segment AI infra with allowlists, issue separate tokens per MCP/LLM/RAG component, and SIEM-pipe prompt logs with consumption quotas.</div>
+        <div class="story-meta"><span class="chip">kaspersky.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.kaspersky.com/blog/llmjacking-2026-private-ai-server-security/55768/?utm_source=tldrinfosec" target="_blank">kaspersky.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/bONQiO" target="_blank">Foxconn ransomware attack (Nitrogen gang): 8TB stolen including confidential Apple, Intel, Google, Nvidia documents</a></div>
+        <div class="story-body">The Nitrogen ransomware gang hit Foxconn&#x27;s North American factories and claims to have exfiltrated 8TB/11M+ documents containing confidential designs and project files from major tech customers. Foxconn confirmed the attack; scope of customer IP exposure is significant for anyone in the NVDA, AAPL, GOOG supply chain.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/bONQiO" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://ipurple.team/2026/05/13/entrypoint-hijacking/?utm_source=tldrinfosec" target="_blank">EntryPoint hijacking: DLL EP overwrite technique avoids thread-creation APIs, extends attacker dwell time</a></div>
+        <div class="story-body">The technique overwrites the EntryPoint of legitimate DLLs (e.g. kernelbase.dll), executing shellcode via thread pools while patching PEB loader structures and restoring the original EP to maintain process stability. PoC tools EPI and LdrShuffle demonstrate viability. Detection requires continuous PEB/LDR scanning, OriginalBase vs DllBase comparison, and correlation of OpenProcess/ReadProcessMemory with suspicious outbound traffic.</div>
+        <div class="story-meta"><span class="chip">ipurple.team</span><div class="ref-links"><a class="ref-link sec" href="https://ipurple.team/2026/05/13/entrypoint-hijacking/?utm_source=tldrinfosec" target="_blank">ipurple.team ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://status.rubygems.org/incidents/cytf062tkwtt?utm_source=tldrinfosec" target="_blank">RubyGems.org temporarily disables new registrations after 500+ malicious packages pushed via DDoS-style bot wave</a></div>
+        <div class="story-body">Bot accounts pushed 500+ malicious gems before being yanked; RubyGems closed registrations for 2–3 days while tightening Fastly WAF rules and account-creation rate limits. Existing gem installs and pushes unaffected. Supply chain risk reminder for Ruby-dependent pipelines.</div>
+        <div class="story-meta"><span class="chip">status.rubygems.org</span><div class="ref-links"><a class="ref-link sec" href="https://status.rubygems.org/incidents/cytf062tkwtt?utm_source=tldrinfosec" target="_blank">status.rubygems.org ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/Vc0Xbz" target="_blank">Wise dual-lists on Nasdaq (ticker: WSE); applying for US national trust bank connected to Federal Reserve rails</a></div>
+        <div class="story-body">Wise&#x27;s Nasdaq listing extends trading hours and targets US investor access, while the more significant signal is its application to charter a US national trust bank with direct Fed payment rail connectivity. This positions Wise to offer bank-grade settlement infrastructure for its Platform business and major bank clients.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/Vc0Xbz" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.theglobeandmail.com/investing/markets/stocks/AFRM/pressreleases/1917522/affirm-maps-road-to-100b-gmv-with-card-ai-commerce-and-global-expansion/?utm_source=tldrfintech" target="_blank">Affirm&#x27;s transformer-based AI underwriting already outperforming existing models internally; targeting $100B GMV via agentic commerce integrations</a></div>
+        <div class="story-body">Affirm disclosed that internal transformer AI underwriting models are beating current production systems, and positioned itself as infrastructure for AI-driven agentic commerce via Shopify, Stripe, and Google integrations. 500K+ checkouts, 27M active consumers, and Affirm Card growth underpin the $100B GMV roadmap.</div>
+        <div class="story-meta"><span class="chip">theglobeandmail.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.theglobeandmail.com/investing/markets/stocks/AFRM/pressreleases/1917522/affirm-maps-road-to-100b-gmv-with-card-ai-commerce-and-global-expansion/?utm_source=tldrfintech" target="_blank">theglobeandmail.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://finovate.com/5-things-to-know-about-the-clarity-act/?utm_source=tldrfintech" target="_blank">CLARITY Act: proposed US legislation classifies tokens as securities vs commodities, sets AML/stablecoin/DeFi guardrails</a></div>
+        <div class="story-body">The Senate bill creates a regulatory framework distinguishing security tokens from commodity tokens while addressing stablecoin yield, DeFi oversight, and AML compliance. Key battleground: whether stablecoin yield products are treated as securities. Material for any fintech with digital asset exposure or tokenized payment rails.</div>
+        <div class="story-meta"><span class="chip">finovate.com</span><div class="ref-links"><a class="ref-link fin" href="https://finovate.com/5-things-to-know-about-the-clarity-act/?utm_source=tldrfintech" target="_blank">finovate.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.paymentsdive.com/news/senators-query-credit-bureaus-on-bnpl/819830/?utm_source=tldrfintech" target="_blank">Senate queries Equifax, Experian, TransUnion on BNPL credit reporting — fragmented standards under regulatory pressure</a></div>
+        <div class="story-body">Democratic senators are pressing the three major bureaus on whether and how BNPL repayment data should feed into consumer credit scores, highlighting the industry&#x27;s inconsistent reporting standards. Google&#x27;s simultaneous integration of Affirm and Klarna into AI shopping surfaces via Google Pay amplifies the systemic scale of BNPL data gaps.</div>
+        <div class="story-meta"><span class="chip">paymentsdive.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.paymentsdive.com/news/senators-query-credit-bureaus-on-bnpl/819830/?utm_source=tldrfintech" target="_blank">paymentsdive.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://questdb.com/blog/window-join-parallel-vectorized/?utm_source=tldrdev" target="_blank">QuestDB WINDOW JOIN: 25x perf gain via data-level parallelism and SIMD-vectorized aggregation</a></div>
+        <div class="story-body">QuestDB replaced a generic join path with a dedicated WINDOW JOIN operator that recognises window structures, organises data into contiguous memory buffers, and applies SIMD-vectorized aggregation kernels with parallel execution. The result is up to 25x faster than competitors on time-series workloads — a concrete pattern for latency-sensitive fintech analytics pipelines.</div>
+        <div class="story-meta"><span class="chip">questdb.com</span><div class="ref-links"><a class="ref-link swe" href="https://questdb.com/blog/window-join-parallel-vectorized/?utm_source=tldrdev" target="_blank">questdb.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://wasp.sh/blog/2026/05/13/new-language-for-web-dev-was-a-mistake?utm_source=tldrdev" target="_blank">Wasp co-founder: 5 years and $5M building a custom web DSL was a mistake — switching to TypeScript SDK</a></div>
+        <div class="story-body">After investing heavily in a proprietary language for full-stack web dev, Wasp concluded the friction of custom IDE tooling and developer adoption resistance outweighed the benefits. The pivot to a TypeScript-based SDK is a hard-won lesson about the hidden costs of escaping the mainstream toolchain — relevant for any platform team considering a custom DSL or internal language.</div>
+        <div class="story-meta"><span class="chip">wasp.sh</span><div class="ref-links"><a class="ref-link swe" href="https://wasp.sh/blog/2026/05/13/new-language-for-web-dev-was-a-mistake?utm_source=tldrdev" target="_blank">wasp.sh ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/PxU" target="_blank">Trump-Xi summit in Beijing: trade truce extension expected, China reopens US beef imports; rare earth access and chip sales both on the table</a></div>
+        <div class="story-body">First US presidential visit to China in nearly a decade, with Musk and Huang aboard Air Force One as business envoys. China renewed import licenses for hundreds of US beef plants as an early concession; the US wants rare earth access restored while China presses for advanced chip sales and Taiwan weapons sale cancellation. A new &#x27;Board of Trade&#x27; structure is being floated. Portfolio-relevant: NVDA chip export restrictions, TSMC supply chain stability, and broader US-China tech decoupling trajectory all hinge on summit outcomes.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/PxU" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Kevin Warsh confirmed as Fed chair; Powell exits while criminal probe ongoing</div>
+        <div class="story-body">Senate confirmed Warsh 54–45 to succeed Powell, whose term ends today. Warsh&#x27;s Fed independence commitment is under scrutiny given Trump pressure history; rate cut delivery is complicated by Iran-driven inflation. Powell remains as governor pending probe resolution. Rate trajectory directly affects fintech valuations and fixed-income positioning in VOO/VEA.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">S&amp;P 500 and Nasdaq set new records; Mag 7 up except Microsoft; Alphabet +3.97%</div>
+        <div class="story-body">Chip and tech stocks drove the rally with Alphabet gaining nearly 4% — directly relevant to GOOGL and NVDA holdings. Microsoft was the sole Mag 7 laggard. Market context: US-China tariff truce and AI capex optimism are the primary tailwinds.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.kaspersky.com/blog/llmjacking-2026-private-ai-server-security/55768/" target="_blank">LLMjacking Honeypot Study: AI Server Attack Surface in the Wild ↗</a></div>
+          <div class="dive-why">Primary research with concrete attacker TTPs, IOCs, and mitigations specifically targeting MCP/Ollama/LangServe infrastructure — directly actionable for anyone running AI agents in production or advising on AI infra security.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://vercel.com/blog/ai-gateway-production-index" target="_blank">Vercel AI Gateway Production Index: 7-Month Real-Traffic Analysis ↗</a></div>
+          <div class="dive-why">Rare production dataset across 200K+ teams quantifying agentic workload share, model routing patterns, and lab spend distribution — ground truth for architectural decisions on model gateway design and vendor strategy.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://links.tldrnewsletter.com/9DLcY9" target="_blank">OpenAI Codex Windows Sandbox Engineering Deep Dive ↗</a></div>
+          <div class="dive-why">Primary engineering post detailing least-privilege sandboxing architecture for coding agents on developer machines — concrete reference design for anyone building or auditing agentic AI deployment in enterprise environments.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 14 May 2026 · sources: econlab.substack.com, rundownai.com, vercel.com, tldrnewsletter.com, kaspersky.com, ipurple.team, status.rubygems.org, theglobeandmail.com, finovate.com, paymentsdive.com, questdb.com, wasp.sh, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
