@@ -1,0 +1,162 @@
+{
+  "date": "2026-05-16",
+  "threadCount": 6,
+  "storyCount": 14,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic's Mythos AI Finds First Public macOS M5 Kernel Exploit in 5 Days",
+        "body": "Anthropic's Mythos Preview model was used to discover and exploit the first public macOS kernel memory corruption vulnerability on Apple M5 silicon, bypassing Apple's Memory Integrity Enforcement system in just five days. This is a landmark demonstration of AI-accelerated offensive security research against hardware-level defenses Apple spent five years building. Direct implication: AI is now compressing the timeline from vulnerability class to working exploit from months to days.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://blog.calif.io/p/first-public-kernel-memory-corruption"
+      },
+      {
+        "headline": "Cursor Launches Cloud Agent Development Environments with Fleet Governance",
+        "body": "Cursor announced cloud-based dev environments purpose-built for autonomous coding agents, supporting multi-repo setups, environment-as-code configuration, and governance controls for managing parallel agent fleets. This is infrastructure-layer thinking for agentic software delivery — not just IDE features. Signals the emerging pattern of per-agent ephemeral environments replacing shared developer sandboxes.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://cursor.com/blog/cloud-agent-development-environments"
+      },
+      {
+        "headline": "Secure Agent Sandbox Architecture: Isolate the Agent, Not Just the Tool",
+        "body": "A technical deep-dive argues that correct agent sandboxing means isolating the agent itself (stateless, no secrets, independently killable) rather than just the tools it calls. The tradeoff is an extra network hop per operation and more services to operate, but eliminates secret exfiltration risk and enables horizontal scaling. Directly relevant for anyone building or evaluating agentic systems in regulated/fintech environments.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic Leases xAI Data Center Capacity After Dev Backlash Over Rate Limits",
+        "body": "Anthropic faced significant developer backlash for restricting API features and banning accounts — moves traced to infrastructure capacity being overwhelmed by faster-than-planned usage growth. The company has struck a deal to lease data centre space from xAI to restore Claude Pro access and raise API rate limits. Reveals how tight compute supply chains are even for well-capitalised frontier labs.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://blog.pragmaticengineer.com/the-pulse-did-capacity-shortages-turn-anthropic-hostile-to-devs/"
+      },
+      {
+        "headline": "Anthropic Publishes 2028 US vs China AI Leadership Scenarios",
+        "body": "Anthropic's research paper outlines two 2028 scenarios: US maintains AI leadership via export controls and chip advantage, or China closes the gap through policy inaction and distillation attacks on US-trained models. Key policy lever identified is closing compute access loopholes and restricting model distillation. Relevant for TSMC and NVDA portfolio thesis around sustained export control regimes.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.anthropic.com/research/2028-ai-leadership"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "NGINX 18-Year-Old Heap Overflow (CVE-2026-42945) Enables Remote Code Execution",
+        "body": "Depthfirst disclosed four remote memory corruption bugs in NGINX including CVE-2026-42945, a heap overflow in the rewrite/set script engine present since 2008 in NGINX and F5 products. A crafted rewrite+set sequence miscalculates buffer length, overflows heap data with escaped URI bytes, and corrupts ngx_pool cleanup pointers to achieve RCE. Exploitation is reliable via deterministic worker heaps and cross-request heap feng shui — urgent patching required for any NGINX deployment using rewrite/set.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://depthfirst.com/research/nginx-rift-achieving-nginx-rce-via-an-18-year-old-vulnerability"
+      },
+      {
+        "headline": "AWS Cognito Multi-SSO Attack Patterns: JIT Ghost Injection, Sub-Splitting, IdpIdentifier Hijack",
+        "body": "Doyensec documented four concrete attack patterns against AWS Cognito User Pools with tenant-supplied OIDC/SAML IdPs: JIT ghost identity injection via missing PreSignUp domain checks, trigger-source gaps bypassing constraints on first federated login, sub-splitting attacks on ProviderName_sub username parsing, and IdpIdentifier hijacks (e.g., claiming gmail.com). Homoglyph collisions in ProviderName (Cyrillic vs ASCII) further enable split-identity confusion across Hosted UI, audit logs, and Lambda consumers. Defenders must branch PreSignUp logic across all triggerSource values, derive tenant/role server-side, and gate IdpIdentifier claims behind verified domain ownership.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://blog.doyensec.com/2026/05/05/cloudsectidbits-masso-cognito-sso.html"
+      },
+      {
+        "headline": "MCP Back-End Vulnerabilities Found at Scale: SQL Injection, Unauthenticated Access in Apache and Alibaba Implementations",
+        "body": "Akamai researchers reviewed ~300 MCP servers and found exploitable flaws in Apache Doris (SQL injection via unchecked db_name parameter), Apache Pinot (unauthenticated HTTP tool access), and Alibaba RDS (unauthenticated RAG schema retrieval). Attackers reaching exposed MCP endpoints can run arbitrary SELECT queries or exfiltrate database structure. With MCP adoption growing rapidly, this is a systemic supply-chain-adjacent risk for any agentic deployment using these backends.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      },
+      {
+        "headline": "OpenAI Confirms Two Employee Devices Compromised via TanStack Supply Chain Attack",
+        "body": "OpenAI published a security advisory confirming two employee devices were compromised as part of the TanStack supply chain compromise, a widely-used JavaScript ecosystem package. OpenAI reports no customer data, production systems, IP, or deployed software was impacted, but is rotating code signing certificates as a precaution. Reinforces the developer toolchain as a high-value lateral movement vector targeting AI companies.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Bluekit AI-Powered Phishing Kit: 40+ Templates, Abliterated Llama + GPT-4.1/Sonnet 4 Integration",
+        "body": "Varonis Threat Labs discovered Bluekit, a phishing-as-a-service kit offering automated domain purchase, 2FA support, geolocation emulation, antibot cloaking, and an AI assistant integrating commercial models (GPT-4.1, Claude Sonnet 4, Gemini, DeepSeek) alongside a jailbroken Llama. Actual AI capability was found to be limited in testing — generic campaign drafts with placeholders — but the commoditisation of AI-augmented phishing infrastructure at this level of polish is a meaningful threat escalation signal.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.varonis.com/blog/bluekit"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Klarna Surges 20% After First Break-Even Since IPO; Fed Chair Warsh Takes Over from Powell",
+        "body": "Klarna shares jumped ~20% after posting its first break-even quarter since its IPO, a significant milestone for BNPL amid ongoing profitability scrutiny. Separately, Kevin Warsh replaced Jerome Powell as Fed Chair today, confirmed by the Senate by the slimmest margin in history; Warsh favours rate cuts but FedWatch shows less than 2.8% probability of cuts through year-end with inflation still at 3.8%. Warsh has publicly compared the AI productivity wave to the 1990s PC boom as a potential inflation buffer — a key macro variable for tech portfolio valuations.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "GitHub Staff Engineer's Production Adoption of Herb HTML+ERB Parser in 500K-Line Rails Monolith",
+        "body": "A GitHub staff engineer integrated Herb, a C-based HTML+ERB parser, into GitHub's Rails monolith (~500K lines of ERB) as a pre-adoption validation exercise before Herb potentially replaces Erubi in Rails core. It caught real bugs that existing linting missed — malformed HTML and invalid Ruby in untested branches — and AI assistants one-shot fixed most of the ~2,800 initially failing files. A useful production case study on using parser-level tooling for correctness guarantees in large legacy codebases.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://hawksley.org/2026/05/06/adopting-herb-at-github.html"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "OpenAI Explores Legal Action Against Apple Over ChatGPT Integration Shortfall",
+        "body": "OpenAI has engaged outside legal counsel to explore action against Apple, claiming Apple failed to deliver the subscriber growth and deep ecosystem integration promised under their two-year partnership. Apple is reportedly set to open its platform to rival AI providers later this year, which would directly erode OpenAI's privileged distribution position. A fracture here reshapes which AI providers get iOS-level distribution access — a major competitive moat.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech",
+          "morningbrew.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/14/openai-is-reportedly-preparing-legal-action-against-apple-it-wouldnt-be-the-first-partner-to-feel-burned/"
+      },
+      {
+        "headline": "AI Labs Acquiring Dev Tool Teams to Control Coding Agent Infrastructure",
+        "body": "AI labs are systematically acquiring the teams behind foundational developer tools — package managers, runtimes, language servers — to control the infrastructure their coding agents depend on. This is a strategic land-grab for the software delivery stack below the model layer. Engineers should track maintainership changes in open-source tooling they depend on and avoid deep platform-specific coupling.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://blog.logrocket.com/ai-companies-buying-teams-behind-dev-tools/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "NGINX Rift: Achieving RCE via an 18-Year-Old Vulnerability (CVE-2026-42945)",
+      "why": "Primary security research with full technical exploitation chain for a critical NGINX/F5 RCE affecting widely deployed infrastructure — directly actionable for any team running NGINX with rewrite/set directives.",
+      "url": "https://depthfirst.com/research/nginx-rift-achieving-nginx-rce-via-an-18-year-old-vulnerability"
+    },
+    {
+      "title": "The Danger of Multi-SSO AWS Cognito User Pools — Doyensec",
+      "why": "Authoritative technical breakdown of four novel identity attack patterns against Cognito federated IdP configurations, with a weaponised OIDC/SAML/SCIM test IdP released — essential reading for anyone owning IAM architecture on AWS.",
+      "url": "https://blog.doyensec.com/2026/05/05/cloudsectidbits-masso-cognito-sso.html"
+    },
+    {
+      "title": "Anthropic: 2028 — Two Scenarios for Global AI Leadership",
+      "why": "First-party Anthropic research framing US vs China AI competition around compute export controls and distillation attacks — directly relevant to the NVDA/TSMC portfolio thesis and long-horizon AI infrastructure bets.",
+      "url": "https://www.anthropic.com/research/2028-ai-leadership"
+    }
+  ]
+}

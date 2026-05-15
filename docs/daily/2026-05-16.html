@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // SAT 16 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SAT 16 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">2</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.calif.io/p/first-public-kernel-memory-corruption" target="_blank">Anthropic&#x27;s Mythos AI Finds First Public macOS M5 Kernel Exploit in 5 Days</a></div>
+        <div class="story-body">Anthropic&#x27;s Mythos Preview model was used to discover and exploit the first public macOS kernel memory corruption vulnerability on Apple M5 silicon, bypassing Apple&#x27;s Memory Integrity Enforcement system in just five days. This is a landmark demonstration of AI-accelerated offensive security research against hardware-level defenses Apple spent five years building. Direct implication: AI is now compressing the timeline from vulnerability class to working exploit from months to days.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://blog.calif.io/p/first-public-kernel-memory-corruption" target="_blank">blog.calif.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cursor.com/blog/cloud-agent-development-environments" target="_blank">Cursor Launches Cloud Agent Development Environments with Fleet Governance</a></div>
+        <div class="story-body">Cursor announced cloud-based dev environments purpose-built for autonomous coding agents, supporting multi-repo setups, environment-as-code configuration, and governance controls for managing parallel agent fleets. This is infrastructure-layer thinking for agentic software delivery — not just IDE features. Signals the emerging pattern of per-agent ephemeral environments replacing shared developer sandboxes.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://cursor.com/blog/cloud-agent-development-environments" target="_blank">cursor.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Secure Agent Sandbox Architecture: Isolate the Agent, Not Just the Tool</div>
+        <div class="story-body">A technical deep-dive argues that correct agent sandboxing means isolating the agent itself (stateless, no secrets, independently killable) rather than just the tools it calls. The tradeoff is an extra network hop per operation and more services to operate, but eliminates secret exfiltration risk and enables horizontal scaling. Directly relevant for anyone building or evaluating agentic systems in regulated/fintech environments.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.pragmaticengineer.com/the-pulse-did-capacity-shortages-turn-anthropic-hostile-to-devs/" target="_blank">Anthropic Leases xAI Data Center Capacity After Dev Backlash Over Rate Limits</a></div>
+        <div class="story-body">Anthropic faced significant developer backlash for restricting API features and banning accounts — moves traced to infrastructure capacity being overwhelmed by faster-than-planned usage growth. The company has struck a deal to lease data centre space from xAI to restore Claude Pro access and raise API rate limits. Reveals how tight compute supply chains are even for well-capitalised frontier labs.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://blog.pragmaticengineer.com/the-pulse-did-capacity-shortages-turn-anthropic-hostile-to-devs/" target="_blank">blog.pragmaticengineer.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.anthropic.com/research/2028-ai-leadership" target="_blank">Anthropic Publishes 2028 US vs China AI Leadership Scenarios</a></div>
+        <div class="story-body">Anthropic&#x27;s research paper outlines two 2028 scenarios: US maintains AI leadership via export controls and chip advantage, or China closes the gap through policy inaction and distillation attacks on US-trained models. Key policy lever identified is closing compute access loopholes and restricting model distillation. Relevant for TSMC and NVDA portfolio thesis around sustained export control regimes.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/research/2028-ai-leadership" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://depthfirst.com/research/nginx-rift-achieving-nginx-rce-via-an-18-year-old-vulnerability" target="_blank">NGINX 18-Year-Old Heap Overflow (CVE-2026-42945) Enables Remote Code Execution</a></div>
+        <div class="story-body">Depthfirst disclosed four remote memory corruption bugs in NGINX including CVE-2026-42945, a heap overflow in the rewrite/set script engine present since 2008 in NGINX and F5 products. A crafted rewrite+set sequence miscalculates buffer length, overflows heap data with escaped URI bytes, and corrupts ngx_pool cleanup pointers to achieve RCE. Exploitation is reliable via deterministic worker heaps and cross-request heap feng shui — urgent patching required for any NGINX deployment using rewrite/set.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://depthfirst.com/research/nginx-rift-achieving-nginx-rce-via-an-18-year-old-vulnerability" target="_blank">depthfirst.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.doyensec.com/2026/05/05/cloudsectidbits-masso-cognito-sso.html" target="_blank">AWS Cognito Multi-SSO Attack Patterns: JIT Ghost Injection, Sub-Splitting, IdpIdentifier Hijack</a></div>
+        <div class="story-body">Doyensec documented four concrete attack patterns against AWS Cognito User Pools with tenant-supplied OIDC/SAML IdPs: JIT ghost identity injection via missing PreSignUp domain checks, trigger-source gaps bypassing constraints on first federated login, sub-splitting attacks on ProviderName_sub username parsing, and IdpIdentifier hijacks (e.g., claiming gmail.com). Homoglyph collisions in ProviderName (Cyrillic vs ASCII) further enable split-identity confusion across Hosted UI, audit logs, and Lambda consumers. Defenders must branch PreSignUp logic across all triggerSource values, derive tenant/role server-side, and gate IdpIdentifier claims behind verified domain ownership.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://blog.doyensec.com/2026/05/05/cloudsectidbits-masso-cognito-sso.html" target="_blank">blog.doyensec.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">MCP Back-End Vulnerabilities Found at Scale: SQL Injection, Unauthenticated Access in Apache and Alibaba Implementations</div>
+        <div class="story-body">Akamai researchers reviewed ~300 MCP servers and found exploitable flaws in Apache Doris (SQL injection via unchecked db_name parameter), Apache Pinot (unauthenticated HTTP tool access), and Alibaba RDS (unauthenticated RAG schema retrieval). Attackers reaching exposed MCP endpoints can run arbitrary SELECT queries or exfiltrate database structure. With MCP adoption growing rapidly, this is a systemic supply-chain-adjacent risk for any agentic deployment using these backends.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">OpenAI Confirms Two Employee Devices Compromised via TanStack Supply Chain Attack</div>
+        <div class="story-body">OpenAI published a security advisory confirming two employee devices were compromised as part of the TanStack supply chain compromise, a widely-used JavaScript ecosystem package. OpenAI reports no customer data, production systems, IP, or deployed software was impacted, but is rotating code signing certificates as a precaution. Reinforces the developer toolchain as a high-value lateral movement vector targeting AI companies.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.varonis.com/blog/bluekit" target="_blank">Bluekit AI-Powered Phishing Kit: 40+ Templates, Abliterated Llama + GPT-4.1/Sonnet 4 Integration</a></div>
+        <div class="story-body">Varonis Threat Labs discovered Bluekit, a phishing-as-a-service kit offering automated domain purchase, 2FA support, geolocation emulation, antibot cloaking, and an AI assistant integrating commercial models (GPT-4.1, Claude Sonnet 4, Gemini, DeepSeek) alongside a jailbroken Llama. Actual AI capability was found to be limited in testing — generic campaign drafts with placeholders — but the commoditisation of AI-augmented phishing infrastructure at this level of polish is a meaningful threat escalation signal.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://www.varonis.com/blog/bluekit" target="_blank">varonis.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Klarna Surges 20% After First Break-Even Since IPO; Fed Chair Warsh Takes Over from Powell</div>
+        <div class="story-body">Klarna shares jumped ~20% after posting its first break-even quarter since its IPO, a significant milestone for BNPL amid ongoing profitability scrutiny. Separately, Kevin Warsh replaced Jerome Powell as Fed Chair today, confirmed by the Senate by the slimmest margin in history; Warsh favours rate cuts but FedWatch shows less than 2.8% probability of cuts through year-end with inflation still at 3.8%. Warsh has publicly compared the AI productivity wave to the 1990s PC boom as a potential inflation buffer — a key macro variable for tech portfolio valuations.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://hawksley.org/2026/05/06/adopting-herb-at-github.html" target="_blank">GitHub Staff Engineer&#x27;s Production Adoption of Herb HTML+ERB Parser in 500K-Line Rails Monolith</a></div>
+        <div class="story-body">A GitHub staff engineer integrated Herb, a C-based HTML+ERB parser, into GitHub&#x27;s Rails monolith (~500K lines of ERB) as a pre-adoption validation exercise before Herb potentially replaces Erubi in Rails core. It caught real bugs that existing linting missed — malformed HTML and invalid Ruby in untested branches — and AI assistants one-shot fixed most of the ~2,800 initially failing files. A useful production case study on using parser-level tooling for correctness guarantees in large legacy codebases.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://hawksley.org/2026/05/06/adopting-herb-at-github.html" target="_blank">hawksley.org ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/05/14/openai-is-reportedly-preparing-legal-action-against-apple-it-wouldnt-be-the-first-partner-to-feel-burned/" target="_blank">OpenAI Explores Legal Action Against Apple Over ChatGPT Integration Shortfall</a></div>
+        <div class="story-body">OpenAI has engaged outside legal counsel to explore action against Apple, claiming Apple failed to deliver the subscriber growth and deep ecosystem integration promised under their two-year partnership. Apple is reportedly set to open its platform to rival AI providers later this year, which would directly erode OpenAI&#x27;s privileged distribution position. A fracture here reshapes which AI providers get iOS-level distribution access — a major competitive moat.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/05/14/openai-is-reportedly-preparing-legal-action-against-apple-it-wouldnt-be-the-first-partner-to-feel-burned/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.logrocket.com/ai-companies-buying-teams-behind-dev-tools/" target="_blank">AI Labs Acquiring Dev Tool Teams to Control Coding Agent Infrastructure</a></div>
+        <div class="story-body">AI labs are systematically acquiring the teams behind foundational developer tools — package managers, runtimes, language servers — to control the infrastructure their coding agents depend on. This is a strategic land-grab for the software delivery stack below the model layer. Engineers should track maintainership changes in open-source tooling they depend on and avoid deep platform-specific coupling.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link mkt" href="https://blog.logrocket.com/ai-companies-buying-teams-behind-dev-tools/" target="_blank">blog.logrocket.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://depthfirst.com/research/nginx-rift-achieving-nginx-rce-via-an-18-year-old-vulnerability" target="_blank">NGINX Rift: Achieving RCE via an 18-Year-Old Vulnerability (CVE-2026-42945) ↗</a></div>
+          <div class="dive-why">Primary security research with full technical exploitation chain for a critical NGINX/F5 RCE affecting widely deployed infrastructure — directly actionable for any team running NGINX with rewrite/set directives.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.doyensec.com/2026/05/05/cloudsectidbits-masso-cognito-sso.html" target="_blank">The Danger of Multi-SSO AWS Cognito User Pools — Doyensec ↗</a></div>
+          <div class="dive-why">Authoritative technical breakdown of four novel identity attack patterns against Cognito federated IdP configurations, with a weaponised OIDC/SAML/SCIM test IdP released — essential reading for anyone owning IAM architecture on AWS.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.anthropic.com/research/2028-ai-leadership" target="_blank">Anthropic: 2028 — Two Scenarios for Global AI Leadership ↗</a></div>
+          <div class="dive-why">First-party Anthropic research framing US vs China AI competition around compute export controls and distillation attacks — directly relevant to the NVDA/TSMC portfolio thesis and long-horizon AI infrastructure bets.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 15 May 2026 · sources: tldr.tech, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
