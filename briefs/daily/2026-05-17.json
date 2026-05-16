@@ -1,0 +1,72 @@
+{
+  "date": "2026-05-17",
+  "threadCount": 2,
+  "storyCount": 6,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "AI Agent Architecture: The Five-Component Loop",
+        "body": "ByteByteGo's breakdown frames an AI agent as a while-loop over five components: LLM brain, planning (CoT/ToT/Reflexion), tools (MCP-standard function calls), memory (context window + vector store), and guardrails (sandboxing, token limits, output validation). The key architectural shift from chatbot to agent is that the model makes choices rather than generating text. Guardrails are called out as scaling linearly with autonomy — the more agentic, the more critical sandboxing and human-in-the-loop checkpoints become.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Claude Code Context Window: 9-Layer Assembly Architecture",
+        "body": "Anthropic's Claude Code assembles its context window from nine distinct, prioritised sources before each model call — including a four-level CLAUDE.md instruction hierarchy, lazily-loaded path-scoped rules, async-prefetched auto-memory (up to 5 files via a secondary LLM scan), and model-generated compaction summaries when history overflows. The design explicitly treats context as a scarce, managed resource rather than a free buffer. Relevant for any team building agentic coding infrastructure or evaluating Claude Code for enterprise deployment.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [],
+    "fin": [
+      {
+        "headline": "US–China Summit Ends Without Structural Deal; Boeing Order the Only Concrete Outcome",
+        "body": "Trump's China trip concluded with Xi Jinping framing a new era of 'strategic stability' but no substantive deals beyond a 200-plane Boeing order — the executive delegation's announced deals remain unannounced. Taiwan arms sales remain unresolved, and Hormuz reopening drew rhetoric but no commitments. Markets sold off the day after: Nasdaq -1.54%, S&P -1.24%, 30-year Treasury yields near yearly highs — a macro signal worth watching for AMZN/MSFT cloud capex and NVDA export exposure.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "REST vs GraphQL vs gRPC: Canonical Trade-off Summary",
+        "body": "A concise reference: REST for public APIs and cacheability; GraphQL when clients need flexible data shapes but accept server-side resolver and N+1 complexity; gRPC for internal microservice communication where binary protobuf encoding and HTTP/2 streaming justify the tooling overhead. The framing on GraphQL's rate-limiting and query-cost analysis challenges is practically useful for fintech API design where abuse vectors matter.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "git fetch vs git pull vs git pull --rebase: Disambiguation",
+        "body": "Fetch is read-only — updates origin/main without touching working directory, safe for inspection. Pull adds a merge commit joining two histories. Pull --rebase replays local commits atop upstream for a linear history, preferred before opening PRs. Low novelty but a clean mental model for team standards enforcement.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Cerebras IPO Debut: +68% Thursday, -10% Friday Amid Bond Sell-Off",
+        "body": "Cerebras jumped 68% on its trading debut Thursday but retreated 10% Friday as tech stocks broadly sold off and 30-year Treasury yields spiked to near-annual highs. The reversal reflects macro pressure (global bond sell-off) rather than company-specific news, but the volatility is a useful data point on AI hardware IPO sentiment — relevant context alongside NVDA's position in the AI chip stack.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": []
+}
