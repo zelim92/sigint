@@ -1,0 +1,170 @@
+{
+  "date": "2026-05-20",
+  "threadCount": 6,
+  "storyCount": 15,
+  "sourceCount": 14,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic acquires Stainless to own SDK generation layer",
+        "body": "Anthropic acquired Stainless, whose SDK automation platform was used by OpenAI, Google, and Cloudflare to auto-generate client SDKs. The acquisition gives Anthropic direct control over a critical developer-tooling layer as agentic API usage scales. Strategically signals Anthropic is building platform lock-in beyond model quality.",
+        "signal": "high",
+        "sources": [
+          "anthropic.com"
+        ],
+        "url": "https://www.anthropic.com/news/anthropic-acquires-stainless"
+      },
+      {
+        "headline": "Cursor Composer 2.5: RL-trained coding agent with distributed training",
+        "body": "Cursor's updated Composer 2.5 was trained with targeted reinforcement learning, synthetic data, and new distributed training techniques specifically for coding agent tasks. Signals maturing agent-training methodology beyond simple RLHF — purpose-built RL loops for agentic code workflows are becoming differentiators. Relevant benchmark: approaches frontier coding performance.",
+        "signal": "med",
+        "sources": [
+          "cursor.com"
+        ],
+        "url": "https://cursor.com/blog/composer-2-5"
+      },
+      {
+        "headline": "Cloudflare's Project Glasswing: Mythos AI model autonomously audits 50+ repos",
+        "body": "Cloudflare tested Mythos Preview (a cyber-frontier model) against 50+ of its own repositories as part of Project Glasswing. The post documents what the model found, where it succeeded, and where it failed — an unusually candid primary-source evaluation of AI-driven vulnerability discovery at production scale. Raises near-term questions about how security workflows change when autonomous code auditing becomes viable.",
+        "signal": "high",
+        "sources": [
+          "blog.cloudflare.com"
+        ],
+        "url": "https://blog.cloudflare.com/cyber-frontier-models/"
+      },
+      {
+        "headline": "Meta restructures 7,000 employees into four AI-native orgs; $135B capex committed",
+        "body": "Meta is reassigning 7,000 workers into four new AI-focused organizations with flatter management structures as a precursor to broader layoffs. The company has committed up to $135B in capex for 2026, predominantly for AI compute and research hiring. Signals further commoditisation pressure on foundation models as hyperscalers consolidate AI product and infra under single orgs.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "\"AI eats the world\" briefing: $700B capex, commoditising models, infrastructure layer as the durable bet",
+        "body": "Big tech is collectively committing ~$700B in AI capex in 2026; under-investing is now viewed as the existential risk. Foundation models are commoditising rapidly, shifting durable value toward infrastructure, tooling, and distribution layers. Directly relevant to MSFT, GOOGL, AMZN, and NVDA positions.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://static1.squarespace.com/static/50363cf324ac8e905e7df861/t/6a0af5d0484fbf5fe9a7743e/1779103184855/2026-Spring-AI.pdf"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Project Zero: 0-click Pixel 10 exploit chain via Tensor G5 VPU driver MMIO over-mmap",
+        "body": "Google Project Zero ported the CVE-2025-54957 Pixel 9 Dolby 0-click to Pixel 10 by replacing the blocked stack-canary overwrite with dap_cpdp_init, then exploited a trivial bounds-check omission in the new Tensor G5 VPU driver (/dev/vpu): vpu_mmap calls remap_pfn_range using caller-supplied VMA size without bounding to the MMIO region, exposing the kernel .text/.data for arbitrary read/write in five lines. Reported Nov 24 2025, patched 71 days later in the February Pixel bulletin — a useful case study in how hardware bring-up introduces regression surface.",
+        "signal": "high",
+        "sources": [
+          "projectzero.google"
+        ],
+        "url": "https://projectzero.google/2026/05/pixel-10-exploit.html"
+      },
+      {
+        "headline": "Compromising Claude Code via malicious skill files and sub-agent injection",
+        "body": "Researchers at ReverseC found that Claude Code's skill-file system can be weaponised: malicious skill frontmatter can overwrite tool settings and spawn malicious sub-agents, achieving an effective agent-hijack without direct command injection. Partial RCE was achieved only via external environment variable dependency, but the sub-agent attack surface is unmitigated. Critical for teams deploying Claude Code in CI/CD or automated pipelines.",
+        "signal": "high",
+        "sources": [
+          "labs.reversec.com"
+        ],
+        "url": "https://labs.reversec.com/posts/2026/05/skill-issues-compromising-claude-code-with-malicious-skills-agents-part-1"
+      },
+      {
+        "headline": "NYC Health + Hospitals: 1.8M patients' biometrics, medical records stolen via third-party vendor breach",
+        "body": "Hackers accessed NYC Health + Hospitals for ~3 months (Nov 2025–Feb 2026) via a compromised third-party vendor, exfiltrating medical records, billing data, government IDs, geolocation data, and stored fingerprints and palm prints for at least 1.8M people. Biometric data exfiltration at this scale is unusually severe — fingerprints and palm prints are non-revocable credentials. Third-party vendor access controls remain the dominant healthcare breach vector.",
+        "signal": "high",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/18/nyc-health-and-hospitals-says-hackers-stole-medical-data-and-fingerprints-during-breach-affecting-at-least-1-8-million-people/"
+      },
+      {
+        "headline": "FunnelKit WordPress plugin 0-day: unauthenticated skimmer injection on 40K WooCommerce stores",
+        "body": "Sansec disclosed an unauthenticated flaw in FunnelKit Funnel Builder (<3.15.0.3) where a public checkout endpoint allowed attackers to write arbitrary JS into global plugin settings, injecting a fake Google Tag Manager loader that opens a WebSocket to wss://protect-wss[.]com/ws to pull a tailored card skimmer. Active exploitation confirmed; 40,000+ WooCommerce stores at risk. No CVE assigned yet.",
+        "signal": "high",
+        "sources": [
+          "thehackernews.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/funnel-builder-flaw-under-active.html"
+      },
+      {
+        "headline": "Bug bounty platform signal collapse: AI-generated report flood degrading triage SLAs for elite researchers",
+        "body": "HackerOne and Bugcrowd are experiencing triage degradation due to AI-generated bulk submissions — a #1-ranked researcher's critical PII leak report waited 12 days for first human response vs. the usual 1–3. Top researchers are exiting platforms for private programs. Operationally relevant for fintech bug bounty program design: consider private/invite-only programs to retain signal quality.",
+        "signal": "med",
+        "sources": [
+          "shubs.io"
+        ],
+        "url": "https://shubs.io/the-down-fall-of-bug-bounties/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Snap's Bento ML platform: architecture for 1B+ predictions/second at 100ms latency",
+        "body": "Bento splits ranking workloads into cheap retrieval + expensive scoring stages, separates GPU (dense layers) from CPU (embedding lookups) at model export time, and maintains dual offline/online feature stores synced at ~1TB/s read throughput across 800TB of online feature data. Continuous incremental retraining with automatic deployment keeps 100s of models current daily. A thorough production case study for high-scale ML serving architecture.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://eng.snap.com/introducing-bento"
+      },
+      {
+        "headline": "Slack migrates 700+ EMR pipeline jobs from SSH to REST-based gateway for security and lifecycle management",
+        "body": "Slack replaced direct SSH access to AWS EMR clusters with a custom REST gateway (Quarry) using YARN Distributed Shell, eliminating zombie processes, unmanaged SSH keys, and infrastructure upgrade blockers. The migration was framed as security-driven modernisation — direct SSH access to data infrastructure is now treated as a security liability, not an operational convenience.",
+        "signal": "med",
+        "sources": [
+          "slack.engineering"
+        ],
+        "url": "https://slack.engineering/from-ssh-to-rest-a-security-driven-modernization-of-slacks-emr-data-pipelines/"
+      },
+      {
+        "headline": "Grab: LangGraph multi-agent system eliminates two engineer-days/week of data pipeline investigation",
+        "body": "Grab's data engineering team built a read-only investigation pipeline with five specialised agents (Classifier, Data, Code Search, On-call, Summarizer) orchestrated via LangGraph, plus a human-gated write pathway for remediation. The risk-stratified architecture — read vs. write pathways with different trust boundaries — is a concrete pattern for deploying agentic automation in regulated environments.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/how-grab-is-using-ai-agents-to-boost"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Musk v. OpenAI dismissed on statute of limitations; OpenAI cleared for IPO path",
+        "body": "A jury unanimously dismissed Musk's $100B+ lawsuit against OpenAI, Altman, Brockman, and Microsoft, finding the case was filed years after the limitations period expired. OpenAI is now unencumbered for its 2027 IPO target; xAI is separately eyeing a public listing via the SpaceX IPO planned as early as next month. Trial testimony revealed internal dysfunction at both OpenAI and among its major backers, including Microsoft.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com",
+          "therundown.ai"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Nvidia earnings watch; Seagate warns new fabs \"take too long\" — chip supply chain signal",
+        "body": "Markets were mixed ahead of Nvidia's earnings (reported as imminent as of 2026-05-19), with the Nasdaq slipping as chip stocks fell after Seagate flagged new factory timelines. 10-year yield at 4.623% with inflation concerns persisting. Directly relevant to NVDA and TSMC positions — Seagate's supply comment is a leading indicator for HDD/storage capacity timelines.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Project Zero: Pixel 10 0-click exploit chain via Tensor G5 VPU driver",
+      "why": "Primary source post-mortem from Google Project Zero detailing an actively patched kernel exploit — essential reading for understanding how new hardware bring-up creates regression surface in privilege separation boundaries.",
+      "url": "https://projectzero.google/2026/05/pixel-10-exploit.html"
+    },
+    {
+      "title": "Introducing Bento: Snap's ML Platform (1B predictions/second architecture)",
+      "why": "Official Snap engineering deep dive on a production ML serving platform — concrete architecture for GPU/CPU split inference, dual feature stores, and high-fanout ranking at extreme scale.",
+      "url": "https://eng.snap.com/introducing-bento"
+    },
+    {
+      "title": "Project Glasswing: What Mythos showed us — Cloudflare's evaluation of AI-driven repo auditing",
+      "why": "Cloudflare's first-party account of deploying a cyber-frontier model against 50+ production repos is a rare primary-source benchmark of autonomous vulnerability discovery, directly relevant to AI-augmented security workflows.",
+      "url": "https://blog.cloudflare.com/cyber-frontier-models/"
+    }
+  ]
+}
