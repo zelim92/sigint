@@ -1,0 +1,152 @@
+{
+  "date": "2026-05-21",
+  "threadCount": 6,
+  "storyCount": 13,
+  "sourceCount": 12,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Google I/O 2026: Gemini 3.5 Flash GA, Gemini Spark 24/7 agent, Antigravity 2.0 agentic platform",
+        "body": "Gemini 3.5 Flash launches at GA (skipping preview), surpassing Gemini 3.1 Pro on coding, agent, and multimodal benchmarks at 4× speed and half the cost, with a notable price bump over prior Flash. Gemini Spark is a new 24/7 personal agent running on Google Cloud VMs that takes agentic actions across Workspace, Chrome, email, and chat. Antigravity 2.0 is a dedicated multi-agent orchestration platform supporting parallel autonomous agents, dynamic subagents, scheduled tasks, and artifacts — now GA on macOS. Token usage across Google AI systems reached 3.2 quadrillion/month; Gemini app hit 900M MAU.",
+        "signal": "high",
+        "sources": [
+          "blog.google",
+          "9to5google.com"
+        ],
+        "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/"
+      },
+      {
+        "headline": "Cloudflare Project Glasswing: Mythos AI model chains low-severity bugs into working exploits in internal codebase",
+        "body": "Cloudflare tested Anthropic's Mythos Preview against 50+ internal repos and observed it chaining use-after-free, arbitrary read/write, and ROP primitives into working PoC exploits, self-validating by compiling and running them in a scratch env. A purpose-built 8-stage harness (Recon→Report) outperformed generic coding agents by scoping parallel tasks to single attack classes with an adversarial second agent that cut false-positive hedging dominant in memory-unsafe-language scans. Key finding: model refusals are inconsistent across semantically equivalent prompts, and sub-two-hour patching SLAs backfire without regression testing — architectural mitigations (WAF reachability, intra-app isolation) are required complements.",
+        "signal": "high",
+        "sources": [
+          "blog.cloudflare.com"
+        ],
+        "url": "https://blog.cloudflare.com/cyber-frontier-models/"
+      },
+      {
+        "headline": "Andrej Karpathy joins Anthropic for frontier R&D",
+        "body": "Karpathy announced he is joining Anthropic, citing the next few years at the LLM frontier as especially formative, signalling a return to core research rather than education. The move concentrates another top-tier AI researcher at Anthropic, intensifying competition with OpenAI and Google.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/xjaD0w"
+      },
+      {
+        "headline": "Netflix multimodal video search: three-stage pipeline fusing ensemble AI model outputs via temporal bucketing",
+        "body": "Netflix built a production video search system that ingests outputs from specialist models (character recognition, scene classification, dialogue transcription, object detection) into Cassandra, fuses them via one-second temporal bucketing with upsert semantics, then indexes enriched nested documents in Elasticsearch for hybrid text+vector queries at sub-second latency. The temporal bucketing design — composite key of asset ID + time bucket — handles incremental model additions and avoids duplicate records at scale (7.2M buckets per 2,000-hour archive). A parallel track is developing MediaFM, a unified foundation model for audio/video/text, but the ensemble pipeline remains the production system.",
+        "signal": "high",
+        "sources": [
+          "netflixtechblog.com"
+        ],
+        "url": "https://netflixtechblog.com/powering-multimodal-intelligence-for-video-search-3e0020cf1202"
+      },
+      {
+        "headline": "OpenAI Guaranteed Capacity: 1–3 year compute commitments with volume discounts",
+        "body": "OpenAI is offering enterprise customers pre-committed, long-term access to compute capacity (1-, 2-, 3-year terms) for running agents and AI workflows, with deeper discounts for longer terms. Supply is limited to current allocation; subsequent rounds will follow. This mirrors cloud reserved-instance pricing models and signals OpenAI positioning itself as infrastructure provider for agentic workloads.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/05/19/openai-announces-new-guaranteed-capacity-offering-for-customers-to-secure-compute.html"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "CVE-2026-20182: CVSS 10.0 auth bypass in Cisco Catalyst SD-WAN enables unauthenticated control-plane compromise",
+        "body": "Rapid7 disclosed a critical DTLS session forgery flaw in Cisco Catalyst SD-WAN's vHub component allowing unauthenticated device authentication bypass and persistent unauthorized access to the SD-WAN control plane. Cisco has issued firmware patches; affected orgs should upgrade immediately and audit logs for suspicious DTLS activity. Any unpatched internet-exposed SD-WAN management plane should be treated as potentially compromised.",
+        "signal": "high",
+        "sources": [
+          "resecurity.com"
+        ],
+        "url": "https://www.resecurity.com/blog/article/cve-2026-20182-unauthenticated-cisco-sd-wan-control-plane-compromise-via-vhub-authentication-bypass"
+      },
+      {
+        "headline": "SHub Reaper macOS stealer: typosquatted Microsoft domain, bypasses Apple Tahoe 26.4 ClickFix, steals crypto wallets and RDP files",
+        "body": "SentinelOne identified a new SHub Stealer variant using fake WeChat/Miro installers from mlcrosoft[.]co[.]com that exploits the applescript:// URL scheme to bypass Apple's Tahoe 26.4 ClickFix mitigation, skips CIS-region hosts, and exfiltrates .docx/.wallet/.key/.json/.rdp files in 70MB chunks. It replaces Exodus, Atomic Wallet, Ledger Live, and Trezor Suite app.asar files with ad hoc code-signed payloads and installs a LaunchAgent backdoor masquerading as com.google.keystone.agent.plist beaconing every 60 seconds. Hunt indicators: unexpected osascript post-Script Editor, Google/Apple-namespaced LaunchAgents in ~/Library/Application Support/, outbound to hebsbsbzjsjshduxbs[.]xyz.",
+        "signal": "high",
+        "sources": [
+          "sentinelone.com"
+        ],
+        "url": "https://www.sentinelone.com/blog/shub-reaper-macos-stealer-spoofs-apple-google-and-microsoft-in-a-single-attack-chain/"
+      },
+      {
+        "headline": "Drupal urgent core security updates shipped May 20 — exploit window is open",
+        "body": "Drupal released critical core patches for 11.x and 10.x branches on May 20; exploits are expected to emerge rapidly post-disclosure. Admins must apply the May 20 fixes on top of the latest branch minimums (11.3.x, 11.2.x, 10.6.x, 10.5.x); Drupal 7 is unaffected.",
+        "signal": "med",
+        "sources": [
+          "thehackernews.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/drupal-to-release-urgent-core-security.html"
+      },
+      {
+        "headline": "Datadog Pathfinding Labs: 100+ intentionally vulnerable AWS environments for CSPM and privilege-escalation testing",
+        "body": "Datadog open-sourced Pathfinding Labs, a Terraform-driven set of 100+ vulnerable AWS environments mapped to the pathfinding.cloud privilege escalation catalog, covering self-escalation, multi-hop, cross-account, and toxic-combination scenarios. Each lab ships with a scripted demo_attack.sh for repeatable exploitation via a plabs CLI (enable/apply/demo/destroy). Useful for validating CSPM tool coverage and training red/blue teams against realistic cloud misconfiguration patterns.",
+        "signal": "med",
+        "sources": [
+          "securitylabs.datadoghq.com"
+        ],
+        "url": "https://securitylabs.datadoghq.com/articles/introducing-pathfinding-labs/"
+      },
+      {
+        "headline": "Inverting PhotoDNA: ML model reconstructs recognizable images from Microsoft's \"irreversible\" hash",
+        "body": "A researcher demonstrated that PhotoDNA hashes — long claimed to be non-invertible — leak sufficient image information for a machine learning model (Ribosome) to reconstruct visually recognizable images. This challenges the privacy and legal assumptions underpinning PhotoDNA's deployment across CSAM detection pipelines at scale.",
+        "signal": "med",
+        "sources": [
+          "anishathalye.com"
+        ],
+        "url": "https://anishathalye.com/inverting-photodna/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Netflix multimodal video search architecture: Cassandra ingest → temporal bucket fusion → Elasticsearch nested-document index",
+        "body": "The production system decouples three concerns: high-throughput write ingestion to Cassandra (zero transformation), offline async fusion via one-second temporal bucketing with composite-key upserts, and Elasticsearch indexing of hierarchical parent/child documents for hybrid text+vector queries. This separation means complex cross-model intersection never contends with real-time ingestion. The 1-second bucket granularity was chosen as the precision/manageability tradeoff at Netflix's archive scale.",
+        "signal": "high",
+        "sources": [
+          "netflixtechblog.com"
+        ],
+        "url": "https://netflixtechblog.com/powering-multimodal-intelligence-for-video-search-3e0020cf1202"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Meta lays off ~8,000 (10% of workforce), pivots 7,000 staff to AI, closes 6,000 open roles; $145B AI capex committed for 2026",
+        "body": "Meta began notifying ~8,000 employees of termination today; simultaneously 7,000 are being redeployed to AI initiatives and 6,000 open roles closed. The company is reporting record profits while committing up to $145B in 2026 AI spending, with an internal program tracking employee computer activity to train AI models on task completion patterns. This is the largest structural AI-driven workforce realignment at a major tech platform to date.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/PO_"
+      },
+      {
+        "headline": "SpaceX filing for IPO as soon as today (June 12 listing), plans to acquire Cursor AI coding tool in July with $10B breakup fee",
+        "body": "SpaceX is expected to file its IPO paperwork today targeting a June 12 listing, with a concurrent plan to acquire AI coding startup Cursor in July. A $10B cash breakup fee is in place if the deal fails regulatory review. Cursor's acquisition by SpaceX would be a significant signal on enterprise AI tooling valuations and Big Tech's appetite for AI developer infrastructure.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/VO6WHi"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Cloudflare Project Glasswing: What Mythos Showed Us",
+      "why": "Primary engineering post from Cloudflare detailing how an AI security model autonomously chains exploits, with concrete harness architecture and defender recommendations — directly actionable for a cybersecurity engineer evaluating AI-assisted offensive tooling risk.",
+      "url": "https://blog.cloudflare.com/cyber-frontier-models/"
+    },
+    {
+      "title": "Netflix: Synchronizing the Senses — Powering Multimodal Intelligence for Video Search",
+      "why": "Primary Netflix Engineering Blog post describing the three-stage Cassandra→temporal fusion→Elasticsearch architecture for multi-model AI output fusion at scale — a concrete senior-engineer-level distributed systems case study.",
+      "url": "https://netflixtechblog.com/powering-multimodal-intelligence-for-video-search-3e0020cf1202"
+    },
+    {
+      "title": "SHub Reaper macOS Stealer — SentinelOne Technical Analysis",
+      "why": "Detailed primary threat research with concrete IOCs, evasion techniques targeting Apple's latest ClickFix mitigations, and crypto wallet attack chain — immediately actionable for blue teams protecting macOS endpoints.",
+      "url": "https://www.sentinelone.com/blog/shub-reaper-macos-stealer-spoofs-apple-google-and-microsoft-in-a-single-attack-chain/"
+    }
+  ]
+}
