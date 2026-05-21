@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 22 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 22 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">7</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">4</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/Ki0Bx1" target="_blank">OpenAI Reasoning Model Autonomously Disproves 80-Year-Old Erdős Conjecture</a></div>
+        <div class="story-body">An unreleased OpenAI general-purpose reasoning model disproved the longstanding conjecture tied to Erdős&#x27; 1946 planar unit distance problem, introducing techniques from algebraic number theory independently verified by Tim Gowers, Noga Alon, and Thomas Bloom. Critically, this came from a general-purpose model — not a math-specific system like DeepMind&#x27;s AlphaProof — signalling frontier models approaching original cross-domain discovery. OpenAI previously walked back a 2025 claim about GPT-5 solving Erdős problems, making independent expert verification here significant.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">rundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/Ki0Bx1" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime/" target="_blank">Google Releases Agent Executor: Open-Source Distributed Agent Runtime</a></div>
+        <div class="story-body">Google&#x27;s Agent Executor is an open-source runtime standard for long-running agent workflows, featuring durable execution, secure isolation, connection recovery, session consistency, and trajectory branching. It integrates with Kubernetes Engine via Agent Substrate to optimise compute efficiency at massive agent deployment scale. This is a direct infrastructure play for production agentic systems, positioning GCP as the execution layer for multi-agent architectures.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime/" target="_blank">cloud.google.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/q5YG3r" target="_blank">Anthropic Signs $45B Compute Deal with SpaceX, $1.25B/Month Through 2029</a></div>
+        <div class="story-body">Anthropic has committed to paying SpaceX $1.25 billion per month for compute capacity across two data centres, including the Memphis &#x27;Colossus 1&#x27; facility and a second site, totalling ~$45B over three years with 90-day exit rights. This is the largest known private compute procurement contract and signals Anthropic&#x27;s capital intensity is approaching hyperscaler territory. The deal also deepens the SpaceX AI division&#x27;s commercial relevance ahead of its IPO.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/q5YG3r" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/05/microsoft-open-sources-rampart-and.html" target="_blank">Microsoft Open-Sources RAMPART and Clarity: AI Agent Security Testing Frameworks</a></div>
+        <div class="story-body">RAMPART (Risk Assessment and Measurement Platform for Agentic Red Teaming) is a Pytest-native framework for adversarial safety testing of AI agents during development, covering cross-prompt injection, data exfiltration, and other harm categories via a single adapter interface. Clarity is a complementary tool that pressure-tests design assumptions pre-code. Unlike the post-build black-box approach of PyRIT, RAMPART integrates into the dev loop — directly relevant to fintech teams building agentic systems.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://thehackernews.com/2026/05/microsoft-open-sources-rampart-and.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://arxiv.org/abs/2605.19407" target="_blank">Scaling Study: No Data Filtering May Be Optimal for Large Model Pretraining</a></div>
+        <div class="story-body">New research on arXiv finds that in high-compute, data-scarce settings, omitting data quality filtering may improve pretraining outcomes for large parameter models, which tolerate and benefit from low-quality and distractor data. This directly challenges the prevailing industry practice of aggressive data curation pipelines. Practical implication: filtering pipelines optimised for small-model training may be counterproductive at frontier scale.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://arxiv.org/abs/2605.19407" target="_blank">arxiv.org ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/05/github-investigating-teampcp-claimed.html" target="_blank">GitHub Breached via Poisoned VS Code Extension — 3,800+ Internal Repos Exfiltrated, LAPSUS$ Selling Access</a></div>
+        <div class="story-body">TeamPCP compromised a GitHub employee device via a trojanized VS Code extension, claiming exfiltration of ~3,800 internal repositories including Actions, Copilot, CodeQL, and Dependabot source. The same group poisoned Microsoft&#x27;s durabletask PyPI package with a Linux infostealer targeting cloud credentials, SSH keys, Vault secrets, and Kubernetes configs that also propagates laterally across AWS clusters. LAPSUS$ is co-selling the leaked materials, raising acute supply chain risk for any organisation consuming GitHub&#x27;s tooling or downstream PyPI packages.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/05/github-investigating-teampcp-claimed.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://securelist.com/exiftool-compromise-mac/119866/" target="_blank">CVE-2026-3102: ExifTool RCE on macOS via Metadata Injection in SetMacOSTags</a></div>
+        <div class="story-body">GReAT found that ExifTool ≤13.49 on macOS allows arbitrary command execution when unsanitised DateTimeOriginal metadata flows through SetMacOSTags into a system() call, exploitable by injecting single quotes via the -n flag and copying via -tagsFromFile. Fix in 13.50 replaces string concatenation with list-form system() calls. Any photo-processing pipeline, asset management tool, or bulk image workflow using ExifTool on macOS is exposed until patched.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://securelist.com/exiftool-compromise-mac/119866/" target="_blank">securelist.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/05/" target="_blank">Kimwolf IoT Botnet Operator &#x27;Dort&#x27; Arrested — 30 Tbps DDoS Record, 25,000+ Attack Commands</a></div>
+        <div class="story-body">Canadian authorities arrested Jacob Butler (aka &#x27;Dort&#x27;), 23, operator of the Kimwolf botnet which enslaved millions of IoT devices including photo frames and webcams, conducting record 30 Tbps DDoS attacks and targeting DoD IP ranges. The botnet was rented to other criminals and linked to DDoS-for-hire services; infrastructure was seized in March alongside three competing botnets (Aisuru, JackSkid, Mossad). Butler faces up to 10 years if convicted in the US on computer intrusion charges.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://krebsonsecurity.com/2026/05/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://unit42.paloaltonetworks.com/tracking-tampered-chef-clusters/" target="_blank">TamperedChef Malvertising Clusters: 4,000+ Samples, OV/EV Cert Abuse, LLM-Generated Distribution Sites</a></div>
+        <div class="story-body">Unit 42 mapped three TamperedChef (EvilAI) clusters distributing trojanized productivity apps that stay dormant for weeks before deploying stealers, RATs, or proxy malware. Operators burned 34+ code-signing certificates ($10K+), ran 20,000+ malvertisements, and used LLM-generated distribution sites with similar visuals but distinct DOM structures to evade detection. Key defensive actions: update EDR/XDR, block untrusted installs, hunt scheduled tasks and registry Run keys, revoke browser-stored credentials on any confirmed infection.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://unit42.paloaltonetworks.com/tracking-tampered-chef-clusters/" target="_blank">unit42.paloaltonetworks.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://lachlan.nz/blog/the-react2shell-story" target="_blank">React Server Components &#x27;Flight&#x27; Protocol RCE Vulnerability (React2Shell)</a></div>
+        <div class="story-body">A researcher discovered that React&#x27;s undocumented Flight protocol, used by Server Components and Next.js, mishandles JavaScript &#x27;thenables&#x27; to enable arbitrary code execution by chaining function calls through React internals. Meta confirmed within 17 hours and patched within ~3 days of disclosure. Any Next.js application using Server Components should verify it is running patched React versions.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://lachlan.nz/blog/the-react2shell-story" target="_blank">lachlan.nz ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/05/20/fintech-mercury-valuation-fundraise-bank-charter.html" target="_blank">Mercury Raises $200M at $5.2B Valuation, Receives Conditional OCC Approval for Bank Charter</a></div>
+        <div class="story-body">Mercury&#x27;s Series D values it 49% higher than 14 months ago with $650M annualised revenue, 300K+ customers, and four years of profitability. Conditional OCC approval to become a federally regulated bank would allow Mercury to offer lending, join Zelle, and reduce partner bank dependency — a structural shift that could disrupt the BaaS model. Funded by TCV, Sequoia, a16z, and Coatue.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/05/20/fintech-mercury-valuation-fundraise-bank-charter.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/UNYcjT" target="_blank">Deel Launches Stablecoin Salary Payouts and Forms Dedicated Crypto Division</a></div>
+        <div class="story-body">Deel, serving 40K+ businesses across 150+ countries, now offers stablecoin salary disbursements and has appointed a Head of Crypto to lead a new dedicated division. This institutionalises crypto payroll infrastructure at enterprise scale and signals stablecoins moving from niche to mainstream HR/payroll tooling. Relevant for fintech AML/KYC teams as stablecoin flows introduce new transaction monitoring requirements.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/UNYcjT" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/zHaJJh" target="_blank">Polymarket Partners with Nasdaq Private Market for Private-Company Prediction Contracts</a></div>
+        <div class="story-body">Polymarket will power prediction contracts tied to private-company valuations, secondary market activity, and IPO timing for firms including OpenAI and SpaceX, using Nasdaq Private Market data. This convergence of prediction markets and alternative investing infrastructure creates new price discovery mechanisms for private tech valuations ahead of public listings. Relevant for portfolio holders watching OpenAI and SpaceX IPO pricing signals.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/zHaJJh" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://zfhuang99.github.io/rust/claude%20code/codex/contracts/spec-driven%20development/2025/12/01/rust-with-ai.html" target="_blank">Rust Multi-Paxos Consensus Engine: 130K Lines via AI Agents, 23K to 300K ops/sec Throughput Gain</a></div>
+        <div class="story-body">A spec-driven AI-assisted approach rebuilt a Replicated State Library in Rust using Claude Code and Codex, producing 130K+ lines and a 13x throughput improvement (23K → 300K ops/sec) with high reliability via automated testing. The post-mortem details how spec-driven development disciplines AI agent output and surfaces where human oversight remains essential. Directly applicable to high-throughput fintech distributed systems.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://zfhuang99.github.io/rust/claude%20code/codex/contracts/spec-driven%20development/2025/12/01/rust-with-ai.html" target="_blank">zfhuang99.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/tkqM7H" target="_blank">Making Monorepos Ergonomic for AI Coding Agents: Production Considerations</a></div>
+        <div class="story-body">Engineering teams are discovering that code agents have distinct failure modes and context requirements that differ from human developers, demanding intentional monorepo organisation changes. The piece covers structuring repositories so agents can navigate, scope work, and avoid context window failure without human intervention. A practical staff-level engineering concern as AI-assisted development scales.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://links.tldrnewsletter.com/tkqM7H" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/RIKybV" target="_blank">SpaceX Files S-1: $80B Raise Target, ~$2T Valuation, $4.3B Q1 Net Loss on $4.69B Revenue</a></div>
+        <div class="story-body">SpaceX&#x27;s IPO filing reveals a three-unit structure (Space rockets, Starlink Connectivity, AI/xAI) with Connectivity generating $1.19B Q1 profit while the AI unit lost $2.5B. Musk retains 85% voting control; vesting of 1B performance shares requires a 1M-person Mars colony. The Anthropic $45B compute deal sits inside the AI unit, and the xAI/Colossus data centre revenue is now a disclosed public company line item — making compute-as-revenue a trackable metric.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/RIKybV" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/05/20/openai-barrels-toward-ipo-that-may-happen-in-september/" target="_blank">OpenAI IPO Filing Imminent, September Target — Despite Missed Revenue and User Targets</a></div>
+        <div class="story-body">OpenAI is working with bankers to file an S-1 within days or weeks, targeting a September public debut following the dismissal of Musk&#x27;s structural lawsuit. The company has missed multiple internal revenue and user targets and must overcome questions about whether revenue can support its committed spending — the Anthropic Stargate-scale compute commitments are a direct comp. Three massive AI IPOs (SpaceX, OpenAI, Anthropic) are expected within 2026.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/05/20/openai-barrels-toward-ipo-that-may-happen-in-september/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Nvidia Q1 Earnings Exceeded Expectations but Stock Fell — Analyst Expectations &#x27;Basically Impossible&#x27;</div>
+        <div class="story-body">Nvidia beat analyst estimates for Q1 2026 but shares declined post-earnings as market expectations had been set at an effectively unachievable bar. Broader market context: Nasdaq at 26,270 (+1.55%) and S&amp;P at 7,432 (+1.08%) on the same day, driven by Iran deal optimism and oil price decline. For NVDA holders, the beat-and-drop pattern reflects valuation compression risk at current multiples.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime/" target="_blank">Google Agent Executor: Distributed Agent Runtime Architecture ↗</a></div>
+          <div class="dive-why">Official GCP engineering blog detailing production architecture for durable, isolated, Kubernetes-integrated agent execution — directly actionable for teams designing or evaluating agentic infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://securelist.com/exiftool-compromise-mac/119866/" target="_blank">CVE-2026-3102: ExifTool macOS RCE via Metadata Injection ↗</a></div>
+          <div class="dive-why">Primary Kaspersky GReAT technical writeup with full attack chain, code-level root cause, and defender checklist — high relevance for any team running image processing pipelines or macOS endpoints.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://arxiv.org/abs/2605.19407" target="_blank">A Bitter Lesson for Data Filtering (arXiv 2605.19407) ↗</a></div>
+          <div class="dive-why">Primary research paper challenging the foundational assumption that data quality filtering improves large model pretraining — architecturally significant for any team investing in data pipeline infrastructure for model training.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 21 May 2026 · sources: tldrnewsletter.com, rundownai.com, krebsonsecurity.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

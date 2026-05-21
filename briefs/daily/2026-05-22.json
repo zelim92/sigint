@@ -1,0 +1,200 @@
+{
+  "date": "2026-05-22",
+  "threadCount": 7,
+  "storyCount": 18,
+  "sourceCount": 4,
+  "sections": {
+    "ai": [
+      {
+        "headline": "OpenAI Reasoning Model Autonomously Disproves 80-Year-Old Erdős Conjecture",
+        "body": "An unreleased OpenAI general-purpose reasoning model disproved the longstanding conjecture tied to Erdős' 1946 planar unit distance problem, introducing techniques from algebraic number theory independently verified by Tim Gowers, Noga Alon, and Thomas Bloom. Critically, this came from a general-purpose model — not a math-specific system like DeepMind's AlphaProof — signalling frontier models approaching original cross-domain discovery. OpenAI previously walked back a 2025 claim about GPT-5 solving Erdős problems, making independent expert verification here significant.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "rundownai.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/Ki0Bx1"
+      },
+      {
+        "headline": "Google Releases Agent Executor: Open-Source Distributed Agent Runtime",
+        "body": "Google's Agent Executor is an open-source runtime standard for long-running agent workflows, featuring durable execution, secure isolation, connection recovery, session consistency, and trajectory branching. It integrates with Kubernetes Engine via Agent Substrate to optimise compute efficiency at massive agent deployment scale. This is a direct infrastructure play for production agentic systems, positioning GCP as the execution layer for multi-agent architectures.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime/"
+      },
+      {
+        "headline": "Anthropic Signs $45B Compute Deal with SpaceX, $1.25B/Month Through 2029",
+        "body": "Anthropic has committed to paying SpaceX $1.25 billion per month for compute capacity across two data centres, including the Memphis 'Colossus 1' facility and a second site, totalling ~$45B over three years with 90-day exit rights. This is the largest known private compute procurement contract and signals Anthropic's capital intensity is approaching hyperscaler territory. The deal also deepens the SpaceX AI division's commercial relevance ahead of its IPO.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/q5YG3r"
+      },
+      {
+        "headline": "Microsoft Open-Sources RAMPART and Clarity: AI Agent Security Testing Frameworks",
+        "body": "RAMPART (Risk Assessment and Measurement Platform for Agentic Red Teaming) is a Pytest-native framework for adversarial safety testing of AI agents during development, covering cross-prompt injection, data exfiltration, and other harm categories via a single adapter interface. Clarity is a complementary tool that pressure-tests design assumptions pre-code. Unlike the post-build black-box approach of PyRIT, RAMPART integrates into the dev loop — directly relevant to fintech teams building agentic systems.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/microsoft-open-sources-rampart-and.html"
+      },
+      {
+        "headline": "Scaling Study: No Data Filtering May Be Optimal for Large Model Pretraining",
+        "body": "New research on arXiv finds that in high-compute, data-scarce settings, omitting data quality filtering may improve pretraining outcomes for large parameter models, which tolerate and benefit from low-quality and distractor data. This directly challenges the prevailing industry practice of aggressive data curation pipelines. Practical implication: filtering pipelines optimised for small-model training may be counterproductive at frontier scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://arxiv.org/abs/2605.19407"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "GitHub Breached via Poisoned VS Code Extension — 3,800+ Internal Repos Exfiltrated, LAPSUS$ Selling Access",
+        "body": "TeamPCP compromised a GitHub employee device via a trojanized VS Code extension, claiming exfiltration of ~3,800 internal repositories including Actions, Copilot, CodeQL, and Dependabot source. The same group poisoned Microsoft's durabletask PyPI package with a Linux infostealer targeting cloud credentials, SSH keys, Vault secrets, and Kubernetes configs that also propagates laterally across AWS clusters. LAPSUS$ is co-selling the leaked materials, raising acute supply chain risk for any organisation consuming GitHub's tooling or downstream PyPI packages.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/05/github-investigating-teampcp-claimed.html"
+      },
+      {
+        "headline": "CVE-2026-3102: ExifTool RCE on macOS via Metadata Injection in SetMacOSTags",
+        "body": "GReAT found that ExifTool ≤13.49 on macOS allows arbitrary command execution when unsanitised DateTimeOriginal metadata flows through SetMacOSTags into a system() call, exploitable by injecting single quotes via the -n flag and copying via -tagsFromFile. Fix in 13.50 replaces string concatenation with list-form system() calls. Any photo-processing pipeline, asset management tool, or bulk image workflow using ExifTool on macOS is exposed until patched.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://securelist.com/exiftool-compromise-mac/119866/"
+      },
+      {
+        "headline": "Kimwolf IoT Botnet Operator 'Dort' Arrested — 30 Tbps DDoS Record, 25,000+ Attack Commands",
+        "body": "Canadian authorities arrested Jacob Butler (aka 'Dort'), 23, operator of the Kimwolf botnet which enslaved millions of IoT devices including photo frames and webcams, conducting record 30 Tbps DDoS attacks and targeting DoD IP ranges. The botnet was rented to other criminals and linked to DDoS-for-hire services; infrastructure was seized in March alongside three competing botnets (Aisuru, JackSkid, Mossad). Butler faces up to 10 years if convicted in the US on computer intrusion charges.",
+        "signal": "med",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/05/"
+      },
+      {
+        "headline": "TamperedChef Malvertising Clusters: 4,000+ Samples, OV/EV Cert Abuse, LLM-Generated Distribution Sites",
+        "body": "Unit 42 mapped three TamperedChef (EvilAI) clusters distributing trojanized productivity apps that stay dormant for weeks before deploying stealers, RATs, or proxy malware. Operators burned 34+ code-signing certificates ($10K+), ran 20,000+ malvertisements, and used LLM-generated distribution sites with similar visuals but distinct DOM structures to evade detection. Key defensive actions: update EDR/XDR, block untrusted installs, hunt scheduled tasks and registry Run keys, revoke browser-stored credentials on any confirmed infection.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://unit42.paloaltonetworks.com/tracking-tampered-chef-clusters/"
+      },
+      {
+        "headline": "React Server Components 'Flight' Protocol RCE Vulnerability (React2Shell)",
+        "body": "A researcher discovered that React's undocumented Flight protocol, used by Server Components and Next.js, mishandles JavaScript 'thenables' to enable arbitrary code execution by chaining function calls through React internals. Meta confirmed within 17 hours and patched within ~3 days of disclosure. Any Next.js application using Server Components should verify it is running patched React versions.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://lachlan.nz/blog/the-react2shell-story"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Mercury Raises $200M at $5.2B Valuation, Receives Conditional OCC Approval for Bank Charter",
+        "body": "Mercury's Series D values it 49% higher than 14 months ago with $650M annualised revenue, 300K+ customers, and four years of profitability. Conditional OCC approval to become a federally regulated bank would allow Mercury to offer lending, join Zelle, and reduce partner bank dependency — a structural shift that could disrupt the BaaS model. Funded by TCV, Sequoia, a16z, and Coatue.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.cnbc.com/2026/05/20/fintech-mercury-valuation-fundraise-bank-charter.html"
+      },
+      {
+        "headline": "Deel Launches Stablecoin Salary Payouts and Forms Dedicated Crypto Division",
+        "body": "Deel, serving 40K+ businesses across 150+ countries, now offers stablecoin salary disbursements and has appointed a Head of Crypto to lead a new dedicated division. This institutionalises crypto payroll infrastructure at enterprise scale and signals stablecoins moving from niche to mainstream HR/payroll tooling. Relevant for fintech AML/KYC teams as stablecoin flows introduce new transaction monitoring requirements.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/UNYcjT"
+      },
+      {
+        "headline": "Polymarket Partners with Nasdaq Private Market for Private-Company Prediction Contracts",
+        "body": "Polymarket will power prediction contracts tied to private-company valuations, secondary market activity, and IPO timing for firms including OpenAI and SpaceX, using Nasdaq Private Market data. This convergence of prediction markets and alternative investing infrastructure creates new price discovery mechanisms for private tech valuations ahead of public listings. Relevant for portfolio holders watching OpenAI and SpaceX IPO pricing signals.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/zHaJJh"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Rust Multi-Paxos Consensus Engine: 130K Lines via AI Agents, 23K to 300K ops/sec Throughput Gain",
+        "body": "A spec-driven AI-assisted approach rebuilt a Replicated State Library in Rust using Claude Code and Codex, producing 130K+ lines and a 13x throughput improvement (23K → 300K ops/sec) with high reliability via automated testing. The post-mortem details how spec-driven development disciplines AI agent output and surfaces where human oversight remains essential. Directly applicable to high-throughput fintech distributed systems.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://zfhuang99.github.io/rust/claude%20code/codex/contracts/spec-driven%20development/2025/12/01/rust-with-ai.html"
+      },
+      {
+        "headline": "Making Monorepos Ergonomic for AI Coding Agents: Production Considerations",
+        "body": "Engineering teams are discovering that code agents have distinct failure modes and context requirements that differ from human developers, demanding intentional monorepo organisation changes. The piece covers structuring repositories so agents can navigate, scope work, and avoid context window failure without human intervention. A practical staff-level engineering concern as AI-assisted development scales.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/tkqM7H"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "SpaceX Files S-1: $80B Raise Target, ~$2T Valuation, $4.3B Q1 Net Loss on $4.69B Revenue",
+        "body": "SpaceX's IPO filing reveals a three-unit structure (Space rockets, Starlink Connectivity, AI/xAI) with Connectivity generating $1.19B Q1 profit while the AI unit lost $2.5B. Musk retains 85% voting control; vesting of 1B performance shares requires a 1M-person Mars colony. The Anthropic $45B compute deal sits inside the AI unit, and the xAI/Colossus data centre revenue is now a disclosed public company line item — making compute-as-revenue a trackable metric.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/RIKybV"
+      },
+      {
+        "headline": "OpenAI IPO Filing Imminent, September Target — Despite Missed Revenue and User Targets",
+        "body": "OpenAI is working with bankers to file an S-1 within days or weeks, targeting a September public debut following the dismissal of Musk's structural lawsuit. The company has missed multiple internal revenue and user targets and must overcome questions about whether revenue can support its committed spending — the Anthropic Stargate-scale compute commitments are a direct comp. Three massive AI IPOs (SpaceX, OpenAI, Anthropic) are expected within 2026.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "morningbrew.com"
+        ],
+        "url": "https://techcrunch.com/2026/05/20/openai-barrels-toward-ipo-that-may-happen-in-september/"
+      },
+      {
+        "headline": "Nvidia Q1 Earnings Exceeded Expectations but Stock Fell — Analyst Expectations 'Basically Impossible'",
+        "body": "Nvidia beat analyst estimates for Q1 2026 but shares declined post-earnings as market expectations had been set at an effectively unachievable bar. Broader market context: Nasdaq at 26,270 (+1.55%) and S&P at 7,432 (+1.08%) on the same day, driven by Iran deal optimism and oil price decline. For NVDA holders, the beat-and-drop pattern reflects valuation compression risk at current multiples.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Google Agent Executor: Distributed Agent Runtime Architecture",
+      "why": "Official GCP engineering blog detailing production architecture for durable, isolated, Kubernetes-integrated agent execution — directly actionable for teams designing or evaluating agentic infrastructure.",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning/agent-executor-googles-distributed-agent-runtime/"
+    },
+    {
+      "title": "CVE-2026-3102: ExifTool macOS RCE via Metadata Injection",
+      "why": "Primary Kaspersky GReAT technical writeup with full attack chain, code-level root cause, and defender checklist — high relevance for any team running image processing pipelines or macOS endpoints.",
+      "url": "https://securelist.com/exiftool-compromise-mac/119866/"
+    },
+    {
+      "title": "A Bitter Lesson for Data Filtering (arXiv 2605.19407)",
+      "why": "Primary research paper challenging the foundational assumption that data quality filtering improves large model pretraining — architecturally significant for any team investing in data pipeline infrastructure for model training.",
+      "url": "https://arxiv.org/abs/2605.19407"
+    }
+  ]
+}
