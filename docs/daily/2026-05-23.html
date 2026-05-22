@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // SAT 23 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SAT 23 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">16</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/TgMrfv" target="_blank">Cursor hits $3B ARR with SpaceX acquisition option at $60B</a></div>
+        <div class="story-body">Cursor reached $3B annualized revenue in late April 2026, with 3,000+ enterprise customers paying $100K+/year — one of the fastest startup growth trajectories on record. SpaceX holds a 30-day option to acquire Cursor at $60B, triggered shortly after SpaceX&#x27;s expected June 12 public listing. The valuation implies AI coding tools are now a strategic infrastructure asset, not just developer tooling.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/TgMrfv" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/05/21/anthropic-microsoft-maia-200-ai-chip.html" target="_blank">Anthropic–Microsoft Maia chip deal signals compute diversification beyond AWS/Google</a></div>
+        <div class="story-body">Microsoft is in talks to supply Maia 200 AI chips to Anthropic following its $5B November investment, addressing Anthropic&#x27;s persistent compute constraints despite existing AWS and Google partnerships. Maia offers ~30% inference performance improvement relevant to Anthropic&#x27;s AI-assisted programming workloads. This deal deepens MSFT&#x27;s stake in the Anthropic ecosystem and creates a three-cloud compute hedge for Anthropic.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.cnbc.com/2026/05/21/anthropic-microsoft-maia-200-ai-chip.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://qwen.ai/blog?id=qwen3.7" target="_blank">Alibaba releases Qwen3.7-Max as top-tier agent-foundation model</a></div>
+        <div class="story-body">Qwen3.7-Max posts leading scores on Terminal-Bench 2.0-Terminus, SWE-Pro, SciCode, MCP-Mark, GPQA Diamond, and IMOAnswerBench, with consistent results across Claude Code, OpenClaw, and custom harnesses. The model is positioned as a proprietary agent-foundation model optimised for autonomous task execution. This extends Chinese frontier model competition into the agentic coding benchmark tier previously dominated by Anthropic.</div>
+        <div class="story-meta"><span class="chip">qwen.ai</span><div class="ref-links"><a class="ref-link ai" href="https://qwen.ai/blog?id=qwen3.7" target="_blank">qwen.ai ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cursor.com/blog/cloud-agent-lessons" target="_blank">Cursor engineering post: lessons from building cloud agents at scale</a></div>
+        <div class="story-body">Cursor&#x27;s engineering blog details architectural decisions for production cloud agents: durable execution for long-running tasks, isolated dev environments per agent, self-healing infrastructure, and strict separation of agent state from conversation state. These patterns are directly applicable to any team building agentic workflows on cloud infrastructure. The post is a primary source from the team now processing $3B ARR through this architecture.</div>
+        <div class="story-meta"><span class="chip">cursor.com</span><div class="ref-links"><a class="ref-link ai" href="https://cursor.com/blog/cloud-agent-lessons" target="_blank">cursor.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://developer.chrome.com/blog/chrome-at-io26" target="_blank">Sundar Pichai: agentic coding and 24/7 multi-device agents are Google&#x27;s near-term trajectory</a></div>
+        <div class="story-body">In a post-I/O interview, Pichai positioned agentic coding (not AI-written line count) as the new engineering success metric, with engineers managing teams of agents. Google&#x27;s Chrome team announced WebMCP standard, agent-native DevTools, and on-device Gemma 197M at I/O 2026, signalling browser-level agent infrastructure. Pichai&#x27;s &#x27;flip phone&#x27; framing — today&#x27;s AI looks primitive in three years — aligns with Google&#x27;s aggressive Gemini integration roadmap.</div>
+        <div class="story-meta"><span class="chip">therundown.ai</span><span class="chip">developer.chrome.com</span><div class="ref-links"><a class="ref-link ai" href="https://developer.chrome.com/blog/chrome-at-io26" target="_blank">developer.chrome.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/05/cisa-admin-leaked-aws-govcloud-keys-on-github/" target="_blank">CISA contractor leaked AWS GovCloud keys and RSA private key granting full CISA-IT GitHub org access</a></div>
+        <div class="story-body">A CISA contractor created a public GitHub account (&#x27;Private-CISA&#x27;) storing plaintext AWS GovCloud credentials, an RSA private key for a GitHub App with admin access to all CISA-IT repositories, and dozens of other agency secrets — the most sensitive material appearing in late April 2026. The exposed GitHub App key would allow an attacker to read all private repos, inject rogue CI/CD runners, hijack pipelines, and modify branch protections. Over a week after notification by GitGuardian and TruffleHog, CISA had still not rotated all affected credentials; lawmakers in both chambers are demanding answers.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://krebsonsecurity.com/2026/05/cisa-admin-leaked-aws-govcloud-keys-on-github/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://safedep.io/megalodon-mass-github-repo-backdooring-ci-workflows/" target="_blank">Megalodon: automated campaign backdoored 5,561 GitHub repos via CI workflow injection in 6 hours</a></div>
+        <div class="story-body">Operation Megalodon pushed 5,718 malicious commits injecting GitHub Actions workflows with base64-encoded bash payloads to exfiltrate CI secrets, cloud credentials, SSH keys, and OIDC tokens to C2 at 216.126.225.129:8443. Targeted workflows used workflow_dispatch with id-token: write, creating silent dormant backdoors; the attack cascaded to npm via poisoned @tiledesk/tiledesk-server packages (2.18.6–2.18.12). Defenders must revert May 18 commits from build-system@noreply.dev or ci-bot@automated.dev, rotate all runner-exposed secrets, and audit cloud OIDC token logs.</div>
+        <div class="story-meta"><span class="chip">safedep.io</span><div class="ref-links"><a class="ref-link sec" href="https://safedep.io/megalodon-mass-github-repo-backdooring-ci-workflows/" target="_blank">safedep.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://neciudan.dev/github-actions-poisoning" target="_blank">GitHub Actions cache poisoning: systemic open-source supply chain risk affecting Angular, tj-actions, TanStack</a></div>
+        <div class="story-body">Cache poisoning allows attackers to write malicious dependency caches that execute inside privileged publish workflows — either directly or by cache eviction using tools like Cacheract, as demonstrated in multiple high-profile incidents. Mitigations: pin actions to SHAs, gate workflow edits with CODEOWNERS, disable or isolate caches in release jobs, enforce non-SMS 2FA, and treat AI agent configs as executable code. If a compromised package ran, remove gh-token-monitor before rotating credentials, then reimage hosts.</div>
+        <div class="story-meta"><span class="chip">neciudan.dev</span><div class="ref-links"><a class="ref-link sec" href="https://neciudan.dev/github-actions-poisoning" target="_blank">neciudan.dev ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.derp.ca/research/crystalx-go-rat/" target="_blank">CrystalX Go RAT uses four-layer encryption (XOR → ChaCha20 → DEFLATE → AES-GCM) with 40+ command set</a></div>
+        <div class="story-body">CrystalX, a MaaS RAT, hides a 6.9 MB Go payload via sequential XOR, ChaCha20, and DEFLATE transforms; the unpacked payload adds AES-GCM string encryption. It establishes WebSocket C2 over TLS to crystalxrat[.]net and supports remote desktop, keylogging, credential theft from browsers/Discord/Telegram/Steam, and destructive commands including BSOD. IOC hunt: NvContainerTask_YBFZUW1U32 persistence artifact, Global\WinSecMutex_YBFZUW1U32, SecurityHealthSystray.exe under DeviceMetadataStore.</div>
+        <div class="story-meta"><span class="chip">derp.ca</span><div class="ref-links"><a class="ref-link sec" href="https://www.derp.ca/research/crystalx-go-rat/" target="_blank">derp.ca ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.netspi.com/blog/technical-blog/hardware-and-embedded-systems-penetration-testing/emulating-and-exploiting-uefi/" target="_blank">UEFI PngDecoderDxe buffer over-read: missing read-side bounds check leaks pre-OS memory including crypto keys</a></div>
+        <div class="story-body">NetSPI found a UEFI PNG decoder validates total allocation size against 0x7fffffff but never bounds-checks reads against compressed data length — spoofing IDAT chunk length to 0x90000000 causes the decompressor to read past the buffer into adjacent pre-OS memory containing cryptographic keys and assembly code. Exploitation is demonstrable via Qiling harness with hooked AllocatePool/FreePool; leaked data is theoretically exfiltrable via HDMI/VGA boot display capture. Audit all UEFI image parsers for read-side bounds checks independent of allocation guards.</div>
+        <div class="story-meta"><span class="chip">netspi.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.netspi.com/blog/technical-blog/hardware-and-embedded-systems-penetration-testing/emulating-and-exploiting-uefi/" target="_blank">netspi.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/05/trapdoor-android-ad-fraud-scheme-hit.html" target="_blank">Trapdoor Android ad fraud hit 659M daily bid requests across 455 apps using hidden WebViews</a></div>
+        <div class="story-body">Trapdoor used utility-style Android apps to deliver second-stage payloads that open hidden WebViews targeting HTML5 cashout domains, generating 659M daily fake bid requests. The scheme abused install attribution APIs to activate fraud only for ad-driven installs, evading detection during organic usage. Google pulled all identified apps; the fraud scale represents a significant drain on programmatic ad budgets relevant to any fintech with ad-funded acquisition.</div>
+        <div class="story-meta"><span class="chip">thehackernews.com</span><div class="ref-links"><a class="ref-link fin" href="https://thehackernews.com/2026/05/trapdoor-android-ad-fraud-scheme-hit.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/MiBf5s" target="_blank">Pinterest lambda-architecture for ML user-sequence data: config-as-code unifying real-time, batch, and online serving</a></div>
+        <div class="story-body">Pinterest redesigned its ML data platform with a single configuration-as-code definition standardising user-sequence data across real-time indexing, batch processing, and online serving. Columnar, time-partitioned storage reduced infrastructure costs while accelerating onboarding of new events and enrichments. The pattern directly addresses the operational overhead of maintaining separate pipelines for each serving mode in high-throughput ML systems.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://links.tldrnewsletter.com/MiBf5s" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://dropbox.tech/machine-learning/introducing-nova-our-internal-platform-for-coding-agents" target="_blank">Dropbox Nova: internal platform standardising AI coding agents across SDLC (flaky tests, migrations, validation)</a></div>
+        <div class="story-body">Dropbox built Nova as a cloud-native platform to run AI coding agents uniformly across their software development lifecycle, replacing fragmented single-purpose tools. Agents handle flaky test remediation, schema migrations, and code validation within Dropbox&#x27;s infrastructure constraints. The post-mortem pattern — centralise agent infrastructure before scaling agent count — is a reusable architectural signal for platform teams.</div>
+        <div class="story-meta"><span class="chip">dropbox.tech</span><div class="ref-links"><a class="ref-link swe" href="https://dropbox.tech/machine-learning/introducing-nova-our-internal-platform-for-coding-agents" target="_blank">dropbox.tech ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/PYo" target="_blank">US government invests $2B in quantum computing; IBM gets $1B matched for dedicated quantum chip fab in Albany</a></div>
+        <div class="story-body">The Trump administration will deploy $2B from the CHIPS and Science Act into nine quantum computing companies, with IBM receiving $1B (matched) to establish a dedicated quantum chip manufacturing facility in Albany, NY; D-Wave, Rigetti, and Infleqtion each receive $100M. Shares jumped up to 31% on the announcement. Timeline risk remains: Nvidia&#x27;s Jensen Huang estimates practical quantum applications are ~20 years out, though others forecast 3–5 years.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/PYo" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/qttqkT" target="_blank">Manus weighs $1B raise to unwind Meta acquisition after Chinese regulatory reversal</a></div>
+        <div class="story-body">Chinese regulators ordered Manus to unwind its acquisition by Meta — an unprecedented reversal of a completed cross-border deal — forcing founders to raise funds to buy back the operation. This signals an escalating Chinese regulatory posture toward US Big Tech acquisitions of Chinese AI assets. The outcome will set precedent for future US-China AI M&amp;A and could constrain Meta&#x27;s AI talent/capability acquisition strategy in China.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/qttqkT" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Trump AI executive order pulled at last minute amid internal disagreements over pre-release model review mandate</div>
+        <div class="story-body">A planned executive order requiring US government and civilian agency review of new AI models before public release was withdrawn by President Trump, who cited personal objections and internal administration disagreements. The order had cybersecurity implications for model release governance. Uncertainty around the regulatory framework continues to affect enterprise AI deployment planning.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://safedep.io/megalodon-mass-github-repo-backdooring-ci-workflows/" target="_blank">Megalodon: Mass GitHub Repo Backdooring via CI Workflows ↗</a></div>
+          <div class="dive-why">Primary technical analysis of the largest known automated CI supply-chain attack to date, with specific IOCs, payload mechanics, OIDC token exfiltration details, and npm cascade — directly actionable for any team using GitHub Actions.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://cursor.com/blog/cloud-agent-lessons" target="_blank">Cursor: Lessons Learned from Building Cloud Agents ↗</a></div>
+          <div class="dive-why">First-party engineering post-mortem from the team operating at $3B ARR on production agentic architecture — covers durable execution, isolated environments, self-healing infra, and state separation patterns that are architecturally significant for any platform building agent infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://trufflesecurity.com/blog/cisa-leaked-admin-github-token-remained-live-2-days" target="_blank">TruffleHog: CISA Leaked Admin GitHub Token Remained Live 2 Days ↗</a></div>
+          <div class="dive-why">Primary source technical disclosure by Dylan Ayrey (TruffleHog creator) detailing the CISA GitHub App RSA key exposure, its blast radius across CISA-IT CI/CD pipelines, and the timeline of non-remediation — high signal for anyone responsible for secrets management in government or regulated environments.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 22 May 2026 · sources: tldrnewsletter.com, cnbc.com, qwen.ai, cursor.com, therundown.ai, developer.chrome.com, krebsonsecurity.com, safedep.io, neciudan.dev, derp.ca, netspi.com, thehackernews.com, dropbox.tech, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
