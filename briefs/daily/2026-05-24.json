@@ -1,0 +1,78 @@
+{
+  "date": "2026-05-24",
+  "threadCount": 2,
+  "storyCount": 6,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "RAG vs Agentic Architecture: Decision Framework and Trade-offs",
+        "body": "RAG is appropriate when answers live in documents — single retrieval, single generation, cheap and debuggable. Agents are for tasks requiring action on external systems: they run a reasoning loop, select tools, execute, and iterate until the goal is met. The cost is more tokens and compounding error drift across steps.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Claude Code Context Management: 5-Layer Lazy Degradation Strategy",
+        "body": "Before every model call, Claude Code runs up to five context-management strategies in escalating order of disruption: budget reduction (cap tool outputs), snip (trim oldest history), microcompact (prune tool turns by ID to preserve prompt cache), context collapse (read-time projection), and auto-compact (full model-generated summary as last resort). The architecture is instructive for anyone building long-running agentic sessions — prioritise cache warmth and avoid full summarisation until necessary.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Claude Code Internal Request Pipeline Traced from Source",
+        "body": "A prompt flows through: interface (CLI/IDE/SDK) → agent loop → permission system → tool dispatch → execution environment (shell/cloud/sandbox) → result fed back to agent loop → state persistence → streamed output. The permission system sitting between planning and execution is the architecturally critical gate for agentic security — the hardest layer to get right when building similar systems.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [],
+    "fin": [
+      {
+        "headline": "Kevin Warsh Sworn in as Fed Chair; Rate Policy Shift Expected",
+        "body": "Warsh was sworn in at the White House on 2026-05-23, replacing a predecessor Trump repeatedly criticised for resisting rate cuts. Trump signalled desire for lower rates at the ceremony. Markets will watch whether Warsh accelerates cuts — relevant to fintech funding conditions and fixed-income positioning across the portfolio.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Forward Proxy vs Reverse Proxy vs API Gateway: Architectural Boundaries",
+        "body": "Forward proxy represents the client (outbound policy enforcement, IP masking); reverse proxy represents the server (TLS termination, load distribution, backend shielding); API gateway is a reverse proxy augmented with auth, rate limiting, versioning, and request shaping applied consistently across microservices. In production, all three layers typically coexist — relevant to IAM/zero-trust architectures where policy enforcement points must be clearly separated.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "S&P 500 Posts Eighth Consecutive Weekly Gain; Reddit Falls on Meta Forum Threat",
+        "body": "The S&P 500 closed its longest weekly winning streak since 2023, aided by Iran peace deal optimism. Reddit dropped ~5.6% after Meta announced a competing online forum product — a direct threat to Reddit's ad-revenue and data-licensing model.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Claude Code context management architecture (5-layer strategy)",
+      "why": "Primary technical breakdown of how Anthropic's production agentic coding tool manages long-session context degradation — directly applicable to anyone designing agentic systems with bounded context windows.",
+      "url": null
+    }
+  ]
+}
