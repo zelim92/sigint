@@ -1,0 +1,24 @@
+{
+  "date": "2026-05-25",
+  "threadCount": 1,
+  "storyCount": 1,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [],
+    "sec": [],
+    "fin": [],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "K-shaped travel economy: premium surges, budget collapses",
+        "body": "Delta's premium ticket sales exceeded economy for the first time ever in 2025 (business/first-class up 9%, main cabin down 7%), mirroring luxury hotel RevPAR gains of 2.9% vs. economy hotel drops of 4.1%. Spirit Airlines shut down in May 2026 citing fuel costs driven partly by the Iran war, illustrating the collapse of the budget travel segment. Vegas visits dropped 7.5% in 2025 (largest non-COVID decline on record) yet casinos posted record ~$8.8B revenue, with 44% of visitors now earning $150K+ — a clean signal that consumer bifurcation is accelerating across discretionary spending categories.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": []
+}
