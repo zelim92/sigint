@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 26 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 26 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://red.anthropic.com/2026/exploit-evals/" target="_blank">Anthropic Claude Mythos: LLM-to-Exploit-Chain Capability Confirmed on ExploitBench</a></div>
+        <div class="story-body">Anthropic&#x27;s restricted Mythos Preview model can chain vulnerability primitives into complete end-to-end attack chains, outperforming all other evaluated models on ExploitBench and ExploitGym benchmarks. Separately, Project Glasswing deployed Mythos Preview with ~50 partners to find 10,000+ high/critical-severity vulnerabilities across 1,000+ open-source projects at &gt;90% true-positive rates. Partners include Cloudflare, Mozilla, Palo Alto Networks, Microsoft, Oracle, and major banks — shifting the security bottleneck from discovery to verification and patching.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">anthropic.com</span><div class="ref-links"><a class="ref-link ai" href="https://red.anthropic.com/2026/exploit-evals/" target="_blank">red.anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Google DeepMind AlphaProof Nexus Solves Nine Open Erdős Problems</div>
+        <div class="story-body">AlphaProof Nexus autonomously solved nine open Erdős problems — two unsolved for 56 years — at a few hundred dollars per problem, pairing an LLM with the Lean proof assistant for machine-verified proofs. It also proved 44 open conjectures from OEIS; a simpler agent variant matched results but cost more, and problems requiring novel mathematical constructions remained unsolved. This follows OpenAI disproving an 80-year-old Erdős conjecture the prior week, marking a rapid escalation in AI mathematical reasoning.</div>
+        <div class="story-meta"><span class="chip">therundownai.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" target="_blank">MCP Specification Release Candidate Introduces Stateless Core</a></div>
+        <div class="story-body">The largest revision to the Model Context Protocol since launch is now in release candidate, introducing a stateless core designed for horizontal scale. This architectural shift has significant implications for agentic systems that rely on persistent server-side session state and will affect how MCP servers are deployed in enterprise and cloud environments.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/" target="_blank">blog.modelcontextprotocol.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://thenextweb.com/news/deepseek-v4-pro-75-percent-price-cut-permanent" target="_blank">DeepSeek Permanently Cuts V4 Pro Prices 75%, Undercuts All Frontier Models</a></div>
+        <div class="story-body">DeepSeek made its promotional 75% price cut on V4 Pro permanent, now sitting below OpenAI GPT-5, Anthropic Claude Opus 4.7, and Google Gemini 3.5 Flash. The gap is widest against frontier reasoning models used by enterprise for demanding workloads, intensifying margin pressure across the AI provider stack.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://thenextweb.com/news/deepseek-v4-pro-75-percent-price-cut-permanent" target="_blank">thenextweb.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://ramp.com/leading-indicators/the-ai-race-has-a-new-frontrunner-but-no-clear-winner" target="_blank">Anthropic Overtakes OpenAI in US Business Adoption; Market Remains Fluid</a></div>
+        <div class="story-body">Ramp spend data shows Claude is now used by 34.4% of US businesses vs OpenAI&#x27;s 32.3% — the first time Anthropic has led. However, over half of customers use both providers and 43% of Anthropic users switched from a competitor, indicating switching costs remain near zero and no durable moat has formed.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://ramp.com/leading-indicators/the-ai-race-has-a-new-frontrunner-but-no-clear-winner" target="_blank">ramp.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://gbhackers.com/litespeed-cpanel-plugin-0-day-exploited/" target="_blank">CVE-2026-48172 (CVSS 10.0): LiteSpeed cPanel Plugin 0-Day Actively Exploited for Root Access</a></div>
+        <div class="story-body">A logic flaw in the LiteSpeed User-End cPanel plugin&#x27;s lsws.redisAble JSON-API endpoint allows any authenticated cPanel user to escalate to root with a single malformed API call — no race condition required. Particularly dangerous on shared hosting where all tenants hold valid sessions; cPanel force-uninstalled the plugin five hours before scheduled disclosure. Patch to LiteSpeed WHM Plugin v5.3.1.0 (bundled with cPanel Plugin v2.4.7) immediately and treat any host with `/var/cpanel/logs` entries matching `cpanel_jsonapi_func=redisAble` as fully compromised.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://gbhackers.com/litespeed-cpanel-plugin-0-day-exploited/" target="_blank">gbhackers.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://ironpeak.be/blog/bypassing-apple-mie/" target="_blank">Apple M5 Memory Integrity Enforcement Bypassed in 5 Days Using Mythos Preview</a></div>
+        <div class="story-body">A three-person team using Anthropic&#x27;s Mythos Preview produced the first public macOS kernel exploit defeating Apple&#x27;s Memory Integrity Enforcement on M5 silicon, chaining CVE-2026-28952 with an info leak to reach a root shell in five days. The root cause is an integer overflow in `_zalloc_ro_mut` — the sole trusted writer for read-only kernel zones — that spills attacker-controlled bytes across slot boundaries and flips cr_uid to zero without touching pointers, tags, or page tables. This reframes hardware memory tagging as shifting rather than eliminating the attack surface, with privileged writers now the highest-value target.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://ironpeak.be/blog/bypassing-apple-mie/" target="_blank">ironpeak.be ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/information-technology/2026/05/a-hacker-group-is-poisoning-open-source-code-at-an-unprecedented-scale/" target="_blank">TeamPCP Supply Chain Campaign: 700+ GitHub Repos Poisoned via Postinstall Hook</a></div>
+        <div class="story-body">A coordinated campaign linked to the `parikhpreyash4` GitHub account inserted identical `package.json` postinstall hooks across 700+ repositories, including popular Packagist packages and GitHub Actions workflows, deploying a binary (`gvfsd-network` / `/tmp/.sshd`) via `curl -skL` with TLS verification disabled. The hook was placed in `package.json` rather than `composer.json` to evade PHP defenders, and a CI/CD path was targeted via a workflow step named &#x27;Dependency Cache Sync&#x27;. GitHub itself was breached via a poisoned VSCode extension; the group appears financially motivated with ransomware and data extortion payloads.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">arstechnica.com</span><div class="ref-links"><a class="ref-link sec" href="https://arstechnica.com/information-technology/2026/05/a-hacker-group-is-poisoning-open-source-code-at-an-unprecedented-scale/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.volkskrant.nl/binnenland/how-a-consultant-and-a-concert-pianist-from-the-netherlands-aided-pro-russian-hackers~b60acffb/" target="_blank">Netherlands Seizes 800 Servers, Arrests Two for Hosting Russia-Linked Cyberattack Infrastructure</a></div>
+        <div class="story-body">Dutch financial crime agency FIOD arrested two men — MIRhosting founder Andrey Nesterenko and associate Youssef Zinad — for violating EU sanctions law by providing hosting infrastructure used by Russia for DDoS attacks, influence operations, and disinformation campaigns. The seized 800 servers belonged to the-hosting / WorkTitans BV, successor entities to EU-sanctioned PQHosting and the Neculiti brothers, which had transferred Stark Industries&#x27; network assets ahead of sanction enforcement. Data on seized servers was irrecoverably lost for customers.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.volkskrant.nl/binnenland/how-a-consultant-and-a-concert-pianist-from-the-netherlands-aided-pro-russian-hackers~b60acffb/" target="_blank">volkskrant.nl ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.blog/changelog/2026-05-22-staged-publishing-and-new-install-time-controls-for-npm/" target="_blank">npm Staged Publishing: 2FA-Gated Tarball Approval and Install-Time Source Controls</a></div>
+        <div class="story-body">GitHub is adding staged publishing to npm requiring maintainers to pass 2FA and explicitly approve a prebuilt tarball before any version becomes installable, including from CI/CD and OIDC trusted publishing. npm CLI 11.15.0 adds `--allow-file`, `--allow-remote`, and `--allow-directory` flags to allowlist non-registry install sources, directly addressing supply chain abuse vectors exploited in the TeamPCP campaign.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://github.blog/changelog/2026-05-22-staged-publishing-and-new-install-time-controls-for-npm/" target="_blank">github.blog ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.thisweekinfintech.com/p/plaid-launches-new-ai-data-tools-guaranteed-payments-to-overhaul-ach" target="_blank">Plaid Launches Guaranteed ACH: Absorbs Payment Failure Risk with Real-Time Risk Models</a></div>
+        <div class="story-body">Plaid&#x27;s new guaranteed ACH product instantly approves bank transfers while Plaid absorbs financial risk if payments fail, backed by proprietary real-time risk models for improved transaction categorisation and income detection. The move positions Plaid as core payment infrastructure rather than a connectivity layer, competing directly with card networks and traditional ACH risk providers. Combined with new AI data tools, this is a significant expansion of Plaid&#x27;s addressable market.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.thisweekinfintech.com/p/plaid-launches-new-ai-data-tools-guaranteed-payments-to-overhaul-ach" target="_blank">thisweekinfintech.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cfo.com/news/inside-anthropic-claude-rapid-expansion-across-corporate-finance-cfo-/820806/" target="_blank">Claude Deeply Embedded in Institutional Finance Workflows at PwC, JPMorgan, Goldman, Visa</a></div>
+        <div class="story-body">Anthropic has launched finance-focused Claude agents covering reconciliations, valuation reviews, earnings analysis, and statement audits, with Microsoft Office integration. Adoption is concentrated among firms with existing enterprise data connectors — PwC, KPMG, JPMorgan, Goldman Sachs, Citi, AIG, and Visa are named. A UK government report separately warns AI could automate 30-50% of financial services tasks, with HSBC, Standard Chartered, and JPMorgan executives openly acknowledging headcount reduction in certain roles.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cfo.com/news/inside-anthropic-claude-rapid-expansion-across-corporate-finance-cfo-/820806/" target="_blank">cfo.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://thepaypers.com/crypto-web3-and-cbdc/news/blockchaincom-files-confidentially-for-us-ipo" target="_blank">Blockchain.com Confidentially Files for US IPO Amid Crypto Industry Listing Wave</a></div>
+        <div class="story-body">Blockchain.com has confidentially filed for a US IPO, joining Kraken and Grayscale as crypto firms testing public markets following the 2025 downturn and advancing federal crypto legislation. Valuation and timing remain undisclosed. The wave signals that regulatory clarity is finally progressing enough for digital asset firms to pursue listings.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://thepaypers.com/crypto-web3-and-cbdc/news/blockchaincom-files-confidentially-for-us-ipo" target="_blank">thepaypers.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cockroachlabs.com/blog/cspann-real-time-indexing-billions-vectors/" target="_blank">CockroachDB C-SPANN: Distributed Vector Index Stored as Native Table Data</a></div>
+        <div class="story-body">CockroachDB&#x27;s C-SPANN builds a hierarchical K-means tree where each partition is stored as ordinary key-value rows within CockroachDB ranges, inheriting existing split, rebalance, caching, and multi-region machinery for free. This avoids the central coordinator, large in-memory caches, and sharding-hostile layouts that disqualify HNSW and IVF for distributed transactional systems. Trade-off: C-SPANN loses on pure latency to specialized in-memory vector DBs but wins on transactional consistency, real-time updates, and multi-tenant isolation.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.cockroachlabs.com/blog/cspann-real-time-indexing-billions-vectors/" target="_blank">cockroachlabs.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://workos.com/auth-md" target="_blank">auth.md: Machine-Readable Agent Registration Standard for OAuth Flows</a></div>
+        <div class="story-body">WorkOS&#x27;s auth.md proposes a standardised Markdown file that tells AI agents how to register on behalf of users — which OAuth flows are supported, which scopes exist, and how to register — without human interaction. The agent&#x27;s identity provider vouches for the user. This is an early attempt at a non-human identity registration standard relevant to agentic IAM architecture.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://workos.com/auth-md" target="_blank">workos.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://epoch.ai/data-insights/ai-chip-component-cost-shares" target="_blank">HBM Now 63% of AI Chip Component Cost, Up from 52% in Early 2024</a></div>
+        <div class="story-body">Epoch AI data shows high-bandwidth memory has risen from 52% to 63% of total AI chip component spending between early 2024 and late 2025, now the dominant cost driver. Tech companies are raising capex forecasts by billions to manage tight HBM supply chains. This has direct implications for NVDA and TSMC supply chain dynamics and AI infrastructure cost curves.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://epoch.ai/data-insights/ai-chip-component-cost-shares" target="_blank">epoch.ai ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cloudedjudgement.substack.com/p/clouded-judgement-52226-the-neocloud" target="_blank">Neocloud Boom: SpaceX/xAI Deal Signals $7.5T AI Buildout Creating $2.5T Addressable Opportunity</a></div>
+        <div class="story-body">SpaceX acquired xAI&#x27;s two Colossus data centers and immediately rented them to Anthropic for $15B/year — nearly doubling SpaceX&#x27;s $18.7B total revenue from 23 years of rocketry in a single quarter. The broader AI infrastructure buildout is projected at $7.5T over 4.5 years (~5% of US GDP, comparable to the 1880s railroad boom); if neoclouds capture 20% of the $13.5T in value created, that&#x27;s a $2.5T opportunity that hyperscalers alone cannot fill. Direct relevance for AMZN, MSFT, GOOGL capital allocation and NVDA/TSMC demand.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://cloudedjudgement.substack.com/p/clouded-judgement-52226-the-neocloud" target="_blank">cloudedjudgement.substack.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Anthropic Launches Enterprise Consulting Arm via Fractional AI Acquisition, Backed by Blackstone and H&amp;F</div>
+        <div class="story-body">Anthropic&#x27;s new enterprise services firm — backed by Blackstone, Hellman &amp; Friedman, and other major investors — has made Fractional AI its operational centerpiece. The move mirrors OpenAI&#x27;s deployment strategy: using consulting-style teams and PE distribution networks to embed models across thousands of mid-market companies. This accelerates enterprise Claude adoption outside the direct API path.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://red.anthropic.com/2026/exploit-evals/" target="_blank">Measuring LLMs&#x27; Ability to Develop Exploits — Anthropic Red Team ↗</a></div>
+          <div class="dive-why">Primary Anthropic research benchmarking Mythos Preview on ExploitBench/ExploitGym; directly quantifies how fast the bar for offensive exploit development is dropping and what that means for defensive security teams.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.anthropic.com/research/glasswing-initial-update" target="_blank">Project Glasswing Initial Update — Anthropic ↗</a></div>
+          <div class="dive-why">Official Anthropic announcement of AI-assisted vulnerability discovery at scale across critical open-source and enterprise infrastructure; sets the baseline for AI-driven offensive/defensive security economics.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.cockroachlabs.com/blog/cspann-real-time-indexing-billions-vectors/" target="_blank">C-SPANN: Real-Time Indexing for Billions of Vectors in CockroachDB ↗</a></div>
+          <div class="dive-why">Primary engineering post-mortem from CockroachDB on architectural trade-offs of embedding distributed vector search natively in a transactional SQL system — a staff-level systems design reference for anyone evaluating vector DB strategy.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 25 May 2026 · sources: tldrnewsletter.com, anthropic.com, therundownai.com, arstechnica.com, krebsonsecurity.com, bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
