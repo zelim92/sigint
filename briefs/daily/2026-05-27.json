@@ -1,0 +1,142 @@
+{
+  "date": "2026-05-27",
+  "threadCount": 5,
+  "storyCount": 12,
+  "sourceCount": 10,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Gemini 3.5 Flash Benchmarked: Best at Speed, Weak Against Top-Tier Models",
+        "body": "Gemini 3.5 Flash is the fastest model at its speed tier, outscoring Gemini 3.1 Pro on Terminal-Bench and MCP Atlas while running 4x faster — positioning it for latency-sensitive agentic workflows. However, it falls short against Opus 4.7 and GPT-5.5 on quality-demanding tasks. Google's strategy: make it the default daily driver for agents where throughput matters more than ceiling quality.",
+        "signal": "med",
+        "sources": [
+          "thezvi.wordpress.com"
+        ],
+        "url": "https://thezvi.wordpress.com/2026/05/22/gemini-3-5-flash-looks-good-for-how-fast-it-is/"
+      },
+      {
+        "headline": "Meta and Google Safety Guardrails Bypassed in Minutes via Fine-Tuning",
+        "body": "Researchers demonstrated that safety fine-tuning on Meta and Google frontier models can be stripped in minutes using widely available tooling, effectively 'decensoring' models. This confirms that RLHF-applied safety is a thin layer rather than a structural constraint, and has direct implications for compliance and misuse risk in enterprise AI deployments.",
+        "signal": "high",
+        "sources": [
+          "therundown.ai"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Credential Brokering Pattern for AI Agents: Solving the Prompt-Injection Credential Leak Problem",
+        "body": "AI agents that hold API keys directly in environment variables are vulnerable to prompt injection attacks that exfiltrate credentials. Credential brokering inserts a private proxy that holds real secrets and only exposes short-lived, scoped tokens to the agent at runtime, preventing direct credential access. This is an emerging IAM pattern specifically addressing non-human identity risk in agentic pipelines.",
+        "signal": "high",
+        "sources": [
+          "infisical.com"
+        ],
+        "url": "https://infisical.com/blog/credential-brokering-for-ai-agents"
+      },
+      {
+        "headline": "Microsoft Webwright: SWE-Style Browser Agent Using Terminal + Python Scripts",
+        "body": "Webwright is Microsoft's open-source browser agent framework that achieves state-of-the-art on long-horizon web tasks by giving agents a terminal to launch multiple browser sessions, capturing screenshots only when needed, and enforcing end-to-end task completion in re-runnable Python scripts. The minimal harness design deliberately avoids complex scaffolding to reduce failure modes. Relevant for teams building agentic workflows that need reliable, auditable web automation.",
+        "signal": "med",
+        "sources": [
+          "microsoft.github.io"
+        ],
+        "url": "https://microsoft.github.io/Webwright/"
+      },
+      {
+        "headline": "Kubernetes SIG Ships Agent Sandbox: Isolated Stateful Singleton Pods for Agent Runtimes",
+        "body": "The kubernetes-sigs Agent Sandbox project provides a core API for managing isolated, stateful singleton workloads with stable identity and persistent storage — purpose-built for AI agent runtimes. This is an official Kubernetes SIG effort, not a vendor wrapper, signalling that agent execution isolation is becoming a first-class infrastructure concern. Extension points allow more advanced features on top of the base Sandbox API.",
+        "signal": "med",
+        "sources": [
+          "github.com"
+        ],
+        "url": "https://github.com/kubernetes-sigs/agent-sandbox"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Microsoft Closes All Unauthenticated M365 Tenant Enumeration Paths — Residual Recon Still Possible",
+        "body": "Microsoft has patched both the Autodiscover SOAP endpoint and the ACS /metadata/json/1 identity endpoint, eliminating unauthenticated full tenant enumeration. However, attackers can still reconstruct tenant identity piecemeal: GUID via OpenID config, MOERA prefix via DKIM CNAME records, and MX brute-forcing — plus instant lookups via databases like azmap.dev. Defenders should treat DKIM CNAMEs as tenant-name disclosure vectors and monitor SharePoint/OneDrive/MDI host probing.",
+        "signal": "high",
+        "sources": [
+          "sprocketsecurity.com"
+        ],
+        "url": "https://www.sprocketsecurity.com/blog/tenant-enumeration-is-dead"
+      },
+      {
+        "headline": "Void Dokkaebi (Famous Chollima) Migrates InvisibleFerret Stealer to Cython-Compiled Binaries",
+        "body": "North Korean APT Void Dokkaebi has recompiled its InvisibleFerret credential stealer from Python scripts to Cython .pyd/.so extension modules, breaking script-based detections while preserving browser credential theft, keylogging, and crypto wallet trojanization. The kill chain uses BeaverTail JS downloader → Cython binaries, with a macOS Chrome downgrade restoring Manifest V2 for tampered MetaMask/Coinbase/Phantom extensions. Hunt for mod.pyd/pad.so/brw.so under .vscode paths and apply XOR routine to execution scripts to recover C&C infrastructure.",
+        "signal": "high",
+        "sources": [
+          "trendmicro.com"
+        ],
+        "url": "https://www.trendmicro.com/en_us/research/26/e/analyzing-void-dokkaebi-invisibleferret-malware.html"
+      },
+      {
+        "headline": "Ghost CMS SQLi (CVE patched in 6.19.1) Actively Exploited in Large-Scale ClickFix Campaign",
+        "body": "Attackers are exploiting an unauthenticated SQL injection flaw in Ghost CMS (pre-6.19.1) to exfiltrate admin API keys, then injecting malicious JavaScript that serves a fake Cloudflare verification prompt as a ClickFix lure. The attack chain combines data exfiltration with a social-engineering delivery mechanism for further malware distribution. Any Ghost CMS instance not yet on 6.19.1 should be treated as compromised.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/zQLjmL"
+      },
+      {
+        "headline": "Ubiquiti Patches Three Max-Severity UniFi OS Vulnerabilities (Improper Access Control, Path Traversal, Command Injection)",
+        "body": "Ubiquiti has patched three critical UniFi OS flaws covering: unauthorized configuration changes via improper access control, system file access and account hijacking via path traversal, and command injection via improper input validation. All three were responsibly disclosed via HackerOne, following two additional patches in recent weeks. UniFi devices are common in SMB and home lab environments that often sit on network perimeters.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/ApuVpV"
+      },
+      {
+        "headline": "RondoDox Botnet Exploits 8-Year-Old ASUS Router CVE (CVSS 9.8) Against 1M+ Exposed Devices",
+        "body": "CVE-2018-5999, a critical unauthenticated configuration vulnerability in ASUS routers, is being actively exploited for the first time in the wild by the RondoDox Mirai-style botnet, which forces admin password resets via the infosvr interface. Over one million devices remain exposed; VulnCheck data shows 56% of attacked edge devices in 2025 were consumer routers and 65% of botnet-exploited flaws were on unsupported tech. Affected ASUS models should be replaced and inbound infosvr access blocked immediately.",
+        "signal": "med",
+        "sources": [
+          "hackread.com"
+        ],
+        "url": "https://hackread.com/rondodox-botnet-2018-vulnerability-hijack-asus-routers/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Vercel Cut Build Provisioning from 90s to 5s Using Firecracker MicroVMs: Full Architecture Deep Dive",
+        "body": "Vercel's internal 'Hive' platform replaced Docker containers with Firecracker microVMs (125ms boot, ~MB memory footprint) to solve hostile multi-tenancy at scale — each customer build gets a dedicated microVM kernel boundary enforced at the CPU level. Three stacked optimizations on top of this harder foundation (not documented in this newsletter excerpt but referenced in the source post) produced the 18x improvement. The architecture pattern: threat model drives isolation primitive selection; cooperative tenants → containers, adversarial tenants → microVMs.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://vercel.com/blog/a-deep-dive-into-hive-vercels-builds-infrastructure"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Huawei Claims Workaround to Match 1.4nm Transistor Density by 2031 Without Advanced Lithography",
+        "body": "Huawei has disclosed a technique it claims achieves transistor density equivalent to 1.4nm-process chips, potentially circumventing US export controls on advanced semiconductor equipment. If validated, this would remove the key bottleneck in China's domestic AI chip supply chain and undermine the strategic value of TSMC-dependent export restrictions. Timeline is 2031; independent verification is absent but the claim is strategically significant for NVDA, TSMC, and US-China tech competition dynamics.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/0N5ijx"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "A Deep Dive into Hive: Vercel's Builds Infrastructure",
+      "why": "Primary engineering post-mortem from Vercel on how Firecracker microVM architecture solved hostile multi-tenancy and delivered an 18x build provisioning speedup — directly applicable to anyone designing isolated execution environments for agentic or multi-tenant workloads.",
+      "url": "https://vercel.com/blog/a-deep-dive-into-hive-vercels-builds-infrastructure"
+    },
+    {
+      "title": "Tenant Enumeration is Dead — Residual M365 Recon Paths",
+      "why": "Authoritative technical breakdown of all remaining Microsoft 365 tenant reconnaissance vectors after Microsoft's May 2026 patches, with specific attacker tradecraft and defender mitigations — directly actionable for IAM and zero-trust practitioners.",
+      "url": "https://www.sprocketsecurity.com/blog/tenant-enumeration-is-dead"
+    },
+    {
+      "title": "Analyzing Void Dokkaebi's Cython-Compiled InvisibleFerret Malware",
+      "why": "Trend Micro primary research on a nation-state APT's evasion evolution from Python to Cython binaries, with full IOCs and kill-chain analysis — high relevance for threat hunters defending fintech environments targeted by North Korean crypto theft campaigns.",
+      "url": "https://www.trendmicro.com/en_us/research/26/e/analyzing-void-dokkaebi-invisibleferret-malware.html"
+    }
+  ]
+}

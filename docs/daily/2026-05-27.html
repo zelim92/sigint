@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 27 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 27 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">5</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">12</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">10</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://thezvi.wordpress.com/2026/05/22/gemini-3-5-flash-looks-good-for-how-fast-it-is/" target="_blank">Gemini 3.5 Flash Benchmarked: Best at Speed, Weak Against Top-Tier Models</a></div>
+        <div class="story-body">Gemini 3.5 Flash is the fastest model at its speed tier, outscoring Gemini 3.1 Pro on Terminal-Bench and MCP Atlas while running 4x faster — positioning it for latency-sensitive agentic workflows. However, it falls short against Opus 4.7 and GPT-5.5 on quality-demanding tasks. Google&#x27;s strategy: make it the default daily driver for agents where throughput matters more than ceiling quality.</div>
+        <div class="story-meta"><span class="chip">thezvi.wordpress.com</span><div class="ref-links"><a class="ref-link ai" href="https://thezvi.wordpress.com/2026/05/22/gemini-3-5-flash-looks-good-for-how-fast-it-is/" target="_blank">thezvi.wordpress.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Meta and Google Safety Guardrails Bypassed in Minutes via Fine-Tuning</div>
+        <div class="story-body">Researchers demonstrated that safety fine-tuning on Meta and Google frontier models can be stripped in minutes using widely available tooling, effectively &#x27;decensoring&#x27; models. This confirms that RLHF-applied safety is a thin layer rather than a structural constraint, and has direct implications for compliance and misuse risk in enterprise AI deployments.</div>
+        <div class="story-meta"><span class="chip">therundown.ai</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://infisical.com/blog/credential-brokering-for-ai-agents" target="_blank">Credential Brokering Pattern for AI Agents: Solving the Prompt-Injection Credential Leak Problem</a></div>
+        <div class="story-body">AI agents that hold API keys directly in environment variables are vulnerable to prompt injection attacks that exfiltrate credentials. Credential brokering inserts a private proxy that holds real secrets and only exposes short-lived, scoped tokens to the agent at runtime, preventing direct credential access. This is an emerging IAM pattern specifically addressing non-human identity risk in agentic pipelines.</div>
+        <div class="story-meta"><span class="chip">infisical.com</span><div class="ref-links"><a class="ref-link ai" href="https://infisical.com/blog/credential-brokering-for-ai-agents" target="_blank">infisical.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://microsoft.github.io/Webwright/" target="_blank">Microsoft Webwright: SWE-Style Browser Agent Using Terminal + Python Scripts</a></div>
+        <div class="story-body">Webwright is Microsoft&#x27;s open-source browser agent framework that achieves state-of-the-art on long-horizon web tasks by giving agents a terminal to launch multiple browser sessions, capturing screenshots only when needed, and enforcing end-to-end task completion in re-runnable Python scripts. The minimal harness design deliberately avoids complex scaffolding to reduce failure modes. Relevant for teams building agentic workflows that need reliable, auditable web automation.</div>
+        <div class="story-meta"><span class="chip">microsoft.github.io</span><div class="ref-links"><a class="ref-link ai" href="https://microsoft.github.io/Webwright/" target="_blank">microsoft.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.com/kubernetes-sigs/agent-sandbox" target="_blank">Kubernetes SIG Ships Agent Sandbox: Isolated Stateful Singleton Pods for Agent Runtimes</a></div>
+        <div class="story-body">The kubernetes-sigs Agent Sandbox project provides a core API for managing isolated, stateful singleton workloads with stable identity and persistent storage — purpose-built for AI agent runtimes. This is an official Kubernetes SIG effort, not a vendor wrapper, signalling that agent execution isolation is becoming a first-class infrastructure concern. Extension points allow more advanced features on top of the base Sandbox API.</div>
+        <div class="story-meta"><span class="chip">github.com</span><div class="ref-links"><a class="ref-link ai" href="https://github.com/kubernetes-sigs/agent-sandbox" target="_blank">github.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.sprocketsecurity.com/blog/tenant-enumeration-is-dead" target="_blank">Microsoft Closes All Unauthenticated M365 Tenant Enumeration Paths — Residual Recon Still Possible</a></div>
+        <div class="story-body">Microsoft has patched both the Autodiscover SOAP endpoint and the ACS /metadata/json/1 identity endpoint, eliminating unauthenticated full tenant enumeration. However, attackers can still reconstruct tenant identity piecemeal: GUID via OpenID config, MOERA prefix via DKIM CNAME records, and MX brute-forcing — plus instant lookups via databases like azmap.dev. Defenders should treat DKIM CNAMEs as tenant-name disclosure vectors and monitor SharePoint/OneDrive/MDI host probing.</div>
+        <div class="story-meta"><span class="chip">sprocketsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.sprocketsecurity.com/blog/tenant-enumeration-is-dead" target="_blank">sprocketsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.trendmicro.com/en_us/research/26/e/analyzing-void-dokkaebi-invisibleferret-malware.html" target="_blank">Void Dokkaebi (Famous Chollima) Migrates InvisibleFerret Stealer to Cython-Compiled Binaries</a></div>
+        <div class="story-body">North Korean APT Void Dokkaebi has recompiled its InvisibleFerret credential stealer from Python scripts to Cython .pyd/.so extension modules, breaking script-based detections while preserving browser credential theft, keylogging, and crypto wallet trojanization. The kill chain uses BeaverTail JS downloader → Cython binaries, with a macOS Chrome downgrade restoring Manifest V2 for tampered MetaMask/Coinbase/Phantom extensions. Hunt for mod.pyd/pad.so/brw.so under .vscode paths and apply XOR routine to execution scripts to recover C&amp;C infrastructure.</div>
+        <div class="story-meta"><span class="chip">trendmicro.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.trendmicro.com/en_us/research/26/e/analyzing-void-dokkaebi-invisibleferret-malware.html" target="_blank">trendmicro.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/zQLjmL" target="_blank">Ghost CMS SQLi (CVE patched in 6.19.1) Actively Exploited in Large-Scale ClickFix Campaign</a></div>
+        <div class="story-body">Attackers are exploiting an unauthenticated SQL injection flaw in Ghost CMS (pre-6.19.1) to exfiltrate admin API keys, then injecting malicious JavaScript that serves a fake Cloudflare verification prompt as a ClickFix lure. The attack chain combines data exfiltration with a social-engineering delivery mechanism for further malware distribution. Any Ghost CMS instance not yet on 6.19.1 should be treated as compromised.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/zQLjmL" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/ApuVpV" target="_blank">Ubiquiti Patches Three Max-Severity UniFi OS Vulnerabilities (Improper Access Control, Path Traversal, Command Injection)</a></div>
+        <div class="story-body">Ubiquiti has patched three critical UniFi OS flaws covering: unauthorized configuration changes via improper access control, system file access and account hijacking via path traversal, and command injection via improper input validation. All three were responsibly disclosed via HackerOne, following two additional patches in recent weeks. UniFi devices are common in SMB and home lab environments that often sit on network perimeters.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/ApuVpV" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://hackread.com/rondodox-botnet-2018-vulnerability-hijack-asus-routers/" target="_blank">RondoDox Botnet Exploits 8-Year-Old ASUS Router CVE (CVSS 9.8) Against 1M+ Exposed Devices</a></div>
+        <div class="story-body">CVE-2018-5999, a critical unauthenticated configuration vulnerability in ASUS routers, is being actively exploited for the first time in the wild by the RondoDox Mirai-style botnet, which forces admin password resets via the infosvr interface. Over one million devices remain exposed; VulnCheck data shows 56% of attacked edge devices in 2025 were consumer routers and 65% of botnet-exploited flaws were on unsupported tech. Affected ASUS models should be replaced and inbound infosvr access blocked immediately.</div>
+        <div class="story-meta"><span class="chip">hackread.com</span><div class="ref-links"><a class="ref-link sec" href="https://hackread.com/rondodox-botnet-2018-vulnerability-hijack-asus-routers/" target="_blank">hackread.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://vercel.com/blog/a-deep-dive-into-hive-vercels-builds-infrastructure" target="_blank">Vercel Cut Build Provisioning from 90s to 5s Using Firecracker MicroVMs: Full Architecture Deep Dive</a></div>
+        <div class="story-body">Vercel&#x27;s internal &#x27;Hive&#x27; platform replaced Docker containers with Firecracker microVMs (125ms boot, ~MB memory footprint) to solve hostile multi-tenancy at scale — each customer build gets a dedicated microVM kernel boundary enforced at the CPU level. Three stacked optimizations on top of this harder foundation (not documented in this newsletter excerpt but referenced in the source post) produced the 18x improvement. The architecture pattern: threat model drives isolation primitive selection; cooperative tenants → containers, adversarial tenants → microVMs.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://vercel.com/blog/a-deep-dive-into-hive-vercels-builds-infrastructure" target="_blank">vercel.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/0N5ijx" target="_blank">Huawei Claims Workaround to Match 1.4nm Transistor Density by 2031 Without Advanced Lithography</a></div>
+        <div class="story-body">Huawei has disclosed a technique it claims achieves transistor density equivalent to 1.4nm-process chips, potentially circumventing US export controls on advanced semiconductor equipment. If validated, this would remove the key bottleneck in China&#x27;s domestic AI chip supply chain and undermine the strategic value of TSMC-dependent export restrictions. Timeline is 2031; independent verification is absent but the claim is strategically significant for NVDA, TSMC, and US-China tech competition dynamics.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/0N5ijx" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://vercel.com/blog/a-deep-dive-into-hive-vercels-builds-infrastructure" target="_blank">A Deep Dive into Hive: Vercel&#x27;s Builds Infrastructure ↗</a></div>
+          <div class="dive-why">Primary engineering post-mortem from Vercel on how Firecracker microVM architecture solved hostile multi-tenancy and delivered an 18x build provisioning speedup — directly applicable to anyone designing isolated execution environments for agentic or multi-tenant workloads.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.sprocketsecurity.com/blog/tenant-enumeration-is-dead" target="_blank">Tenant Enumeration is Dead — Residual M365 Recon Paths ↗</a></div>
+          <div class="dive-why">Authoritative technical breakdown of all remaining Microsoft 365 tenant reconnaissance vectors after Microsoft&#x27;s May 2026 patches, with specific attacker tradecraft and defender mitigations — directly actionable for IAM and zero-trust practitioners.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.trendmicro.com/en_us/research/26/e/analyzing-void-dokkaebi-invisibleferret-malware.html" target="_blank">Analyzing Void Dokkaebi&#x27;s Cython-Compiled InvisibleFerret Malware ↗</a></div>
+          <div class="dive-why">Trend Micro primary research on a nation-state APT&#x27;s evasion evolution from Python to Cython binaries, with full IOCs and kill-chain analysis — high relevance for threat hunters defending fintech environments targeted by North Korean crypto theft campaigns.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 26 May 2026 · sources: thezvi.wordpress.com, therundown.ai, infisical.com, microsoft.github.io, github.com, sprocketsecurity.com, trendmicro.com, tldrnewsletter.com, hackread.com, bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
