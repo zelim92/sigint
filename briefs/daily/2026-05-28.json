@@ -1,0 +1,169 @@
+{
+  "date": "2026-05-28",
+  "threadCount": 6,
+  "storyCount": 15,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic Engineering: How Claude Is Contained Across Products",
+        "body": "Anthropic published a detailed engineering post on their containment architecture for Claude deployments: design for containment at the environment layer first, then steer behavior at the model layer, and match isolation strength to the user's oversight capacity. The principle is that placing a hard limit on potential damage often shifts the risk balance favourably even before model-level safety is considered. Directly applicable to anyone deploying agentic systems in fintech or IAM contexts where blast-radius control matters.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.anthropic.com/engineering/how-we-contain-claude"
+      },
+      {
+        "headline": "DeepSWE: Contamination-Free Long-Horizon Coding Agent Benchmark",
+        "body": "DeepSWE introduces a new benchmark across 91 repositories in 5 languages, designed so no model has pre-seen the solution, addressing contamination weaknesses in existing evals like SWE-Bench Pro. It provides sharper separation metrics for coding agents and reflects real-world engineering complexity. Directly relevant for teams evaluating which coding-agent infrastructure to trust for production-grade work.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://deepswe.datacurve.ai/blog"
+      },
+      {
+        "headline": "Google DeepMind CEO Demis Hassabis: AGI by 2030, Gaps Remain",
+        "body": "Hassabis confirmed AGI is on track for 2030 ±1 year, with unsolved gaps in world physics, memory consistency, and continual learning. Drug discovery timelines have hardened, with oncology and immunology as first targets. Investor-relevant signal for GOOGL: DeepMind's roadmap is explicit and Hassabis is more confident than prior public statements.",
+        "signal": "med",
+        "sources": [
+          "rundownai.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "NVIDIA CompileIQ in CUDA 13.3: AI-Driven GPU Kernel Auto-Tuning",
+        "body": "CompileIQ uses evolutionary algorithms to auto-tune GPU compiler settings per individual kernel, delivering up to 15% performance gains on already-optimised AI inference and training workloads. It supports multi-objective tuning across runtime, power, and compile time. Relevant to NVDA investors as it deepens the software moat around CUDA for LLM inference.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://developer.nvidia.com/blog/extract-more-kernel-performance-with-nvidia-compileiq-auto-tuning/"
+      },
+      {
+        "headline": "WorkOS Launches auth.md: Open Protocol for AI Agent Registration",
+        "body": "WorkOS published auth.md, a machine-readable Markdown file standard exposed at a service root that allows AI agents to dynamically discover OAuth Protected Resource Metadata, parse required scopes, and authenticate without human-in-the-loop sign-up flows. Native support is built into WorkOS AuthKit. This is a concrete non-human identity (NHI) registration pattern that directly addresses the IAM gap for agentic systems.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://go.bytebytego.com/WorkOS_052726"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Laravel-Lang Supply Chain Attack: 233 Package Versions Compromised via GitHub Tag Hijack",
+        "body": "An attacker abused GitHub's version-tagging system to redirect tags in laravel-lang/lang (7.8k stars) and two related repos to commits in an attacker-controlled fork, injecting a credential stealer via Composer's autoloader without touching the official repos. The dropper fetches a ~5,900-line PHP payload that harvests cloud credentials, SSH keys, browser vaults, crypto wallets, and comms tokens, then AES-256 encrypts exfil and self-deletes. Block flipboxstudio[.]info, audit Composer lock files, and rotate all credentials on affected hosts immediately.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.aikido.dev/blog/supply-chain-attack-targets-laravel-lang-packages-with-credential-stealer"
+      },
+      {
+        "headline": "CVE-2026-5426: KnowledgeDeliver LMS Zero-Day RCE via ASP.NET ViewState Deserialization",
+        "body": "An unknown threat actor exploited hardcoded ASP.NET machineKey values shipped identically across pre-February KnowledgeDeliver LMS deployments to forge malicious ViewState payloads achieving unauthenticated RCE. Post-exploitation chain: in-memory BLUEBEAM/Godzilla web shell inside w3wp.exe, icacls granting Everyone full web-root access, and a JS file backdoor serving Cobalt Strike BEACON. Hunt for Application Event ID 1316 ViewState failures, anomalous w3wp.exe child processes, and rotate machineKeys to unique per-instance values.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://cloud.google.com/blog/topics/threat-intelligence/knowledgedeliver-viewstate-deserialization-vulnerability/"
+      },
+      {
+        "headline": "Charter Communications Breach: ShinyHunters Compromised Salesforce via Microsoft Entra Vishing",
+        "body": "ShinyHunters claim they gained access to Charter's Salesforce instance by vishing an employee's Microsoft Entra account. Charter disputes that customer data was exfiltrated, but the group claims customer names, phone numbers, plan data, and CPNI were stolen. The Entra-to-Salesforce lateral movement path is a high-signal reminder of the privileged access risk in federated SaaS identity chains.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Lithuania National Register Breach: 600K Entries Leaked Including Intelligence and Military Addresses",
+        "body": "Lithuanian authorities disclosed a leak of 600k+ entries from national legal entity and real estate registers, accessed using credentials of authorised institutions — suspected foreign state actor. Stolen data includes addresses of intelligence officers, military personnel, diplomats, and politicians. The credential-reuse attack vector against institutional accounts mirrors enterprise IAM risks at nation-state scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://apnews.com/article/lithuania-cybersecurity-data-leak-foreign-country-c37226dd898fcd7dcf62265e6465d1d1"
+      },
+      {
+        "headline": "rsync CVE Analysis: Memory-Safe Go Reimplementation Avoids 8 of 12 CVEs by Omitting Features",
+        "body": "A detailed analysis of all 12 rsync CVEs from the Jan 2025 and May 2026 batches shows gokrazy/rsync avoided 8 purely by not implementing vulnerable features (incremental recursion, compression, proxy support, hostname ACLs), with Go's runtime bounds checks and os.Root API neutralising most of the rest. Only one logic bug (CVE-2026-43617) was language-proof. Upgrade to rsync 3.4.3+ or gokrazy/rsync v0.3.3+; add mount namespace or Landlock hardening.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://michael.stapelberg.ch/posts/2026-05-24-minimal-memory-safe-go-rsync-vulns/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Airtable's Vector Search Architecture: Hierarchical Partition Capping in Milvus at Scale",
+        "body": "Airtable's semantic search system (backing their Omni AI feature) uses one Milvus partition per customer base for strict isolation, but hit a hard wall at ~100k partitions per collection (partition creation ballooning from 20ms to 250ms). Fix: hierarchical capping at 400 collections × 1,000 partitions per cluster = 400k bases per cluster, with new clusters provisioned as needed. HNSW index selected for 99–100% recall with sub-500ms P99 latency, with DiskANN for cold partitions and hot-loading on demand — a clean worked example of letting data properties drive architecture.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://medium.com/airtable-eng/productionizing-semantic-search-how-we-built-and-scaled-vector-infrastructure-at-airtable-180fff11a136"
+      },
+      {
+        "headline": "Vercel Cut Build Provisioning From 90s to 5s with Firecracker-Based Hive Platform",
+        "body": "Vercel's Hive platform runs customer builds in AWS Firecracker microVMs on shared hardware — avoiding container kernel-sharing risks — and achieves 18× faster provisioning via faster cold boot, a warm pre-booted pool, and Firecracker's millisecond boot time. The architecture solves the untrusted-multi-tenant isolation problem that containers cannot safely address. Production case study directly relevant to platform engineers designing secure CI/CD or sandboxed execution environments.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/how-vercel-cut-build-wait-times-from"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "China Restricts Overseas Travel for Top AI Professionals at Private Firms",
+        "body": "Beijing has extended travel restrictions — previously limited to state-sector researchers and executives — to startup founders, researchers, and executives at private AI firms, who now need government approval before travelling abroad. This signals China is treating private AI talent as a strategic national asset and creates recruitment and collaboration friction for global AI labs. Macro risk for any cross-border AI research partnerships or hiring pipelines.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "xAI–Cursor Acquisition: Late-Stage Legal Warning Signals Integration Missteps",
+        "body": "xAI's general counsel issued a directive for employees to limit contact with Cursor staff to what's necessary for the technical partnership, with the warning coming weeks after the two companies' employees had already been working alongside each other. Premature co-mingling before deal close creates antitrust and regulatory exposure that could jeopardise the acquisition. Watch for deal risk if regulators scrutinise early integration conduct.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Microsoft MAI-Image-2.5 Debuts at #3 on Lmsys Arena Text-to-Image Leaderboard",
+        "body": "Microsoft's MAI-Image-2.5 ranks third on Arena's text-to-image leaderboard at launch, with significant improvements in visual reasoning, scene structure, and commercial illustration over MAI-Image-2. MSFT is demonstrating competitive multimodal model capability outside of OpenAI's product line. Relevant to MSFT holders as evidence of deepening in-house AI model portfolio.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://microsoft.ai/news/mai-image-2-5-launches-at-no-3-on-arena-ai/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "How Anthropic Contains Claude Across Products",
+      "why": "Primary engineering post from Anthropic on agentic containment architecture — directly actionable for any team deploying LLM agents in regulated or high-blast-radius environments like fintech or IAM.",
+      "url": "https://www.anthropic.com/engineering/how-we-contain-claude"
+    },
+    {
+      "title": "KnowledgeDeliver ViewState Zero-Day RCE — Google Threat Intelligence",
+      "why": "Google Mandiant's primary threat intelligence write-up on an active zero-day exploit chain, with detailed IOCs and detection guidance — essential reading for any security team running ASP.NET applications.",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/knowledgedeliver-viewstate-deserialization-vulnerability/"
+    },
+    {
+      "title": "Productionizing Semantic Search at Airtable — Vector Infrastructure Engineering Post",
+      "why": "Primary engineering post-mortem from Airtable's data infrastructure team with concrete Milvus partitioning benchmarks, index selection tradeoffs, and cold/warm loading patterns — a staff-level systems design reference for anyone building AI features on top of vector search.",
+      "url": "https://medium.com/airtable-eng/productionizing-semantic-search-how-we-built-and-scaled-vector-infrastructure-at-airtable-180fff11a136"
+    }
+  ]
+}
