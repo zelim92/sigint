@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 29 MAY 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 29 MAY 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://biohub.org/news/world-model-of-protein-biology/" target="_blank">Biohub releases open protein &#x27;world model&#x27;: ESMC + ESMFold2 + ESM Atlas</a></div>
+        <div class="story-body">CZI&#x27;s Biohub released a fully open discovery engine comprising ESMC (protein language model trained on 2.8B sequences), ESMFold2 (claims SOTA on structure prediction, outperforming AlphaFold on protein-protein and antibody-antigen tasks), and ESM Atlas (navigable map of 6.8B sequences and 1.1B predicted structures). In-lab binder design against five cancer/immune targets showed 36–88% hit rates. All three models are freely available to the research community.</div>
+        <div class="story-meta"><span class="chip">biohub.org</span><span class="chip">therundown.ai</span><div class="ref-links"><a class="ref-link ai" href="https://biohub.org/news/world-model-of-protein-biology/" target="_blank">biohub.org ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://developers.openai.com/api/docs/guides/secure-mcp-tunnels" target="_blank">OpenAI Secure MCP Tunnel: private MCP servers connected without internet exposure</a></div>
+        <div class="story-body">OpenAI published a Secure MCP Tunnel spec that uses an outbound-only HTTPS tunnel client to relay traffic from private, firewalled MCP servers to OpenAI products, removing the need to expose internal tooling on a public endpoint. The design integrates with existing enterprise network controls and maintains data-flow integrity. Directly relevant to anyone building agentic systems on internal data or regulated environments.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://developers.openai.com/api/docs/guides/secure-mcp-tunnels" target="_blank">developers.openai.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://cognition.ai/blog/series-d" target="_blank">Cognition raises $1B+ at $26B valuation to scale Devin AI software engineer</a></div>
+        <div class="story-body">Cognition closed a Series D at a $26B valuation to expand Devin across more enterprise clients, including Mercedes-Benz and Itaú. The company is building task-routing logic to match models to sub-tasks dynamically. A signal that agentic coding tools are now commanding enterprise SaaS-level valuations.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://cognition.ai/blog/series-d" target="_blank">cognition.ai ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.databricks.com/blog/reliable-llm-inference-scale" target="_blank">Databricks: &#x27;model units&#x27; abstraction cuts LLM serving GPU costs 80%+</a></div>
+        <div class="story-body">Databricks published a production engineering post describing &#x27;model units&#x27; — a resource abstraction that precisely allocates GPU capacity per workload type in a multi-tenant LLM serving fleet. Integrating model units into load balancing and autoscaling reduced GPU costs by over 80% while meeting latency SLOs under bursty traffic. Architecturally significant for anyone running large-scale inference.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.databricks.com/blog/reliable-llm-inference-scale" target="_blank">databricks.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://simonwillison.net/2026/May/27/product-market-fit/#atom-everything" target="_blank">OpenAI + Anthropic confirmed at enterprise product-market fit via usage-based pricing shift</a></div>
+        <div class="story-body">Simon Willison&#x27;s analysis notes both labs have moved enterprises to consumption-based pricing anchored by coding agents, with some accounts exceeding $200/user/month vs. the $10–20 flat-rate era. This pricing shift indicates durable revenue and signals that agentic coding is now load-bearing infrastructure for tech companies.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://simonwillison.net/2026/May/27/product-market-fit/#atom-everything" target="_blank">simonwillison.net ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://venturebeat.com/security/attack-dominating-financial-services-resets-mfa-steals-token" target="_blank">MFA token-theft now the dominant financial-sector attack vector; device-code OAuth flow weaponised at scale</a></div>
+        <div class="story-body">Converging reports from CrowdStrike, FBI, and Verizon DBIR identify the primary financial-services attack pattern as: Teams vishing → help-desk MFA reset → attacker device registered (Mutant Spider), OR Kali365 PhaaS ($250/month) capturing M365 OAuth tokens via the legitimate device-code flow — bypassing password theft entirely. Token grants persist for weeks; traditional credential monitoring misses them. Mitigations: restrict device-code flow via Entra Conditional Access, require FIDO2 for help-desk MFA resets, monitor OAuth refresh-token use from unfamiliar device IDs.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://venturebeat.com/security/attack-dominating-financial-services-resets-mfa-steals-token" target="_blank">venturebeat.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cybersecuritynews.com/russian-hacker-used-jailbroken-gemini/" target="_blank">Jailbroken Gemini CLI used in multi-year credential-stuffing and crypto-drain campaign</a></div>
+        <div class="story-body">Actor &#x27;bandcampro&#x27; persisted safety bypasses across sessions by embedding escalating instructions in Gemini CLI&#x27;s GEMINI.md memory file and reinforcing them with Russian-language prompts that evaded English-only guardrails. The resulting capability cracked 29 WordPress admin accounts via LLM-assisted password mutation against infostealer logs, deployed a trojanized wallet app (GoToResolve RAT), and drained at least one crypto wallet — all using 73 rotated stolen API keys. IoCs: C2 nodes at 213.165.51[.]115, 34.34.57[.]141, 34.34.81[.]129, 35.192.41[.]201.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://cybersecuritynews.com/russian-hacker-used-jailbroken-gemini/" target="_blank">cybersecuritynews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://orca.security/resources/blog/kopia-backup-rce-vulnerability/" target="_blank">CVE-2026-45695 (CVSS 9.8): Unauthenticated RCE in Kopia backup via SSH ProxyCommand injection</a></div>
+        <div class="story-body">Kopia&#x27;s /api/v1/repo/exists endpoint passes SFTP config fields unsanitised into an SSH command line, allowing a single crafted HTTP request to inject -oProxyCommand= and execute arbitrary shell code on the backup server. Affects versions ≤0.22.3 when running --without-password on non-loopback interfaces. No public PoC yet but trivially weaponisable. Patch: upgrade to 0.23.0; otherwise restrict to localhost and place behind an authenticating proxy.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://orca.security/resources/blog/kopia-backup-rce-vulnerability/" target="_blank">orca.security ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://aws.amazon.com/blogs/security/governing-infrastructure-as-code-using-pattern-based-policy-as-code/" target="_blank">AWS security blog: OPA policy-as-code governance for Terraform IaC in CI/CD pipelines</a></div>
+        <div class="story-body">AWS published a worked pattern for using Open Policy Agent to gate Terraform plans in CI/CD: early linting → plan generation → OPA evaluation → approval artifact upload. Example policies enforce S3 HTTPS-only transport, block public ingress on sensitive ports, and enforce least-privilege IAM. Practical reference for teams hardening IaC pipelines.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://aws.amazon.com/blogs/security/governing-infrastructure-as-code-using-pattern-based-policy-as-code/" target="_blank">aws.amazon.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/pgz4FR" target="_blank">Robinhood launches agentic trading accounts: isolated funds, spending caps, real-time audit trail</a></div>
+        <div class="story-body">Robinhood&#x27;s Agentic Trading feature opens a dedicated sub-account where a user-chosen AI agent can execute trades and credit card purchases, scoped to deposited funds only. Users receive push notifications per trade, can view real-time P&amp;L, and can disconnect the agent instantly. The design mirrors a least-privilege IAM pattern applied to financial delegation — architecturally notable for fintech identity teams.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/pgz4FR" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/fM2fiO" target="_blank">SoFi launches bank-issued USD stablecoin; Mastercard secures NY BitLicense</a></div>
+        <div class="story-body">SoFi Technologies made SoFiUSD — a bank-issued stablecoin — live for members to buy, sell, hold, and convert in-app. Simultaneously, Mastercard Transaction Services received a NYDFS BitLicense, clearing it to support stablecoins and tokenised deposits in New York. Two major regulated institutions moving into stablecoin infrastructure within the same news cycle.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/fM2fiO" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/FlQTKM" target="_blank">AI compliance automation identified as largest near-term enterprise AI market</a></div>
+        <div class="story-body">Analysis argues compliance is AI&#x27;s biggest enterprise opportunity, driven by high labour costs, fragmented legacy systems, and compounding regulatory complexity. Multimodal reasoning, computer-use agents, and long-horizon workflows now make it feasible to replace large reviewer teams. Directly relevant to AML/KYC and regulatory reporting functions at fintechs.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/FlQTKM" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/oDQINp" target="_blank">Primitive launches governed AI agent OS for financial services with embedded fraud and compliance rails</a></div>
+        <div class="story-body">Former Galileo CEO Derek White&#x27;s startup Primitive released an AI agent operating system purpose-built for regulated institutions, offering auditable, traceable agents for growth, lending, fraud detection, and employee coaching — all running inside institutional network boundaries. Positions itself as the compliance-aware runtime layer for financial AI agents.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/oDQINp" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/must-know-failure-modes-in-distributed" target="_blank">ByteByteGo: canonical failure mode taxonomy for distributed systems</a></div>
+        <div class="story-body">ByteByteGo published a structured breakdown of recurring distributed systems failure patterns — systems reporting healthy while serving errors, recovery-blocking stuck states, and silent data corruption with green dashboards. Framed around mechanism + standard mitigation for each pattern. Solid staff-engineer reference for incident post-mortems and system design reviews.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/must-know-failure-modes-in-distributed" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://performance.dev/how-is-linear-so-fast-a-technical-breakdown" target="_blank">Linear&#x27;s local-first browser-DB architecture: technical breakdown of sub-10ms UI</a></div>
+        <div class="story-body">A deep technical post dissects Linear&#x27;s performance: the database lives in the browser (SQLite via WASM), writes are applied locally and synced to the server asynchronously, eliminating round-trip latency from the UI critical path. Additional techniques include aggressive code splitting, granular reactive observables, asset preloading, and GPU-accelerated animations. A concrete case study in local-first architecture at production scale.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://performance.dev/how-is-linear-so-fast-a-technical-breakdown" target="_blank">performance.dev ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Nasdaq and S&amp;P 500 hit new records; AI wealth driving SF luxury home prices up 13.4% since ChatGPT launch</div>
+        <div class="story-body">Both major indexes closed at record highs. On the ground, SF Bay Area luxury homes are up 13.4% since November 2022 while non-luxury properties in the same area fell 3.8%; San Francisco median house price hit a record $2.15M in March. SF one-bedroom median rent jumped 21% YoY to $4,000+, tying NYC as the most expensive in the US — a concrete macro signal of where AI compensation is flowing.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Salesforce revenue outlook miss signals AI pressure on traditional SaaS</div>
+        <div class="story-body">Salesforce&#x27;s fiscal quarter revenue guidance fell short of Wall Street expectations, sending the stock lower. Coming alongside Robinhood and SoFi&#x27;s AI-native product launches, it underscores structural pressure on conventional SaaS from agentic AI workflows that bypass CRM-style UI layers entirely.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://arstechnica.com/space/2026/05/us-space-force-confirms-spacex-will-build-sensor-to-shooter-targeting-network/" target="_blank">SpaceX wins $2.29B Space Force sensor-to-shooter targeting network contract</a></div>
+        <div class="story-body">The US Space Force confirmed SpaceX will build a Starlink-derived secure communications backbone linking space-based sensors to weapons systems, with a full operational prototype due by end of 2027. Combined with the speculative $2T IPO narrative, this contract provides concrete near-term government revenue visibility and validates SpaceX&#x27;s position as dual-use infrastructure for both commercial cloud-in-space and military command-and-control.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://arstechnica.com/space/2026/05/us-space-force-confirms-spacex-will-build-sensor-to-shooter-targeting-network/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://biohub.org/news/world-model-of-protein-biology/" target="_blank">Biohub ESMFold2 / ESMC / ESM Atlas — world model of protein biology ↗</a></div>
+          <div class="dive-why">Primary announcement from a major research institution releasing SOTA open-source protein structure prediction tools that outperform AlphaFold; directly relevant to AI applied to biology and the broader trajectory of scientific AI models.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.databricks.com/blog/reliable-llm-inference-scale" target="_blank">Databricks: Reliable LLM Inference at Scale — &#x27;model units&#x27; GPU cost reduction ↗</a></div>
+          <div class="dive-why">Production engineering post-mortem from a major ML platform describing a concrete abstraction (model units) that cut GPU serving costs 80%+ while meeting latency SLOs; actionable architecture reference for anyone operating large-scale inference infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://orca.security/resources/blog/kopia-backup-rce-vulnerability/" target="_blank">Orca Security: CVE-2026-45695 Kopia Backup RCE via SSH ProxyCommand Injection ↗</a></div>
+          <div class="dive-why">Official vendor disclosure of a CVSS 9.8 unauthenticated RCE in a widely-used open-source backup tool; trivially weaponisable from a single HTTP request with no public PoC yet — narrow patch window before exploit code appears.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 28 May 2026 · sources: biohub.org, therundown.ai, tldrnewsletter.com, morningbrew.com, blog.bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

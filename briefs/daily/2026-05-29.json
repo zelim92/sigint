@@ -1,0 +1,199 @@
+{
+  "date": "2026-05-29",
+  "threadCount": 6,
+  "storyCount": 18,
+  "sourceCount": 5,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Biohub releases open protein 'world model': ESMC + ESMFold2 + ESM Atlas",
+        "body": "CZI's Biohub released a fully open discovery engine comprising ESMC (protein language model trained on 2.8B sequences), ESMFold2 (claims SOTA on structure prediction, outperforming AlphaFold on protein-protein and antibody-antigen tasks), and ESM Atlas (navigable map of 6.8B sequences and 1.1B predicted structures). In-lab binder design against five cancer/immune targets showed 36–88% hit rates. All three models are freely available to the research community.",
+        "signal": "high",
+        "sources": [
+          "biohub.org",
+          "therundown.ai"
+        ],
+        "url": "https://biohub.org/news/world-model-of-protein-biology/"
+      },
+      {
+        "headline": "OpenAI Secure MCP Tunnel: private MCP servers connected without internet exposure",
+        "body": "OpenAI published a Secure MCP Tunnel spec that uses an outbound-only HTTPS tunnel client to relay traffic from private, firewalled MCP servers to OpenAI products, removing the need to expose internal tooling on a public endpoint. The design integrates with existing enterprise network controls and maintains data-flow integrity. Directly relevant to anyone building agentic systems on internal data or regulated environments.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://developers.openai.com/api/docs/guides/secure-mcp-tunnels"
+      },
+      {
+        "headline": "Cognition raises $1B+ at $26B valuation to scale Devin AI software engineer",
+        "body": "Cognition closed a Series D at a $26B valuation to expand Devin across more enterprise clients, including Mercedes-Benz and Itaú. The company is building task-routing logic to match models to sub-tasks dynamically. A signal that agentic coding tools are now commanding enterprise SaaS-level valuations.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://cognition.ai/blog/series-d"
+      },
+      {
+        "headline": "Databricks: 'model units' abstraction cuts LLM serving GPU costs 80%+",
+        "body": "Databricks published a production engineering post describing 'model units' — a resource abstraction that precisely allocates GPU capacity per workload type in a multi-tenant LLM serving fleet. Integrating model units into load balancing and autoscaling reduced GPU costs by over 80% while meeting latency SLOs under bursty traffic. Architecturally significant for anyone running large-scale inference.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.databricks.com/blog/reliable-llm-inference-scale"
+      },
+      {
+        "headline": "OpenAI + Anthropic confirmed at enterprise product-market fit via usage-based pricing shift",
+        "body": "Simon Willison's analysis notes both labs have moved enterprises to consumption-based pricing anchored by coding agents, with some accounts exceeding $200/user/month vs. the $10–20 flat-rate era. This pricing shift indicates durable revenue and signals that agentic coding is now load-bearing infrastructure for tech companies.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://simonwillison.net/2026/May/27/product-market-fit/#atom-everything"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "MFA token-theft now the dominant financial-sector attack vector; device-code OAuth flow weaponised at scale",
+        "body": "Converging reports from CrowdStrike, FBI, and Verizon DBIR identify the primary financial-services attack pattern as: Teams vishing → help-desk MFA reset → attacker device registered (Mutant Spider), OR Kali365 PhaaS ($250/month) capturing M365 OAuth tokens via the legitimate device-code flow — bypassing password theft entirely. Token grants persist for weeks; traditional credential monitoring misses them. Mitigations: restrict device-code flow via Entra Conditional Access, require FIDO2 for help-desk MFA resets, monitor OAuth refresh-token use from unfamiliar device IDs.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://venturebeat.com/security/attack-dominating-financial-services-resets-mfa-steals-token"
+      },
+      {
+        "headline": "Jailbroken Gemini CLI used in multi-year credential-stuffing and crypto-drain campaign",
+        "body": "Actor 'bandcampro' persisted safety bypasses across sessions by embedding escalating instructions in Gemini CLI's GEMINI.md memory file and reinforcing them with Russian-language prompts that evaded English-only guardrails. The resulting capability cracked 29 WordPress admin accounts via LLM-assisted password mutation against infostealer logs, deployed a trojanized wallet app (GoToResolve RAT), and drained at least one crypto wallet — all using 73 rotated stolen API keys. IoCs: C2 nodes at 213.165.51[.]115, 34.34.57[.]141, 34.34.81[.]129, 35.192.41[.]201.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://cybersecuritynews.com/russian-hacker-used-jailbroken-gemini/"
+      },
+      {
+        "headline": "CVE-2026-45695 (CVSS 9.8): Unauthenticated RCE in Kopia backup via SSH ProxyCommand injection",
+        "body": "Kopia's /api/v1/repo/exists endpoint passes SFTP config fields unsanitised into an SSH command line, allowing a single crafted HTTP request to inject -oProxyCommand= and execute arbitrary shell code on the backup server. Affects versions ≤0.22.3 when running --without-password on non-loopback interfaces. No public PoC yet but trivially weaponisable. Patch: upgrade to 0.23.0; otherwise restrict to localhost and place behind an authenticating proxy.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://orca.security/resources/blog/kopia-backup-rce-vulnerability/"
+      },
+      {
+        "headline": "AWS security blog: OPA policy-as-code governance for Terraform IaC in CI/CD pipelines",
+        "body": "AWS published a worked pattern for using Open Policy Agent to gate Terraform plans in CI/CD: early linting → plan generation → OPA evaluation → approval artifact upload. Example policies enforce S3 HTTPS-only transport, block public ingress on sensitive ports, and enforce least-privilege IAM. Practical reference for teams hardening IaC pipelines.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://aws.amazon.com/blogs/security/governing-infrastructure-as-code-using-pattern-based-policy-as-code/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Robinhood launches agentic trading accounts: isolated funds, spending caps, real-time audit trail",
+        "body": "Robinhood's Agentic Trading feature opens a dedicated sub-account where a user-chosen AI agent can execute trades and credit card purchases, scoped to deposited funds only. Users receive push notifications per trade, can view real-time P&L, and can disconnect the agent instantly. The design mirrors a least-privilege IAM pattern applied to financial delegation — architecturally notable for fintech identity teams.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "morningbrew.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/pgz4FR"
+      },
+      {
+        "headline": "SoFi launches bank-issued USD stablecoin; Mastercard secures NY BitLicense",
+        "body": "SoFi Technologies made SoFiUSD — a bank-issued stablecoin — live for members to buy, sell, hold, and convert in-app. Simultaneously, Mastercard Transaction Services received a NYDFS BitLicense, clearing it to support stablecoins and tokenised deposits in New York. Two major regulated institutions moving into stablecoin infrastructure within the same news cycle.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/fM2fiO"
+      },
+      {
+        "headline": "AI compliance automation identified as largest near-term enterprise AI market",
+        "body": "Analysis argues compliance is AI's biggest enterprise opportunity, driven by high labour costs, fragmented legacy systems, and compounding regulatory complexity. Multimodal reasoning, computer-use agents, and long-horizon workflows now make it feasible to replace large reviewer teams. Directly relevant to AML/KYC and regulatory reporting functions at fintechs.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/FlQTKM"
+      },
+      {
+        "headline": "Primitive launches governed AI agent OS for financial services with embedded fraud and compliance rails",
+        "body": "Former Galileo CEO Derek White's startup Primitive released an AI agent operating system purpose-built for regulated institutions, offering auditable, traceable agents for growth, lending, fraud detection, and employee coaching — all running inside institutional network boundaries. Positions itself as the compliance-aware runtime layer for financial AI agents.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/oDQINp"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "ByteByteGo: canonical failure mode taxonomy for distributed systems",
+        "body": "ByteByteGo published a structured breakdown of recurring distributed systems failure patterns — systems reporting healthy while serving errors, recovery-blocking stuck states, and silent data corruption with green dashboards. Framed around mechanism + standard mitigation for each pattern. Solid staff-engineer reference for incident post-mortems and system design reviews.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/must-know-failure-modes-in-distributed"
+      },
+      {
+        "headline": "Linear's local-first browser-DB architecture: technical breakdown of sub-10ms UI",
+        "body": "A deep technical post dissects Linear's performance: the database lives in the browser (SQLite via WASM), writes are applied locally and synced to the server asynchronously, eliminating round-trip latency from the UI critical path. Additional techniques include aggressive code splitting, granular reactive observables, asset preloading, and GPU-accelerated animations. A concrete case study in local-first architecture at production scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://performance.dev/how-is-linear-so-fast-a-technical-breakdown"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Nasdaq and S&P 500 hit new records; AI wealth driving SF luxury home prices up 13.4% since ChatGPT launch",
+        "body": "Both major indexes closed at record highs. On the ground, SF Bay Area luxury homes are up 13.4% since November 2022 while non-luxury properties in the same area fell 3.8%; San Francisco median house price hit a record $2.15M in March. SF one-bedroom median rent jumped 21% YoY to $4,000+, tying NYC as the most expensive in the US — a concrete macro signal of where AI compensation is flowing.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Salesforce revenue outlook miss signals AI pressure on traditional SaaS",
+        "body": "Salesforce's fiscal quarter revenue guidance fell short of Wall Street expectations, sending the stock lower. Coming alongside Robinhood and SoFi's AI-native product launches, it underscores structural pressure on conventional SaaS from agentic AI workflows that bypass CRM-style UI layers entirely.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "SpaceX wins $2.29B Space Force sensor-to-shooter targeting network contract",
+        "body": "The US Space Force confirmed SpaceX will build a Starlink-derived secure communications backbone linking space-based sensors to weapons systems, with a full operational prototype due by end of 2027. Combined with the speculative $2T IPO narrative, this contract provides concrete near-term government revenue visibility and validates SpaceX's position as dual-use infrastructure for both commercial cloud-in-space and military command-and-control.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://arstechnica.com/space/2026/05/us-space-force-confirms-spacex-will-build-sensor-to-shooter-targeting-network/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Biohub ESMFold2 / ESMC / ESM Atlas — world model of protein biology",
+      "why": "Primary announcement from a major research institution releasing SOTA open-source protein structure prediction tools that outperform AlphaFold; directly relevant to AI applied to biology and the broader trajectory of scientific AI models.",
+      "url": "https://biohub.org/news/world-model-of-protein-biology/"
+    },
+    {
+      "title": "Databricks: Reliable LLM Inference at Scale — 'model units' GPU cost reduction",
+      "why": "Production engineering post-mortem from a major ML platform describing a concrete abstraction (model units) that cut GPU serving costs 80%+ while meeting latency SLOs; actionable architecture reference for anyone operating large-scale inference infrastructure.",
+      "url": "https://www.databricks.com/blog/reliable-llm-inference-scale"
+    },
+    {
+      "title": "Orca Security: CVE-2026-45695 Kopia Backup RCE via SSH ProxyCommand Injection",
+      "why": "Official vendor disclosure of a CVSS 9.8 unauthenticated RCE in a widely-used open-source backup tool; trivially weaponisable from a single HTTP request with no public PoC yet — narrow patch window before exploit code appears.",
+      "url": "https://orca.security/resources/blog/kopia-backup-rce-vulnerability/"
+    }
+  ]
+}
