@@ -1,0 +1,203 @@
+{
+  "date": "2026-05-30",
+  "threadCount": 5,
+  "storyCount": 17,
+  "sourceCount": 15,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic releases Claude Opus 4.8, raises $65B at $965B valuation — surpasses OpenAI",
+        "body": "Opus 4.8 outperforms GPT-5.5 and Gemini 3.1 Pro on agentic coding, computer use, financial analysis, and Humanity's Last Exam at the same price as 4.7. Key developer additions: adjustable effort controls, mid-conversation system message injection, and dynamic workflows in Claude Code that spawn hundreds of parallel subagents. Fast mode is 3x cheaper; a Mythos-class model is teased for the coming weeks. The $65B Series H at $965B post-money valuation is backed by $47B run-rate revenue.",
+        "signal": "high",
+        "sources": [
+          "anthropic.com",
+          "therundown.ai"
+        ],
+        "url": "https://www.anthropic.com/news/claude-opus-4-8"
+      },
+      {
+        "headline": "Claude Code dynamic workflows: 750K lines of Rust rewritten from Zig in 11 days",
+        "body": "Anthropic's dynamic workflows feature lets Claude write orchestration scripts that decompose tasks into subtasks and run hundreds of parallel subagents, converging results before returning to the user. Real-world validation: Bun's Jarred Sumner used it to rewrite Bun from Zig to Rust with 99.8% test suite success in 11 days. Available now in research preview on Claude Code CLI, Desktop, and VS Code for Max/Team/Enterprise — token consumption is substantially higher than a standard session.",
+        "signal": "high",
+        "sources": [
+          "claude.com",
+          "tldr.tech"
+        ],
+        "url": "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code"
+      },
+      {
+        "headline": "Apple distilling Google's Gemini to run on-device for iOS 27 Siri overhaul",
+        "body": "Apple is using model distillation and a hybrid cloud/on-device architecture to integrate a compressed Gemini model into Siri, targeting launch at WWDC on June 8. Processing uses secure encrypted cloud servers with specialised Nvidia hardware to preserve privacy. This is framed as Tim Cook's final major product launch before handing leadership to John Ternus.",
+        "signal": "med",
+        "sources": [
+          "arstechnica.com",
+          "tldr.tech"
+        ],
+        "url": "https://arstechnica.com/ai/2026/05/apple-reportedly-trying-to-distill-googles-multi-trillion-parameter-gemini-ai-to-run-on-iphone/"
+      },
+      {
+        "headline": "Open models are 4–6 months behind closed frontier models, gap widening since DeepSeek R1",
+        "body": "Analysis on LessWrong finds open models trail the best closed models by roughly 4–6 months on public benchmarks. The gap was narrowest around DeepSeek R1's release but has since been expanding, suggesting closed-model labs are pulling ahead again. Relevant for assessing self-hosted AI options in security and fintech workloads.",
+        "signal": "med",
+        "sources": [
+          "lesswrong.com",
+          "tldr.tech"
+        ],
+        "url": "https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models"
+      },
+      {
+        "headline": "Anthropic–SpaceX compute deal: 180-day lease with 90-day cancellation, contradicts SpaceX S-1",
+        "body": "The widely reported multi-billion-dollar/month compute deal between SpaceX and Anthropic is structured as a 180-day lease with a mutual 90-day cancellation clause — SpaceX's request so it can reclaim capacity. Elon Musk publicly downplayed long-term commitment, but this directly contradicts SpaceX's S-1 filing which presents it as a 3-year agreement. The contractual ambiguity is material for Anthropic's compute reliability and any IPO narrative.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com",
+          "tldr.tech"
+        ],
+        "url": "https://techcrunch.com/2026/05/28/how-long-is-anthropics-lease-with-spacex-opinions-vary/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Seedworm/MuddyWater abuses signed SentinelOne and Fortemedia binaries for DLL sideloading across 9 countries",
+        "body": "Iran-linked Seedworm ran a 2026 espionage campaign targeting 9 orgs in 9 countries, sideloading malicious DLLs via legitimate signed binaries (sentinelmemoryscanner.exe, fmapp.exe) to deploy the ChromElevator browser-data stealer. The attack chain uses Node.js instead of PowerShell to evade detection, establishes registry persistence, and exfiltrates via sendit[.]sh to blend with normal cloud traffic. Defenders: flag unsigned DLLs beside signed executables, alert on unexpected Node.js execution, block unknown file-transfer services outbound.",
+        "signal": "high",
+        "sources": [
+          "cybersecuritynews.com",
+          "tldr.tech"
+        ],
+        "url": "https://cybersecuritynews.com/seedworm-apt-abuses-signed-fortemedia-2/"
+      },
+      {
+        "headline": "CVE-2026-27771: Gitea container registry allowed unauthenticated pulls of private images for 4 years across ~30,000 deployments",
+        "body": "A missing auth check in Gitea's container registry exposed private images to unauthenticated pulls for approximately four years, affecting ~30,000 self-hosted Gitea and Forgejo instances including healthcare, aerospace, SaaS, and ISP sectors. Leaked assets include source code, embedded secrets, and production configuration. Patch: upgrade to Gitea v1.26.2; interim mitigation: set REQUIRE_SIGNIN_VIEW=true and audit registry pull logs.",
+        "signal": "high",
+        "sources": [
+          "techtimes.com",
+          "tldr.tech"
+        ],
+        "url": "https://www.techtimes.com/articles/317291/20260527/gitea-flaw-left-30000-deployments-private-container-images-readable-4-years.htm"
+      },
+      {
+        "headline": "IRGC Nimbus Manticore escalates with AI-assisted backdoors, SEO poisoning, and AppDomain hijacking",
+        "body": "UNC1549 (Nimbus Manticore) combined AppDomain hijacking — a malicious Setup.exe.config beside a signed Microsoft binary — with trojanized Zoom installers to deploy MiniJunk/MiniFast backdoors, hijacking the legitimate ZoomUpdateTaskUser scheduled task for persistence. Mid-campaign, the group pivoted from email lures to SEO poisoning, pushing a fake getsqldeveloper[.]com to the top of Bing and DuckDuckGo. The C2 traffic impersonates Chrome, and AI-assisted code provides full cmd.exe remote control.",
+        "signal": "high",
+        "sources": [
+          "hackread.com",
+          "tldr.tech"
+        ],
+        "url": "https://hackread.com/iran-nimbus-manticore-trojan-zoom-installers-us-firms/"
+      },
+      {
+        "headline": "Prison phone service Pay Tel exposed 300K+ driver's licenses and inmate records via open Azure storage bucket",
+        "body": "Pay Tel left an Azure Blob Storage container publicly accessible containing at least 300,000 scanned driver's licenses, ID documents, user photos, inmate texts, handwritten notes, and financial records. UpGuard reported the exposure on May 7; Pay Tel quietly locked it down but has not issued breach notifications. This is a textbook misconfigured cloud storage incident with significant KYC/identity data risk.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com",
+          "tldr.tech"
+        ],
+        "url": "https://techcrunch.com/2026/05/28/a-security-lapse-at-prison-payphone-service-pay-tel-publicly-exposed-over-300000-callers-drivers-licenses/"
+      },
+      {
+        "headline": "Stored XSS in pretalx (CVE) allows full organizer session hijack via iframe srcdoc CSP bypass",
+        "body": "A high-severity stored XSS in pretalx (conference CFP software) lets any registered submitter inject JavaScript into organizer search results; the exploit uses an iframe srcdoc to bypass innerHTML script blocking and a same-origin uploaded .js file to pass CSP. An attacker can automate talk submissions, plant payloads in titles, and hijack organizer sessions to permanently revoke superuser rights via authenticated GETs. Shared pretalx deployments amplify blast radius significantly.",
+        "signal": "med",
+        "sources": [
+          "novee.security",
+          "tldr.tech"
+        ],
+        "url": "https://novee.security/blog/pretalx-stored-xss-vulnerability-account-takeover/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "US macro deterioration: Q1 GDP revised down to 1.6%, inflation at 3-year high of 3.8%, 37% probability of rate hike by December",
+        "body": "The Conference Board CEO confidence index dropped 12 points to 47 in Q2 (below 50 = negative), with 47% of Fortune 500 CEOs reporting worsening conditions — up from 8% in Q1. US Q1 GDP was revised down from 2% to 1.6%, and the 12-month PCE inflation rate hit 3.8%, a three-year high. CME FedWatch now prices a 37% probability of a rate hike in December, complicating the Fed's easing cycle under new Chair Kevin Warsh.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Meta launches enterprise subscriptions and B2B solutions unit to offset AI capex",
+        "body": "Meta is standing up a new Enterprise Solutions unit modelled on Google and OpenAI's forward-deployed engineer model, layering subscription tiers on top of its AI chatbot monetisation. The company is also evaluating opening a cloud computing business once it has excess compute capacity. This signals a structural shift from pure ad-revenue dependence as AI capex balloons.",
+        "signal": "med",
+        "sources": [
+          "sherwood.news",
+          "tldr.tech"
+        ],
+        "url": "https://sherwood.news/tech/meta-looks-to-enterprise-cloud-subscriptions-to-justify-ballooning-capex-bill/"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Slack AI multi-cloud architecture: intelligent routing and hybrid capacity for global low-latency LLM inference",
+        "body": "Slack's engineering post details the evolution from manual hardware management to fully managed multi-cloud AI infrastructure, using intelligent routing to balance cost and latency globally. The architecture handles hybrid capacity — mixing on-demand and reserved compute — to absorb variable LLM workloads without over-provisioning. Directly relevant for teams designing resilient AI serving infrastructure.",
+        "signal": "med",
+        "sources": [
+          "slack.engineering",
+          "tldr.tech"
+        ],
+        "url": "https://slack.engineering/slack-ai-the-path-to-multi-cloud/"
+      },
+      {
+        "headline": "Dropbox Nova: AI coding agents now behind 1 in 12 PRs; bottleneck shifts downstream to review and CI",
+        "body": "Dropbox's internal AI coding agent platform Nova accounts for roughly 1 in 12 pull requests; the post argues that AI doesn't eliminate bottlenecks but displaces them — from code generation to review, CI, validation, and release. The real engineering challenge is building systems with the context, guardrails, and human review capacity to safely absorb the increased throughput. Practical framing for teams adopting agentic coding at scale.",
+        "signal": "med",
+        "sources": [
+          "dropbox.tech",
+          "tldr.tech"
+        ],
+        "url": "https://dropbox.tech/culture/beyond-code-generation-rethinking-engineering-productivity-in-the-age-of-ai-agents"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Anthropic overtakes OpenAI in valuation at $965B; $47B run-rate revenue with IPO trajectory",
+        "body": "Anthropic's $65B Series H at $965B post-money — backed by enterprise adoption and $47B ARR — makes it the highest-valued AI lab globally, ahead of OpenAI. The company plans to expand compute capacity, research, and product development. With a Mythos-class model imminent and Claude Code gaining traction in enterprise dev workflows, the IPO runway is materialising rapidly.",
+        "signal": "high",
+        "sources": [
+          "anthropic.com",
+          "therundown.ai"
+        ],
+        "url": "https://www.anthropic.com/news/series-h"
+      },
+      {
+        "headline": "Microsoft developing dedicated AI coding model to regain ground against Cursor/Claude Code",
+        "body": "Microsoft is building a new AI model specifically targeting the coding arena, signalling it views its current GitHub Copilot position as insufficient against Claude Code and Cursor. The initiative is a direct response to competitive pressure from Anthropic and independent coding tools. Portfolio-relevant: MSFT's ability to monetise AI via developer tooling is a key bull thesis.",
+        "signal": "med",
+        "sources": [
+          "sherwood.news",
+          "tldr.tech"
+        ],
+        "url": "https://sherwood.news/tech/report-microsoft-tries-to-get-back-in-the-ai-coding-game-with-new-model/"
+      },
+      {
+        "headline": "Dell surges 3.84% on $9.7B US military software supply deal",
+        "body": "Dell spiked after announcing a $9.7B deal to supply software to the US military, reinforcing the defence-tech spending theme amid elevated geopolitical uncertainty. Broader market context: Nasdaq +0.91%, S&P +0.58% on Iran ceasefire extension talks; Bitcoin -2.13%; 10-year yield 4.455%.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Introducing Dynamic Workflows in Claude Code (Anthropic Engineering)",
+      "why": "Primary source from Anthropic detailing the parallel subagent orchestration architecture — directly relevant to evaluating agentic coding infrastructure and token cost implications for enterprise deployments.",
+      "url": "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code"
+    },
+    {
+      "title": "Slack AI: The Path to Multi-Cloud (Slack Engineering Blog)",
+      "why": "Production post-mortem from Slack's engineering team on building resilient multi-cloud LLM serving infrastructure with intelligent routing — high-value reference architecture for fintech/IAM teams scaling AI workloads.",
+      "url": "https://slack.engineering/slack-ai-the-path-to-multi-cloud/"
+    },
+    {
+      "title": "Novee: Stored XSS in pretalx — Account Takeover via CSP Bypass",
+      "why": "Primary security research post with full exploit chain detail (iframe srcdoc bypass, same-origin JS CSP evasion, session hijack) — useful case study for web app security reviews and understanding modern XSS mitigations.",
+      "url": "https://novee.security/blog/pretalx-stored-xss-vulnerability-account-takeover/"
+    }
+  ]
+}
