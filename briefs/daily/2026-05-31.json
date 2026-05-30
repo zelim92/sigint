@@ -1,0 +1,49 @@
+{
+  "date": "2026-05-31",
+  "threadCount": 2,
+  "storyCount": 3,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "DoorDash simulation-evaluation flywheel for LLM chatbot testing at scale",
+        "body": "DoorDash built an offline simulation + LLM-as-judge evaluation pipeline to iterate on their customer support chatbot without risking production degradation. An LLM plays the customer role using behavioral profiles derived from real historical transcripts, generating dynamic multi-turn conversations; a separate LLM evaluator scores each conversation against policy criteria with binary pass/fail. The system runs 200+ simulated conversations in under 5 minutes and enforces a 50+ evaluation suite as a gate before any deployment, cutting iteration from days to hours.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://careersatdoordash.com/blog/doordash-simulation-evaluation-flywheel-to-develop-llm-chatbots-at-scale/"
+      }
+    ],
+    "sec": [],
+    "fin": [],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "Dell AI server revenue surpasses PC sales; raises FY2027 guidance to $167B",
+        "body": "Dell reported 88% YoY revenue growth to $43.8B in Q1 FY2026, with $16.1B from AI servers alone — exceeding PC revenue. The company raised FY2027 guidance from $140B to $167B, projecting $60B from AI server sales, driven by hyperscaler and cloud-rental customers like CoreWeave and Nscale. Dell stock closed up 32% on the day; shares are up ~225% YTD, making it a clear infrastructure proxy for AI capex spending.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/Qk2?mbcid=45940273.3867999&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      },
+      {
+        "headline": "S&P 500 posts ninth consecutive winning week; software stocks record best month since 2001",
+        "body": "The S&P closed out May with its longest winning streak since 2023, while software sector equities posted their strongest monthly gain in 25 years, reversing fears that AI commoditisation would erode software valuations. Nasdaq closed at 26,972 and S&P at 7,580. Relevant for MSFT and GOOGL holdings — sector sentiment has sharply reversed.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "DoorDash Engineering: A Simulation and Evaluation Flywheel to Build LLM Chatbots at Scale",
+      "why": "Primary engineering post from DoorDash detailing a production-grade LLM testing architecture — directly applicable to any team running agentic or LLM-backed systems in fraud, support, or IAM contexts where non-determinism and regression testing are live problems.",
+      "url": "https://careersatdoordash.com/blog/doordash-simulation-evaluation-flywheel-to-develop-llm-chatbots-at-scale/"
+    }
+  ]
+}
