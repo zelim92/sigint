@@ -1,0 +1,215 @@
+{
+  "date": "2026-06-02",
+  "threadCount": 6,
+  "storyCount": 20,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "MiniMax M3: Open-weights frontier model with 1M-token context and desktop control",
+        "body": "MiniMax M3 achieves frontier-level performance on coding and agentic tasks, supports image/video input, and can operate a desktop computer. It introduces a new attention architecture enabling ultra-long context windows up to 1 million tokens. Available via API and open weights.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://threadreaderapp.com/thread/2061266317815296322.html"
+      },
+      {
+        "headline": "Microsoft Copilot Super App leaked: unified GitHub Copilot, Cowork, and Scout agent hub",
+        "body": "Leaked screenshots ahead of Build 2026 show Microsoft consolidating scattered AI tools into a single Copilot app with tabs for GitHub Copilot, collaborative work, and Scout — an always-on agentic assistant integrated with Teams. The move is a direct response to weak adoption across siloed products.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.testingcatalog.com/exclusive-new-screenshots-of-upcoming-copilot-super-app/"
+      },
+      {
+        "headline": "Nvidia Computex 2026: N1X laptop chip and Vera Rubin datacenter platform incoming",
+        "body": "Nvidia will unveil the N1X laptop chip (20 ARM cores, RTX 5070-class GPU, up to 128 GB RAM) and the 'Vera Rubin' AI datacenter platform at Computex. Focus is on physical and agentic AI, with robotics and autonomous machines highlighted. Gaming announcements minimal.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://wccftech.com/nvidia-computex-2026-what-to-expect/"
+      },
+      {
+        "headline": "Agentic RL: token-drift problem in LLM reinforcement learning solved via buffer-preserving architecture",
+        "body": "Re-tokenizing decoded tokens during RL training causes gradient drift and unreliable updates. The correct pattern: maintain a sampled-token buffer, never re-encode, and rely on prefix-preserving chat templates (satisfied by most modern templates) to keep loss computation accurate. Critical for teams building RL fine-tuning pipelines on top of LLMs.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://qgallouedec-tito.hf.space/"
+      },
+      {
+        "headline": "Goldman Sachs: AI agents to materially increase tech sector cash flow",
+        "body": "Goldman's analysis projects the next wave of AI adoption — specifically agentic AI — will significantly improve economics for major technology companies by reducing headcount costs and increasing software leverage. Directly relevant to MSFT, GOOGL, AMZN portfolio positions.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.pymnts.com/artificial-intelligence-2/2026/goldman-sachs-predicts-ai-agents-will-increase-tech-cash-flow/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "CVE-2026-35616: FortiClient EMS active RCE chain delivering EKZ infostealer",
+        "body": "Attackers exploit an unauthenticated access-control flaw in FortiClient EMS 7.4.5–7.4.6 to modify VPN/EMS configs so fortitray.exe launches malicious batch scripts on IPsec tunnel establishment. The chain downloads EKZ infostealer (disguised as a Fortinet patch) via base64-encoded PowerShell, exfiltrating Chromium/Firefox credentials, cookies, and cards over HTTP before wiping artifacts. Apply April hotfixes immediately; hunt for 'Certificate not found in request header' log sequences and Tor/VPS admin logins.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/TsBxbd"
+      },
+      {
+        "headline": "Meta AI support bot exploited to hijack Instagram accounts via social-engineered password reset",
+        "body": "Pro-Iran actors used a VPN near the target's location to trigger Meta's AI chat support into linking a new email address to existing accounts, generating a password-reset OTP with no MFA challenge — defacing high-profile accounts including the Obama White House Instagram. Meta issued an emergency patch; accounts with any MFA form were immune. Signals a systemic risk: AI chatbots handling account recovery are as socially engineerable as human agents.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/06/hackers-used-metas-ai-support-bot-to-seize-instagram-accounts/"
+      },
+      {
+        "headline": "LLMReaper PoC: Manifest V3 Chrome extension silently exfiltrates ChatGPT, Claude, and Gemini conversations",
+        "body": "A PoC extension uses MutationObserver to scrape full AI chat sessions in real time and ships JSON payloads (including usernames and Gemini Gmail IDs) to a remote FastAPI backend via the service worker, bypassing Same Origin Policy. Only standard 'read all site data' permissions required; the backend runs regex to surface API keys, JWTs, and DB URLs from pasted content. Defenders should isolate AI use to dedicated browser profiles and audit extensions — maps to MITRE T1056.003/T1041/T1555.003.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://thewhiteh4t.github.io/blog/ai-chat-llmreaper/"
+      },
+      {
+        "headline": "ClickFix campaign targets Claude Code users with fileless infostealer via spoofed Anthropic pages",
+        "body": "SEO-poisoned 'claude code install' results redirect victims to fake Anthropic sites that instruct pasting an mshta.exe command executing a polyglot HTA/MP3. The HTA spawns 32-bit PowerShell with AMSI bypass, pulls a .NET infostealer via Assembly.Load entirely in-memory, and beacons credentials to Russian infrastructure at 185.177.239.255:443. Block *.oakenfjrod[.]ru, alert on mshta.exe spawning PowerShell with outbound connections.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://hackread.com/fake-anthropic-sites-fileless-infostealer-claude-code-users/"
+      },
+      {
+        "headline": "CIFSwitch Linux LPE: kernel CIFS subsystem fails to verify key-request origin, enabling root on major distros",
+        "body": "A local privilege-escalation flaw in the Linux kernel CIFS subsystem allows attackers to forge authentication key descriptions and gain root by exploiting the kernel's key-request mechanism. Confirmed vulnerable by default: Linux Mint 21.3/22.3, CentOS Stream 9, Rocky Linux 9, Alma Linux 9, Kali Linux 2021.4–2026.1, and SLES 15S P7.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/9nv8bC"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "SoFi launches SoFiUSD: first US national bank-issued stablecoin on public blockchain",
+        "body": "SoFiUSD is fully reserved, available to 14.7M members, and integrated into the Galileo platform (160M accounts) with Mastercard settlement support. Signals stablecoins transitioning from crypto products to regulated banking infrastructure with real settlement-cost and speed implications for payments companies.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.kucoin.com/news/flash/sofi-launches-sofiusd-for-14-7-million-users-as-first-bank-issued-stablecoin"
+      },
+      {
+        "headline": "Apollo and Blackstone assemble $36B private credit vehicle to finance Google TPUs for Anthropic",
+        "body": "A SPV buys Google TPUs and leases them to Anthropic, keeping debt off Anthropic's balance sheet — one of the largest AI infrastructure financings ever. The structure mirrors aircraft/real estate asset finance and signals AI compute as a new private credit asset class at scale.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/gGSYDe"
+      },
+      {
+        "headline": "Airwallex hits $12B valuation with ARR growing from $1B to $1.5B in seven months",
+        "body": "Funding values Airwallex 50% above its late-2025 round as it expands from cross-border payments into spend management, billing, and accounting — increasingly overlapping with Stripe and enterprise fintech. Strong late-stage fintech IPO candidate.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/Gj9DQ0"
+      },
+      {
+        "headline": "Private fintech now worth 3x public fintech; Stripe, Revolut, Ramp staying private longer",
+        "body": "Blue Dot Investors/FT Partners report: top 100 private fintechs valued at $1.9T, triple public peers founded in the same era, with slightly more revenue. Secondary markets and abundant capital are delaying IPOs indefinitely, while a large tail of slower-growth fintechs faces limited liquidity paths.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.heyfuturenexus.com/private-fintech-has-quietly-become-bigger-than-public-fintech-now-what/"
+      },
+      {
+        "headline": "Dimon vs. Armstrong: stablecoin yield battle reaches legislative inflection point",
+        "body": "JPMorgan and Coinbase clash publicly over the Clarity Act's yield provisions — banks argue stablecoin issuers offering yield creates unregulated deposit-like products. The confrontation reflects stablecoins becoming a structural battle over deposit flows and financial services architecture.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/UunwNp"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Backpressure as an agent safety mechanism: downstream signalling to limit unattended agentic sessions",
+        "body": "Applying backpressure (downstream-to-upstream load signalling) to agentic AI loops allows agents to validate more of their own work before requiring human review, extending safe unattended sessions while reducing low-quality PRs. The post frames backpressure as the core primitive for safe agentic autonomy — architecturally significant for teams building AI coding agents.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.lucasfcosta.com/blog/backpressure-is-all-you-need"
+      },
+      {
+        "headline": "Agents vs. pipelines: when to use each for LLM integration",
+        "body": "Fixed-logic pipelines suit high-scale, predictable tasks; autonomous agents with dynamic context gathering and reasoning loops are better for complex, ambiguous problems. The key architectural decision is control-flow ownership — agents manage their own; pipelines have it externally imposed.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.seangoedecke.com/build-agents-not-pipelines/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Nvidia N1/N1X ARM Windows chips: up to 128 GB RAM, local AI agent capability, imminent launch",
+        "body": "Nvidia-designed N1 (16 GB RAM, 18–45W) and N1X (128 GB RAM, 45–80W) chips for Windows on ARM PCs will enable local AI agent execution. Announced in partnership with Microsoft; PC maker launches imminent per cryptic Nvidia tweet. Directly relevant to NVDA and MSFT positions.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.thurrott.com/mobile/copilot-pc/336816/leaks-nvidia-powered-windows-11-pcs-set-to-debut"
+      },
+      {
+        "headline": "Major stock indexes at record highs entering June; HPE surges on AI wave ahead of earnings",
+        "body": "Nasdaq (+16% YTD), S&P (+10.7%), and Dow (+6.2%) all at record highs as of June 1. HPE up 80% YTD riding AI infrastructure demand and reported earnings June 1. Investors watching Iran/Hormuz geopolitics and Friday's jobs report for near-term direction.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Berkshire Hathaway acquires Taylor Morrison Home for $6.8B all-cash",
+        "body": "Berkshire's all-cash homebuilder acquisition signals confidence in the US housing market despite rising insurance costs and rate pressure. Relevant macro context for fintech players in mortgage, insurance, and property finance.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "LLMReaper: DOM-Based AI Conversation Exfiltration via Browser Extensions",
+      "why": "Primary technical writeup of a novel attack vector directly affecting AI tools used by engineers — actionable for anyone who pastes credentials or API keys into ChatGPT, Claude, or Gemini in a shared browser context.",
+      "url": "https://thewhiteh4t.github.io/blog/ai-chat-llmreaper/"
+    },
+    {
+      "title": "Agentic RL: Token-In, Token-Out Done Right",
+      "why": "Technically precise treatment of a subtle but critical correctness bug in LLM RL training pipelines — essential reading for any team running RLHF or RL fine-tuning on production models.",
+      "url": "https://qgallouedec-tito.hf.space/"
+    },
+    {
+      "title": "Backpressure Is All You Need",
+      "why": "Proposes a concrete systems-engineering pattern (backpressure) as the architectural primitive for safe, extended agentic autonomy — bridges distributed systems craft directly into AI agent design.",
+      "url": "https://www.lucasfcosta.com/blog/backpressure-is-all-you-need"
+    }
+  ]
+}

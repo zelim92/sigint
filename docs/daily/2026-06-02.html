@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 02 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 02 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">20</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">3</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://threadreaderapp.com/thread/2061266317815296322.html" target="_blank">MiniMax M3: Open-weights frontier model with 1M-token context and desktop control</a></div>
+        <div class="story-body">MiniMax M3 achieves frontier-level performance on coding and agentic tasks, supports image/video input, and can operate a desktop computer. It introduces a new attention architecture enabling ultra-long context windows up to 1 million tokens. Available via API and open weights.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://threadreaderapp.com/thread/2061266317815296322.html" target="_blank">threadreaderapp.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.testingcatalog.com/exclusive-new-screenshots-of-upcoming-copilot-super-app/" target="_blank">Microsoft Copilot Super App leaked: unified GitHub Copilot, Cowork, and Scout agent hub</a></div>
+        <div class="story-body">Leaked screenshots ahead of Build 2026 show Microsoft consolidating scattered AI tools into a single Copilot app with tabs for GitHub Copilot, collaborative work, and Scout — an always-on agentic assistant integrated with Teams. The move is a direct response to weak adoption across siloed products.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://www.testingcatalog.com/exclusive-new-screenshots-of-upcoming-copilot-super-app/" target="_blank">testingcatalog.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://wccftech.com/nvidia-computex-2026-what-to-expect/" target="_blank">Nvidia Computex 2026: N1X laptop chip and Vera Rubin datacenter platform incoming</a></div>
+        <div class="story-body">Nvidia will unveil the N1X laptop chip (20 ARM cores, RTX 5070-class GPU, up to 128 GB RAM) and the &#x27;Vera Rubin&#x27; AI datacenter platform at Computex. Focus is on physical and agentic AI, with robotics and autonomous machines highlighted. Gaming announcements minimal.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://wccftech.com/nvidia-computex-2026-what-to-expect/" target="_blank">wccftech.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://qgallouedec-tito.hf.space/" target="_blank">Agentic RL: token-drift problem in LLM reinforcement learning solved via buffer-preserving architecture</a></div>
+        <div class="story-body">Re-tokenizing decoded tokens during RL training causes gradient drift and unreliable updates. The correct pattern: maintain a sampled-token buffer, never re-encode, and rely on prefix-preserving chat templates (satisfied by most modern templates) to keep loss computation accurate. Critical for teams building RL fine-tuning pipelines on top of LLMs.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://qgallouedec-tito.hf.space/" target="_blank">qgallouedec-tito.hf.space ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.pymnts.com/artificial-intelligence-2/2026/goldman-sachs-predicts-ai-agents-will-increase-tech-cash-flow/" target="_blank">Goldman Sachs: AI agents to materially increase tech sector cash flow</a></div>
+        <div class="story-body">Goldman&#x27;s analysis projects the next wave of AI adoption — specifically agentic AI — will significantly improve economics for major technology companies by reducing headcount costs and increasing software leverage. Directly relevant to MSFT, GOOGL, AMZN portfolio positions.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://www.pymnts.com/artificial-intelligence-2/2026/goldman-sachs-predicts-ai-agents-will-increase-tech-cash-flow/" target="_blank">pymnts.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/TsBxbd" target="_blank">CVE-2026-35616: FortiClient EMS active RCE chain delivering EKZ infostealer</a></div>
+        <div class="story-body">Attackers exploit an unauthenticated access-control flaw in FortiClient EMS 7.4.5–7.4.6 to modify VPN/EMS configs so fortitray.exe launches malicious batch scripts on IPsec tunnel establishment. The chain downloads EKZ infostealer (disguised as a Fortinet patch) via base64-encoded PowerShell, exfiltrating Chromium/Firefox credentials, cookies, and cards over HTTP before wiping artifacts. Apply April hotfixes immediately; hunt for &#x27;Certificate not found in request header&#x27; log sequences and Tor/VPS admin logins.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/TsBxbd" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/06/hackers-used-metas-ai-support-bot-to-seize-instagram-accounts/" target="_blank">Meta AI support bot exploited to hijack Instagram accounts via social-engineered password reset</a></div>
+        <div class="story-body">Pro-Iran actors used a VPN near the target&#x27;s location to trigger Meta&#x27;s AI chat support into linking a new email address to existing accounts, generating a password-reset OTP with no MFA challenge — defacing high-profile accounts including the Obama White House Instagram. Meta issued an emergency patch; accounts with any MFA form were immune. Signals a systemic risk: AI chatbots handling account recovery are as socially engineerable as human agents.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://krebsonsecurity.com/2026/06/hackers-used-metas-ai-support-bot-to-seize-instagram-accounts/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thewhiteh4t.github.io/blog/ai-chat-llmreaper/" target="_blank">LLMReaper PoC: Manifest V3 Chrome extension silently exfiltrates ChatGPT, Claude, and Gemini conversations</a></div>
+        <div class="story-body">A PoC extension uses MutationObserver to scrape full AI chat sessions in real time and ships JSON payloads (including usernames and Gemini Gmail IDs) to a remote FastAPI backend via the service worker, bypassing Same Origin Policy. Only standard &#x27;read all site data&#x27; permissions required; the backend runs regex to surface API keys, JWTs, and DB URLs from pasted content. Defenders should isolate AI use to dedicated browser profiles and audit extensions — maps to MITRE T1056.003/T1041/T1555.003.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://thewhiteh4t.github.io/blog/ai-chat-llmreaper/" target="_blank">thewhiteh4t.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://hackread.com/fake-anthropic-sites-fileless-infostealer-claude-code-users/" target="_blank">ClickFix campaign targets Claude Code users with fileless infostealer via spoofed Anthropic pages</a></div>
+        <div class="story-body">SEO-poisoned &#x27;claude code install&#x27; results redirect victims to fake Anthropic sites that instruct pasting an mshta.exe command executing a polyglot HTA/MP3. The HTA spawns 32-bit PowerShell with AMSI bypass, pulls a .NET infostealer via Assembly.Load entirely in-memory, and beacons credentials to Russian infrastructure at 185.177.239.255:443. Block *.oakenfjrod[.]ru, alert on mshta.exe spawning PowerShell with outbound connections.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://hackread.com/fake-anthropic-sites-fileless-infostealer-claude-code-users/" target="_blank">hackread.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/9nv8bC" target="_blank">CIFSwitch Linux LPE: kernel CIFS subsystem fails to verify key-request origin, enabling root on major distros</a></div>
+        <div class="story-body">A local privilege-escalation flaw in the Linux kernel CIFS subsystem allows attackers to forge authentication key descriptions and gain root by exploiting the kernel&#x27;s key-request mechanism. Confirmed vulnerable by default: Linux Mint 21.3/22.3, CentOS Stream 9, Rocky Linux 9, Alma Linux 9, Kali Linux 2021.4–2026.1, and SLES 15S P7.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/9nv8bC" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.kucoin.com/news/flash/sofi-launches-sofiusd-for-14-7-million-users-as-first-bank-issued-stablecoin" target="_blank">SoFi launches SoFiUSD: first US national bank-issued stablecoin on public blockchain</a></div>
+        <div class="story-body">SoFiUSD is fully reserved, available to 14.7M members, and integrated into the Galileo platform (160M accounts) with Mastercard settlement support. Signals stablecoins transitioning from crypto products to regulated banking infrastructure with real settlement-cost and speed implications for payments companies.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://www.kucoin.com/news/flash/sofi-launches-sofiusd-for-14-7-million-users-as-first-bank-issued-stablecoin" target="_blank">kucoin.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/gGSYDe" target="_blank">Apollo and Blackstone assemble $36B private credit vehicle to finance Google TPUs for Anthropic</a></div>
+        <div class="story-body">A SPV buys Google TPUs and leases them to Anthropic, keeping debt off Anthropic&#x27;s balance sheet — one of the largest AI infrastructure financings ever. The structure mirrors aircraft/real estate asset finance and signals AI compute as a new private credit asset class at scale.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/gGSYDe" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/Gj9DQ0" target="_blank">Airwallex hits $12B valuation with ARR growing from $1B to $1.5B in seven months</a></div>
+        <div class="story-body">Funding values Airwallex 50% above its late-2025 round as it expands from cross-border payments into spend management, billing, and accounting — increasingly overlapping with Stripe and enterprise fintech. Strong late-stage fintech IPO candidate.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/Gj9DQ0" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.heyfuturenexus.com/private-fintech-has-quietly-become-bigger-than-public-fintech-now-what/" target="_blank">Private fintech now worth 3x public fintech; Stripe, Revolut, Ramp staying private longer</a></div>
+        <div class="story-body">Blue Dot Investors/FT Partners report: top 100 private fintechs valued at $1.9T, triple public peers founded in the same era, with slightly more revenue. Secondary markets and abundant capital are delaying IPOs indefinitely, while a large tail of slower-growth fintechs faces limited liquidity paths.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://www.heyfuturenexus.com/private-fintech-has-quietly-become-bigger-than-public-fintech-now-what/" target="_blank">heyfuturenexus.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/UunwNp" target="_blank">Dimon vs. Armstrong: stablecoin yield battle reaches legislative inflection point</a></div>
+        <div class="story-body">JPMorgan and Coinbase clash publicly over the Clarity Act&#x27;s yield provisions — banks argue stablecoin issuers offering yield creates unregulated deposit-like products. The confrontation reflects stablecoins becoming a structural battle over deposit flows and financial services architecture.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/UunwNp" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.lucasfcosta.com/blog/backpressure-is-all-you-need" target="_blank">Backpressure as an agent safety mechanism: downstream signalling to limit unattended agentic sessions</a></div>
+        <div class="story-body">Applying backpressure (downstream-to-upstream load signalling) to agentic AI loops allows agents to validate more of their own work before requiring human review, extending safe unattended sessions while reducing low-quality PRs. The post frames backpressure as the core primitive for safe agentic autonomy — architecturally significant for teams building AI coding agents.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://www.lucasfcosta.com/blog/backpressure-is-all-you-need" target="_blank">lucasfcosta.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.seangoedecke.com/build-agents-not-pipelines/" target="_blank">Agents vs. pipelines: when to use each for LLM integration</a></div>
+        <div class="story-body">Fixed-logic pipelines suit high-scale, predictable tasks; autonomous agents with dynamic context gathering and reasoning loops are better for complex, ambiguous problems. The key architectural decision is control-flow ownership — agents manage their own; pipelines have it externally imposed.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://www.seangoedecke.com/build-agents-not-pipelines/" target="_blank">seangoedecke.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.thurrott.com/mobile/copilot-pc/336816/leaks-nvidia-powered-windows-11-pcs-set-to-debut" target="_blank">Nvidia N1/N1X ARM Windows chips: up to 128 GB RAM, local AI agent capability, imminent launch</a></div>
+        <div class="story-body">Nvidia-designed N1 (16 GB RAM, 18–45W) and N1X (128 GB RAM, 45–80W) chips for Windows on ARM PCs will enable local AI agent execution. Announced in partnership with Microsoft; PC maker launches imminent per cryptic Nvidia tweet. Directly relevant to NVDA and MSFT positions.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link mkt" href="https://www.thurrott.com/mobile/copilot-pc/336816/leaks-nvidia-powered-windows-11-pcs-set-to-debut" target="_blank">thurrott.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Major stock indexes at record highs entering June; HPE surges on AI wave ahead of earnings</div>
+        <div class="story-body">Nasdaq (+16% YTD), S&amp;P (+10.7%), and Dow (+6.2%) all at record highs as of June 1. HPE up 80% YTD riding AI infrastructure demand and reported earnings June 1. Investors watching Iran/Hormuz geopolitics and Friday&#x27;s jobs report for near-term direction.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Berkshire Hathaway acquires Taylor Morrison Home for $6.8B all-cash</div>
+        <div class="story-body">Berkshire&#x27;s all-cash homebuilder acquisition signals confidence in the US housing market despite rising insurance costs and rate pressure. Relevant macro context for fintech players in mortgage, insurance, and property finance.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://thewhiteh4t.github.io/blog/ai-chat-llmreaper/" target="_blank">LLMReaper: DOM-Based AI Conversation Exfiltration via Browser Extensions ↗</a></div>
+          <div class="dive-why">Primary technical writeup of a novel attack vector directly affecting AI tools used by engineers — actionable for anyone who pastes credentials or API keys into ChatGPT, Claude, or Gemini in a shared browser context.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://qgallouedec-tito.hf.space/" target="_blank">Agentic RL: Token-In, Token-Out Done Right ↗</a></div>
+          <div class="dive-why">Technically precise treatment of a subtle but critical correctness bug in LLM RL training pipelines — essential reading for any team running RLHF or RL fine-tuning on production models.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.lucasfcosta.com/blog/backpressure-is-all-you-need" target="_blank">Backpressure Is All You Need ↗</a></div>
+          <div class="dive-why">Proposes a concrete systems-engineering pattern (backpressure) as the architectural primitive for safe, extended agentic autonomy — bridges distributed systems craft directly into AI agent design.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 01 Jun 2026 · sources: tldr.tech, krebsonsecurity.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
