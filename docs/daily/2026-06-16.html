@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 16 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 16 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">17</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.anthropic.com/news/fable-mythos-access" target="_blank">Anthropic Fable 5 &amp; Mythos 5 Pulled Worldwide Under US Export-Control Directive</a></div>
+        <div class="story-body">The Trump administration&#x27;s Commerce Department issued an export-control directive blocking all non-US-citizen access to Anthropic&#x27;s two most capable models; Amazon CEO Andy Jassy flagged jailbreak concerns to the White House, which gave Anthropic a 90-minute ultimatum before imposing controls. Anthropic disputes the severity, noting the jailbreak was non-universal and that comparable vulnerabilities exist in GPT-5.5 and other public models. Semafor reports a China-linked group may have accessed Mythos, and senior Anthropic staff are now in Washington negotiating; all other Anthropic models remain accessible.</div>
+        <div class="story-meta"><span class="chip">anthropic.com</span><span class="chip">arstechnica.com</span><span class="chip">tldrnewsletter.com</span><span class="chip">therundownai.com</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/news/fable-mythos-access" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">LLM Inference Engineering: Prefill vs Decode Split and Production Optimisation Techniques</div>
+        <div class="story-body">ByteByteGo published a detailed guide on inference engineering, framing the entire field around the prefill (compute-bound, TTFT) vs decode (memory-bandwidth-bound, TPS) split. Key techniques covered: continuous batching, prefix/KV caching (with prompt-structure implications for cost), quantisation (30–50% gains per precision step), speculative decoding, disaggregated prefill/decode infrastructure, and tensor/pipeline parallelism. Self-hosted open models typically cut costs ~80% at scale vs closed APIs once engineering investment is justified.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://threadreaderapp.com/thread/2065704919299235870.html" target="_blank">GLM-5.2 Released: MIT-Licensed, 1M Context, Strong Coding from Z.ai</a></div>
+        <div class="story-body">GLM-5.2 from Z.ai (formerly Zhipu AI) is available to GLM Coding Plan users with a 1M-token usable context window and emphasis on long-horizon coding tasks. API and chatbot services follow next week; the model will be open-sourced under MIT. Notable as a capable Chinese open-weight model entering the coding agent space.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://threadreaderapp.com/thread/2065704919299235870.html" target="_blank">threadreaderapp.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://labs.ramp.com/swebench" target="_blank">Ramp Launches Private SWE-Bench for Financial Coding Agents</a></div>
+        <div class="story-body">Ramp&#x27;s SWE-Bench is built from 80 real production backend tasks previously shipped by their internal coding agent (Inspect) post-engineer review, covering card authorisation, bill pay, fraud, treasury, and accounting. Pass/fail scoring requires the agent to produce a review-ready patch flipping tests from failing to passing within 45 minutes — a domain-specific, anti-contamination benchmark approach worth watching for fintech AI eval methodology.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://labs.ramp.com/swebench" target="_blank">labs.ramp.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://research.checkpoint.com/2026/from-sqli-to-rce-exploiting-langgraphs-checkpointer/" target="_blank">LangGraph Checkpointer: SQLi → RCE Chain Affecting 50M+ Monthly Downloads</a></div>
+        <div class="story-body">Check Point Research disclosed three chained CVEs in LangGraph&#x27;s persistence layer: SQL injection in SQLite and Redis checkpointers (CVE-2025-67644, CVE-2026-27022) combined with unsafe msgpack deserialization (CVE-2026-28277) enabling RCE via os.system() calls when get_state_history() is exposed to user-controlled input. Exploitation path: UNION SELECT injects malicious msgpack payload → importlib.import_module/getattr executes arbitrary code. Patch to langgraph-checkpoint-sqlite 3.0.1+, langgraph 1.0.10+, langgraph-checkpoint-redis 1.0.2+; audit any checkpoint history APIs exposed to untrusted users immediately.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://research.checkpoint.com/2026/from-sqli-to-rce-exploiting-langgraphs-checkpointer/" target="_blank">research.checkpoint.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://labs.watchtowr.com/why-use-app-level-auth-when-every-database-has-auth-splunk-enterprise-cve-2026-20253-pre-auth-rce/" target="_blank">Splunk Enterprise CVE-2026-20253 (CVSS 9.8): Pre-Auth RCE via PostgreSQL Sidecar Proxy</a></div>
+        <div class="story-body">The /__raw/v1/postgres/recovery/ proxy exposes a loopback-only PostgreSQL service on port 5435 to the network unauthenticated. Exploit chain: inject attacker-controlled host into database parameter → malicious pg_dump redirect → lo_export writes arbitrary files → .pgpass credential harvest → overwrite ssg_enable_modular_input.py for RCE as splunk user. Affects Splunk Enterprise 10.0.0–10.0.6 and 10.2.0–10.2.3 on AWS out-of-the-box. Mitigate: patch to 10.0.7/10.2.4, restrict external access to /__raw/, treat .pgpass files as secrets.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://labs.watchtowr.com/why-use-app-level-auth-when-every-database-has-auth-splunk-enterprise-cve-2026-20253-pre-auth-rce/" target="_blank">labs.watchtowr.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.sonatype.com/blog/atomic-arch-npm-campaign-adds-malicious-dependency" target="_blank">AUR Supply Chain Attack: ~1,500 Packages Hijacked to Deliver eBPF Rootkit via Malicious npm Dependency</a></div>
+        <div class="story-body">Attackers are taking over abandoned Arch User Repository packages and modifying PKGBUILDs to install atomic-lockfile, a malicious npm dependency that drops a native Linux payload with eBPF-based rootkit behaviour, credential and token harvesting, anti-debugging, and HTTP exfiltration. The campaign spans multiple waves using npm and Bun installers, touching approximately 1,500 AUR packages — a significant escalation in open-source supply chain risk for Linux dev environments.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.sonatype.com/blog/atomic-arch-npm-campaign-adds-malicious-dependency" target="_blank">sonatype.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.theregister.com/security/2026/06/12/novo-nordisk-says-hackers-stole-clinical-trial-data/" target="_blank">Novo Nordisk Breach: Pseudonymized Clinical Trial Data Stolen, Targeted Phishing Underway</a></div>
+        <div class="story-body">Attackers accessed Novo Nordisk&#x27;s clinical trial records including patient IDs, demographics, biomarkers, and lifestyle data, leaving some internal systems offline. The company is warning trial participants and healthcare partners of active targeted phishing via email, phone, and WhatsApp using stolen contact data — a direct re-identification and social engineering risk from pseudonymized dataset exfiltration.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.theregister.com/security/2026/06/12/novo-nordisk-says-hackers-stole-clinical-trial-data/" target="_blank">theregister.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://recyclebin.zip/posts/2026-05-25-secret-scanning-fleet-bagel/" target="_blank">Developer Workstation Secret Scanning: bagel + fleet + osquery Workflow</a></div>
+        <div class="story-body">A published workflow uses bagel (TruffleHog-equivalent for workstations rather than repos) to scan dev machines for plaintext secrets, outputs JSON with location and criticality, then uses fleet with osquery to verify scan completion and Slack-notify on findings. Operationally relevant for any team managing developer endpoints with high-value credentials — addresses the gap between repo scanning and endpoint exposure.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://recyclebin.zip/posts/2026-05-25-secret-scanning-fleet-bagel/" target="_blank">recyclebin.zip ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.paymentsdive.com/news/adyen-to-buy-orb-for-335m/822807/" target="_blank">Adyen Acquires Orb for $335M to Add Real-Time Usage-Based Billing</a></div>
+        <div class="story-body">Adyen&#x27;s cash acquisition of enterprise billing startup Orb follows the Talon.One deal and signals a deliberate product-gap-filling M&amp;A strategy targeting AI-era digital businesses. Usage-based billing is a critical capability for AI API vendors and consumption-priced SaaS — Adyen is positioning its platform to handle the billing complexity that flat-rate models can&#x27;t.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.paymentsdive.com/news/adyen-to-buy-orb-for-335m/822807/" target="_blank">paymentsdive.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.zelle.com/press-releases/zelle-heads-to-india-unveils-zelleusdsm-stablecoin-other-markets" target="_blank">Zelle Expands to India and Unveils ZelleUSD Stablecoin for Cross-Border Markets</a></div>
+        <div class="story-body">Early Warning Services is launching US-to-India remittances before end of 2026 and introducing ZelleUSD, a USD-backed stablecoin for cross-border capabilities beyond India. This extends Zelle&#x27;s $1.2T network into international remittances and stablecoin rails, directly competing with incumbent wire services and emerging crypto payout networks like the concurrent MassPay-Coinbase stablecoin partnership.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.zelle.com/press-releases/zelle-heads-to-india-unveils-zelleusdsm-stablecoin-other-markets" target="_blank">zelle.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Stripe Launches Multi-Currency Treasury and Agent Commerce Tools for UK Businesses</div>
+        <div class="story-body">Stripe&#x27;s UK expansion includes expanded multi-currency treasury capabilities, new fraud defences, and a single integration for selling across multiple AI agents. The agent commerce angle — one Stripe integration routing payments across different AI agent storefronts — is architecturally significant for the emerging agentic economy and relevant to fraud/AML surface area expansion.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/R1e" target="_blank">US-Iran Ceasefire Deal to Reopen Strait of Hormuz: Macro Implications for Energy and Inflation</a></div>
+        <div class="story-body">A 60-day ceasefire extension signed Friday in Geneva reopens the Strait of Hormuz, which had been disrupted since the February 28 conflict onset causing elevated global inflation. Oil prices dropped on the news; the deal does not address Iran&#x27;s nuclear programme or US sanctions, leaving resolution contingent on follow-on negotiations. Portfolio-relevant: ExxonMobil up 23.8% YTD, Nasdaq +11.4%, S&amp;P +8.6% as of June 15.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.morningbrew.com/c/R1e" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://planetscale.com/blog/the-only-scalable-delete" target="_blank">Postgres Bulk Delete at Scale: Only DROP TABLE or TRUNCATE Are O(1)</a></div>
+        <div class="story-body">Large DELETE operations in Postgres leave dead tuples, add WAL/replication overhead, and never return disk space — they add work rather than reclaim it. DROP TABLE and TRUNCATE operate directly on file system objects, scaling independently of data size. The practical implication: design schemas so bulk deletion maps to table/partition drops, not row-level deletes, particularly relevant for high-volume event tables, audit logs, or time-series data in fintech systems.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://planetscale.com/blog/the-only-scalable-delete" target="_blank">planetscale.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.janestreet.com/formal-methods-at-jane-street-index/" target="_blank">Formal Methods Getting Second Look as AI Code Verification Tool at Jane Street</a></div>
+        <div class="story-body">Jane Street published on how the rise of agentic coding is shifting the cost-benefit calculus for formal methods — proof-based correctness guarantees previously too expensive for routine use are now viable for verifying AI-generated code at scale. The framing is significant: formal methods as a post-AI-generation verification layer rather than a development-time practice.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.janestreet.com/formal-methods-at-jane-street-index/" target="_blank">blog.janestreet.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">SpaceX IPO: Musk Becomes First Trillionaire as Shares Open +20% at $135</div>
+        <div class="story-body">SpaceX&#x27;s IPO priced at $135 and opened up 20%, vaulting Musk to ~$1T net worth — more than 3% of US GDP. Relevant to portfolio holders as a signal of private-to-public market appetite for deep-tech infrastructure plays and as context for the ongoing AI/space capex cycle.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/ai/2026/06/anthropic-shuts-down-fable-mythos-models-following-trump-admin-directive/" target="_blank">Anthropic Export Control Sets Precedent for US Government AI Sovereignty Claims Over Frontier Models</a></div>
+        <div class="story-body">The Fable/Mythos shutdown is the first known instance of the US Commerce Department imposing export controls on a specific frontier model&#x27;s API access, going beyond chip/hardware controls. The mechanism — blocking non-US-citizen access including foreign national employees — creates a compliance architecture problem for all US AI labs with global user bases and international teams. This precedent materially affects MSFT (Azure OpenAI), GOOGL (Gemini), and AMZN (Bedrock/Anthropic) as downstream infrastructure providers.</div>
+        <div class="story-meta"><span class="chip">anthropic.com</span><span class="chip">arstechnica.com</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://arstechnica.com/ai/2026/06/anthropic-shuts-down-fable-mythos-models-following-trump-admin-directive/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://labs.watchtowr.com/why-use-app-level-auth-when-every-database-has-auth-splunk-enterprise-cve-2026-20253-pre-auth-rce/" target="_blank">Splunk Enterprise CVE-2026-20253 Technical Writeup (watchTowr Labs) ↗</a></div>
+          <div class="dive-why">Full exploit chain walkthrough for a CVSS 9.8 pre-auth RCE in widely deployed SIEM infrastructure — directly actionable for any team running Splunk, with specific mitigations and affected version ranges.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://research.checkpoint.com/2026/from-sqli-to-rce-exploiting-langgraphs-checkpointer/" target="_blank">From SQLi to RCE: Exploiting LangGraph&#x27;s Checkpointer (Check Point Research) ↗</a></div>
+          <div class="dive-why">Primary security research disclosing three chained CVEs in a 50M+ download/month AI framework component — critical for any team running LangGraph agents with persistent state, with exact patch versions specified.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://labs.ramp.com/swebench" target="_blank">Ramp SWE-Bench: Private Benchmark for Financial Coding Agents ↗</a></div>
+          <div class="dive-why">Production-grounded benchmark built from real fintech backend tasks (fraud, card auth, treasury) — a methodological template for evaluating AI coding agents in regulated/domain-specific environments, directly relevant to fintech engineering teams considering internal agent adoption.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 15 Jun 2026 · sources: anthropic.com, arstechnica.com, tldrnewsletter.com, therundownai.com, morningbrew.com, bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
