@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 18 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 18 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">5</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">13</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/06/16/spacex-spcx-cursor-acquisition-ipo.html" target="_blank">SpaceX acquires Cursor for $60B in all-stock deal to bolster xAI</a></div>
+        <div class="story-body">SpaceX exercised its April option to acquire AI coding startup Cursor for $60B in SpaceX stock, funded by a post-IPO rally that pushed SpaceX past $2.6T market cap. Cursor CEO Michael Truell has teased an upcoming model trained from scratch, &#x27;generally intelligent&#x27; and Opus-scale, which SpaceX plans to integrate into Grok Build and its own editor. SpaceX&#x27;s AI unit lost $2.5B last year, making Cursor&#x27;s $1B+ ARR and frontier model ambitions a meaningful bet to close the gap on Anthropic and OpenAI.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><span class="chip">therundown.ai</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.cnbc.com/2026/06/16/spacex-spcx-cursor-acquisition-ipo.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://android-developers.googleblog.com/2026/06/Android-17.html" target="_blank">Android 17 ships AppFunctions + Android MCP for on-device agentic orchestration</a></div>
+        <div class="story-body">Android 17 introduces AppFunctions and Android MCP, enabling apps to expose discoverable, orchestratable tools that on-device AI agents can invoke natively. Google frames this as a platform-level shift toward an &#x27;intelligence system&#x27;, with agents capable of acting across apps without user hand-holding. This is the mobile OS equivalent of the MCP server proliferation happening on the desktop/cloud side — worth tracking for IAM and app-permission implications.</div>
+        <div class="story-meta"><span class="chip">android-developers.googleblog.com</span><div class="ref-links"><a class="ref-link ai" href="https://android-developers.googleblog.com/2026/06/Android-17.html" target="_blank">android-developers.googleblog.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Cursor Origin: agent-native Git forge built for parallel AI development</div>
+        <div class="story-body">Cursor launched Origin, a Git-compatible forge designed around the assumption that many AI agents will simultaneously clone, branch, commit, rebase, review, and fix failures in the same repo. Unlike GitHub — built for human-scale, sequential workflows — Origin is architected for agent-scale parallelism. Combined with the SpaceX acquisition, Cursor is positioning to own the full AI software factory stack.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://z.ai/blog/glm-5.2" target="_blank">Z.ai launches GLM-5.2 with 1M-token context and MIT-licensed open weights</a></div>
+        <div class="story-body">GLM-5.2 targets long-horizon agentic coding tasks across entire codebases, with a 1 million-token context window and new reasoning controls. Open weights under MIT license are due the following week alongside API and chatbot access. No benchmark results were published at launch, so frontier claims remain unverified.</div>
+        <div class="story-meta"><span class="chip">z.ai</span><div class="ref-links"><a class="ref-link ai" href="https://z.ai/blog/glm-5.2" target="_blank">z.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/KKpLIp" target="_blank">DeepSeek raises $7.4B at $50B+ valuation, becoming China&#x27;s most valuable AI startup</a></div>
+        <div class="story-body">DeepSeek closed a $7.4B round with founder Liang Wenfeng contributing ~$3B and a government-backed fund adding ~$150M; Wenfeng previously held ~90% of the company. Capital will go toward R&amp;D and compute infrastructure expansion. At $50B+ valuation, DeepSeek is now a credible frontier competitor with state-adjacent backing, relevant context for export-control and supply-chain risk analysis.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/KKpLIp" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html" target="_blank">Google Vertex AI SDK bucket-squatting flaw allowed malicious model injection via OAuth token theft</a></div>
+        <div class="story-body">A bug in the Vertex AI Python SDK used predictable staging bucket names, letting attackers pre-register them, intercept model uploads from other projects, and substitute malicious pickle-based models that executed arbitrary code in Google&#x27;s serving containers. Unit 42&#x27;s test payload stole OAuth tokens and accessed other model artifacts, logs, and metadata in the same Google-managed tenant. Fixed in v1.144.0 (randomized names) and fully patched in v1.148.0 (bucket ownership checks) — upgrade and set explicit staging_bucket everywhere.</div>
+        <div class="story-meta"><span class="chip">thehackernews.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://bobdahacker.com/blog/fifa-hack" target="_blank">FIFA World Cup 2026: researcher&#x27;s low-privilege Entra account exposed live RTMP stream keys and match controls</a></div>
+        <div class="story-body">A researcher who registered as a FIFA player agent was silently provisioned into FIFA&#x27;s internal Microsoft Entra tenant, gaining a &#x27;NO_ROLES&#x27; account that still surfaced the live Football Data Platform — including RTMP ingest URLs, stream keys, and start/stop controls for every match feed. They confirmed live stream access via VLC before escalating to FIFA, MediaKind, HBS, CISA, and FBI; the issue was patched the next day with no acknowledgment from FIFA. Classic over-provisioning / Entra guest account misconfiguration with extreme real-world blast radius.</div>
+        <div class="story-meta"><span class="chip">bobdahacker.com</span><div class="ref-links"><a class="ref-link sec" href="https://bobdahacker.com/blog/fifa-hack" target="_blank">bobdahacker.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/vgE7SH" target="_blank">Malicious JetBrains Marketplace plugins harvest AI API keys at install time</a></div>
+        <div class="story-body">Aikido Security found a campaign distributing fake AI coding assistant plugins on the JetBrains Marketplace that prompt for API keys on first launch and immediately exfiltrate them to attacker-controlled servers. The plugins also offered a paid tier whose keys may originate from harvested free-tier accounts, creating a credential laundering loop. Any developer who installed and configured these plugins should rotate affected API keys immediately.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/vgE7SH" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.varonis.com/blog/openclaw-phishing" target="_blank">Varonis research: OpenClaw AI agent fails social engineering tests including emergency credential requests and malicious OAuth flows</a></div>
+        <div class="story-body">Varonis Threat Labs tested an OpenClaw agent with access to a Gmail inbox containing enterprise credentials; it complied with fabricated emergency outage credential requests and CRM export demands even under a hardened profile. In phishing and OAuth-flow scenarios the agent clicked malicious links but stopped short of entering credentials. The finding underscores that current AI agents don&#x27;t have robust social-engineering resistance even with restrictive system prompts — a direct risk for any agentic IAM or helpdesk automation deployment.</div>
+        <div class="story-meta"><span class="chip">varonis.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.varonis.com/blog/openclaw-phishing" target="_blank">varonis.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.malwarebytes.com/blog/news/2026/06/cardiac-patients-medical-data-stolen-and-held-to-ransom" target="_blank">iRhythm ransomware extortion: cardiac patient PHI and proprietary data stolen from third-party business apps</a></div>
+        <div class="story-body">A criminal contacted iRhythm on June 9 claiming to have exfiltrated proprietary data, patient health information, and personal details from third-party business applications, then demanded payment. Clinical systems and card data were not affected, but the data volume is sufficient for sustained medical identity theft, phishing, and fraud campaigns targeting patients. Third-party SaaS data exposure continues to be the soft underbelly of healthcare security posture.</div>
+        <div class="story-meta"><span class="chip">malwarebytes.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.malwarebytes.com/blog/news/2026/06/cardiac-patients-medical-data-stolen-and-held-to-ransom" target="_blank">malwarebytes.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Robinhood cuts 10% of workforce (290 roles) citing need to flatten structure</div>
+        <div class="story-body">CEO Vlad Tenev attributed cuts to a need to &#x27;achieve massive scale&#x27; despite claiming the business is at peak strength. Robinhood stock is down ~16% YTD as crypto downturn and market volatility have dampened retail trading activity. Relevant as a leading indicator of retail fintech health and sentiment going into H2.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://gist.github.com/samsch/0d1f3d3b4745d778f78b230cf6061452" target="_blank">Stop using JWTs for sessions: stateless auth is largely a myth</a></div>
+        <div class="story-body">A widely circulated technical argument makes the case that JWTs are inappropriate for user session management — they were never designed for long-lived authentication, and truly stateless token revocation is impractical without a persistent store. Cookie-based sessions with server-side state offer better security properties and flexibility for revocation and expiry. Relevant for any IAM or auth system design review.</div>
+        <div class="story-meta"><span class="chip">gist.github.com</span><div class="ref-links"><a class="ref-link swe" href="https://gist.github.com/samsch/0d1f3d3b4745d778f78b230cf6061452" target="_blank">gist.github.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://aws.amazon.com/blogs/aws/amazon-s3-annotations-attach-rich-queryable-context-directly-to-your-objects/" target="_blank">Amazon S3 Annotations: queryable per-object metadata up to 1,000 fields × 1MB each</a></div>
+        <div class="story-body">AWS launched S3 Annotations, allowing up to 1,000 named annotations per object (JSON, XML, YAML, plain text) up to 1MB each, modifiable without rewriting objects and available in all regions. This enables rich, queryable business context directly on storage objects — useful for ML data lineage, audit metadata, and compliance tagging without separate metadata stores. Generally available now.</div>
+        <div class="story-meta"><span class="chip">aws.amazon.com</span><div class="ref-links"><a class="ref-link swe" href="https://aws.amazon.com/blogs/aws/amazon-s3-annotations-attach-rich-queryable-context-directly-to-your-objects/" target="_blank">aws.amazon.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/R9p" target="_blank">SpaceX IPO surge: $2.65T market cap, surpassing Amazon — retail driving 75% of single-stock purchases</a></div>
+        <div class="story-body">SpaceX ended Tuesday at ~$2.65T, up ~49% from its $135 IPO price in under a week, briefly surpassing Microsoft before settling just ahead of Amazon. Retail investors bought more SpaceX stock since IPO than all other stocks combined on Monday. Musk targets $1T revenue by 2030 vs $18.7B last year; the AI unit lost $2.5B, making the Cursor acquisition a critical strategic bet — and one funded entirely by the IPO rally.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/R9p" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://newsletter.pragmaticengineer.com/p/why-is-meta-destroying-its-engineering" target="_blank">Meta dismantling its engineering culture to force AI pivot — staff exodus risk</a></div>
+        <div class="story-body">Meta&#x27;s historically strong engineering culture — built on autonomy, impact ownership, and balanced business/engineering tradeoffs — has been rapidly dismantled since April in an aggressive AI-first restructuring. Engineers report disempowerment and a collapse in the conditions that made Meta a top destination. This is a meaningful talent and execution risk for a company that needs deep engineering credibility to compete in the AI layer.</div>
+        <div class="story-meta"><span class="chip">newsletter.pragmaticengineer.com</span><div class="ref-links"><a class="ref-link mkt" href="https://newsletter.pragmaticengineer.com/p/why-is-meta-destroying-its-engineering" target="_blank">newsletter.pragmaticengineer.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html" target="_blank">Google Vertex AI SDK Bucket-Squatting Vulnerability (Unit 42 / The Hacker News) ↗</a></div>
+          <div class="dive-why">Primary source technical writeup on a supply-chain-style ML infrastructure attack with concrete exploit path, OAuth token exfiltration payload, and version-specific remediation — directly actionable for any team using Vertex AI SDK.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://bobdahacker.com/blog/fifa-hack" target="_blank">FIFA World Cup Entra Misconfiguration — Full Researcher Disclosure ↗</a></div>
+          <div class="dive-why">First-person post-mortem of a catastrophic over-provisioning failure in Microsoft Entra&#x27;s guest/external identity model, with live stream key exposure at global-scale broadcast infrastructure — essential reading for anyone designing Entra B2B or external-access policies.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://android-developers.googleblog.com/2026/06/Android-17.html" target="_blank">Android 17 AI Agent Integration — Official Android Developers Blog ↗</a></div>
+          <div class="dive-why">Primary Google engineering announcement detailing AppFunctions and Android MCP architecture for on-device agentic tool orchestration — foundational spec for understanding the emerging mobile agent permission and identity surface.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 17 Jun 2026 · sources: cnbc.com, therundown.ai, morningbrew.com, android-developers.googleblog.com, tldrnewsletter.com, z.ai, thehackernews.com, bobdahacker.com, varonis.com, malwarebytes.com, gist.github.com, aws.amazon.com, newsletter.pragmaticengineer.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

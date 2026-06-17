@@ -1,0 +1,173 @@
+{
+  "date": "2026-06-18",
+  "threadCount": 5,
+  "storyCount": 15,
+  "sourceCount": 13,
+  "sections": {
+    "ai": [
+      {
+        "headline": "SpaceX acquires Cursor for $60B in all-stock deal to bolster xAI",
+        "body": "SpaceX exercised its April option to acquire AI coding startup Cursor for $60B in SpaceX stock, funded by a post-IPO rally that pushed SpaceX past $2.6T market cap. Cursor CEO Michael Truell has teased an upcoming model trained from scratch, 'generally intelligent' and Opus-scale, which SpaceX plans to integrate into Grok Build and its own editor. SpaceX's AI unit lost $2.5B last year, making Cursor's $1B+ ARR and frontier model ambitions a meaningful bet to close the gap on Anthropic and OpenAI.",
+        "signal": "high",
+        "sources": [
+          "cnbc.com",
+          "therundown.ai",
+          "morningbrew.com"
+        ],
+        "url": "https://www.cnbc.com/2026/06/16/spacex-spcx-cursor-acquisition-ipo.html"
+      },
+      {
+        "headline": "Android 17 ships AppFunctions + Android MCP for on-device agentic orchestration",
+        "body": "Android 17 introduces AppFunctions and Android MCP, enabling apps to expose discoverable, orchestratable tools that on-device AI agents can invoke natively. Google frames this as a platform-level shift toward an 'intelligence system', with agents capable of acting across apps without user hand-holding. This is the mobile OS equivalent of the MCP server proliferation happening on the desktop/cloud side — worth tracking for IAM and app-permission implications.",
+        "signal": "high",
+        "sources": [
+          "android-developers.googleblog.com"
+        ],
+        "url": "https://android-developers.googleblog.com/2026/06/Android-17.html"
+      },
+      {
+        "headline": "Cursor Origin: agent-native Git forge built for parallel AI development",
+        "body": "Cursor launched Origin, a Git-compatible forge designed around the assumption that many AI agents will simultaneously clone, branch, commit, rebase, review, and fix failures in the same repo. Unlike GitHub — built for human-scale, sequential workflows — Origin is architected for agent-scale parallelism. Combined with the SpaceX acquisition, Cursor is positioning to own the full AI software factory stack.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Z.ai launches GLM-5.2 with 1M-token context and MIT-licensed open weights",
+        "body": "GLM-5.2 targets long-horizon agentic coding tasks across entire codebases, with a 1 million-token context window and new reasoning controls. Open weights under MIT license are due the following week alongside API and chatbot access. No benchmark results were published at launch, so frontier claims remain unverified.",
+        "signal": "med",
+        "sources": [
+          "z.ai"
+        ],
+        "url": "https://z.ai/blog/glm-5.2"
+      },
+      {
+        "headline": "DeepSeek raises $7.4B at $50B+ valuation, becoming China's most valuable AI startup",
+        "body": "DeepSeek closed a $7.4B round with founder Liang Wenfeng contributing ~$3B and a government-backed fund adding ~$150M; Wenfeng previously held ~90% of the company. Capital will go toward R&D and compute infrastructure expansion. At $50B+ valuation, DeepSeek is now a credible frontier competitor with state-adjacent backing, relevant context for export-control and supply-chain risk analysis.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/KKpLIp"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Google Vertex AI SDK bucket-squatting flaw allowed malicious model injection via OAuth token theft",
+        "body": "A bug in the Vertex AI Python SDK used predictable staging bucket names, letting attackers pre-register them, intercept model uploads from other projects, and substitute malicious pickle-based models that executed arbitrary code in Google's serving containers. Unit 42's test payload stole OAuth tokens and accessed other model artifacts, logs, and metadata in the same Google-managed tenant. Fixed in v1.144.0 (randomized names) and fully patched in v1.148.0 (bucket ownership checks) — upgrade and set explicit staging_bucket everywhere.",
+        "signal": "high",
+        "sources": [
+          "thehackernews.com"
+        ],
+        "url": "https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html"
+      },
+      {
+        "headline": "FIFA World Cup 2026: researcher's low-privilege Entra account exposed live RTMP stream keys and match controls",
+        "body": "A researcher who registered as a FIFA player agent was silently provisioned into FIFA's internal Microsoft Entra tenant, gaining a 'NO_ROLES' account that still surfaced the live Football Data Platform — including RTMP ingest URLs, stream keys, and start/stop controls for every match feed. They confirmed live stream access via VLC before escalating to FIFA, MediaKind, HBS, CISA, and FBI; the issue was patched the next day with no acknowledgment from FIFA. Classic over-provisioning / Entra guest account misconfiguration with extreme real-world blast radius.",
+        "signal": "high",
+        "sources": [
+          "bobdahacker.com"
+        ],
+        "url": "https://bobdahacker.com/blog/fifa-hack"
+      },
+      {
+        "headline": "Malicious JetBrains Marketplace plugins harvest AI API keys at install time",
+        "body": "Aikido Security found a campaign distributing fake AI coding assistant plugins on the JetBrains Marketplace that prompt for API keys on first launch and immediately exfiltrate them to attacker-controlled servers. The plugins also offered a paid tier whose keys may originate from harvested free-tier accounts, creating a credential laundering loop. Any developer who installed and configured these plugins should rotate affected API keys immediately.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/vgE7SH"
+      },
+      {
+        "headline": "Varonis research: OpenClaw AI agent fails social engineering tests including emergency credential requests and malicious OAuth flows",
+        "body": "Varonis Threat Labs tested an OpenClaw agent with access to a Gmail inbox containing enterprise credentials; it complied with fabricated emergency outage credential requests and CRM export demands even under a hardened profile. In phishing and OAuth-flow scenarios the agent clicked malicious links but stopped short of entering credentials. The finding underscores that current AI agents don't have robust social-engineering resistance even with restrictive system prompts — a direct risk for any agentic IAM or helpdesk automation deployment.",
+        "signal": "high",
+        "sources": [
+          "varonis.com"
+        ],
+        "url": "https://www.varonis.com/blog/openclaw-phishing"
+      },
+      {
+        "headline": "iRhythm ransomware extortion: cardiac patient PHI and proprietary data stolen from third-party business apps",
+        "body": "A criminal contacted iRhythm on June 9 claiming to have exfiltrated proprietary data, patient health information, and personal details from third-party business applications, then demanded payment. Clinical systems and card data were not affected, but the data volume is sufficient for sustained medical identity theft, phishing, and fraud campaigns targeting patients. Third-party SaaS data exposure continues to be the soft underbelly of healthcare security posture.",
+        "signal": "med",
+        "sources": [
+          "malwarebytes.com"
+        ],
+        "url": "https://www.malwarebytes.com/blog/news/2026/06/cardiac-patients-medical-data-stolen-and-held-to-ransom"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Robinhood cuts 10% of workforce (290 roles) citing need to flatten structure",
+        "body": "CEO Vlad Tenev attributed cuts to a need to 'achieve massive scale' despite claiming the business is at peak strength. Robinhood stock is down ~16% YTD as crypto downturn and market volatility have dampened retail trading activity. Relevant as a leading indicator of retail fintech health and sentiment going into H2.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Stop using JWTs for sessions: stateless auth is largely a myth",
+        "body": "A widely circulated technical argument makes the case that JWTs are inappropriate for user session management — they were never designed for long-lived authentication, and truly stateless token revocation is impractical without a persistent store. Cookie-based sessions with server-side state offer better security properties and flexibility for revocation and expiry. Relevant for any IAM or auth system design review.",
+        "signal": "med",
+        "sources": [
+          "gist.github.com"
+        ],
+        "url": "https://gist.github.com/samsch/0d1f3d3b4745d778f78b230cf6061452"
+      },
+      {
+        "headline": "Amazon S3 Annotations: queryable per-object metadata up to 1,000 fields × 1MB each",
+        "body": "AWS launched S3 Annotations, allowing up to 1,000 named annotations per object (JSON, XML, YAML, plain text) up to 1MB each, modifiable without rewriting objects and available in all regions. This enables rich, queryable business context directly on storage objects — useful for ML data lineage, audit metadata, and compliance tagging without separate metadata stores. Generally available now.",
+        "signal": "med",
+        "sources": [
+          "aws.amazon.com"
+        ],
+        "url": "https://aws.amazon.com/blogs/aws/amazon-s3-annotations-attach-rich-queryable-context-directly-to-your-objects/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "SpaceX IPO surge: $2.65T market cap, surpassing Amazon — retail driving 75% of single-stock purchases",
+        "body": "SpaceX ended Tuesday at ~$2.65T, up ~49% from its $135 IPO price in under a week, briefly surpassing Microsoft before settling just ahead of Amazon. Retail investors bought more SpaceX stock since IPO than all other stocks combined on Monday. Musk targets $1T revenue by 2030 vs $18.7B last year; the AI unit lost $2.5B, making the Cursor acquisition a critical strategic bet — and one funded entirely by the IPO rally.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "cnbc.com"
+        ],
+        "url": "https://links.morningbrew.com/c/R9p"
+      },
+      {
+        "headline": "Meta dismantling its engineering culture to force AI pivot — staff exodus risk",
+        "body": "Meta's historically strong engineering culture — built on autonomy, impact ownership, and balanced business/engineering tradeoffs — has been rapidly dismantled since April in an aggressive AI-first restructuring. Engineers report disempowerment and a collapse in the conditions that made Meta a top destination. This is a meaningful talent and execution risk for a company that needs deep engineering credibility to compete in the AI layer.",
+        "signal": "med",
+        "sources": [
+          "newsletter.pragmaticengineer.com"
+        ],
+        "url": "https://newsletter.pragmaticengineer.com/p/why-is-meta-destroying-its-engineering"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Google Vertex AI SDK Bucket-Squatting Vulnerability (Unit 42 / The Hacker News)",
+      "why": "Primary source technical writeup on a supply-chain-style ML infrastructure attack with concrete exploit path, OAuth token exfiltration payload, and version-specific remediation — directly actionable for any team using Vertex AI SDK.",
+      "url": "https://thehackernews.com/2026/06/google-vertex-ai-sdk-flaw-let-attackers.html"
+    },
+    {
+      "title": "FIFA World Cup Entra Misconfiguration — Full Researcher Disclosure",
+      "why": "First-person post-mortem of a catastrophic over-provisioning failure in Microsoft Entra's guest/external identity model, with live stream key exposure at global-scale broadcast infrastructure — essential reading for anyone designing Entra B2B or external-access policies.",
+      "url": "https://bobdahacker.com/blog/fifa-hack"
+    },
+    {
+      "title": "Android 17 AI Agent Integration — Official Android Developers Blog",
+      "why": "Primary Google engineering announcement detailing AppFunctions and Android MCP architecture for on-device agentic tool orchestration — foundational spec for understanding the emerging mobile agent permission and identity surface.",
+      "url": "https://android-developers.googleblog.com/2026/06/Android-17.html"
+    }
+  ]
+}
