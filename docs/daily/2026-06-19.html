@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 19 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 19 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">7</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://vercel.com/blog/introducing-vercel-connect" target="_blank">Vercel Connect: Runtime Credential Exchange Replaces Long-Lived Tokens for Agents</a></div>
+        <div class="story-body">Vercel Connect (public beta) eliminates persistent provider tokens by issuing short-lived, task-scoped credentials at runtime for AI agents. This directly addresses the non-human identity threat surface where shared, long-lived tokens are a primary compromise vector. Paired with Vercel&#x27;s &#x27;eve&#x27; open-source agent framework (durable execution, sandboxed compute, human-in-loop approvals), it represents a credible production-grade agentic infrastructure stack.</div>
+        <div class="story-meta"><span class="chip">vercel.com</span><div class="ref-links"><a class="ref-link ai" href="https://vercel.com/blog/introducing-vercel-connect" target="_blank">vercel.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Anthropic&#x27;s Mythos/Fable Export Ban: USG Deadlock Continues at G7</div>
+        <div class="story-body">Commerce Sec. Lutnick formally warned Anthropic against distributing Mythos/Fable to &#x27;foreign persons&#x27;; WaPo reports the access list had &#x27;ballooned&#x27; including a South Korean firm with suspected China ties, providing the USG&#x27;s clearest stated rationale yet. 150+ cybersecurity experts signed an open letter opposing the restrictions, and internal Anthropic messages describe employees feeling &#x27;unfairly targeted.&#x27; The standoff is architecturally significant for any enterprise relying on Claude API access.</div>
+        <div class="story-meta"><span class="chip">therundown.ai</span><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://parsiya.net/blog/llm-thonking/" target="_blank">LLMs Show Non-Monotonic Performance on Security Vuln Triage: Higher Reasoning Effort ≠ Better Results</a></div>
+        <div class="story-body">A 26-combination study across Claude 4.6/4.7 and GPT-5.4/5.5 with varying context windows and reasoning effort levels found that neither later model versions nor higher reasoning settings reliably improved detection of real vulnerabilities from the Mythos blog post. This has direct implications for teams using frontier LLMs for security triage pipelines — calibration matters more than raw capability.</div>
+        <div class="story-meta"><span class="chip">parsiya.net</span><div class="ref-links"><a class="ref-link ai" href="https://parsiya.net/blog/llm-thonking/" target="_blank">parsiya.net ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.anthropic.com/research/claude-code-expertise" target="_blank">Anthropic Research: Domain Expertise Outweighs Coding Skill in Agentic Workflows</a></div>
+        <div class="story-body">Anthropic&#x27;s study of Claude Code usage found that success in agentic coding tasks correlates more strongly with the user&#x27;s domain expertise than their formal programming ability — non-technical professionals achieved comparable results to software engineers. There is also a measurable shift toward complex end-to-end agentic tasks with increasing estimated economic value per task.</div>
+        <div class="story-meta"><span class="chip">anthropic.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/research/claude-code-expertise" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/06/16/chatgpts-market-share-slips-below-50-for-first-time/" target="_blank">ChatGPT Market Share Falls Below 50% for First Time; Adyen and Stripe Move on Agentic Commerce</a></div>
+        <div class="story-body">ChatGPT&#x27;s share of the AI assistant market has dipped below 50% as users migrate to Gemini, Claude, and Grok — a structural shift from a winner-take-all dynamic to a multi-model market. Simultaneously, Adyen launched &#x27;Agentic&#x27; modular APIs for AI-agent commerce channels, and Stripe/AWS are enabling AI agents to pay for web content via WAF integration, signalling that payment rails for autonomous agents are becoming a real infrastructure layer.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/06/16/chatgpts-market-share-slips-below-50-for-first-time/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">FortiBleed: 30K+ Fortinet Devices Compromised via Credential Reuse; 73K Credentials Leaked</div>
+        <div class="story-body">An automated Russian-linked campaign (&#x27;FortiBleed&#x27;) has logged into 30,791+ internet-facing Fortinet firewalls/VPN gateways across 194 countries using reused and long-lived credentials, pivoting compromised devices into credential-harvesting relay nodes. A separate server leak exposed ~74K usernames, passwords and email addresses from the ongoing campaign; attackers also brute-forced MSSQL and cracked intercepted SSL VPN hashes. NATO-country government, telecom and critical infrastructure are priority targets.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/" target="_blank">Popa Botnet (1.5–2.5M IPs/day) Linked to Publicly-Traded Israeli Proxy Firm NetNut/Alarum</a></div>
+        <div class="story-body">Researchers from Qurium, Synthient, Spur and Black Lotus Labs have linked the Popa botnet — a Vo1d/Badbox 2.0 component running on rogue Android TV boxes — to NetNut, the proxy service of NASDAQ-listed Alarum Technologies (ALAR). Popa traffic analysis proves devices forward NetNut client traffic; Spur found NetNut&#x27;s KYC claims are effectively marketing, with resellers offering access for a burner email and $5 crypto. Infoblox found 65% of enterprise customers were querying residential proxy domains, with 60%+ of government and banking customers affected.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.argus-systems.ai/blog/openbsd-pap-27-year-auth-bypass.html" target="_blank">27-Year-Old OpenBSD PAP Auth Bypass: Zero-Credential PPPoE Authentication via sppp(4)</a></div>
+        <div class="story-body">A 1999-era bug in OpenBSD&#x27;s sppp_pap_input() allowed a PPPoE peer to authenticate with name_len=0/passwd_len=0, causing bcmp to return 0 and granting full auth with no credentials; oversized lengths triggered a kernel heap over-read. Reachable unauthenticated from the same broadcast domain (pppoe_data_input chain), patched June 14 (openbsd/src@076e2b1) — admins on sppp(4) PPPoE links should rebuild immediately.</div>
+        <div class="story-meta"><span class="chip">blog.argus-systems.ai</span><div class="ref-links"><a class="ref-link sec" href="https://blog.argus-systems.ai/blog/openbsd-pap-27-year-auth-bypass.html" target="_blank">blog.argus-systems.ai ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://ipurple.team/2026/06/17/qos-policies/" target="_blank">EDR Telemetry Throttling via Windows QoS Policies: EDRChoker PoC</a></div>
+        <div class="story-body">Attackers with admin rights can create Windows QoS policies (via PowerShell/WMI) targeting EDR agent processes, throttling their telemetry to as low as 8 bits/second so TLS handshakes fail and alerts never reach vendor clouds. The &#x27;EDRChoker&#x27; PoC mass-creates these rules; defenders should audit ActiveStore QoS entries, enable detailed PowerShell/WMI logging, and monitor Event ID 5857.</div>
+        <div class="story-meta"><span class="chip">ipurple.team</span><div class="ref-links"><a class="ref-link sec" href="https://ipurple.team/2026/06/17/qos-policies/" target="_blank">ipurple.team ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://pluto.security/blog/inside-claude-managed-agents/" target="_blank">Claude Managed Agents Runtime: gVisor-Sandboxed but Permissive by Default</a></div>
+        <div class="story-body">Pluto Security reverse-engineered Anthropic&#x27;s hosted agent runtime and found it uses gVisor (same as Cloud Cowork), with strong vault credential proxy isolation and multi-layer network proxy bypass defenses. However, the default configuration is very permissive — teams deploying Claude agents should explicitly harden configurations rather than relying on defaults.</div>
+        <div class="story-meta"><span class="chip">pluto.security</span><div class="ref-links"><a class="ref-link sec" href="https://pluto.security/blog/inside-claude-managed-agents/" target="_blank">pluto.security ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.paymentsdive.com/news/nuvei-to-buy-payoneer-for-275b/822908/" target="_blank">Nuvei Acquires Payoneer for $2.75B: Cross-Border Payments Consolidation</a></div>
+        <div class="story-body">Nuvei is buying Payoneer to combine payment acceptance with Payoneer&#x27;s payouts, multi-currency accounts, global banking network, and stablecoin-to-fiat rails. The deal targets digital marketplaces, e-commerce sellers, and freelancers across global markets, continuing rapid consolidation in cross-border payment infrastructure.</div>
+        <div class="story-meta"><span class="chip">paymentsdive.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.paymentsdive.com/news/nuvei-to-buy-payoneer-for-275b/822908/" target="_blank">paymentsdive.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.paymentsdive.com/news/apple-delves-deeper-into-payments-ai-iphone-siri-retail-merchants/822664/" target="_blank">Apple iOS 27 Payments Expansion: AI-Driven Wallet, Pay-Later, Bill Splitting</a></div>
+        <div class="story-body">iOS 27 significantly expands Apple Wallet/Pay with AI features covering loyalty programs, debit balances, pay-later, and bill splitting — deepening Apple&#x27;s influence over consumer payment choices and increasing pressure on issuers and card networks. This is a material expansion of Apple&#x27;s payments ecosystem relevant to any fintech building on or competing with iOS payment flows.</div>
+        <div class="story-meta"><span class="chip">paymentsdive.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.paymentsdive.com/news/apple-delves-deeper-into-payments-ai-iphone-siri-retail-merchants/822664/" target="_blank">paymentsdive.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Stablecoins Reviving Embedded Finance: Proprietary Financial Data as Durable Moat</div>
+        <div class="story-body">Stablecoins are enabling software platforms to offer global balances, payments, and yield without country-by-country banking infrastructure. As AI commoditises software development, the strategic moat shifts to proprietary transaction history, balances, and lending data — platforms like Deel, Ramp, Shopify, and Block are identified as durable winners.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Fed Signals Rate Hikes Under New Chair Warsh; Markets Sell Off</div>
+        <div class="story-body">Kevin Warsh&#x27;s debut FOMC meeting held rates at 3.50–3.75% but 9 of 19 officials projected a 2026 hike, pushing CME odds of two 2026 hikes from 17% to 37% overnight; S&amp;P fell 1.22%, Nasdaq 1.35%. Warsh is forming five task forces to examine Fed operations, including AI&#x27;s inflation impact, and abstained from the dot plot — introducing additional forward-guidance uncertainty material to portfolio positioning.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://vercel.com/blog/introducing-eve" target="_blank">Vercel &#x27;eve&#x27;: Open-Source Agentic Framework with Durable Execution and Human-in-Loop</a></div>
+        <div class="story-body">Eve provides durable execution, sandboxed compute, subagents, evaluations, and approval gates as built-in primitives, letting developers define agents as a directory of files. It is designed to handle production concerns (retries, state, scaling) so agent logic stays cleanly separated from infrastructure — a meaningful abstraction shift from current ad-hoc agent deployment patterns.</div>
+        <div class="story-meta"><span class="chip">vercel.com</span><div class="ref-links"><a class="ref-link swe" href="https://vercel.com/blog/introducing-eve" target="_blank">vercel.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://browser-use.com/posts/firecracker-browser-infra" target="_blank">Cloud Browser Infrastructure: Firecracker VMs Achieve $0.02/hr with Sub-Second Cold Starts</a></div>
+        <div class="story-body">Browser Use rebuilt cloud browser infrastructure using Firecracker microVMs with a dynamic-scaling control plane, achieving 3x cost reduction ($0.02/hr) and sub-second session starts while maintaining strong isolation. This is a concrete production case study for teams evaluating sandboxed browser-agent infrastructure cost models.</div>
+        <div class="story-meta"><span class="chip">browser-use.com</span><div class="ref-links"><a class="ref-link swe" href="https://browser-use.com/posts/firecracker-browser-infra" target="_blank">browser-use.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.coinbase.com/blog/system-update-take-control-of-your-money-with-coinbase" target="_blank">Coinbase &#x27;Everything Exchange&#x27;: Tokenized Stocks, AI Advisors, Agentic Trading, Stablecoin Payments</a></div>
+        <div class="story-body">Coinbase announced a sweeping platform expansion positioning itself as a unified destination for trading, banking, payments, and AI-powered financial management, including tokenized stocks, options, stablecoin payments infrastructure, expanded lending, and agentic trading tools. This is the most direct challenge yet to traditional brokerages and banks from a crypto-native platform with regulatory footing.</div>
+        <div class="story-meta"><span class="chip">coinbase.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.coinbase.com/blog/system-update-take-control-of-your-money-with-coinbase" target="_blank">coinbase.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://brandonrozek.com/blog/post-quantum-security-adoption/" target="_blank">Post-Quantum Crypto Adoption: OpenSSH, TLS, and WireGuard Upgrade Paths</a></div>
+        <div class="story-body">OpenSSH defaults to mlkem768x25519-sha256 since April 2022 and warns on non-PQ server connections post-October 2025; TLS X25519MLKEM768 now covers ~70% of internet traffic per Cloudflare Radar. WireGuard requires explicit PresharedKey or Rosenpass layering for PQ-forward-secrecy — a practical gap for VPN-heavy fintech/enterprise deployments facing harvest-now-decrypt-later risk.</div>
+        <div class="story-meta"><span class="chip">brandonrozek.com</span><div class="ref-links"><a class="ref-link mkt" href="https://brandonrozek.com/blog/post-quantum-security-adoption/" target="_blank">brandonrozek.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.argus-systems.ai/blog/openbsd-pap-27-year-auth-bypass.html" target="_blank">A 27-Year-Old Authentication Bypass in OpenBSD&#x27;s PPP Stack ↗</a></div>
+          <div class="dive-why">Primary source technical disclosure with exploit path, affected code, and patch commit — directly actionable for any infrastructure running OpenBSD PPPoE links.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://pluto.security/blog/inside-claude-managed-agents/" target="_blank">Inside Claude Managed Agents: Reverse Engineering the Security Boundaries of Anthropic&#x27;s Hosted Agent Runtime ↗</a></div>
+          <div class="dive-why">Primary security research on the sandbox architecture of a widely-deployed hosted agent runtime — critical reading for anyone deploying Claude agents in enterprise or regulated environments.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.anthropic.com/research/claude-code-expertise" target="_blank">Agentic Coding and Persistent Returns to Expertise (Anthropic Research) ↗</a></div>
+          <div class="dive-why">Anthropic&#x27;s own empirical study on Claude Code usage patterns with economic value estimates — primary source data on how domain expertise vs. coding skill drives agentic task outcomes, directly relevant to team composition decisions.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 18 Jun 2026 · sources: vercel.com, therundown.ai, tldrnewsletter.com, parsiya.net, anthropic.com, techcrunch.com, krebsonsecurity.com, blog.argus-systems.ai, ipurple.team, pluto.security, paymentsdive.com, morningbrew.com, browser-use.com, coinbase.com, brandonrozek.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+{
+  "date": "2026-06-19",
+  "threadCount": 7,
+  "storyCount": 18,
+  "sourceCount": 15,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Vercel Connect: Runtime Credential Exchange Replaces Long-Lived Tokens for Agents",
+        "body": "Vercel Connect (public beta) eliminates persistent provider tokens by issuing short-lived, task-scoped credentials at runtime for AI agents. This directly addresses the non-human identity threat surface where shared, long-lived tokens are a primary compromise vector. Paired with Vercel's 'eve' open-source agent framework (durable execution, sandboxed compute, human-in-loop approvals), it represents a credible production-grade agentic infrastructure stack.",
+        "signal": "high",
+        "sources": [
+          "vercel.com"
+        ],
+        "url": "https://vercel.com/blog/introducing-vercel-connect"
+      },
+      {
+        "headline": "Anthropic's Mythos/Fable Export Ban: USG Deadlock Continues at G7",
+        "body": "Commerce Sec. Lutnick formally warned Anthropic against distributing Mythos/Fable to 'foreign persons'; WaPo reports the access list had 'ballooned' including a South Korean firm with suspected China ties, providing the USG's clearest stated rationale yet. 150+ cybersecurity experts signed an open letter opposing the restrictions, and internal Anthropic messages describe employees feeling 'unfairly targeted.' The standoff is architecturally significant for any enterprise relying on Claude API access.",
+        "signal": "high",
+        "sources": [
+          "therundown.ai",
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "LLMs Show Non-Monotonic Performance on Security Vuln Triage: Higher Reasoning Effort ≠ Better Results",
+        "body": "A 26-combination study across Claude 4.6/4.7 and GPT-5.4/5.5 with varying context windows and reasoning effort levels found that neither later model versions nor higher reasoning settings reliably improved detection of real vulnerabilities from the Mythos blog post. This has direct implications for teams using frontier LLMs for security triage pipelines — calibration matters more than raw capability.",
+        "signal": "high",
+        "sources": [
+          "parsiya.net"
+        ],
+        "url": "https://parsiya.net/blog/llm-thonking/"
+      },
+      {
+        "headline": "Anthropic Research: Domain Expertise Outweighs Coding Skill in Agentic Workflows",
+        "body": "Anthropic's study of Claude Code usage found that success in agentic coding tasks correlates more strongly with the user's domain expertise than their formal programming ability — non-technical professionals achieved comparable results to software engineers. There is also a measurable shift toward complex end-to-end agentic tasks with increasing estimated economic value per task.",
+        "signal": "med",
+        "sources": [
+          "anthropic.com"
+        ],
+        "url": "https://www.anthropic.com/research/claude-code-expertise"
+      },
+      {
+        "headline": "ChatGPT Market Share Falls Below 50% for First Time; Adyen and Stripe Move on Agentic Commerce",
+        "body": "ChatGPT's share of the AI assistant market has dipped below 50% as users migrate to Gemini, Claude, and Grok — a structural shift from a winner-take-all dynamic to a multi-model market. Simultaneously, Adyen launched 'Agentic' modular APIs for AI-agent commerce channels, and Stripe/AWS are enabling AI agents to pay for web content via WAF integration, signalling that payment rails for autonomous agents are becoming a real infrastructure layer.",
+        "signal": "med",
+        "sources": [
+          "techcrunch.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://techcrunch.com/2026/06/16/chatgpts-market-share-slips-below-50-for-first-time/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "FortiBleed: 30K+ Fortinet Devices Compromised via Credential Reuse; 73K Credentials Leaked",
+        "body": "An automated Russian-linked campaign ('FortiBleed') has logged into 30,791+ internet-facing Fortinet firewalls/VPN gateways across 194 countries using reused and long-lived credentials, pivoting compromised devices into credential-harvesting relay nodes. A separate server leak exposed ~74K usernames, passwords and email addresses from the ongoing campaign; attackers also brute-forced MSSQL and cracked intercepted SSL VPN hashes. NATO-country government, telecom and critical infrastructure are priority targets.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Popa Botnet (1.5–2.5M IPs/day) Linked to Publicly-Traded Israeli Proxy Firm NetNut/Alarum",
+        "body": "Researchers from Qurium, Synthient, Spur and Black Lotus Labs have linked the Popa botnet — a Vo1d/Badbox 2.0 component running on rogue Android TV boxes — to NetNut, the proxy service of NASDAQ-listed Alarum Technologies (ALAR). Popa traffic analysis proves devices forward NetNut client traffic; Spur found NetNut's KYC claims are effectively marketing, with resellers offering access for a burner email and $5 crypto. Infoblox found 65% of enterprise customers were querying residential proxy domains, with 60%+ of government and banking customers affected.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/"
+      },
+      {
+        "headline": "27-Year-Old OpenBSD PAP Auth Bypass: Zero-Credential PPPoE Authentication via sppp(4)",
+        "body": "A 1999-era bug in OpenBSD's sppp_pap_input() allowed a PPPoE peer to authenticate with name_len=0/passwd_len=0, causing bcmp to return 0 and granting full auth with no credentials; oversized lengths triggered a kernel heap over-read. Reachable unauthenticated from the same broadcast domain (pppoe_data_input chain), patched June 14 (openbsd/src@076e2b1) — admins on sppp(4) PPPoE links should rebuild immediately.",
+        "signal": "high",
+        "sources": [
+          "blog.argus-systems.ai"
+        ],
+        "url": "https://blog.argus-systems.ai/blog/openbsd-pap-27-year-auth-bypass.html"
+      },
+      {
+        "headline": "EDR Telemetry Throttling via Windows QoS Policies: EDRChoker PoC",
+        "body": "Attackers with admin rights can create Windows QoS policies (via PowerShell/WMI) targeting EDR agent processes, throttling their telemetry to as low as 8 bits/second so TLS handshakes fail and alerts never reach vendor clouds. The 'EDRChoker' PoC mass-creates these rules; defenders should audit ActiveStore QoS entries, enable detailed PowerShell/WMI logging, and monitor Event ID 5857.",
+        "signal": "high",
+        "sources": [
+          "ipurple.team"
+        ],
+        "url": "https://ipurple.team/2026/06/17/qos-policies/"
+      },
+      {
+        "headline": "Claude Managed Agents Runtime: gVisor-Sandboxed but Permissive by Default",
+        "body": "Pluto Security reverse-engineered Anthropic's hosted agent runtime and found it uses gVisor (same as Cloud Cowork), with strong vault credential proxy isolation and multi-layer network proxy bypass defenses. However, the default configuration is very permissive — teams deploying Claude agents should explicitly harden configurations rather than relying on defaults.",
+        "signal": "med",
+        "sources": [
+          "pluto.security"
+        ],
+        "url": "https://pluto.security/blog/inside-claude-managed-agents/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Nuvei Acquires Payoneer for $2.75B: Cross-Border Payments Consolidation",
+        "body": "Nuvei is buying Payoneer to combine payment acceptance with Payoneer's payouts, multi-currency accounts, global banking network, and stablecoin-to-fiat rails. The deal targets digital marketplaces, e-commerce sellers, and freelancers across global markets, continuing rapid consolidation in cross-border payment infrastructure.",
+        "signal": "med",
+        "sources": [
+          "paymentsdive.com"
+        ],
+        "url": "https://www.paymentsdive.com/news/nuvei-to-buy-payoneer-for-275b/822908/"
+      },
+      {
+        "headline": "Apple iOS 27 Payments Expansion: AI-Driven Wallet, Pay-Later, Bill Splitting",
+        "body": "iOS 27 significantly expands Apple Wallet/Pay with AI features covering loyalty programs, debit balances, pay-later, and bill splitting — deepening Apple's influence over consumer payment choices and increasing pressure on issuers and card networks. This is a material expansion of Apple's payments ecosystem relevant to any fintech building on or competing with iOS payment flows.",
+        "signal": "med",
+        "sources": [
+          "paymentsdive.com"
+        ],
+        "url": "https://www.paymentsdive.com/news/apple-delves-deeper-into-payments-ai-iphone-siri-retail-merchants/822664/"
+      },
+      {
+        "headline": "Stablecoins Reviving Embedded Finance: Proprietary Financial Data as Durable Moat",
+        "body": "Stablecoins are enabling software platforms to offer global balances, payments, and yield without country-by-country banking infrastructure. As AI commoditises software development, the strategic moat shifts to proprietary transaction history, balances, and lending data — platforms like Deel, Ramp, Shopify, and Block are identified as durable winners.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Fed Signals Rate Hikes Under New Chair Warsh; Markets Sell Off",
+        "body": "Kevin Warsh's debut FOMC meeting held rates at 3.50–3.75% but 9 of 19 officials projected a 2026 hike, pushing CME odds of two 2026 hikes from 17% to 37% overnight; S&P fell 1.22%, Nasdaq 1.35%. Warsh is forming five task forces to examine Fed operations, including AI's inflation impact, and abstained from the dot plot — introducing additional forward-guidance uncertainty material to portfolio positioning.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Vercel 'eve': Open-Source Agentic Framework with Durable Execution and Human-in-Loop",
+        "body": "Eve provides durable execution, sandboxed compute, subagents, evaluations, and approval gates as built-in primitives, letting developers define agents as a directory of files. It is designed to handle production concerns (retries, state, scaling) so agent logic stays cleanly separated from infrastructure — a meaningful abstraction shift from current ad-hoc agent deployment patterns.",
+        "signal": "med",
+        "sources": [
+          "vercel.com"
+        ],
+        "url": "https://vercel.com/blog/introducing-eve"
+      },
+      {
+        "headline": "Cloud Browser Infrastructure: Firecracker VMs Achieve $0.02/hr with Sub-Second Cold Starts",
+        "body": "Browser Use rebuilt cloud browser infrastructure using Firecracker microVMs with a dynamic-scaling control plane, achieving 3x cost reduction ($0.02/hr) and sub-second session starts while maintaining strong isolation. This is a concrete production case study for teams evaluating sandboxed browser-agent infrastructure cost models.",
+        "signal": "med",
+        "sources": [
+          "browser-use.com"
+        ],
+        "url": "https://browser-use.com/posts/firecracker-browser-infra"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Coinbase 'Everything Exchange': Tokenized Stocks, AI Advisors, Agentic Trading, Stablecoin Payments",
+        "body": "Coinbase announced a sweeping platform expansion positioning itself as a unified destination for trading, banking, payments, and AI-powered financial management, including tokenized stocks, options, stablecoin payments infrastructure, expanded lending, and agentic trading tools. This is the most direct challenge yet to traditional brokerages and banks from a crypto-native platform with regulatory footing.",
+        "signal": "med",
+        "sources": [
+          "coinbase.com"
+        ],
+        "url": "https://www.coinbase.com/blog/system-update-take-control-of-your-money-with-coinbase"
+      },
+      {
+        "headline": "Post-Quantum Crypto Adoption: OpenSSH, TLS, and WireGuard Upgrade Paths",
+        "body": "OpenSSH defaults to mlkem768x25519-sha256 since April 2022 and warns on non-PQ server connections post-October 2025; TLS X25519MLKEM768 now covers ~70% of internet traffic per Cloudflare Radar. WireGuard requires explicit PresharedKey or Rosenpass layering for PQ-forward-secrecy — a practical gap for VPN-heavy fintech/enterprise deployments facing harvest-now-decrypt-later risk.",
+        "signal": "med",
+        "sources": [
+          "brandonrozek.com"
+        ],
+        "url": "https://brandonrozek.com/blog/post-quantum-security-adoption/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "A 27-Year-Old Authentication Bypass in OpenBSD's PPP Stack",
+      "why": "Primary source technical disclosure with exploit path, affected code, and patch commit — directly actionable for any infrastructure running OpenBSD PPPoE links.",
+      "url": "https://blog.argus-systems.ai/blog/openbsd-pap-27-year-auth-bypass.html"
+    },
+    {
+      "title": "Inside Claude Managed Agents: Reverse Engineering the Security Boundaries of Anthropic's Hosted Agent Runtime",
+      "why": "Primary security research on the sandbox architecture of a widely-deployed hosted agent runtime — critical reading for anyone deploying Claude agents in enterprise or regulated environments.",
+      "url": "https://pluto.security/blog/inside-claude-managed-agents/"
+    },
+    {
+      "title": "Agentic Coding and Persistent Returns to Expertise (Anthropic Research)",
+      "why": "Anthropic's own empirical study on Claude Code usage patterns with economic value estimates — primary source data on how domain expertise vs. coding skill drives agentic task outcomes, directly relevant to team composition decisions.",
+      "url": "https://www.anthropic.com/research/claude-code-expertise"
+    }
+  ]
+}
