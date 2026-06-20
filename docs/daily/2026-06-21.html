@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // SUN 21 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SUN 21 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">16</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://huggingface.co/blog/ServiceNow/mosaicleaks" target="_blank">MosaicLeaks: Research Agents Leak Private Data — PA-DR Reduces from 34% to 9.9%</a></div>
+        <div class="story-body">ServiceNow&#x27;s research shows that deep-research agents combining private docs with web retrieval leak sensitive information at high rates. The proposed PA-DR mitigation uses RL rewards for safe query construction (not prompt engineering), cutting information leakage from 34% to 9.9% while preserving task success. Critical signal for any team deploying RAG-based agents over enterprise document stores.</div>
+        <div class="story-meta"><span class="chip">huggingface.co</span><div class="ref-links"><a class="ref-link ai" href="https://huggingface.co/blog/ServiceNow/mosaicleaks" target="_blank">huggingface.co ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://alignment.openai.com/beneficial-rl/" target="_blank">OpenAI RL Research: Beneficial Personas Persist Under Adversarial Pressure</a></div>
+        <div class="story-body">OpenAI&#x27;s alignment team demonstrates that RL training on realistic scenarios targeting beneficial traits generalises across dozens of benchmarks and resists adversarial probing. The finding suggests model &#x27;personas&#x27; can be deeply entrenched via RL — a dual-use insight for both alignment and red-teaming. Published on the OpenAI alignment site with full methodology.</div>
+        <div class="story-meta"><span class="chip">alignment.openai.com</span><div class="ref-links"><a class="ref-link ai" href="https://alignment.openai.com/beneficial-rl/" target="_blank">alignment.openai.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.testingcatalog.com/openai-prepares-gpt-5-6-models-for-the-upcoming-release/" target="_blank">GPT-5.6 Imminent: 1.5M Token Context, Faster Codex, Competitive Pricing vs Anthropic</a></div>
+        <div class="story-body">OpenAI is preparing GPT-5.6 (Mini and Pro variants) for release next week with a 1.5M token context window, improved long-horizon coding, and pricing positioned to undercut Claude. Timing coincides with US regulatory pressure limiting Anthropic&#x27;s Claude Fable 5 availability. Relevant to MSFT/AMZN as Azure and AWS model availability shifts.</div>
+        <div class="story-meta"><span class="chip">testingcatalog.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.testingcatalog.com/openai-prepares-gpt-5-6-models-for-the-upcoming-release/" target="_blank">testingcatalog.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.perplexity.ai/hub/blog/self-improving-memory-for-agents" target="_blank">Perplexity Brain: Persistent Context Graph for Agents Across Sessions</a></div>
+        <div class="story-body">Perplexity&#x27;s Brain system builds a persistent, source-linked context graph spanning tasks, projects, files, and decisions — allowing agents to resume with full context rather than starting cold. The system continuously updates and reorganises knowledge while improving answer correctness and reducing per-task costs. Architecturally significant for long-running enterprise agent deployments.</div>
+        <div class="story-meta"><span class="chip">perplexity.ai</span><div class="ref-links"><a class="ref-link ai" href="https://www.perplexity.ai/hub/blog/self-improving-memory-for-agents" target="_blank">perplexity.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://deepmind.google/blog/securing-the-future-of-ai-agents/" target="_blank">Google DeepMind AI Control Roadmap: Security Framework for Agentic Systems</a></div>
+        <div class="story-body">DeepMind published an AI Control Roadmap addressing security challenges for increasingly capable agents, framing controls that go beyond standard alignment techniques. Agents projected to generate $2.9T in US economic value by 2030, raising the stakes for misalignment and misuse. Directly relevant to enterprise agentic deployments in fintech contexts.</div>
+        <div class="story-meta"><span class="chip">deepmind.google</span><div class="ref-links"><a class="ref-link ai" href="https://deepmind.google/blog/securing-the-future-of-ai-agents/" target="_blank">deepmind.google ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://socket.dev/blog/glasswasm-malware-open-vsx-extensions" target="_blank">GlassWASM: WebAssembly Malware in Trojanized Open VSX Extensions — Zero Plaintext IOCs</a></div>
+        <div class="story-body">Two Open VSX extensions (ExarGD.vsblack, noellee-doc/flint-debug) contained TinyGo-compiled WASM payloads decrypting strings via embedded ChaCha20 at runtime and using Solana SPL Memo transactions as a dead-drop C2 resolver before executing cross-platform download-and-execute via Node child_process. IOC-based detection is ineffective due to rotating C2; defenders must hunt the execution chain (WASM load → Node child_process → download). Any host that activated these extensions should be treated as fully compromised.</div>
+        <div class="story-meta"><span class="chip">socket.dev</span><div class="ref-links"><a class="ref-link sec" href="https://socket.dev/blog/glasswasm-malware-open-vsx-extensions" target="_blank">socket.dev ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">Salesforce CRM Data Exfiltrated via Compromised Klue OAuth Integration</div>
+        <div class="story-body">Attackers exploited a long-unused Klue integration credential to mint OAuth tokens and exfiltrate Salesforce CRM data (contacts, quotes, messages) over ~24 hours with near-1,000 API queries in 15-minute bursts — attributed to the Icarus extortion group. The attack vector is a stale third-party OAuth integration, a pervasive non-human identity risk in enterprise SaaS stacks. Immediate actions: revoke Klue secrets, audit API query rate anomalies, enforce IP allowlists on all integration accounts.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/" target="_blank">MCP Enterprise-Managed Authorization: Zero-Touch OAuth SSO for AI Agent Servers</a></div>
+        <div class="story-body">The stable Enterprise-Managed Authorization extension for MCP enables centralised, zero-touch SSO access to MCP servers via enterprise identity providers, removing per-user OAuth consent flows at scale. This is architecturally significant for IAM teams deploying MCP-connected agents enterprise-wide — centralising authz control at the IdP layer rather than individual tool configurations. Direct relevance to OAuth/OIDC and non-human identity governance.</div>
+        <div class="story-meta"><span class="chip">modelcontextprotocol.io</span><div class="ref-links"><a class="ref-link sec" href="https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/" target="_blank">blog.modelcontextprotocol.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://orchidfiles.com/github-repositories-distributing-malware/" target="_blank">GitHub Malware Campaign: 10,000 Repositories Distributing Trojanised Packages</a></div>
+        <div class="story-body">A large-scale supply chain attack on GitHub involves 10,000+ repositories with Trojan malware disguised as legitimate tools, using frequent commit cycling to evade detection. Readme files are updated to link to zip archives containing the malicious payload. Engineers using GitHub for dependency discovery or tool downloads are at elevated risk.</div>
+        <div class="story-meta"><span class="chip">orchidfiles.com</span><div class="ref-links"><a class="ref-link sec" href="https://orchidfiles.com/github-repositories-distributing-malware/" target="_blank">orchidfiles.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.rapid7.com/blog/post/tr-malware-tracking-dropping-elephant-tradecraft-china-themed-loader-chain/" target="_blank">Dropping Elephant APT: In-Memory RAT with AMSI/WLDP/ETW Patching via Fondue.exe Side-Load</a></div>
+        <div class="story-body">Rapid7 traced a Dropping Elephant campaign using a China energy-sector LNK lure → obfuscated PowerShell → Fondue.exe side-loading APPWIZ.cpl → AES-256-CBC Donut loader mapping a 32-bit RAT entirely in memory while patching AMSI, WLDP, and ETW. C2 uses Salsa20-encrypted HTTPS with control-flow flattening; hunt on GoogleErrorReport scheduled task, Fondue.exe loading APPWIZ.cpl from C:\Users\Public, and in-memory security-bypass patterns.</div>
+        <div class="story-meta"><span class="chip">rapid7.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.rapid7.com/blog/post/tr-malware-tracking-dropping-elephant-tradecraft-china-themed-loader-chain/" target="_blank">rapid7.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://americanexpress.io/cell-based-architecture-for-resilient-payment-systems/" target="_blank">American Express Cell-Based Architecture for Payment System Resilience</a></div>
+        <div class="story-body">AmEx published a detailed engineering post on using cell-based architecture for its core payments ecosystem, isolating failures within autonomous units that contain blast radius without affecting the broader system. Each cell operates independently with its own data and services, enabling high availability under partial failure. A concrete production case study relevant to fintech resilience design.</div>
+        <div class="story-meta"><span class="chip">americanexpress.io</span><div class="ref-links"><a class="ref-link fin" href="https://americanexpress.io/cell-based-architecture-for-resilient-payment-systems/" target="_blank">americanexpress.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.thatprivacyguy.com/blog/elkjop-forced-consent-fine/" target="_blank">Elkjøp Fined €1.8M for Forced Consent GDPR Violation — Consent-for-Membership Model Ruled Unlawful</a></div>
+        <div class="story-body">Norway&#x27;s DPA fined Elkjøp €1.8M for conditioning loyalty membership on acceptance of marketing communications, ruling the consent was not freely given under GDPR/ePrivacy. The ruling strengthens enforcement precedent that bundled consent (access to service in exchange for marketing opt-in) is unlawful across EU/EEA. Fintech companies using consent-gated onboarding or loyalty programmes should audit their consent flows.</div>
+        <div class="story-meta"><span class="chip">thatprivacyguy.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.thatprivacyguy.com/blog/elkjop-forced-consent-fine/" target="_blank">thatprivacyguy.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.elastic.co/search-labs/blog/agent-memory-elasticsearch" target="_blank">Elastic Agent Memory Layer: 0.89 Recall, Zero Tenant Leaks via Multi-Index Episodic/Semantic/Procedural Architecture</a></div>
+        <div class="story-body">Elastic published a detailed engineering post on building a persistent agent memory layer using separate Elasticsearch indices for episodic, semantic, and procedural memory, achieving 0.89 recall accuracy with strict tenant isolation. The architecture handles memory decay and contradiction resolution through a consistent update pipeline. High relevance for teams building production multi-tenant agent systems.</div>
+        <div class="story-meta"><span class="chip">elastic.co</span><div class="ref-links"><a class="ref-link swe" href="https://www.elastic.co/search-labs/blog/agent-memory-elasticsearch" target="_blank">elastic.co ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.credrelay.com/p/getting-a-cve-without-shipping-slop" target="_blank">AI-Assisted Vulnerability Research: Claude Code + Ghidra MCP Yields Two ASUS Driver CVEs</a></div>
+        <div class="story-body">Researcher used Claude Code integrated with Ghidra MCP to analyse ASUS Windows drivers and produce two validated CVEs (CVE-2026-3508: OOB read in AsusWmiAcpi.sys; CVE-2026-6737: AsusPTPFilter.sys vulnerability) without generating low-quality reports. Demonstrates a viable AI-augmented binary analysis workflow closing the gap between security research and driver vulnerability discovery. Methodologically significant for security engineering teams.</div>
+        <div class="story-meta"><span class="chip">credrelay.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.credrelay.com/p/getting-a-cve-without-shipping-slop" target="_blank">credrelay.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/06/18/amazon-hopes-to-challenge-nvidia-more-directly-by-selling-its-ai-chips/" target="_blank">AWS in Talks to Sell Trainium Chips Externally to Challenge Nvidia</a></div>
+        <div class="story-body">AWS is in discussions to sell its Trainium AI chips to third-party data centres — a strategic shift from its current cloud-only model where capacity is already sold out. If successful, this directly challenges Nvidia&#x27;s dominance in the accelerator market and signals Amazon&#x27;s confidence in its silicon roadmap. Relevant to AMZN and NVDA portfolio positions.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/06/18/amazon-hopes-to-challenge-nvidia-more-directly-by-selling-its-ai-chips/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Intel Shares Surge on Trump-Announced Apple Chip Partnership</div>
+        <div class="story-body">Intel stock jumped after Trump announced an agreement with Apple to design and build chips in the US with Intel&#x27;s foundry. Under CEO Lip-Bu Tan (since March 2025), Intel has been rebuilding credibility; Apple partnership would be a marquee foundry win and a strategic blow to TSMC&#x27;s dominance. Monitor for impact on TSMC position.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://huggingface.co/blog/ServiceNow/mosaicleaks" target="_blank">MosaicLeaks: Privacy Risks in Deep Research Agents (PA-DR Mitigation) ↗</a></div>
+          <div class="dive-why">Primary research from ServiceNow quantifying information leakage rates in agentic RAG systems and proposing an RL-based mitigation — directly actionable for any team deploying enterprise research agents over sensitive data.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://socket.dev/blog/glasswasm-malware-open-vsx-extensions" target="_blank">GlassWASM: WebAssembly Malware in Open VSX Extensions ↗</a></div>
+          <div class="dive-why">Socket&#x27;s technical teardown of a novel supply chain attack using WASM+ChaCha20+Solana dead-drops is a primary threat intelligence source with concrete detection guidance for developer toolchain security.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://alignment.openai.com/beneficial-rl/" target="_blank">OpenAI: Reinforcement Learning Towards Broadly and Persistently Beneficial Models ↗</a></div>
+          <div class="dive-why">Primary research post from OpenAI&#x27;s alignment team showing RL can entrench beneficial personas that generalise and resist adversarial pressure — foundational reading for understanding the trajectory of model safety and agentic autonomy.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 20 Jun 2026 · sources: huggingface.co, alignment.openai.com, testingcatalog.com, perplexity.ai, deepmind.google, socket.dev, tldrnewsletter.com, modelcontextprotocol.io, orchidfiles.com, rapid7.com, americanexpress.io, thatprivacyguy.com, elastic.co, credrelay.com, techcrunch.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

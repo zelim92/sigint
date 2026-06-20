@@ -1,0 +1,179 @@
+{
+  "date": "2026-06-21",
+  "threadCount": 6,
+  "storyCount": 16,
+  "sourceCount": 15,
+  "sections": {
+    "ai": [
+      {
+        "headline": "MosaicLeaks: Research Agents Leak Private Data — PA-DR Reduces from 34% to 9.9%",
+        "body": "ServiceNow's research shows that deep-research agents combining private docs with web retrieval leak sensitive information at high rates. The proposed PA-DR mitigation uses RL rewards for safe query construction (not prompt engineering), cutting information leakage from 34% to 9.9% while preserving task success. Critical signal for any team deploying RAG-based agents over enterprise document stores.",
+        "signal": "high",
+        "sources": [
+          "huggingface.co"
+        ],
+        "url": "https://huggingface.co/blog/ServiceNow/mosaicleaks"
+      },
+      {
+        "headline": "OpenAI RL Research: Beneficial Personas Persist Under Adversarial Pressure",
+        "body": "OpenAI's alignment team demonstrates that RL training on realistic scenarios targeting beneficial traits generalises across dozens of benchmarks and resists adversarial probing. The finding suggests model 'personas' can be deeply entrenched via RL — a dual-use insight for both alignment and red-teaming. Published on the OpenAI alignment site with full methodology.",
+        "signal": "high",
+        "sources": [
+          "alignment.openai.com"
+        ],
+        "url": "https://alignment.openai.com/beneficial-rl/"
+      },
+      {
+        "headline": "GPT-5.6 Imminent: 1.5M Token Context, Faster Codex, Competitive Pricing vs Anthropic",
+        "body": "OpenAI is preparing GPT-5.6 (Mini and Pro variants) for release next week with a 1.5M token context window, improved long-horizon coding, and pricing positioned to undercut Claude. Timing coincides with US regulatory pressure limiting Anthropic's Claude Fable 5 availability. Relevant to MSFT/AMZN as Azure and AWS model availability shifts.",
+        "signal": "med",
+        "sources": [
+          "testingcatalog.com"
+        ],
+        "url": "https://www.testingcatalog.com/openai-prepares-gpt-5-6-models-for-the-upcoming-release/"
+      },
+      {
+        "headline": "Perplexity Brain: Persistent Context Graph for Agents Across Sessions",
+        "body": "Perplexity's Brain system builds a persistent, source-linked context graph spanning tasks, projects, files, and decisions — allowing agents to resume with full context rather than starting cold. The system continuously updates and reorganises knowledge while improving answer correctness and reducing per-task costs. Architecturally significant for long-running enterprise agent deployments.",
+        "signal": "med",
+        "sources": [
+          "perplexity.ai"
+        ],
+        "url": "https://www.perplexity.ai/hub/blog/self-improving-memory-for-agents"
+      },
+      {
+        "headline": "Google DeepMind AI Control Roadmap: Security Framework for Agentic Systems",
+        "body": "DeepMind published an AI Control Roadmap addressing security challenges for increasingly capable agents, framing controls that go beyond standard alignment techniques. Agents projected to generate $2.9T in US economic value by 2030, raising the stakes for misalignment and misuse. Directly relevant to enterprise agentic deployments in fintech contexts.",
+        "signal": "med",
+        "sources": [
+          "deepmind.google"
+        ],
+        "url": "https://deepmind.google/blog/securing-the-future-of-ai-agents/"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "GlassWASM: WebAssembly Malware in Trojanized Open VSX Extensions — Zero Plaintext IOCs",
+        "body": "Two Open VSX extensions (ExarGD.vsblack, noellee-doc/flint-debug) contained TinyGo-compiled WASM payloads decrypting strings via embedded ChaCha20 at runtime and using Solana SPL Memo transactions as a dead-drop C2 resolver before executing cross-platform download-and-execute via Node child_process. IOC-based detection is ineffective due to rotating C2; defenders must hunt the execution chain (WASM load → Node child_process → download). Any host that activated these extensions should be treated as fully compromised.",
+        "signal": "high",
+        "sources": [
+          "socket.dev"
+        ],
+        "url": "https://socket.dev/blog/glasswasm-malware-open-vsx-extensions"
+      },
+      {
+        "headline": "Salesforce CRM Data Exfiltrated via Compromised Klue OAuth Integration",
+        "body": "Attackers exploited a long-unused Klue integration credential to mint OAuth tokens and exfiltrate Salesforce CRM data (contacts, quotes, messages) over ~24 hours with near-1,000 API queries in 15-minute bursts — attributed to the Icarus extortion group. The attack vector is a stale third-party OAuth integration, a pervasive non-human identity risk in enterprise SaaS stacks. Immediate actions: revoke Klue secrets, audit API query rate anomalies, enforce IP allowlists on all integration accounts.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "MCP Enterprise-Managed Authorization: Zero-Touch OAuth SSO for AI Agent Servers",
+        "body": "The stable Enterprise-Managed Authorization extension for MCP enables centralised, zero-touch SSO access to MCP servers via enterprise identity providers, removing per-user OAuth consent flows at scale. This is architecturally significant for IAM teams deploying MCP-connected agents enterprise-wide — centralising authz control at the IdP layer rather than individual tool configurations. Direct relevance to OAuth/OIDC and non-human identity governance.",
+        "signal": "high",
+        "sources": [
+          "modelcontextprotocol.io"
+        ],
+        "url": "https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/"
+      },
+      {
+        "headline": "GitHub Malware Campaign: 10,000 Repositories Distributing Trojanised Packages",
+        "body": "A large-scale supply chain attack on GitHub involves 10,000+ repositories with Trojan malware disguised as legitimate tools, using frequent commit cycling to evade detection. Readme files are updated to link to zip archives containing the malicious payload. Engineers using GitHub for dependency discovery or tool downloads are at elevated risk.",
+        "signal": "med",
+        "sources": [
+          "orchidfiles.com"
+        ],
+        "url": "https://orchidfiles.com/github-repositories-distributing-malware/"
+      },
+      {
+        "headline": "Dropping Elephant APT: In-Memory RAT with AMSI/WLDP/ETW Patching via Fondue.exe Side-Load",
+        "body": "Rapid7 traced a Dropping Elephant campaign using a China energy-sector LNK lure → obfuscated PowerShell → Fondue.exe side-loading APPWIZ.cpl → AES-256-CBC Donut loader mapping a 32-bit RAT entirely in memory while patching AMSI, WLDP, and ETW. C2 uses Salsa20-encrypted HTTPS with control-flow flattening; hunt on GoogleErrorReport scheduled task, Fondue.exe loading APPWIZ.cpl from C:\\Users\\Public, and in-memory security-bypass patterns.",
+        "signal": "med",
+        "sources": [
+          "rapid7.com"
+        ],
+        "url": "https://www.rapid7.com/blog/post/tr-malware-tracking-dropping-elephant-tradecraft-china-themed-loader-chain/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "American Express Cell-Based Architecture for Payment System Resilience",
+        "body": "AmEx published a detailed engineering post on using cell-based architecture for its core payments ecosystem, isolating failures within autonomous units that contain blast radius without affecting the broader system. Each cell operates independently with its own data and services, enabling high availability under partial failure. A concrete production case study relevant to fintech resilience design.",
+        "signal": "med",
+        "sources": [
+          "americanexpress.io"
+        ],
+        "url": "https://americanexpress.io/cell-based-architecture-for-resilient-payment-systems/"
+      },
+      {
+        "headline": "Elkjøp Fined €1.8M for Forced Consent GDPR Violation — Consent-for-Membership Model Ruled Unlawful",
+        "body": "Norway's DPA fined Elkjøp €1.8M for conditioning loyalty membership on acceptance of marketing communications, ruling the consent was not freely given under GDPR/ePrivacy. The ruling strengthens enforcement precedent that bundled consent (access to service in exchange for marketing opt-in) is unlawful across EU/EEA. Fintech companies using consent-gated onboarding or loyalty programmes should audit their consent flows.",
+        "signal": "med",
+        "sources": [
+          "thatprivacyguy.com"
+        ],
+        "url": "https://www.thatprivacyguy.com/blog/elkjop-forced-consent-fine/"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Elastic Agent Memory Layer: 0.89 Recall, Zero Tenant Leaks via Multi-Index Episodic/Semantic/Procedural Architecture",
+        "body": "Elastic published a detailed engineering post on building a persistent agent memory layer using separate Elasticsearch indices for episodic, semantic, and procedural memory, achieving 0.89 recall accuracy with strict tenant isolation. The architecture handles memory decay and contradiction resolution through a consistent update pipeline. High relevance for teams building production multi-tenant agent systems.",
+        "signal": "high",
+        "sources": [
+          "elastic.co"
+        ],
+        "url": "https://www.elastic.co/search-labs/blog/agent-memory-elasticsearch"
+      },
+      {
+        "headline": "AI-Assisted Vulnerability Research: Claude Code + Ghidra MCP Yields Two ASUS Driver CVEs",
+        "body": "Researcher used Claude Code integrated with Ghidra MCP to analyse ASUS Windows drivers and produce two validated CVEs (CVE-2026-3508: OOB read in AsusWmiAcpi.sys; CVE-2026-6737: AsusPTPFilter.sys vulnerability) without generating low-quality reports. Demonstrates a viable AI-augmented binary analysis workflow closing the gap between security research and driver vulnerability discovery. Methodologically significant for security engineering teams.",
+        "signal": "med",
+        "sources": [
+          "credrelay.com"
+        ],
+        "url": "https://www.credrelay.com/p/getting-a-cve-without-shipping-slop"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "AWS in Talks to Sell Trainium Chips Externally to Challenge Nvidia",
+        "body": "AWS is in discussions to sell its Trainium AI chips to third-party data centres — a strategic shift from its current cloud-only model where capacity is already sold out. If successful, this directly challenges Nvidia's dominance in the accelerator market and signals Amazon's confidence in its silicon roadmap. Relevant to AMZN and NVDA portfolio positions.",
+        "signal": "high",
+        "sources": [
+          "techcrunch.com"
+        ],
+        "url": "https://techcrunch.com/2026/06/18/amazon-hopes-to-challenge-nvidia-more-directly-by-selling-its-ai-chips/"
+      },
+      {
+        "headline": "Intel Shares Surge on Trump-Announced Apple Chip Partnership",
+        "body": "Intel stock jumped after Trump announced an agreement with Apple to design and build chips in the US with Intel's foundry. Under CEO Lip-Bu Tan (since March 2025), Intel has been rebuilding credibility; Apple partnership would be a marquee foundry win and a strategic blow to TSMC's dominance. Monitor for impact on TSMC position.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "MosaicLeaks: Privacy Risks in Deep Research Agents (PA-DR Mitigation)",
+      "why": "Primary research from ServiceNow quantifying information leakage rates in agentic RAG systems and proposing an RL-based mitigation — directly actionable for any team deploying enterprise research agents over sensitive data.",
+      "url": "https://huggingface.co/blog/ServiceNow/mosaicleaks"
+    },
+    {
+      "title": "GlassWASM: WebAssembly Malware in Open VSX Extensions",
+      "why": "Socket's technical teardown of a novel supply chain attack using WASM+ChaCha20+Solana dead-drops is a primary threat intelligence source with concrete detection guidance for developer toolchain security.",
+      "url": "https://socket.dev/blog/glasswasm-malware-open-vsx-extensions"
+    },
+    {
+      "title": "OpenAI: Reinforcement Learning Towards Broadly and Persistently Beneficial Models",
+      "why": "Primary research post from OpenAI's alignment team showing RL can entrench beneficial personas that generalise and resist adversarial pressure — foundational reading for understanding the trajectory of model safety and agentic autonomy.",
+      "url": "https://alignment.openai.com/beneficial-rl/"
+    }
+  ]
+}
