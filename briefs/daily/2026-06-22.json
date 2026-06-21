@@ -1,0 +1,24 @@
+{
+  "date": "2026-06-22",
+  "threadCount": 2,
+  "storyCount": 1,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [],
+    "sec": [],
+    "fin": [
+      {
+        "headline": "Prediction markets hit $24B monthly volume; insider trading scandals mount",
+        "body": "Kalshi and Polymarket combined global trading volume surged from $4.5B (Sept 2025) to ~$24B (Apr 2026), with Kalshi now carrying >$1.5B annualised revenue and a $22B valuation. Insider trading is a structural integrity problem: a US Army soldier faces trial for $400k in Polymarket profits from classified Maduro-capture intel, a Google employee was charged for betting on internal search data, and suspicious Iran war wagers from new accounts netted $1M. Kalshi is moving to require employer disclosure for sensitive trades, but Democratic senators are pushing the CFTC to restrict bet categories outright.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/Rik?mbcid=46232682.4037183&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ],
+    "swe": [],
+    "mkt": []
+  },
+  "deepDives": []
+}
