@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 23 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 23 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">7</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">19</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/06/20/nobel-laureate-john-jumper-is-leaving-deepmind-for-rival-anthropic/" target="_blank">John Jumper (Nobel laureate, AlphaFold) leaves Google DeepMind for Anthropic</a></div>
+        <div class="story-body">Jumper&#x27;s departure follows Gemini co-lead Noam Shazeer leaving for OpenAI days earlier — a two-punch elite talent drain from DeepMind in one week. DeepMind&#x27;s science edge, historically its strongest differentiator, is now directly at risk as Anthropic has a June 30 science-focused event pending. Google&#x27;s lagging enterprise coding tool performance is cited as a contributing factor.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">therundown.ai</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/06/20/nobel-laureate-john-jumper-is-leaving-deepmind-for-rival-anthropic/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://threadreaderapp.com/thread/2068862070062485867.html" target="_blank">Sakana Fugu: multi-agent orchestration system exposed as a single OpenAI-compatible API</a></div>
+        <div class="story-body">Sakana Fugu presents a unified API surface that internally routes to a coordinated team of expert models, handling delegation, verification, and synthesis transparently. This is architecturally significant for enterprise agentic deployments where callers should not manage fleet complexity. Available now via OpenAI-compatible endpoint.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://threadreaderapp.com/thread/2068862070062485867.html" target="_blank">threadreaderapp.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thezvi.substack.com/p/ai-173-ai-pauses" target="_blank">Trump White House paused Anthropic&#x27;s Claude Fable 5 and Mythos 5 via export controls over a misidentified &#x27;jailbreak&#x27;</a></div>
+        <div class="story-body">The administration cited a jailbreak of Claude Fable 5 that reportedly was simply a code-fix prompt; Anthropic has been told to remediate what is functionally an unpatchable constraint. Deployment has been blocked for over a week with no resolution path, creating a serious regulatory risk precedent for frontier model deployments.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://thezvi.substack.com/p/ai-173-ai-pauses" target="_blank">thezvi.substack.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://github.blog/security/making-secret-scanning-more-trustworthy-reducing-false-positives-at-scale/" target="_blank">GitHub adds LLM-based context reasoning to secret scanning, achieves 75.76% false-positive reduction</a></div>
+        <div class="story-body">Rather than scanning whole files, the system extracts semantic usage context — whether a value flows into an auth header, DB client, or cloud SDK — letting it distinguish real credentials from test data and UUIDs. Built with Microsoft Security &amp; AI&#x27;s Agents Offense team; evaluated against hundreds of customer-confirmed false positives against a 65% target.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://github.blog/security/making-secret-scanning-more-trustworthy-reducing-false-positives-at-scale/" target="_blank">github.blog ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">AI-native org transformation: pod-based structures, Agent Champions, and the leadership competency shift</div>
+        <div class="story-body">ByteByteGo&#x27;s series with Meta&#x27;s Shah Rahman details how 3–5 person cross-functional pods with dedicated Agent Champions (50–100% time commitment) are replacing traditional engineering hierarchies; one pilot reported 90%+ adoption in under two months and features built in hours. The key thesis: 70% of transformation success is cultural/operational change, not tooling — individual AI gains do not compound into org gains without structural redesign.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://unit42.paloaltonetworks.com/large-scale-credential-attacks/" target="_blank">FortiBleed: 86,000 Fortinet credentials stolen across 194 countries via SSL VPN interception and GPU cracking</a></div>
+        <div class="story-body">Attackers intercepted SSL VPN authentication, cracked hashes with a 45-GPU cluster after 1.16 billion attempts against 320,000 FortiGate targets, then pivoted into Active Directory. An IAB on Exploit[.]in is selling harvested credentials as of June 16. Defenders should enforce MFA, adopt ZTNA to pull management interfaces off public internet, and audit for successful logins following high-volume failure bursts.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://unit42.paloaltonetworks.com/large-scale-credential-attacks/" target="_blank">unit42.paloaltonetworks.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.pentesty.co/blog/novo-nordisk-ozempic-fulcrumsec-breach-2026" target="_blank">Novo Nordisk breach: single leaked GitHub PAT enabled 2-month dwell, 1.3 TB exfiltration including Ozempic formula</a></div>
+        <div class="story-body">FulcrumSec claims initial access in March via one GitHub personal access token; undetected bulk-clone activity and large outbound transfers over weeks preceded a $25M ransom demand that Novo Nordisk refused, triggering a 264 GB public leak. The attack is OWASP A07 (credential failure), not novel technique — signal was abnormal bulk-clone + outbound data patterns neither of which triggered alerts.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.pentesty.co/blog/novo-nordisk-ozempic-fulcrumsec-breach-2026" target="_blank">pentesty.co ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.macrumors.com/2026/06/18/a12-and-a13-chips-facing-exploit/" target="_blank">Apple A12/A13 unpatchable BootROM exploit &#x27;usbliter8&#x27; published — iPhone XS through iPhone 11 permanently vulnerable</a></div>
+        <div class="story-body">Paradigm Shift&#x27;s exploit abuses a USB controller bug where unusually small packets during startup walk an internal hardware pointer backward, enabling out-of-bounds writes; the flaw is in mask ROM so no patch is possible. Once executed it installs a restart-surviving handler that can downgrade security settings and boot unsigned code, broadening attack surface against the Secure Enclave. A13 required additional PAC bypass steps; A14+ are safe due to correct boot-time memory protection configuration.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.macrumors.com/2026/06/18/a12-and-a13-chips-facing-exploit/" target="_blank">macrumors.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.techtimes.com/articles/318790/20260621/texas-data-breach-hits-3-million-drivers-licenses-passport-numbers-stolen-hunting-vendor.htm" target="_blank">Texas hunting/fishing license vendor breach exposes 3M records: driver&#x27;s licenses, passport numbers stolen</a></div>
+        <div class="story-body">The unnamed SaaS vendor behind Texas Parks and Wildlife&#x27;s licensing system was breached, with the dataset now being sold by a threat actor linked to a similar Virginia wildlife agency breach — suggesting shared platform probing across state agencies. Driver&#x27;s license and passport numbers were included, creating high-value synthetic identity fraud material.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.techtimes.com/articles/318790/20260621/texas-data-breach-hits-3-million-drivers-licenses-passport-numbers-stolen-hunting-vendor.htm" target="_blank">techtimes.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://finance.yahoo.com/technology/ai/articles/jpmorgan-limits-claude-hong-kong-122432362.html" target="_blank">JPMorgan removes Claude from approved AI tools in Hong Kong; Goldman Sachs made similar move</a></div>
+        <div class="story-body">Both banks are pulling Anthropic&#x27;s Claude from approved tooling in Hong Kong, citing licensing terms and regulatory/geopolitical concerns — not a security incident. This signals a growing pattern of financial institutions creating geography-specific AI governance policies as model licensing terms intersect with local regulations.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://finance.yahoo.com/technology/ai/articles/jpmorgan-limits-claude-hong-kong-122432362.html" target="_blank">finance.yahoo.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.fintechbrainfood.com/p/stablecoin-issuer-kyc" target="_blank">Stablecoin KYC rules proposed under GENIUS Act: issuers must maintain CIPs similar to banks</a></div>
+        <div class="story-body">Federal regulators proposed rules requiring GENIUS-compliant stablecoin issuers to maintain Customer Identification Programs on par with bank-grade CIP requirements, while on/off ramps (typically MTL-licensed at state level) remain under state supervision. This is the first concrete regulatory framework shaping stablecoin compliance architecture in the US.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.fintechbrainfood.com/p/stablecoin-issuer-kyc" target="_blank">fintechbrainfood.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.fintechbrainfood.com/p/zelle-stablecoin" target="_blank">Zelle USD stablecoin launched for international payments; bank consortium TCH chose tokenized deposits instead</a></div>
+        <div class="story-body">Zelle (owned by major US banks) announced a stablecoin for international payments one week after TCH (The Clearing House) opted for tokenized deposits — the two approaches reflecting a fundamental split among bank consortia on settlement infrastructure. The divergence signals no consensus on whether stablecoins or tokenized deposits will win bank-grade payment rails.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.fintechbrainfood.com/p/zelle-stablecoin" target="_blank">fintechbrainfood.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Kalshi IPO talks begin after $2B annualized revenue, $22B valuation; faces gambling regulation scrutiny</div>
+        <div class="story-body">Kalshi hit $16.8B in May trading volume and raised $1B in May before entering informal IPO discussions with banks. State regulators and gaming groups are challenging whether sports and casino-style prediction contracts constitute illegal gambling — a regulatory overhang that could materially affect IPO timing and structure.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.paymentsdive.com/news/deluxe-makes-625m-acquisition/823276/" target="_blank">Deluxe acquires Celero Commerce for $625M to become top-10 US non-bank merchant acquirer</a></div>
+        <div class="story-body">The combined entity processed ~$70B in gross transactions last year, accelerating Deluxe&#x27;s pivot away from legacy paper-check revenue toward digital payments and data services. This consolidation continues the trend of legacy financial infrastructure companies acquiring modern payment processors to remain relevant.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.paymentsdive.com/news/deluxe-makes-625m-acquisition/823276/" target="_blank">paymentsdive.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Loop engineering: AI coding workflows shift from prompt engineering to iterative evaluate-and-reprompt systems</div>
+        <div class="story-body">The paradigm shift is from crafting a single prompt to building automated loops that repeatedly prompt, evaluate against measurable goals, and re-prompt agents — treating the agent workflow as a feedback control system rather than a one-shot command. This architectural pattern is what separates toy demos from production-grade AI-assisted development.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/temporary-accounts/" target="_blank">Cloudflare introduces temporary accounts for AI agents — frictionless deployment without MFA or browser auth</a></div>
+        <div class="story-body">The new `--temporary` flag in Wrangler lets AI agents deploy Cloudflare Workers without human sign-up flows, browser authentication, or MFA prompts. This directly addresses the non-human identity problem in agentic CI/CD pipelines and is architecturally relevant for automated deployment agents operating headlessly.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.cloudflare.com/temporary-accounts/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline">Marvell +265% YTD joins S&amp;P 500; Micron earnings and Nvidia shareholder meeting this week are key semiconductor signals</div>
+        <div class="story-body">Marvell&#x27;s dramatic YTD run reflects AI-driven custom silicon demand; its S&amp;P 500 inclusion adds index-buying pressure. Micron&#x27;s Wednesday earnings report and Nvidia&#x27;s annual shareholder meeting will be the first significant datapoints on whether the AI infrastructure spending cycle is sustaining into H2 2026.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://electrek.co/2026/06/21/tesla-megapod-ai-data-center-hardware/" target="_blank">Tesla files &#x27;Megapod&#x27; trademark — turnkey modular AI data center system to compete with Nvidia&#x27;s platform</a></div>
+        <div class="story-body">The Megapod filing describes a complete self-contained computing system for AI workloads including servers, networking, power, and cooling in a single rack-and-room unit. This positions Tesla as a direct infrastructure competitor to Nvidia&#x27;s DGX/NVL platform, leveraging its energy and manufacturing capabilities — relevant to NVDA&#x27;s moat.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://electrek.co/2026/06/21/tesla-megapod-ai-data-center-hardware/" target="_blank">electrek.co ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.bankingdive.com/news/robinhood-300-employees-workforce-cut-reduction-tenev-10-percent/823035/" target="_blank">Robinhood cuts ~300 employees (10%) despite record trading activity across equities, options, and prediction markets</a></div>
+        <div class="story-body">The layoffs signal Robinhood is optimising for margin rather than growth headcount, even as trading volumes hit records — likely driven by AI-enabled operational efficiency and prediction market revenue growth. Fintech platforms are re-evaluating staffing models as AI reduces the headcount required per unit of product output.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.bankingdive.com/news/robinhood-300-employees-workforce-cut-reduction-tenev-10-percent/823035/" target="_blank">bankingdive.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://github.blog/security/making-secret-scanning-more-trustworthy-reducing-false-positives-at-scale/" target="_blank">GitHub: Making secret scanning more trustworthy — LLM context reasoning to reduce false positives at scale ↗</a></div>
+          <div class="dive-why">Primary engineering post from GitHub Security detailing the exact architecture (context extraction → LLM reasoning → 75.76% FP reduction) relevant to any IAM/security team building or evaluating credential detection pipelines.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://unit42.paloaltonetworks.com/large-scale-credential-attacks/" target="_blank">Palo Alto Unit 42: Threat Brief on FortiBleed — large-scale credential attack chain against Fortinet/Sophos/MSSQL ↗</a></div>
+          <div class="dive-why">Primary threat intelligence from Unit 42 detailing the full multi-stage attack chain (spray → privilege escalation → config extraction → offline crack) with actionable defender mitigations for any org running internet-facing VPN or firewall infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.pentesty.co/blog/novo-nordisk-ozempic-fulcrumsec-breach-2026" target="_blank">Novo Nordisk / FulcrumSec breach analysis: how a single GitHub PAT became a 1.3 TB exfiltration ↗</a></div>
+          <div class="dive-why">Detailed attacker TTP breakdown mapping a PAT-based supply chain intrusion to OWASP A07, with concrete defensive architecture recommendations (PAT scoping, IP allowlists, SSO backing, bulk-clone alerting) directly applicable to any org with GitHub-hosted internal repositories.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 22 Jun 2026 · sources: techcrunch.com, therundown.ai, tldrnewsletter.com, bytebytego.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
