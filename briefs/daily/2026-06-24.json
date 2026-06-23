@@ -1,0 +1,162 @@
+{
+  "date": "2026-06-24",
+  "threadCount": 6,
+  "storyCount": 14,
+  "sourceCount": 14,
+  "sections": {
+    "ai": [
+      {
+        "headline": "OpenAI launches GPT-5.5-Cyber and Daybreak defensive security stack",
+        "body": "OpenAI released GPT-5.5-Cyber in limited access alongside a Daybreak Cyber Partner Program — a defensive stack designed to embed the model into existing security products via governed partner distribution rather than direct API access. A companion Codex Security plugin and an open-source initiative called Patch the Planet were also launched. Access is deliberately gated through partner systems, signalling OpenAI is building a channel model for enterprise security deployment.",
+        "signal": "high",
+        "sources": [
+          "testingcatalog.com"
+        ],
+        "url": "https://www.testingcatalog.com/openai-launches-new-security-tools-and-updates-gpt-5-5-cyber/"
+      },
+      {
+        "headline": "Sakana AI's Fugu uses multi-model orchestration as a hedge against export-control risk",
+        "body": "Japan's Sakana AI launched Fugu, a model that routes each request across a pool of underlying models through a single API, pitching the architecture explicitly as resilience against the export controls that pulled Anthropic's Mythos and Fable from Japanese customers. Two tiers exist: a faster everyday Fugu and a heavier Ultra for patent research and security testing. Early user reception is mixed — benchmarks claim near-Fable performance but real-world results have disappointed, and the cost and opacity of the model mix are cited concerns.",
+        "signal": "med",
+        "sources": [
+          "rundownai.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Claude Code 'Extended Thinking' reasoning is encrypted; users receive only summaries",
+        "body": "Anthropic encrypts the full chain-of-thought in Claude Code's Extended Thinking mode — the API returns a summary, not the actual reasoning tokens, and the decryption key never reaches the user's machine. Full thinking output requires an enterprise agreement, making audit-trail use cases (e.g., compliance, security review) harder without a commercial contract. This is a meaningful transparency gap for teams using agentic coding tools in regulated environments.",
+        "signal": "high",
+        "sources": [
+          "patrickmccanna.net"
+        ],
+        "url": "https://patrickmccanna.net/the-text-in-claude-codes-extended-thinking-output-is-not-authentic/"
+      },
+      {
+        "headline": "GLM-5.2 emerges as strongest open-weights model but with notable caveats",
+        "body": "Zhipu AI's GLM-5.2 is benchmarking as the best openly available model, outperforming prior open models on coding and reasoning. Head-to-head testing against Claude Opus 4.8 shows GLM-5.2 is significantly cheaper but lacks vision capability and shows benchmark overfitting, making it best suited for cost-sensitive text and logic workloads rather than multimodal or correctness-critical tasks.",
+        "signal": "med",
+        "sources": [
+          "thezvi.wordpress.com",
+          "techstackups.com"
+        ],
+        "url": "https://thezvi.wordpress.com/2026/06/22/glm-5-2-is-the-new-best-open-model/"
+      },
+      {
+        "headline": "SpaceX Colossus compute-as-a-service: $6.3B deal with Reflection AI signals infrastructure pivot",
+        "body": "SpaceX signed a deal worth up to $6.3 billion with Reflection AI for GB300-based compute access at Project Colossus 2, priced at ~$150M/month. SpaceX has now struck compute deals with Anthropic, Google, Cursor (which it is acquiring), and Reflection, positioning Colossus as a significant external AI infrastructure revenue stream. This diversifies SpaceX's revenue model well beyond launch services.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com",
+          "morningbrew.com"
+        ],
+        "url": "https://www.cnbc.com/2026/06/22/spacex-ai-colossus-data-center-reflection.html"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "MCP 'Agentjacking' via Sentry DSN: prompt injection that bypasses EDR, WAF, IAM, and VPN",
+        "body": "Researchers demonstrated an attack chain where a publicly exposed Sentry DSN (documented by Sentry as safe to embed) allows an attacker to inject a crafted error event whose markdown fields contain a fake fix section with a malicious npx command. When an AI coding agent (Claude Code, Cursor, Codex) clears the Sentry backlog via MCP, it reads the injected event as trusted guidance and executes the command with the developer's own credentials, reaching AWS keys, GitHub tokens, and git secrets. Because every step is an authorized action, the attack sidesteps EDR, WAF, IAM, VPN, and firewall controls entirely — defenders must gate agent-initiated commands at the runtime layer, not the network or prompt layer.",
+        "signal": "high",
+        "sources": [
+          "thenewstack.io"
+        ],
+        "url": "https://thenewstack.io/agentjacking-sentry-mcp-attack/"
+      },
+      {
+        "headline": "7,000 Langflow servers actively exploited via chained RCE bugs; LangGraph and LangChain-core share the same holes",
+        "body": "Attackers are chaining three vulnerabilities across the LangChain ecosystem: LangGraph's SQLite checkpointer can be poisoned for arbitrary Python execution, Langflow's file-upload bug is already delivering cron-based reverse shells on ~7,000 exposed servers, and LangChain-core's prompt loader can exfiltrate API keys from disk. Teams running AI agent infrastructure on these frameworks need to patch specific versions and lock down default configurations immediately.",
+        "signal": "high",
+        "sources": [
+          "venturebeat.com"
+        ],
+        "url": "https://venturebeat.com/security/7000-langflow-servers-under-attack-langgraph-langchain-same-holes"
+      },
+      {
+        "headline": "Scattered Spider members plead guilty on day one of UK trial; group linked to $115M in ransoms across 120 intrusions",
+        "body": "Thalha Jubair (20) and Owen Flowers (18) pleaded guilty to the 2024 Transport for London cyberattack on the first day of what was expected to be a six-week trial. US prosecutors separately allege Jubair participated in 120 network intrusions across 47 US entities generating at least $115M in ransom payments, operated a SIM-swapping Telegram service targeting major telcos, and ran a fake emergency data request (EDR) business from age 15. The guilty pleas are a significant law enforcement milestone against a group that also hit MGM, Caesars, M&S, Harrods, Co-op, LastPass, and Signal.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/06/scattered-spider-hackers-plead-guilty-on-day-1-of-trial/"
+      },
+      {
+        "headline": "FortiBleed update: ~1,000 orgs confirmed internally compromised; attackers cracked configs on 36 rented GPUs",
+        "body": "A threat actor scanned internet-facing FortiGates, leveraged unpatched vulnerabilities and dormant backdoor admin accounts (some planted by a Russian ransomware crew reusing identical passwords), exported full device configs, and cracked hashes offline on 36 rented enterprise GPUs before reselling the plaintext as VPN credentials. Confirmed compromises reach ~1,000 organisations with operators adding rogue admins, opening SSH/RDP firewall rules, and pivoting through telcos and MSPs into downstream networks.",
+        "signal": "high",
+        "sources": [
+          "doublepulsar.com"
+        ],
+        "url": "https://doublepulsar.com/an-update-on-fortibleed-whats-happening-with-victim-orgs-c0671a50e7f4"
+      },
+      {
+        "headline": "CVE-2025-20701: Beats/Airoha SoC auth flaw patched — Bluetooth wiretap, key extraction, voice-assistant hijack chain",
+        "body": "Apple shipped Beats Firmware 1B211 to fix CVE-2025-20701, an authentication flaw in Airoha SoCs that allows a proximity attacker to eavesdrop through an unpaired earbud's microphone during pairing discovery. Chained with related Airoha bugs, the weakness can extract pairing keys, impersonate trusted headphones, and pivot to call hijacking, contact extraction, and voice-assistant triggering on the paired phone. Exploitation requires Bluetooth range proximity making it a targeted-surveillance risk; the fix deploys silently when buds are cased near a connected Apple device.",
+        "signal": "med",
+        "sources": [
+          "malwarebytes.com"
+        ],
+        "url": "https://www.malwarebytes.com/blog/bugs/2026/06/apple-patches-beats-studio-buds-flaw-that-could-turn-earbuds-into-a-wiretap"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Ex-Meta L8 principal engineer's complete agentic engineering workflow: terminal-first, agent-agnostic, 30+ PRs/day",
+        "body": "Kun Chen (former Meta/Atlassian L8) published a detailed walkthrough of his solo agentic setup: WezTerm + tmux + Neovim as the keyboard-driven shell, Claude Code and OpenCode as agent harnesses (deliberately kept agent-agnostic to avoid vendor lock-in), voice input via local Whisper-class models to beat typing speed, and custom open-source tooling to handle automated code review, PR creation, and parallel worktree management. The core architectural insight is maintaining agent-agnosticism — avoid features like auto-managed memory that lock you to a single vendor since model leadership rotates rapidly. Parallel tmux sessions allow multiple agents running simultaneously on different worktrees, with the engineer operating at spec and review level only.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "4 bytes of struct padding yields 49% faster array clearing in Go on Intel due to SIMD alignment",
+        "body": "Adding 4 bytes of padding between struct fields in Go can improve array-clearing performance by up to 49% on Intel machines by enabling the processor's optimised SIMD memory instructions that require aligned elements. Misaligned struct fields prevent the CPU's optimised memory handling paths from engaging. A concrete production-level optimisation case study worth benchmarking in high-throughput Go services.",
+        "signal": "med",
+        "sources": [
+          "blog.andr2i.com"
+        ],
+        "url": "https://blog.andr2i.com/posts/2026-06-22-optimization-catalog-how-4-bytes-of-padding-make-array-clearing-49-faster"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "GOOGL drops 5% on AI staff departure concerns; Nasdaq and S&P pull back",
+        "body": "Google had its worst single-day decline in over a year (-5.08%) as investors reacted to high-profile AI staff departures, dragging the Nasdaq down 1.33% and S&P 500 down 0.37%. Nvidia and Meta also dipped. SpaceX continued a three-day slide that erased $600B in market value — notable given the simultaneous positive Colossus compute news, suggesting the selloff has broader momentum drivers.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Google bankrolls A24 to build AI filmmaker tools",
+        "body": "Google is investing in A24 to develop AI-powered filmmaking tools, extending its strategy of embedding AI capabilities into high-profile creative industry partnerships. This follows a broader pattern of Google DeepMind and Cloud competing for AI workload wallet share beyond enterprise IT into media and creative verticals.",
+        "signal": "med",
+        "sources": [
+          "rundownai.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Agentjacking via Sentry MCP: Authorized Intent Chain attack bypassing all perimeter controls",
+      "why": "Primary technical writeup on a novel attack class directly relevant to any team deploying AI coding agents with MCP integrations — actionable defences needed now.",
+      "url": "https://thenewstack.io/agentjacking-sentry-mcp-attack/"
+    },
+    {
+      "title": "FortiBleed update: anatomy of a 1,000-org FortiGate compromise campaign",
+      "why": "Detailed post-mortem on an active, large-scale campaign targeting network perimeter devices with offline hash-cracking and MSP pivot tactics — high relevance for enterprise network defence posture.",
+      "url": "https://doublepulsar.com/an-update-on-fortibleed-whats-happening-with-victim-orgs-c0671a50e7f4"
+    },
+    {
+      "title": "Claude Code Extended Thinking: encrypted reasoning and the enterprise audit-trail problem",
+      "why": "Primary source technical finding with direct implications for compliance and forensic use of agentic coding tools in regulated fintech environments.",
+      "url": "https://patrickmccanna.net/the-text-in-claude-codes-extended-thinking-output-is-not-authentic/"
+    }
+  ]
+}
