@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 25 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 25 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">5</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">11</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://role-confusion.github.io/" target="_blank">Prompt Injection as Role Confusion: 61% Jailbreak Rate, 10% After Destyling</a></div>
+        <div class="story-body">Researchers showed LLMs cannot reliably distinguish privileged role-tag text (system/assistant) from untrusted user input, placing greater weight on writing style than content. Attackers mimicking a model&#x27;s internal reasoning style achieved 61% jailbreak success against models like gpt-oss-20b. &#x27;Destyling&#x27; — rewriting untrusted input to strip role-tag formatting — dropped attack success to 10%; treat role boundaries as continuous trust gradients, not hard delimiters.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">simonwillison.net</span><div class="ref-links"><a class="ref-link ai" href="https://role-confusion.github.io/" target="_blank">role-confusion.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/6nW3wy" target="_blank">OpenAI Daybreak Expands: GPT-5.5-Cyber, Codex Security, and &#x27;Patch the Planet&#x27;</a></div>
+        <div class="story-body">OpenAI expanded Daybreak with the full GPT-5.5-Cyber model, updated Codex Security workflows for large-codebase scanning and patch drafting, and a vendor partner program to embed capabilities in third-party security tools. A &#x27;Patch the Planet&#x27; initiative funds expert-led remediation for critical open-source projects, coordinating with governments and critical infrastructure operators. Codex Security validates findings and generates patches that plug into existing CI pipelines.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/6nW3wy" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/" target="_blank">OpenClaw AI Supply Chain: Malicious Skills Bypassing VirusTotal via Semantic Hijacking</a></div>
+        <div class="story-body">Unit 42 documented five malicious ClawHub skills surviving VirusTotal and ClawScan screening between February and May 2026, exploiting OpenClaw&#x27;s natural-language execution model via semantic instruction hijacking rather than memory exploits. Observed tradecraft included Base64 droppers to macOS infostealers, a README padded to 22 MB to exceed scanner size limits, and novel agentic-monetization schemes. Defenders must enforce line-by-line skill source audits, validate publisher provenance, and monitor outbound callbacks against stated skill specs.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">unit42.paloaltonetworks.com</span><div class="ref-links"><a class="ref-link ai" href="https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/" target="_blank">unit42.paloaltonetworks.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank">Claude Tag: Anthropic Brings Agentic AI into Slack as Team-Level Coworker</a></div>
+        <div class="story-body">Claude Tag replaces the existing Claude Slack app with a persistent agentic layer that accepts task assignments from any team member via @mention, breaks tasks into stages, executes against approved tools and codebases, and maintains cross-channel context over time. An ambient mode proactively fetches information from relevant channels and follows up on stalled tasks. Rolling out now to enterprise and team subscribers; Andrej Karpathy called it the &#x27;third major redesign of LLM UI/UX.&#x27;</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">anthropic.com</span><span class="chip">therundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://mistral.ai/news/ocr-4/" target="_blank">Mistral OCR 4: SOTA Document Intelligence with 170-Language Support, Single-Container Deploy</a></div>
+        <div class="story-body">Mistral OCR 4 provides structured extraction including bounding boxes, block classification, and inline confidence scores across 170 languages. It claims a 4x speed advantage over competing systems and is compact enough for self-hosted single-container deployment, making it viable for regulated environments requiring on-premise data processing. Targets enterprise search and structured data pipeline integration.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">mistral.ai</span><div class="ref-links"><a class="ref-link ai" href="https://mistral.ai/news/ocr-4/" target="_blank">mistral.ai ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/nO9lcG" target="_blank">FFmpeg PixelSmash RCE: Heap Buffer Overflow in MagicYUV Decoder Triggered by Media File Open</a></div>
+        <div class="story-body">JFrog researchers found a heap buffer overflow in FFmpeg&#x27;s MagicYUV decoder slice handling (CVE pending) enabling RCE in applications running without ASLR, or DoS otherwise. The flaw triggers on opening AVI, MKV, or MOV files — including directory browsing or automated media ingestion workflows — making attack surface very broad. Any application embedding the widely-used FFmpeg library is potentially vulnerable; patch immediately.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/nO9lcG" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/copy-fail-linux-vulnerability-mitigation/" target="_blank">Cloudflare&#x27;s &#x27;Copy Fail&#x27; Linux LPE Response: eBPF LSM Policy + 48-Hour Log Hunt</a></div>
+        <div class="story-body">A 4-byte out-of-bounds write in Linux&#x27;s AF_ALG crypto interface allowed unprivileged users to corrupt cached binaries (e.g. /usr/bin/su) and gain root. Cloudflare confirmed existing behavioral detection caught exploit attempts within minutes, hunted 48 hours of logs finding no exploitation, then deployed a bpf-lsm policy restricting AF_ALG socket binds to an allow-list with fleet-wide tracing to avoid breaking legitimate users. Response pattern is a strong model for runtime kernel exploit mitigation at scale.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">blog.cloudflare.com</span><div class="ref-links"><a class="ref-link sec" href="https://blog.cloudflare.com/copy-fail-linux-vulnerability-mitigation/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/06/github-updates-actionscheckout-to-block.html" target="_blank">GitHub actions/checkout Updated to Block pwn-request Attack Patterns</a></div>
+        <div class="story-body">GitHub changed actions/checkout default behavior to block common privilege-escalation patterns in pull_request_target workflows that have historically enabled attackers to exfiltrate secrets or gain write access via forked PRs. Teams using actions/checkout in CI pipelines should review the updated defaults and audit any workflows using pull_request_target with checkout of untrusted code.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">thehackernews.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/06/github-updates-actionscheckout-to-block.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/NOXz7v" target="_blank">Tata Electronics Breach: World Leaks Publishes 200K Files Including Apple and Tesla Trade Secrets</a></div>
+        <div class="story-body">The World Leaks ransomware group published 200,000+ files from Tata Electronics containing confidential product specifications and technical documents from Apple and Tesla, plus employee records including foreign nationals. Tata Electronics manufactures Apple products; the leak represents a significant supply-chain data exposure for two of the world&#x27;s most secretive hardware companies.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/NOXz7v" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.businessinsider.com/meta-ai-training-data-leak-exposed-employee-activity-across-company-2026-6" target="_blank">Meta Pauses Mandatory Keystroke-Tracking AI Training Program After Internal Data Leak</a></div>
+        <div class="story-body">Meta&#x27;s Model Capability Initiative — a mandatory program training AI models on employee keystrokes and mouse movements — was paused after discovering that sensitive data including private conversations, performance records, and transcripts was accessible company-wide. The incident raises acute insider-threat and data governance questions for any organization deploying similar continuous behavioral telemetry collection for ML training.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">businessinsider.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.businessinsider.com/meta-ai-training-data-leak-exposed-employee-activity-across-company-2026-6" target="_blank">businessinsider.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://leehanchung.github.io/blogs/2026/05/08/hidden-technical-debt-agent-harness/" target="_blank">Hidden Technical Debt in Agentic AI: Why Your Agent Harness Will Be Obsolete</a></div>
+        <div class="story-body">A detailed analysis argues that agent harness code — managing planning, execution, and state between LLMs and environments — is structural technical debt because advancing model capabilities will internalize much of this scaffolding. The key architectural guidance: production harnesses should be tightly constrained for safe operation while training harnesses should allow exploration, and teams must resist treating harness code as a permanent abstraction layer.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://leehanchung.github.io/blogs/2026/05/08/hidden-technical-debt-agent-harness/" target="_blank">leehanchung.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">LLM Architecture Deep Dive: SLM vs LLM Design Tradeoffs in Production</div>
+        <div class="story-body">ByteByteGo&#x27;s thorough breakdown covers how deployment target, inference economics, and training budget force SLMs and LLMs into distinct architectural regions. Key SLM techniques covered: grouped-query attention (4x KV cache reduction), sliding window attention, cross-layer KV cache sharing, knowledge distillation, and overtraining beyond Chinchilla-optimal ratios. Useful reference for teams deciding on-device vs cloud model placement.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/Rsz" target="_blank">Global AI/Chip Selloff: NVDA, TSMC Peers Down 12%+; Fed Rate Hike Fears Compound Capex Concerns</a></div>
+        <div class="story-body">A multi-day global tech selloff hit AI and semiconductor names hard: SK Hynix and Samsung fell 12%+, Micron -13.2%, AMD -5.8%, Intel -6.1%, Marvell -9.4%, while Mag-7 finished down 1.5% as a group (MSFT and AMZN were the two exceptions showing gains). Triggers include Google -5% and SpaceX -16% on Monday, Bank of America projecting three Fed rate hikes totaling 75bps in 2026, and recurring investor anxiety over hundreds of billions in AI capex commitments. Micron&#x27;s earnings report is the near-term catalyst watch.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/Rsz" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/tHXGjz" target="_blank">NSA Lost Access to Anthropic AI Model Amid Dispute</a></div>
+        <div class="story-body">The NSA lost access to a powerful Anthropic model amid an unspecified dispute between the agency and the company, signaling early friction in the government AI procurement space. Details are sparse but the story is a signal that AI vendors are willing to enforce usage terms even with intelligence community customers — relevant context for enterprise and regulated-sector AI procurement.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/tHXGjz" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://role-confusion.github.io/" target="_blank">Prompt Injection as Role Confusion (primary research site) ↗</a></div>
+          <div class="dive-why">Primary research paper with concrete attack metrics (61% → 10% with destyling) directly applicable to any team building agentic systems that process untrusted input — a must-read for IAM and agentic security design.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.cloudflare.com/copy-fail-linux-vulnerability-mitigation/" target="_blank">Cloudflare&#x27;s Copy Fail Linux LPE Mitigation Engineering Post ↗</a></div>
+          <div class="dive-why">Official Cloudflare engineering post-mortem detailing a complete runtime kernel exploit response playbook using eBPF LSM policies, fleet-wide tracing, and log forensics — directly reusable for any team operating Linux production infrastructure.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/" target="_blank">Unit 42: OpenClaw AI Supply Chain Risk ↗</a></div>
+          <div class="dive-why">Primary threat research documenting novel agentic-AI supply chain attack patterns — semantic instruction hijacking and scanner evasion — that will scale to any LLM skill/plugin marketplace, directly relevant to non-human identity and tool-trust architecture decisions.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 24 Jun 2026 · sources: tldrnewsletter.com, simonwillison.net, unit42.paloaltonetworks.com, anthropic.com, therundownai.com, mistral.ai, blog.cloudflare.com, thehackernews.com, businessinsider.com, bytebytego.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
