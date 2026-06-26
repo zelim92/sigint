@@ -1,0 +1,211 @@
+{
+  "date": "2026-06-27",
+  "threadCount": 5,
+  "storyCount": 18,
+  "sourceCount": 14,
+  "sections": {
+    "ai": [
+      {
+        "headline": "White House imposes staged rollout on OpenAI GPT-5.6 over national security concerns",
+        "body": "The Trump administration issued a formal request for OpenAI to limit GPT-5.6 to ~20 government-approved partners via Amazon Bedrock before any public release, citing the model's 'Mythos-level' capabilities and need for extended red-teaming on cyber-capability execution and automated social manipulation. Sam Altman told staff this was the fastest path to general release, expected 'a couple of weeks later.' The pattern is now established: frontier models above a capability threshold require government sign-off, with Fable, Mythos, and now GPT-5.6 all subject to this gate.",
+        "signal": "high",
+        "sources": [
+          "techcrunch.com",
+          "therundown.ai",
+          "tldr.tech"
+        ],
+        "url": "https://techcrunch.com/2026/06/25/the-white-house-is-asking-openai-to-slow-roll-the-release-of-its-new-model-over-safety-concerns/"
+      },
+      {
+        "headline": "GasLight macOS malware embeds prompt-injection strings to defeat AI-assisted analysis",
+        "body": "SentinelOne discovered GasLight, a macOS infostealer/backdoor that embeds a 3.5KB block of 38 fake 'system' messages — out-of-memory errors, token expiry, disk exhaustion — specifically crafted to confuse AI-powered binary analysis tools into halting. This is the first documented case of malware purpose-built to exploit AI-assisted reverse-engineering pipelines, not just human analysts. Defenders relying on AI triage tooling need to account for adversarial prompt injection in static analysis workflows.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/mNbI72"
+      },
+      {
+        "headline": "Lilian Weng publishes deep technical review of scaling laws and compute-optimal allocation",
+        "body": "The post from OpenAI's head of safety covers the empirical power-law relationships between compute, loss, model size, and data, including how to use Chinchilla-style findings to allocate compute optimally. It also addresses known failure modes and boundary conditions where scaling laws break down — critical reading for anyone sizing inference infrastructure or making AI capex decisions.",
+        "signal": "med",
+        "sources": [
+          "lilianweng.github.io",
+          "tldr.tech"
+        ],
+        "url": "https://lilianweng.github.io/posts/2026-06-24-scaling-laws/"
+      },
+      {
+        "headline": "Liquid AI releases LFM 2.5 230M: non-transformer model matches transformers 3× its size",
+        "body": "LFM 2.5 is a 230M-parameter model built on state-space and liquid neural network continuous-time formulations, achieving parity with ~700M-parameter transformers on edge reasoning and sequence generation benchmarks. The architecture is relevant for on-device and low-latency inference use cases in security tooling and fintech where deploying large models is infeasible.",
+        "signal": "med",
+        "sources": [
+          "liquid.ai",
+          "tldr.tech"
+        ],
+        "url": "https://www.liquid.ai/blog/lfm2-5-230m"
+      },
+      {
+        "headline": "Chinese GLM-5.2 closes capability gap with Anthropic at significantly lower cost",
+        "body": "Z.ai's GLM-5.2 is benchmarked near Anthropic's Fable and Mythos models and entered the world's top 10 most-used models shortly after launch, while costing substantially less. With the US imposing release gates on domestic frontier models, Chinese alternatives face no equivalent restrictions, creating a competitive asymmetry that directly affects enterprise procurement and AMZN/MSFT/GOOGL cloud AI margins.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Polymarket $3M frontend hack via compromised third-party vendor; supply chain script injection",
+        "body": "Attackers compromised a third-party vendor dependency in Polymarket's frontend, injecting a script that drained approximately $3M in PUSD from at least 11 wallets — funds were immediately swapped to ETH and consolidated to a single address. The vector is a textbook software supply chain attack through an upstream dependency, directly analogous to risks in fintech frontend stacks that use third-party SDKs. Polymarket has removed the dependency and committed to full user refunds.",
+        "signal": "high",
+        "sources": [
+          "cryptonews.net",
+          "tldr.tech"
+        ],
+        "url": "https://cryptonews.net/news/security/33065348/"
+      },
+      {
+        "headline": "Klue breach compounds: second threat actor claims to have exfiltrated data from Icarus operator's server",
+        "body": "Following the June 12 breach of Klue (a competitive intelligence platform used by security-focused enterprises), an unnamed second group claims to have copied the stolen data from an Icarus operator's infrastructure and is now extorting 195 customers directly. This illustrates the multi-party extortion chain risk: paying the initial attacker does not prevent downstream data reuse when stolen data is itself exposed in criminal infrastructure.",
+        "signal": "high",
+        "sources": [
+          "techcrunch.com",
+          "tldr.tech"
+        ],
+        "url": "https://techcrunch.com/2026/06/25/hacked-klue-says-criminals-are-deleting-stolen-customer-data-but-now-other-hackers-are-making-threats/"
+      },
+      {
+        "headline": "Amadey and StealC MaaS infrastructure dismantled: 326 servers, 142 domains seized, 27M credentials recovered",
+        "body": "A coordinated law enforcement and industry action (including Microsoft) took down the Amadey loader and StealC stealer networks, seizing 326 servers, 142 domains, and ~$47M in crypto. 27 million stolen credentials were recovered, representing significant exposure across enterprise and consumer accounts that fed initial-access broker pipelines. Organisations should cross-reference credential exposure against this dataset via HIBP and similar services.",
+        "signal": "high",
+        "sources": [
+          "thehackernews.com",
+          "tldr.tech"
+        ],
+        "url": "https://thehackernews.com/2026/06/amadey-and-stealc-malware-network.html"
+      },
+      {
+        "headline": "Malicious Edge extension 'Edgecution' uses Chrome Native Messaging as C2 bridge to Python backdoor",
+        "body": "Zscaler identified Edgecution, a malicious Microsoft Edge extension distributed via fake IT support social engineering on Teams, that uses Chrome's Native Messaging protocol to communicate with a local Python backdoor installed via AutoHotkey/PowerShell. The tradecraft is linked to an initial access broker connected with the Payouts Kings ransomware group. This attack chain bypasses network-layer controls by abusing a legitimate OS-level IPC mechanism.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/fn7bYL"
+      },
+      {
+        "headline": "Cloudflare launches self-managed OAuth for all customers, replacing API token model for SaaS/agentic integrations",
+        "body": "Cloudflare's self-managed OAuth release lets any customer register OAuth clients for scoped delegated API access, with the Hydra engine migrated via blue-green 1.X/2.X upgrades. The release adds dashboard-level revocation, visible app ownership, and improved consent prompts specifically to reduce OAuth phishing surface. Architecturally significant for teams building agentic or internal developer platform integrations on Cloudflare.",
+        "signal": "med",
+        "sources": [
+          "blog.cloudflare.com",
+          "tldr.tech"
+        ],
+        "url": "https://blog.cloudflare.com/oauth-for-all/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "AI data center chip demand drives 4× memory price spike, forcing Apple 15–25% price hikes on consumer hardware",
+        "body": "Apple raised Mac prices 15–20% and iPad prices 15–25%, attributing the increases to memory and storage chip costs that have 'more than quadrupled' since Q4 2025 as AI hyperscalers compete for NAND and DRAM capacity. Micron beat Q2 earnings expectations significantly (stock +15.8% in one session). Fed Governor Cook flagged sustained AI infrastructure spend as an inflation risk that could keep rates elevated — a direct headwind for growth-oriented portfolio positions.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tldr.tech"
+        ],
+        "url": "https://links.morningbrew.com/c/RCf"
+      },
+      {
+        "headline": "Generative AI economy hits $175B annualised revenue run rate; demand-side analysis suggests rapid growth continuing",
+        "body": "The AI economy generated $110B in sales over the trailing 12 months with an annualised run rate now exceeding $175B. The Exponential View analysis examines whether revenue growth is covering investment expense and models the impact of falling token prices on market structure — relevant for sizing AI infrastructure positions in MSFT, GOOGL, and AMZN.",
+        "signal": "med",
+        "sources": [
+          "exponentialview.co",
+          "tldr.tech"
+        ],
+        "url": "https://www.exponentialview.co/p/the-state-of-the-ai-economy"
+      },
+      {
+        "headline": "JPMorgan succession drama: Marianne Lake retires, two co-presidents elevated ahead of Dimon's planned 3-year exit",
+        "body": "JPMorgan promoted Doug Petno and Troy Rohrbaugh to co-presidents in what appears to be a competitive succession structure, while previously favoured candidate Marianne Lake announced retirement. Dimon has signalled a three-year runway. Succession risk at the largest US bank is material context for financial sector stability assessments.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "NPM packument size limit silently blocked Drizzle ORM releases for a month — a hidden supply chain fragility",
+        "body": "Drizzle ORM hit NPM's undocumented 100MB packument size limit (the JSON document aggregating all version metadata), blocking all new publishes for approximately one month until resolved with NPM support by pruning old versions. This is a systemic fragility: any high-velocity OSS package accumulating version history faces the same silent cliff, with no automated warning, directly affecting downstream CI/CD pipelines.",
+        "signal": "med",
+        "sources": [
+          "vlt.io",
+          "tldr.tech"
+        ],
+        "url": "https://www.vlt.io/blog/packument-size-limits"
+      },
+      {
+        "headline": "Production caching convergence: every distributed team rebuilds the same tiered cache from scratch",
+        "body": "A TierFS analysis documents how infrastructure teams independently converge on near-identical tiered caching designs (local SSD + remote object store) for ephemeral compute workloads, each solving cold-start latency without sharing solutions. With AI workloads dramatically increasing checkpoint and dataset sizes, this problem is intensifying and represents a senior engineering abstraction opportunity.",
+        "signal": "med",
+        "sources": [
+          "tierfs.com",
+          "tldr.tech"
+        ],
+        "url": "https://www.tierfs.com/blog/every-team-builds-the-same-cache.html"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "OpenAI leans toward 2027 IPO amid choppy markets and post-SpaceX IPO valuation concerns",
+        "body": "OpenAI executives are now favouring a 2027 IPO timeline, citing SpaceX's rapid post-IPO stock decline, recent tech-driven index weakness, and concerns about retail investor appetite. The delay extends the window before public market pricing disciplines OpenAI's current valuation, but also defers liquidity for MSFT's equity stake.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": null
+      },
+      {
+        "headline": "IBM claims sub-1nm (0.7nm node) chip architecture via stacked nanosheet transistors",
+        "body": "IBM announced a 'nanostack' architecture delivering transistor density equivalent to a sub-1nm physical node by stacking transistors in a staggered layout — though actual physical dimensions remain larger than the node label implies. If manufacturable at scale (partner: likely TSMC or Samsung), this would represent a significant node advancement relevant to TSMC's roadmap and NVDA's next-generation GPU density.",
+        "signal": "med",
+        "sources": [
+          "arstechnica.com",
+          "tldr.tech"
+        ],
+        "url": "https://arstechnica.com/gadgets/2026/06/ibm-claims-worlds-first-sub-1-nanometer-chip-technology/"
+      },
+      {
+        "headline": "Fake AI tool lures now outpace fake office software in SMB malware delivery — 5× YoY growth",
+        "body": "Kaspersky's 2026 SMB threat report documents 33,352 attacks impersonating five popular AI services (Jan–Apr), nearly 5× the prior year, with Claude and 'OpenClaw' as leading lures — surpassing traditional office software impersonation for the first time. Trusted-relationship attacks (supply chain via SMB partner access) rose from 12.7% to 15.5% of initial vectors, signalling that the AI brand is now the most effective social engineering lure for enterprise entry.",
+        "signal": "med",
+        "sources": [
+          "securelist.com",
+          "tldr.tech"
+        ],
+        "url": "https://securelist.com/smb-threat-report-2026/120357/"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Scaling Laws, Carefully — Lilian Weng",
+      "why": "Primary technical post from OpenAI's head of safety covering compute-optimal allocation frameworks and failure modes of scaling laws — directly actionable for AI infrastructure sizing and capex modelling.",
+      "url": "https://lilianweng.github.io/posts/2026-06-24-scaling-laws/"
+    },
+    {
+      "title": "Cloudflare OAuth for All — Engineering Retrospective",
+      "why": "Official Cloudflare engineering post detailing the Hydra migration architecture, blue-green upgrade strategy, consent UI redesign, and OAuth phishing mitigations — primary source for IAM engineers designing delegated access for agentic systems.",
+      "url": "https://blog.cloudflare.com/oauth-for-all/"
+    },
+    {
+      "title": "NIST SP 800-213 Revision 1 Initial Public Draft — IoT Cybersecurity for Federal Use",
+      "why": "Primary NIST standards document shifting IoT security requirements from device-level to full-product scope and aligning with NIST risk frameworks — open for public comment, directly relevant to any fintech or enterprise deploying IoT/edge infrastructure.",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213r1.ipd.pdf"
+    }
+  ]
+}

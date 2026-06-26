@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // SAT 27 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">SAT 27 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">5</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/06/25/the-white-house-is-asking-openai-to-slow-roll-the-release-of-its-new-model-over-safety-concerns/" target="_blank">White House imposes staged rollout on OpenAI GPT-5.6 over national security concerns</a></div>
+        <div class="story-body">The Trump administration issued a formal request for OpenAI to limit GPT-5.6 to ~20 government-approved partners via Amazon Bedrock before any public release, citing the model&#x27;s &#x27;Mythos-level&#x27; capabilities and need for extended red-teaming on cyber-capability execution and automated social manipulation. Sam Altman told staff this was the fastest path to general release, expected &#x27;a couple of weeks later.&#x27; The pattern is now established: frontier models above a capability threshold require government sign-off, with Fable, Mythos, and now GPT-5.6 all subject to this gate.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">therundown.ai</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/06/25/the-white-house-is-asking-openai-to-slow-roll-the-release-of-its-new-model-over-safety-concerns/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/mNbI72" target="_blank">GasLight macOS malware embeds prompt-injection strings to defeat AI-assisted analysis</a></div>
+        <div class="story-body">SentinelOne discovered GasLight, a macOS infostealer/backdoor that embeds a 3.5KB block of 38 fake &#x27;system&#x27; messages — out-of-memory errors, token expiry, disk exhaustion — specifically crafted to confuse AI-powered binary analysis tools into halting. This is the first documented case of malware purpose-built to exploit AI-assisted reverse-engineering pipelines, not just human analysts. Defenders relying on AI triage tooling need to account for adversarial prompt injection in static analysis workflows.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/mNbI72" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank">Lilian Weng publishes deep technical review of scaling laws and compute-optimal allocation</a></div>
+        <div class="story-body">The post from OpenAI&#x27;s head of safety covers the empirical power-law relationships between compute, loss, model size, and data, including how to use Chinchilla-style findings to allocate compute optimally. It also addresses known failure modes and boundary conditions where scaling laws break down — critical reading for anyone sizing inference infrastructure or making AI capex decisions.</div>
+        <div class="story-meta"><span class="chip">lilianweng.github.io</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank">lilianweng.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.liquid.ai/blog/lfm2-5-230m" target="_blank">Liquid AI releases LFM 2.5 230M: non-transformer model matches transformers 3× its size</a></div>
+        <div class="story-body">LFM 2.5 is a 230M-parameter model built on state-space and liquid neural network continuous-time formulations, achieving parity with ~700M-parameter transformers on edge reasoning and sequence generation benchmarks. The architecture is relevant for on-device and low-latency inference use cases in security tooling and fintech where deploying large models is infeasible.</div>
+        <div class="story-meta"><span class="chip">liquid.ai</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://www.liquid.ai/blog/lfm2-5-230m" target="_blank">liquid.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Chinese GLM-5.2 closes capability gap with Anthropic at significantly lower cost</div>
+        <div class="story-body">Z.ai&#x27;s GLM-5.2 is benchmarked near Anthropic&#x27;s Fable and Mythos models and entered the world&#x27;s top 10 most-used models shortly after launch, while costing substantially less. With the US imposing release gates on domestic frontier models, Chinese alternatives face no equivalent restrictions, creating a competitive asymmetry that directly affects enterprise procurement and AMZN/MSFT/GOOGL cloud AI margins.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cryptonews.net/news/security/33065348/" target="_blank">Polymarket $3M frontend hack via compromised third-party vendor; supply chain script injection</a></div>
+        <div class="story-body">Attackers compromised a third-party vendor dependency in Polymarket&#x27;s frontend, injecting a script that drained approximately $3M in PUSD from at least 11 wallets — funds were immediately swapped to ETH and consolidated to a single address. The vector is a textbook software supply chain attack through an upstream dependency, directly analogous to risks in fintech frontend stacks that use third-party SDKs. Polymarket has removed the dependency and committed to full user refunds.</div>
+        <div class="story-meta"><span class="chip">cryptonews.net</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://cryptonews.net/news/security/33065348/" target="_blank">cryptonews.net ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/06/25/hacked-klue-says-criminals-are-deleting-stolen-customer-data-but-now-other-hackers-are-making-threats/" target="_blank">Klue breach compounds: second threat actor claims to have exfiltrated data from Icarus operator&#x27;s server</a></div>
+        <div class="story-body">Following the June 12 breach of Klue (a competitive intelligence platform used by security-focused enterprises), an unnamed second group claims to have copied the stolen data from an Icarus operator&#x27;s infrastructure and is now extorting 195 customers directly. This illustrates the multi-party extortion chain risk: paying the initial attacker does not prevent downstream data reuse when stolen data is itself exposed in criminal infrastructure.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://techcrunch.com/2026/06/25/hacked-klue-says-criminals-are-deleting-stolen-customer-data-but-now-other-hackers-are-making-threats/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/06/amadey-and-stealc-malware-network.html" target="_blank">Amadey and StealC MaaS infrastructure dismantled: 326 servers, 142 domains seized, 27M credentials recovered</a></div>
+        <div class="story-body">A coordinated law enforcement and industry action (including Microsoft) took down the Amadey loader and StealC stealer networks, seizing 326 servers, 142 domains, and ~$47M in crypto. 27 million stolen credentials were recovered, representing significant exposure across enterprise and consumer accounts that fed initial-access broker pipelines. Organisations should cross-reference credential exposure against this dataset via HIBP and similar services.</div>
+        <div class="story-meta"><span class="chip">thehackernews.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/06/amadey-and-stealc-malware-network.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/fn7bYL" target="_blank">Malicious Edge extension &#x27;Edgecution&#x27; uses Chrome Native Messaging as C2 bridge to Python backdoor</a></div>
+        <div class="story-body">Zscaler identified Edgecution, a malicious Microsoft Edge extension distributed via fake IT support social engineering on Teams, that uses Chrome&#x27;s Native Messaging protocol to communicate with a local Python backdoor installed via AutoHotkey/PowerShell. The tradecraft is linked to an initial access broker connected with the Payouts Kings ransomware group. This attack chain bypasses network-layer controls by abusing a legitimate OS-level IPC mechanism.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/fn7bYL" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/oauth-for-all/" target="_blank">Cloudflare launches self-managed OAuth for all customers, replacing API token model for SaaS/agentic integrations</a></div>
+        <div class="story-body">Cloudflare&#x27;s self-managed OAuth release lets any customer register OAuth clients for scoped delegated API access, with the Hydra engine migrated via blue-green 1.X/2.X upgrades. The release adds dashboard-level revocation, visible app ownership, and improved consent prompts specifically to reduce OAuth phishing surface. Architecturally significant for teams building agentic or internal developer platform integrations on Cloudflare.</div>
+        <div class="story-meta"><span class="chip">blog.cloudflare.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://blog.cloudflare.com/oauth-for-all/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RCf" target="_blank">AI data center chip demand drives 4× memory price spike, forcing Apple 15–25% price hikes on consumer hardware</a></div>
+        <div class="story-body">Apple raised Mac prices 15–20% and iPad prices 15–25%, attributing the increases to memory and storage chip costs that have &#x27;more than quadrupled&#x27; since Q4 2025 as AI hyperscalers compete for NAND and DRAM capacity. Micron beat Q2 earnings expectations significantly (stock +15.8% in one session). Fed Governor Cook flagged sustained AI infrastructure spend as an inflation risk that could keep rates elevated — a direct headwind for growth-oriented portfolio positions.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.morningbrew.com/c/RCf" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.exponentialview.co/p/the-state-of-the-ai-economy" target="_blank">Generative AI economy hits $175B annualised revenue run rate; demand-side analysis suggests rapid growth continuing</a></div>
+        <div class="story-body">The AI economy generated $110B in sales over the trailing 12 months with an annualised run rate now exceeding $175B. The Exponential View analysis examines whether revenue growth is covering investment expense and models the impact of falling token prices on market structure — relevant for sizing AI infrastructure positions in MSFT, GOOGL, and AMZN.</div>
+        <div class="story-meta"><span class="chip">exponentialview.co</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://www.exponentialview.co/p/the-state-of-the-ai-economy" target="_blank">exponentialview.co ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">JPMorgan succession drama: Marianne Lake retires, two co-presidents elevated ahead of Dimon&#x27;s planned 3-year exit</div>
+        <div class="story-body">JPMorgan promoted Doug Petno and Troy Rohrbaugh to co-presidents in what appears to be a competitive succession structure, while previously favoured candidate Marianne Lake announced retirement. Dimon has signalled a three-year runway. Succession risk at the largest US bank is material context for financial sector stability assessments.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.vlt.io/blog/packument-size-limits" target="_blank">NPM packument size limit silently blocked Drizzle ORM releases for a month — a hidden supply chain fragility</a></div>
+        <div class="story-body">Drizzle ORM hit NPM&#x27;s undocumented 100MB packument size limit (the JSON document aggregating all version metadata), blocking all new publishes for approximately one month until resolved with NPM support by pruning old versions. This is a systemic fragility: any high-velocity OSS package accumulating version history faces the same silent cliff, with no automated warning, directly affecting downstream CI/CD pipelines.</div>
+        <div class="story-meta"><span class="chip">vlt.io</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://www.vlt.io/blog/packument-size-limits" target="_blank">vlt.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.tierfs.com/blog/every-team-builds-the-same-cache.html" target="_blank">Production caching convergence: every distributed team rebuilds the same tiered cache from scratch</a></div>
+        <div class="story-body">A TierFS analysis documents how infrastructure teams independently converge on near-identical tiered caching designs (local SSD + remote object store) for ephemeral compute workloads, each solving cold-start latency without sharing solutions. With AI workloads dramatically increasing checkpoint and dataset sizes, this problem is intensifying and represents a senior engineering abstraction opportunity.</div>
+        <div class="story-meta"><span class="chip">tierfs.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://www.tierfs.com/blog/every-team-builds-the-same-cache.html" target="_blank">tierfs.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">OpenAI leans toward 2027 IPO amid choppy markets and post-SpaceX IPO valuation concerns</div>
+        <div class="story-body">OpenAI executives are now favouring a 2027 IPO timeline, citing SpaceX&#x27;s rapid post-IPO stock decline, recent tech-driven index weakness, and concerns about retail investor appetite. The delay extends the window before public market pricing disciplines OpenAI&#x27;s current valuation, but also defers liquidity for MSFT&#x27;s equity stake.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://arstechnica.com/gadgets/2026/06/ibm-claims-worlds-first-sub-1-nanometer-chip-technology/" target="_blank">IBM claims sub-1nm (0.7nm node) chip architecture via stacked nanosheet transistors</a></div>
+        <div class="story-body">IBM announced a &#x27;nanostack&#x27; architecture delivering transistor density equivalent to a sub-1nm physical node by stacking transistors in a staggered layout — though actual physical dimensions remain larger than the node label implies. If manufacturable at scale (partner: likely TSMC or Samsung), this would represent a significant node advancement relevant to TSMC&#x27;s roadmap and NVDA&#x27;s next-generation GPU density.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link mkt" href="https://arstechnica.com/gadgets/2026/06/ibm-claims-worlds-first-sub-1-nanometer-chip-technology/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://securelist.com/smb-threat-report-2026/120357/" target="_blank">Fake AI tool lures now outpace fake office software in SMB malware delivery — 5× YoY growth</a></div>
+        <div class="story-body">Kaspersky&#x27;s 2026 SMB threat report documents 33,352 attacks impersonating five popular AI services (Jan–Apr), nearly 5× the prior year, with Claude and &#x27;OpenClaw&#x27; as leading lures — surpassing traditional office software impersonation for the first time. Trusted-relationship attacks (supply chain via SMB partner access) rose from 12.7% to 15.5% of initial vectors, signalling that the AI brand is now the most effective social engineering lure for enterprise entry.</div>
+        <div class="story-meta"><span class="chip">securelist.com</span><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link mkt" href="https://securelist.com/smb-threat-report-2026/120357/" target="_blank">securelist.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws/" target="_blank">Scaling Laws, Carefully — Lilian Weng ↗</a></div>
+          <div class="dive-why">Primary technical post from OpenAI&#x27;s head of safety covering compute-optimal allocation frameworks and failure modes of scaling laws — directly actionable for AI infrastructure sizing and capex modelling.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.cloudflare.com/oauth-for-all/" target="_blank">Cloudflare OAuth for All — Engineering Retrospective ↗</a></div>
+          <div class="dive-why">Official Cloudflare engineering post detailing the Hydra migration architecture, blue-green upgrade strategy, consent UI redesign, and OAuth phishing mitigations — primary source for IAM engineers designing delegated access for agentic systems.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-213r1.ipd.pdf" target="_blank">NIST SP 800-213 Revision 1 Initial Public Draft — IoT Cybersecurity for Federal Use ↗</a></div>
+          <div class="dive-why">Primary NIST standards document shifting IoT security requirements from device-level to full-product scope and aligning with NIST risk frameworks — open for public comment, directly relevant to any fintech or enterprise deploying IoT/edge infrastructure.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 26 Jun 2026 · sources: techcrunch.com, therundown.ai, tldr.tech, lilianweng.github.io, liquid.ai, cryptonews.net, thehackernews.com, blog.cloudflare.com, morningbrew.com, exponentialview.co, vlt.io, tierfs.com, arstechnica.com, securelist.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
