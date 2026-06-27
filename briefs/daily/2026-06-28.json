@@ -1,0 +1,69 @@
+{
+  "date": "2026-06-28",
+  "threadCount": 2,
+  "storyCount": 5,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "RAG Architecture Tradeoffs: Standard vs Graph RAG vs Agentic RAG",
+        "body": "ByteByteGo's breakdown codifies production selection criteria: Standard RAG for speed-sensitive doc retrieval, Graph RAG for structured knowledge domains (legal, compliance, biomedical) where entity relationships matter, and Agentic RAG for multi-step reasoning with self-correction loops. Key failure mode: Standard RAG has no catch mechanism for wrong chunk retrieval; Agentic RAG adds a verification agent that re-retrieves on failure. Graph RAG's global search path skips vector/graph entirely, batching community reports for LLM relevance scoring — an underappreciated pattern for broad thematic queries.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "API Security Checklist: BOLA Still Top Vulnerability, PKCE/mTLS Baseline",
+        "body": "ByteByteGo's API security summary flags BOLA (Broken Object Level Authorization) as the persistent top API vulnerability, requiring object-, function-, and field-level permission checks per request — not just route-level auth. Key reminders relevant to IAM work: implicit and password grants should be fully deprecated, short-lived tokens with PKCE for public clients, mTLS between internal services, and HSM-backed vault rotation for signing keys. Shadow API inventory is called out explicitly — you can't secure endpoints you don't know exist.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Redis 8 Ships Vector Set as Native Data Structure, Completing RAG Infrastructure Stack",
+        "body": "Redis 8 adds Vector Set as a built-in data type alongside the existing ten structures, enabling approximate nearest-neighbor search over embeddings natively — previously requiring RedisSearch or external tooling. This consolidates the RAG retrieval layer into Redis alongside Streams (append-only log with consumer groups and per-consumer offset tracking) and Time Series (with retention and downsampling). Architecturally significant for teams using Redis as a unified data plane across caching, queuing, and now AI retrieval.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Oracle Posts Worst Week Since 2001 Dot-Com Bust on AI Investment Concerns",
+        "body": "Oracle fell 19% on the week as investors questioned the returns on its AI infrastructure buildout, marking its worst weekly performance since the 2001 dot-com collapse. This follows a broader pattern of AI skepticism dragging chip and cloud-adjacent names, with the S&P 500 and Nasdaq both closing the week down. Relevant signal for MSFT, AMZN, and GOOGL positioning: market is beginning to price in execution risk on AI capex, not just opportunity.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RFL?mblid=989600c78cc7&mbcid=46334354.3997800&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      },
+      {
+        "headline": "California Billionaire Tax Act on November Ballot: 5% One-Time Levy on $1.1B+ Residents",
+        "body": "A union-backed initiative imposing a one-time 5% tax on California billionaires (residents since Jan 1) qualified for the November ballot, projected to raise $100B over five years. Sergey Brin — who relocated to Nevada — has contributed the majority of $100M+ in counter-campaign funding via Building a Better California. At 54% voter support in May polling, passage is plausible; if enacted, could accelerate high-net-worth tech founder/executive relocations already underway.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RFC?mbcid=46334354.3997800&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Redis 8 Official Release Notes / Vector Set Documentation",
+      "why": "Native vector search in Redis changes the infrastructure equation for RAG pipelines — worth reviewing the official data model and performance guarantees before adopting in production IAM or fraud systems.",
+      "url": null
+    }
+  ]
+}
