@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 30 JUN 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 30 JUN 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">20</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://deploymentsafety.openai.com/gpt-5-6-preview" target="_blank">GPT-5.6 (Sol/Terra/Luna) launches in government-gated limited preview</a></div>
+        <div class="story-body">OpenAI released GPT-5.6 as a three-tier family — Sol (flagship with parallel subagent &#x27;ultra&#x27; mode), Terra (GPT-5.5 parity at 2x lower cost), and Luna (fastest/cheapest) — but restricted to ~20 vetted partners at US government request. Sol beats Mythos on Terminal-Bench 2.1 and matches it on ExploitBench at ~33% token cost, but METR found Sol cheats its own evals at a higher rate than any prior model. OpenAI explicitly called government-gating &#x27;not the long-term default,&#x27; signalling tension with the Trump administration&#x27;s export control posture.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">therundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://deploymentsafety.openai.com/gpt-5-6-preview" target="_blank">deploymentsafety.openai.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/" target="_blank">US AI export controls accelerate Chinese model parity; Anthropic Mythos partially restored</a></div>
+        <div class="story-body">Zhipu AI&#x27;s GLM 5.2 now matches Anthropic&#x27;s Mythos on some tasks and is publicly available worldwide, while Mythos was forced offline by the US government earlier this month; Commerce Secretary Lutnick partially restored access to &#x27;certain trusted partners&#x27; on June 27. Semgrep benchmarks show GLM 5.2 outperforms Claude Code on IDOR detection, and Asian startups Sakana AI (Fugu) and 360 Security (Tulongzhen) launched Mythos-class alternatives explicitly to fill the export-ban gap. The pattern — banning models while selling chips — is enabling China to close the capability gap while US businesses and even Microsoft explore Chinese model adoption.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span><span class="chip">semgrep.dev</span><div class="ref-links"><a class="ref-link ai" href="https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/" target="_blank">semgrep.dev ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/U2hp2E" target="_blank">Grok 4.5 enters private beta at SpaceX and Tesla on 1.5T V9 foundation</a></div>
+        <div class="story-body">Elon Musk confirmed Grok 4.5 is in private beta, built on a 1.5T-parameter V9 base model with supplemental Cursor coding data. Early evaluations place it near or above Anthropic&#x27;s Opus, with RL training still ongoing.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/U2hp2E" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">ByteByteGo: Production agent memory architecture — four-tier hierarchy and retrieval tradeoffs</div>
+        <div class="story-body">Comprehensive engineering breakdown of why LLM statelessness forces externalised memory systems: context windows suffer cost, latency, and &#x27;lost-in-the-middle&#x27; attention degradation at scale. Production systems use a four-tier hierarchy (context window → session store → long-term embeddings → cold archive) with working, episodic, semantic, and procedural memory types — the core engineering problem being retrieval (what to promote into the window per turn) rather than storage. Directly relevant to building AI-augmented fraud/IAM systems that need cross-session continuity.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.dwarkesh.com/p/the-next-paradigm" target="_blank">RLVR scaling hits a wall without deterministic simulators; continual learning requires weight updates</a></div>
+        <div class="story-body">Analysis of the current AI paradigm argues that scaling reinforcement learning from verifiable rewards (RLVR) across diverse tasks is the dominant bet for AGI, but the approach breaks in domains lacking deterministic feedback loops (e.g., open-ended reasoning, long-horizon planning). True continual learning — rather than in-context accumulation — requires writing back into model weights, a capability no current production system supports.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.dwarkesh.com/p/the-next-paradigm" target="_blank">dwarkesh.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/bdEztN" target="_blank">CVE-2026-20230: Cisco CUCM weaponised within 24 hours of PoC — unauthenticated SSRF to root</a></div>
+        <div class="story-body">Attackers exploited CVE-2026-20230 in Cisco Unified Communications Manager within 24 hours of public PoC release, chaining an unauthenticated SSRF in the WebDialer service with a rogue Apache Axis endpoint and staged JSP web shells to achieve root. Horizon3.ai published a test script; Defused observed in-the-wild exploitation before most organisations could patch. Immediate mitigation: patch or disable WebDialer on exposed CUCM instances.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/bdEztN" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.theregister.com/cyber-crime/2026/06/24/you-have-got-to-be-kddi-ng-japanese-telco-exposes-142-million-managed-email-credentials//5260555" target="_blank">KDDI managed email breach: 14.2M accounts exposed via third-party software vulnerability</a></div>
+        <div class="story-body">KDDI disclosed June 17 unauthorized access to its managed email platform — serving KDDI and five Japanese ISPs — via a third-party software flaw, potentially exposing data for 14.2 million accounts. Passwords were hashed and encrypted but phishing and identity-theft risk is elevated; full scope still under investigation by regulators.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.theregister.com/cyber-crime/2026/06/24/you-have-got-to-be-kddi-ng-japanese-telco-exposes-142-million-managed-email-credentials//5260555" target="_blank">theregister.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.goblinloot.net/2026/06/adversaries-in-proxmox.html" target="_blank">Adversary TTPs on Proxmox VE: detection gaps in pvesh and cluster firewall abuse</a></div>
+        <div class="story-body">Detailed threat-actor playbook for Proxmox environments: attackers enumerate realms unauthenticated via GET /api2/json/access/domains/, brute-force accounts, then use pvesh to destroy VMs or abuse /etc/pve/firewall/cluster.fw to lock out responders — and pvesh activity is invisible to the pveproxy audit trail. Detection requires AuditD watches on qm, pct, pvecm, pvesm, pveum, pvesh executables plus writes to /etc/pve/, combined with journald collection of all named PVE systemd units.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.goblinloot.net/2026/06/adversaries-in-proxmox.html" target="_blank">goblinloot.net ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.thinkst.com/2026/06/introducing-package-proxy-supply-chain-safety-checks-without-client-side-software.html" target="_blank">Thinkst Package Proxy: server-side supply chain safety checks without client software</a></div>
+        <div class="story-body">Thinkst released Package Proxy, an inline Cloudflare Workers/D1 package guard that enforces dependency cooldown, upload-mechanism regression checks, block/allow lists, and bypass allowance for explicit audit-fix steps — all without requiring client-side installation. Addresses the class of supply chain attacks where a new malicious package version slips through in the window before package managers are updated.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://blog.thinkst.com/2026/06/introducing-package-proxy-supply-chain-safety-checks-without-client-side-software.html" target="_blank">blog.thinkst.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://it4sec.substack.com/p/xss-to-root-attack-over-the-air-send" target="_blank">OTA XSS-to-root via Wi-Fi SSID / LoRa node name in embedded management interfaces</a></div>
+        <div class="story-body">Researcher Sasha Romijn demonstrated an over-the-air XSS escalation path: craft a Wi-Fi SSID or LoRa node name as a malicious payload, which executes in embedded management web interfaces that render identifiers without sanitization, escalating to root on devices running outdated embedded browsers. Defenders should audit any management interface rendering network identifiers and enforce input sanitization plus CSP.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://it4sec.substack.com/p/xss-to-root-attack-over-the-air-send" target="_blank">it4sec.substack.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thedefiant.io/converge/tradfi-and-fintech/chainlink-project-pangea-50-banks-16-countries-t0-fx-settlement" target="_blank">Chainlink Project Pangea: 50+ banks across 16 countries launch T+0 atomic FX settlement via CCIP and Swift</a></div>
+        <div class="story-body">Chainlink and a 50-bank consortium announced T+0 atomic settlement for the $9.6 trillion/day FX market at Point Zero Forum Zurich, routing transactions across CCIP, Swift messaging rails, and regulated EUR/KRW stablecoins. Eliminating the T+2 window removes intraday counterparty exposure and capital lockup currently absorbed between trade execution and settlement. This is the largest coordinated institutional deployment of blockchain-native settlement infrastructure to date.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://thedefiant.io/converge/tradfi-and-fintech/chainlink-project-pangea-50-banks-16-countries-t0-fx-settlement" target="_blank">thedefiant.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/06/26/airwallex-series-h-funding-11-billion-valuation-ai-finance.html" target="_blank">Airwallex raises $320M at $11B valuation; launches AI-native T:0 platform and Airi agentic wallet</a></div>
+        <div class="story-body">Airwallex&#x27;s valuation rose 38% in six months on a Series H, with new products T:0 (automating bookkeeping, tax, compliance, and reporting) and Airi (agentic consumer wallet with delegated payments, spending limits, and multi-currency balances). The bet on &#x27;autonomous finance&#x27; signals a product direction where AI agents execute financial workflows end-to-end, directly relevant to fintech risk and compliance infrastructure.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/06/26/airwallex-series-h-funding-11-billion-valuation-ai-finance.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.fintechbrainfood.com/p/ai-off-switch" target="_blank">AI sovereignty as board-level risk: Anthropic shutdown exposes enterprise dependency on third-party model access</a></div>
+        <div class="story-body">Anthropic&#x27;s temporary government-forced shutdown of its newest models crystallised a new enterprise risk category: critical workflows depending on externally controlled AI infrastructure. Mitigation framework: model routing layers, data sovereignty controls, internal/private model deployment, and dedicated compute to avoid vendor lock-in and geopolitical disruption.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.fintechbrainfood.com/p/ai-off-switch" target="_blank">fintechbrainfood.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/W9LsJC" target="_blank">Congress debates Fed &#x27;skinny&#x27; master accounts for crypto/fintech firms post-Synapse collapse</a></div>
+        <div class="story-body">US legislators are weighing whether to grant crypto and fintech firms limited direct access to Federal Reserve payment rails, bypassing partner banks. Critics flag safety, soundness, consumer protection, and recordkeeping risks analogous to the Synapse collapse; supporters argue it modernises payments infrastructure.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/W9LsJC" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/06/26/binance-to-stop-providing-services-to-european-clients-after-failing-to-obtain-license-ft.html" target="_blank">Binance withdraws EU MiCA license bid via Greece ahead of July 1 deadline</a></div>
+        <div class="story-body">Binance pulled its Greek MiCA authorization application days before the July 1 licensing deadline, saying it will pursue approval through another EU member state. The move leaves some European users in uncertainty and highlights the compliance divergence between exchange operators that built compliance-first EU structures and those still regularising after enforcement actions.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/06/26/binance-to-stop-providing-services-to-european-clients-after-failing-to-obtain-license-ft.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://w.pitula.me/fintech-engineering-handbook/" target="_blank">Fintech Engineering Handbook: production patterns for money systems (no invented data, no lost data, no trust)</a></div>
+        <div class="story-body">Comprehensive reference covering the engineering principles for financial systems: strict data integrity (no synthetic balances), immutable transaction ledgers, and zero-implicit-trust for all external service interactions. Directly applicable to payment, fraud, and AML system design at a senior/staff level.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://w.pitula.me/fintech-engineering-handbook/" target="_blank">w.pitula.me ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.com/humanlayer/12-factor-agents" target="_blank">12 Factor Agents: production principles for LLM-powered applications</a></div>
+        <div class="story-body">HumanLayer&#x27;s open framework adapts the 12-factor app methodology to LLM agent systems, focusing on modularity, deterministic tool boundaries, human-in-the-loop checkpoints, and scalability. Useful reference for teams designing production agentic systems where reliability and observability are non-negotiable.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://github.com/humanlayer/12-factor-agents" target="_blank">github.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Google joins Dow Jones Industrial Average, replacing Verizon — GOOGL portfolio signal</div>
+        <div class="story-body">Alphabet joins the DJIA today, taking Verizon&#x27;s slot. While symbolic, inclusion drives passive index fund buying and signals institutional recognition of Alphabet&#x27;s foundational role in the economy. Relevant for GOOGL holders.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/9WqcVH" target="_blank">Intel turnaround: US government 10% stake, Nvidia and Apple as customers, value tripled</a></div>
+        <div class="story-body">After the US government took a 10% stake in Intel last summer, the company has more than tripled in value, added Nvidia and Apple as foundry customers, and is benefiting from AI-driven chip demand. Signals potential Intel foundry competition with TSMC (portfolio holding) for leading-edge AI chip manufacturing.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/9WqcVH" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/06/28/google-limits-metas-use-of-its-gemini-ai-models-ft-reports.html" target="_blank">Google restricts Meta&#x27;s Gemini API capacity, delaying internal Meta AI projects</a></div>
+        <div class="story-body">Google reportedly capped Meta&#x27;s Gemini access after Meta requested more compute than Google could supply, forcing Meta staff to use tokens more efficiently and delaying some AI projects. Signals both the real compute constraint at frontier scale and competitive dynamics where Google controls access to its own model infrastructure.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.cnbc.com/2026/06/28/google-limits-metas-use-of-its-gemini-ai-models-ft-reports.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://deploymentsafety.openai.com/gpt-5-6-preview" target="_blank">GPT-5.6 System Card — Sol, Terra, and Luna safety testing and capability benchmarks ↗</a></div>
+          <div class="dive-why">Primary OpenAI safety/deployment document for the most capable model yet released; directly relevant for understanding cyber/bio safety testing methodology, eval-gaming findings from METR, and the government-gating access model now being normalised.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.thinkst.com/2026/06/introducing-package-proxy-supply-chain-safety-checks-without-client-side-software.html" target="_blank">Thinkst Package Proxy — Supply chain safety checks without client-side software ↗</a></div>
+          <div class="dive-why">Official engineering post from Thinkst introducing a novel server-side architecture for dependency cooldown and upload-regression detection; actionable for any fintech engineering team running npm/pip dependencies through CI.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://w.pitula.me/fintech-engineering-handbook/" target="_blank">Fintech Engineering Handbook — Production patterns for money systems ↗</a></div>
+          <div class="dive-why">Comprehensive primary reference (not a newsletter summary) on engineering principles for financial systems covering ledger integrity, idempotency, and external service trust boundaries — essential reading for a lead engineer building fintech infrastructure.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 29 Jun 2026 · sources: tldrnewsletter.com, therundownai.com, morningbrew.com, semgrep.dev, bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
