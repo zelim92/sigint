@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 01 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 01 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">4</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank">Thinking Machines proposes &#x27;Interaction Models&#x27; to break real-time AI ceiling</a></div>
+        <div class="story-body">Thinking Machines&#x27; TML-Interaction-Small (276B MoE, 12B active params) replaces the harness pattern — VAD + STT + LLM + TTS pipeline — with a single model that processes 200ms micro-turn audio/video chunks as continuous streams. A fast interaction model pairs with a slower background reasoning model sharing context, enabling capabilities like mid-sentence codeswitching correction that turn-based architectures cannot reach regardless of latency. Architecture was designed audio/video-first rather than text-first, with SGLang streaming session contributions enabling efficient low-latency serving.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link ai" href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank">thinkingmachines.ai ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://venturebeat.com/orchestration/deepseek-open-sources-dspark-a-new-framework-to-speed-up-llm-inference-by-up-to-85" target="_blank">DeepSeek open-sources DSpark: speculative decoding framework with up to 85% inference speedup</a></div>
+        <div class="story-body">DSpark is a speculative decoding system that runs a lightweight scout model ahead of the primary LLM to predict likely token paths, enabling parallel verification and reducing wall-clock inference time by up to 85% without altering model outputs. Released as open-source, it is architecturally significant for anyone running self-hosted inference at scale where latency and GPU cost matter.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://venturebeat.com/orchestration/deepseek-open-sources-dspark-a-new-framework-to-speed-up-llm-inference-by-up-to-85" target="_blank">venturebeat.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://cognition.com/blog/devin-fusion" target="_blank">Cognition&#x27;s Devin Fusion: multi-model routing cuts agentic coding costs 35–41%</a></div>
+        <div class="story-body">Devin Fusion uses a dual-agent architecture (main agent + sidekick) with dynamic model routing between frontier and cost-effective models, achieving 35% cost reduction on FrontierCode benchmark with maintained performance, and 41% with Fable 5 integration. The approach avoids costly KV-cache misses through intelligent task routing — a concrete production signal for teams designing agentic cost envelopes.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://cognition.com/blog/devin-fusion" target="_blank">cognition.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://ai.meta.com/blog/brain2qwerty-brain-ai-human-communication/" target="_blank">Meta Brain2Qwerty v2 achieves 61% word accuracy from non-invasive brain scans</a></div>
+        <div class="story-body">Trained on ~22,000 sentences from 9 participants (10 hours each, MEG device), v2 decodes full sentences vs v1&#x27;s character-by-character output, jumping from 8% to 61% average word accuracy with best subjects hitting 78% — closing the gap with surgical BCIs. Meta open-sourced training code for v1/v2 and the v1 dataset on Hugging Face; accuracy scales with data volume suggesting surgical-implant parity may be achievable without hardware.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">therundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://ai.meta.com/blog/brain2qwerty-brain-ai-human-communication/" target="_blank">ai.meta.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">AI ecosystem shifting to modular open-weights architecture: token economy analysis</div>
+        <div class="story-body">Standardised inference APIs and the Transformer architecture are enabling open-weights models to compete with closed systems on cost while accelerating stack-level innovation through disaggregation. The structural trend has direct portfolio implications for NVDA (inference compute demand) and MSFT/GOOGL (closed model margin pressure).</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://securityaffairs.com/194338/uncategorized/dirtyclone-fourth-linux-kernel-flaw-in-six-weeks-escalates-to-root.html" target="_blank">DirtyClone (CVE-2026-43503, CVSS 8.8): fourth Linux kernel LPE in six weeks, root via IPsec tunnel</a></div>
+        <div class="story-body">Unprivileged local users can gain root by mapping a privileged binary (e.g. /usr/bin/su) into a packet and forcing decryption through an attacker-controlled IPsec tunnel, overwriting auth logic without disk writes or logs. Requires CAP_NET_ADMIN, available by default on Debian/Fedora via unprivileged user namespaces; Ubuntu 24.04+ blocks via AppArmor. Mitigations: apply May 21 mainline patch, or set kernel.unprivileged_userns_clone=0 / blacklist xfrm modules (disables IPsec/AFS).</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://securityaffairs.com/194338/uncategorized/dirtyclone-fourth-linux-kernel-flaw-in-six-weeks-escalates-to-root.html" target="_blank">securityaffairs.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.infosecurity-magazine.com/news/us-insurance-regulator-confirms/" target="_blank">NAIC data breach via Oracle PeopleSoft zero-day stalls sector-wide insurance rating functions</a></div>
+        <div class="story-body">A zero-day in Oracle PeopleSoft (financial reporting module) was exploited in a broad campaign detected June 11, disclosed June 17; the attacker accessed storage areas and published data, causing multiple credit rating agencies to pause feeds and NAIC to suspend investment designation assignments. The incident illustrates how a back-office ERP zero-day at a shared regulatory infrastructure node creates systemic disruption across dependent insurers — a third-party/supply-chain risk pattern directly relevant to fintech regulatory dependencies.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.infosecurity-magazine.com/news/us-insurance-regulator-confirms/" target="_blank">infosecurity-magazine.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://johnstawinski.com/2026/06/18/repo-jacking-anthropics-claude-community-plugins-and-the-shas-that-saved-them/" target="_blank">Repo-jacking vulnerability in Anthropic Claude community plugin marketplace via dangling GitHub namespaces</a></div>
+        <div class="story-body">Researcher claimed a deleted GitHub namespace (oduffy-delphi) referenced in Anthropic&#x27;s official marketplace.json and demonstrated that the plugin install flow lands users on the attacker-controlled repo with no warning. SHA-pinning in marketplace entries blocked the code-install path for this case, but the author flags that Anthropic&#x27;s automated SHA-refresh PRs could be manipulated to ingest a malicious commit SHA. Anthropic closed as out-of-scope; remaining claimable dangling paths disclosed as IOCs.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://johnstawinski.com/2026/06/18/repo-jacking-anthropics-claude-community-plugins-and-the-shas-that-saved-them/" target="_blank">johnstawinski.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://it4sec.substack.com/p/skip-or-inject-commands-into-uav" target="_blank">Voltage glitching bypasses PX4 autopilot safety checks on STM32 microcontrollers</a></div>
+        <div class="story-body">Researchers demonstrated physical voltage-glitching attacks against PX4 Autopilot on STM32 that skip control instructions and bypass safety checks, affecting a widely deployed UAV flight controller platform. Currently requires physical device access; relevant for supply-chain and physical security threat modelling of commercial drone fleets.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://it4sec.substack.com/p/skip-or-inject-commands-into-uav" target="_blank">it4sec.substack.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RLB?mblid=87d568ccb65b&amp;mbcid=46356576.4059708&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">SCOTUS 5–4 blocks Trump firing of Fed Governor Lisa Cook, preserves central bank independence — for now</a></div>
+        <div class="story-body">The court ruled Trump denied Cook due process, allowing her to retain her seat while litigation continues, but left open the &#x27;for cause&#x27; removal pathway. A separate 6–3 ruling expanded presidential power to fire FTC and other independent agency commissioners. Roberts&#x27; majority opinion explicitly cited appearance of independence as structurally critical to Fed policy credibility and bond market confidence — material for rate-sensitive portfolio positioning.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.morningbrew.com/c/RLB?mblid=87d568ccb65b&amp;mbcid=46356576.4059708&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://queue.acm.org/detail.cfm?id=3819084" target="_blank">Formal verification becoming accessible via AI-assisted proof writing (ACM Queue)</a></div>
+        <div class="story-body">AI tooling is removing the historically prohibitive cost of writing formal proofs, making mathematical verification of business-critical invariants practical for production systems. Directly relevant for IAM policy engines, fraud rule logic, and payment processing where correctness guarantees carry regulatory weight.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://queue.acm.org/detail.cfm?id=3819084" target="_blank">queue.acm.org ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.lambrospetrou.com/articles/fokosdb/" target="_blank">FokosDB: strongly consistent bottomless storage on Cloudflare Durable Objects</a></div>
+        <div class="story-body">Experimental database using hash/range partitioning, distributed transactions, and topology-encoded caching built entirely on Cloudflare Durable Objects — a production architecture study in achieving strong consistency on an edge-compute substrate without managing stateful infrastructure. Useful reference for teams evaluating globally distributed session or identity state stores.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.lambrospetrou.com/articles/fokosdb/" target="_blank">lambrospetrou.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RLN?mblid=1488e2963feb&amp;mbcid=46356576.4059708&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Rocket Lab acquires Iridium for $8B in cash-and-stock deal to challenge SpaceX</a></div>
+        <div class="story-body">Deal gives Rocket Lab control over 66 LEO satellites and valuable licensed spectrum for direct-to-device connectivity, enabling vertical integration across launch, satellites, and services. Strategic consolidation in the satellite communications market; Iridium&#x27;s spectrum rights are the core strategic asset.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/RLN?mblid=1488e2963feb&amp;mbcid=46356576.4059708&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Alphabet joins Dow Jones Industrial Average; tech stocks rally to close H1 2026</div>
+        <div class="story-body">GOOGL (portfolio holding) joined the DJIA on June 29, contributing to a record Dow close above 52,000. Nasdaq +2.07%, S&amp;P +1.18% on the final trading day of H1 2026, reversing prior-week losses led by tech.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://thinkingmachines.ai/blog/interaction-models/" target="_blank">Interaction Models: A Scalable Approach to Human-AI Collaboration — Thinking Machines ↗</a></div>
+          <div class="dive-why">Primary research post from the lab detailing TML-Interaction-Small&#x27;s micro-turn architecture, two-model coordination scheme, and benchmark methodology — directly actionable for anyone designing real-time agentic or voice-AI systems.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://johnstawinski.com/2026/06/18/repo-jacking-anthropics-claude-community-plugins-and-the-shas-that-saved-them/" target="_blank">Repo-jacking Anthropic&#x27;s Claude Community Plugins — John Stawinski ↗</a></div>
+          <div class="dive-why">Primary security research post with full exploit walkthrough, IOC list, and SHA-pinning analysis — immediately actionable for any team operating AI plugin marketplaces or consuming third-party agentic tool registries.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://queue.acm.org/detail.cfm?id=3819084" target="_blank">You Don&#x27;t Know Jack About Formal Verification — ACM Queue ↗</a></div>
+          <div class="dive-why">Peer-reviewed ACM article arguing AI lowers proof-writing costs enough to make formal verification practical for production business logic — relevant deep read for engineers owning high-assurance IAM or fraud rule systems.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 30 Jun 2026 · sources: bytebytego.com, tldrnewsletter.com, therundownai.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

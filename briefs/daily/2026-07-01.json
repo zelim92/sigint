@@ -1,0 +1,163 @@
+{
+  "date": "2026-07-01",
+  "threadCount": 6,
+  "storyCount": 14,
+  "sourceCount": 4,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Thinking Machines proposes 'Interaction Models' to break real-time AI ceiling",
+        "body": "Thinking Machines' TML-Interaction-Small (276B MoE, 12B active params) replaces the harness pattern — VAD + STT + LLM + TTS pipeline — with a single model that processes 200ms micro-turn audio/video chunks as continuous streams. A fast interaction model pairs with a slower background reasoning model sharing context, enabling capabilities like mid-sentence codeswitching correction that turn-based architectures cannot reach regardless of latency. Architecture was designed audio/video-first rather than text-first, with SGLang streaming session contributions enabling efficient low-latency serving.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://thinkingmachines.ai/blog/interaction-models/"
+      },
+      {
+        "headline": "DeepSeek open-sources DSpark: speculative decoding framework with up to 85% inference speedup",
+        "body": "DSpark is a speculative decoding system that runs a lightweight scout model ahead of the primary LLM to predict likely token paths, enabling parallel verification and reducing wall-clock inference time by up to 85% without altering model outputs. Released as open-source, it is architecturally significant for anyone running self-hosted inference at scale where latency and GPU cost matter.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://venturebeat.com/orchestration/deepseek-open-sources-dspark-a-new-framework-to-speed-up-llm-inference-by-up-to-85"
+      },
+      {
+        "headline": "Cognition's Devin Fusion: multi-model routing cuts agentic coding costs 35–41%",
+        "body": "Devin Fusion uses a dual-agent architecture (main agent + sidekick) with dynamic model routing between frontier and cost-effective models, achieving 35% cost reduction on FrontierCode benchmark with maintained performance, and 41% with Fable 5 integration. The approach avoids costly KV-cache misses through intelligent task routing — a concrete production signal for teams designing agentic cost envelopes.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://cognition.com/blog/devin-fusion"
+      },
+      {
+        "headline": "Meta Brain2Qwerty v2 achieves 61% word accuracy from non-invasive brain scans",
+        "body": "Trained on ~22,000 sentences from 9 participants (10 hours each, MEG device), v2 decodes full sentences vs v1's character-by-character output, jumping from 8% to 61% average word accuracy with best subjects hitting 78% — closing the gap with surgical BCIs. Meta open-sourced training code for v1/v2 and the v1 dataset on Hugging Face; accuracy scales with data volume suggesting surgical-implant parity may be achievable without hardware.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundownai.com"
+        ],
+        "url": "https://ai.meta.com/blog/brain2qwerty-brain-ai-human-communication/"
+      },
+      {
+        "headline": "AI ecosystem shifting to modular open-weights architecture: token economy analysis",
+        "body": "Standardised inference APIs and the Transformer architecture are enabling open-weights models to compete with closed systems on cost while accelerating stack-level innovation through disaggregation. The structural trend has direct portfolio implications for NVDA (inference compute demand) and MSFT/GOOGL (closed model margin pressure).",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "DirtyClone (CVE-2026-43503, CVSS 8.8): fourth Linux kernel LPE in six weeks, root via IPsec tunnel",
+        "body": "Unprivileged local users can gain root by mapping a privileged binary (e.g. /usr/bin/su) into a packet and forcing decryption through an attacker-controlled IPsec tunnel, overwriting auth logic without disk writes or logs. Requires CAP_NET_ADMIN, available by default on Debian/Fedora via unprivileged user namespaces; Ubuntu 24.04+ blocks via AppArmor. Mitigations: apply May 21 mainline patch, or set kernel.unprivileged_userns_clone=0 / blacklist xfrm modules (disables IPsec/AFS).",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://securityaffairs.com/194338/uncategorized/dirtyclone-fourth-linux-kernel-flaw-in-six-weeks-escalates-to-root.html"
+      },
+      {
+        "headline": "NAIC data breach via Oracle PeopleSoft zero-day stalls sector-wide insurance rating functions",
+        "body": "A zero-day in Oracle PeopleSoft (financial reporting module) was exploited in a broad campaign detected June 11, disclosed June 17; the attacker accessed storage areas and published data, causing multiple credit rating agencies to pause feeds and NAIC to suspend investment designation assignments. The incident illustrates how a back-office ERP zero-day at a shared regulatory infrastructure node creates systemic disruption across dependent insurers — a third-party/supply-chain risk pattern directly relevant to fintech regulatory dependencies.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.infosecurity-magazine.com/news/us-insurance-regulator-confirms/"
+      },
+      {
+        "headline": "Repo-jacking vulnerability in Anthropic Claude community plugin marketplace via dangling GitHub namespaces",
+        "body": "Researcher claimed a deleted GitHub namespace (oduffy-delphi) referenced in Anthropic's official marketplace.json and demonstrated that the plugin install flow lands users on the attacker-controlled repo with no warning. SHA-pinning in marketplace entries blocked the code-install path for this case, but the author flags that Anthropic's automated SHA-refresh PRs could be manipulated to ingest a malicious commit SHA. Anthropic closed as out-of-scope; remaining claimable dangling paths disclosed as IOCs.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://johnstawinski.com/2026/06/18/repo-jacking-anthropics-claude-community-plugins-and-the-shas-that-saved-them/"
+      },
+      {
+        "headline": "Voltage glitching bypasses PX4 autopilot safety checks on STM32 microcontrollers",
+        "body": "Researchers demonstrated physical voltage-glitching attacks against PX4 Autopilot on STM32 that skip control instructions and bypass safety checks, affecting a widely deployed UAV flight controller platform. Currently requires physical device access; relevant for supply-chain and physical security threat modelling of commercial drone fleets.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://it4sec.substack.com/p/skip-or-inject-commands-into-uav"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "SCOTUS 5–4 blocks Trump firing of Fed Governor Lisa Cook, preserves central bank independence — for now",
+        "body": "The court ruled Trump denied Cook due process, allowing her to retain her seat while litigation continues, but left open the 'for cause' removal pathway. A separate 6–3 ruling expanded presidential power to fire FTC and other independent agency commissioners. Roberts' majority opinion explicitly cited appearance of independence as structurally critical to Fed policy credibility and bond market confidence — material for rate-sensitive portfolio positioning.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RLB?mblid=87d568ccb65b&mbcid=46356576.4059708&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Formal verification becoming accessible via AI-assisted proof writing (ACM Queue)",
+        "body": "AI tooling is removing the historically prohibitive cost of writing formal proofs, making mathematical verification of business-critical invariants practical for production systems. Directly relevant for IAM policy engines, fraud rule logic, and payment processing where correctness guarantees carry regulatory weight.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://queue.acm.org/detail.cfm?id=3819084"
+      },
+      {
+        "headline": "FokosDB: strongly consistent bottomless storage on Cloudflare Durable Objects",
+        "body": "Experimental database using hash/range partitioning, distributed transactions, and topology-encoded caching built entirely on Cloudflare Durable Objects — a production architecture study in achieving strong consistency on an edge-compute substrate without managing stateful infrastructure. Useful reference for teams evaluating globally distributed session or identity state stores.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.lambrospetrou.com/articles/fokosdb/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Rocket Lab acquires Iridium for $8B in cash-and-stock deal to challenge SpaceX",
+        "body": "Deal gives Rocket Lab control over 66 LEO satellites and valuable licensed spectrum for direct-to-device connectivity, enabling vertical integration across launch, satellites, and services. Strategic consolidation in the satellite communications market; Iridium's spectrum rights are the core strategic asset.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com",
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RLN?mblid=1488e2963feb&mbcid=46356576.4059708&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      },
+      {
+        "headline": "Alphabet joins Dow Jones Industrial Average; tech stocks rally to close H1 2026",
+        "body": "GOOGL (portfolio holding) joined the DJIA on June 29, contributing to a record Dow close above 52,000. Nasdaq +2.07%, S&P +1.18% on the final trading day of H1 2026, reversing prior-week losses led by tech.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Interaction Models: A Scalable Approach to Human-AI Collaboration — Thinking Machines",
+      "why": "Primary research post from the lab detailing TML-Interaction-Small's micro-turn architecture, two-model coordination scheme, and benchmark methodology — directly actionable for anyone designing real-time agentic or voice-AI systems.",
+      "url": "https://thinkingmachines.ai/blog/interaction-models/"
+    },
+    {
+      "title": "Repo-jacking Anthropic's Claude Community Plugins — John Stawinski",
+      "why": "Primary security research post with full exploit walkthrough, IOC list, and SHA-pinning analysis — immediately actionable for any team operating AI plugin marketplaces or consuming third-party agentic tool registries.",
+      "url": "https://johnstawinski.com/2026/06/18/repo-jacking-anthropics-claude-community-plugins-and-the-shas-that-saved-them/"
+    },
+    {
+      "title": "You Don't Know Jack About Formal Verification — ACM Queue",
+      "why": "Peer-reviewed ACM article arguing AI lowers proof-writing costs enough to make formal verification practical for production business logic — relevant deep read for engineers owning high-assurance IAM or fraud rule systems.",
+      "url": "https://queue.acm.org/detail.cfm?id=3819084"
+    }
+  ]
+}
