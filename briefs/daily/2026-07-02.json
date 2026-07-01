@@ -1,0 +1,40 @@
+{
+  "date": "2026-07-02",
+  "threadCount": 1,
+  "storyCount": 2,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [
+      {
+        "headline": "OpenAI's WebRTC split-relay architecture for 900M weekly voice AI users",
+        "body": "OpenAI decoupled packet routing from protocol termination: a stateless relay at the geographic edge reads the ICE ufrag field as a routing key and forwards encrypted media to the correct stateful transceiver without decrypting or modifying it. The transceiver owns all heavy WebRTC state — ICE, DTLS handshake, SRTP keys — and is pinned to a single process, solving Kubernetes port-exhaustion and state-stickiness problems simultaneously. They deliberately rejected SFU architecture (suited for multiparty) and TURN (extra round-trip latency) in favour of this custom relay/transceiver split built on Pion (Go), SO_REUSEPORT, thread pinning, and a Redis-backed flow table for restart recovery.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://openai.com/index/delivering-low-latency-voice-ai-at-scale/"
+      }
+    ],
+    "sec": [],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "ICE ufrag as a zero-overhead routing key: lessons for stateful-service/stateless-proxy splits in Kubernetes",
+        "body": "The core engineering insight is embedding transceiver routing metadata inside an existing protocol field (ICE ufrag) that the client already sends on the first packet, eliminating any database round-trip from the hot path. The relay remains effectively stateless — its in-memory flow table is reconstructable from the ufrag after a restart — which enables independent scaling and rolling deploys without session affinity hacks at the load balancer. The tradeoff is full ownership of signaling: the technique requires controlling server-side ufrag generation, making it incompatible with off-the-shelf signaling stacks.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://openai.com/index/delivering-low-latency-voice-ai-at-scale/"
+      }
+    ],
+    "mkt": []
+  },
+  "deepDives": [
+    {
+      "title": "Delivering Low-Latency Voice AI at Scale — OpenAI Engineering",
+      "why": "Primary source engineering post from OpenAI's infrastructure team detailing the relay/transceiver architecture, ufrag routing trick, and Kubernetes deployment constraints at 900M weekly user scale — directly applicable to any team building real-time audio or stateful-service/stateless-proxy systems on Kubernetes.",
+      "url": "https://openai.com/index/delivering-low-latency-voice-ai-at-scale/"
+    }
+  ]
+}
