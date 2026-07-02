@@ -1,0 +1,90 @@
+{
+  "date": "2026-07-03",
+  "threadCount": 4,
+  "storyCount": 6,
+  "sourceCount": 4,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Meta Plans to Sell Excess AI Compute as Cloud Service, Rivaling AWS/CoreWeave",
+        "body": "Meta is planning to monetise surplus AI compute and models by entering the cloud market — a direct pivot toward infrastructure-as-a-service to offset $182.9B in committed AI capex. The move mirrors SpaceX's Memphis data centre deals with Anthropic and Google. Stock rose 8.81% on the report; signal is that hyperscalers with owned GPU clusters are exploring compute arbitrage as a second revenue stream.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RUy?mblid=fd39d55e9089&mbcid=46394867.4019118&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "FBI + Google Seize NetNut/Popa Botnet: 2M+ Compromised Residential Devices, 316 Threat Actor Clusters Observed in One Week",
+        "body": "The FBI, IRS-CI, Google GTIG, Lumen, and Shadowserver seized hundreds of NetNut domains tied to the Popa botnet — a 2M+ device residential proxy network operated by NASDAQ-listed Alarum Technologies (ALAR) that was widely used for password spraying, account takeover, ad fraud, and APT traffic obfuscation. Google GTIG observed 316 distinct threat actor clusters (including espionage groups) using NetNut exit nodes in a single June week, and notes the network was heavily white-labelled by resellers. Separately, Spur found 42% of LG webOS apps and 25%+ of Samsung Tizen apps embed residential proxy SDKs — smart TVs are an under-appreciated non-human identity / rogue-node risk for enterprise network defenders.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com",
+          "cloud.google.com"
+        ],
+        "url": "https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks"
+      },
+      {
+        "headline": "Residential Proxy Ecosystem Shows Resilience Post-Takedown: Operators Pivot to Competitor Reselling",
+        "body": "Post-IPIDEA takedown earlier in 2026, NetNut absorbed displaced traffic and grew to parity with IPIDEA in daily volume. Google warns the same rebound dynamic will likely recur: disrupted proxy operators simply buy capacity from surviving competitors, becoming resellers. Defenders should treat residential proxy exit nodes as a persistent, self-healing threat class rather than an episodic one.",
+        "signal": "med",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Trump Crypto Disclosure: $1.2B from World Liberty Financial and Memecoins While Pushing Crypto-Friendly Regulation",
+        "body": "Financial disclosures show Trump earned $500M+ from World Liberty Financial crypto product sales and $600M+ from face-branded memecoins in 2025, the same period he was signing crypto-friendly executive actions. Ethics groups flag structural conflict of interest; relevant to AML/KYC professionals tracking political exposure (PEP) risk in crypto rails and the regulatory trajectory of US digital asset policy.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RVm?mblid=7d40db7e82bd&mbcid=46394867.4019118&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Multi-Region Architecture: Consistency Tradeoffs and Cost Progression from Single-Region to Active-Active",
+        "body": "ByteByteGo's deep-dive frames multi-region deployment as a progression of explicit tradeoffs — each step (read replicas → active-passive → active-active) buys latency or availability but introduces a new conflict-resolution problem when network partitions cause divergent writes. The article is structured around building blocks before patterns, useful framing for staff-level design reviews or data-residency/compliance architecture work.",
+        "signal": "med",
+        "sources": [
+          "blog.bytebytego.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/multi-region-architecture-going-global"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Philadelphia Semiconductor Index Posts Best Quarter Ever: ~92% Return in Q2 2026, AI Hardware Dominates",
+        "body": "S&P 500 closed Q2 up 14.9% (best since 2020); the Philadelphia Semiconductor Index logged ~92% in Q2 alone, with Sandisk, Micron, and Intel leading. 16 of the 50 best-performing Russell 2000 stocks are chip-related, pulling the small-cap index up 20%+ YTD. Risk flag: OpenAI reportedly pushing IPO to 2027 and Nvidia showing semi-stagnant growth may signal peak chip-cycle momentum — watch Fed rate decisions H2.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/RPJ?mblid=7e8c884ab1cc&mbcid=46382635.3541224&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Google GTIG: Disrupting Residential Proxy Networks — NetNut/Popa Takedown Technical Report",
+      "why": "Primary source from Google's Threat Intelligence Group detailing SDK fingerprints, threat actor cluster analysis (316 clusters in one week), and the white-label reseller graph — directly actionable for security teams defending against proxy-obfuscated credential attacks and account takeover.",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks"
+    },
+    {
+      "title": "Synthient: Popa — From Sourcing to Distribution",
+      "why": "Primary technical report linking NetNut SDK distribution mechanics to the Popa botnet, with supply-chain analysis of how compromised TV boxes are enrolled — relevant to non-human identity and rogue-node threat modelling.",
+      "url": "https://synthient.com/blog/popa-from-sourcing-to-distribution"
+    },
+    {
+      "title": "ByteByteGo: Multi-Region Architecture — Going Global Without Going Broke",
+      "why": "Staff-engineer-level systems design reference covering the conflict-resolution and consistency cost ladder from single-region to active-active, useful for fintech infrastructure decisions involving data residency and high-availability requirements.",
+      "url": "https://blog.bytebytego.com/p/multi-region-architecture-going-global"
+    }
+  ]
+}

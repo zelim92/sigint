@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 03 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 03 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">4</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">6</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~4 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">4</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RUy?mblid=fd39d55e9089&amp;mbcid=46394867.4019118&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Meta Plans to Sell Excess AI Compute as Cloud Service, Rivaling AWS/CoreWeave</a></div>
+        <div class="story-body">Meta is planning to monetise surplus AI compute and models by entering the cloud market — a direct pivot toward infrastructure-as-a-service to offset $182.9B in committed AI capex. The move mirrors SpaceX&#x27;s Memphis data centre deals with Anthropic and Google. Stock rose 8.81% on the report; signal is that hyperscalers with owned GPU clusters are exploring compute arbitrage as a second revenue stream.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.morningbrew.com/c/RUy?mblid=fd39d55e9089&amp;mbcid=46394867.4019118&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks" target="_blank">FBI + Google Seize NetNut/Popa Botnet: 2M+ Compromised Residential Devices, 316 Threat Actor Clusters Observed in One Week</a></div>
+        <div class="story-body">The FBI, IRS-CI, Google GTIG, Lumen, and Shadowserver seized hundreds of NetNut domains tied to the Popa botnet — a 2M+ device residential proxy network operated by NASDAQ-listed Alarum Technologies (ALAR) that was widely used for password spraying, account takeover, ad fraud, and APT traffic obfuscation. Google GTIG observed 316 distinct threat actor clusters (including espionage groups) using NetNut exit nodes in a single June week, and notes the network was heavily white-labelled by resellers. Separately, Spur found 42% of LG webOS apps and 25%+ of Samsung Tizen apps embed residential proxy SDKs — smart TVs are an under-appreciated non-human identity / rogue-node risk for enterprise network defenders.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><span class="chip">cloud.google.com</span><div class="ref-links"><a class="ref-link sec" href="https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks" target="_blank">cloud.google.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/" target="_blank">Residential Proxy Ecosystem Shows Resilience Post-Takedown: Operators Pivot to Competitor Reselling</a></div>
+        <div class="story-body">Post-IPIDEA takedown earlier in 2026, NetNut absorbed displaced traffic and grew to parity with IPIDEA in daily volume. Google warns the same rebound dynamic will likely recur: disrupted proxy operators simply buy capacity from surviving competitors, becoming resellers. Defenders should treat residential proxy exit nodes as a persistent, self-healing threat class rather than an episodic one.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://krebsonsecurity.com/2026/06/popa-botnet-linked-to-publicly-traded-israeli-firm/" target="_blank">krebsonsecurity.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RVm?mblid=7d40db7e82bd&amp;mbcid=46394867.4019118&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Trump Crypto Disclosure: $1.2B from World Liberty Financial and Memecoins While Pushing Crypto-Friendly Regulation</a></div>
+        <div class="story-body">Financial disclosures show Trump earned $500M+ from World Liberty Financial crypto product sales and $600M+ from face-branded memecoins in 2025, the same period he was signing crypto-friendly executive actions. Ethics groups flag structural conflict of interest; relevant to AML/KYC professionals tracking political exposure (PEP) risk in crypto rails and the regulatory trajectory of US digital asset policy.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.morningbrew.com/c/RVm?mblid=7d40db7e82bd&amp;mbcid=46394867.4019118&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/multi-region-architecture-going-global" target="_blank">Multi-Region Architecture: Consistency Tradeoffs and Cost Progression from Single-Region to Active-Active</a></div>
+        <div class="story-body">ByteByteGo&#x27;s deep-dive frames multi-region deployment as a progression of explicit tradeoffs — each step (read replicas → active-passive → active-active) buys latency or availability but introduces a new conflict-resolution problem when network partitions cause divergent writes. The article is structured around building blocks before patterns, useful framing for staff-level design reviews or data-residency/compliance architecture work.</div>
+        <div class="story-meta"><span class="chip">blog.bytebytego.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.bytebytego.com/p/multi-region-architecture-going-global" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/RPJ?mblid=7e8c884ab1cc&amp;mbcid=46382635.3541224&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Philadelphia Semiconductor Index Posts Best Quarter Ever: ~92% Return in Q2 2026, AI Hardware Dominates</a></div>
+        <div class="story-body">S&amp;P 500 closed Q2 up 14.9% (best since 2020); the Philadelphia Semiconductor Index logged ~92% in Q2 alone, with Sandisk, Micron, and Intel leading. 16 of the 50 best-performing Russell 2000 stocks are chip-related, pulling the small-cap index up 20%+ YTD. Risk flag: OpenAI reportedly pushing IPO to 2027 and Nvidia showing semi-stagnant growth may signal peak chip-cycle momentum — watch Fed rate decisions H2.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/RPJ?mblid=7e8c884ab1cc&amp;mbcid=46382635.3541224&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://cloud.google.com/blog/topics/threat-intelligence/google-continued-disruption-residential-proxy-networks" target="_blank">Google GTIG: Disrupting Residential Proxy Networks — NetNut/Popa Takedown Technical Report ↗</a></div>
+          <div class="dive-why">Primary source from Google&#x27;s Threat Intelligence Group detailing SDK fingerprints, threat actor cluster analysis (316 clusters in one week), and the white-label reseller graph — directly actionable for security teams defending against proxy-obfuscated credential attacks and account takeover.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://synthient.com/blog/popa-from-sourcing-to-distribution" target="_blank">Synthient: Popa — From Sourcing to Distribution ↗</a></div>
+          <div class="dive-why">Primary technical report linking NetNut SDK distribution mechanics to the Popa botnet, with supply-chain analysis of how compromised TV boxes are enrolled — relevant to non-human identity and rogue-node threat modelling.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://blog.bytebytego.com/p/multi-region-architecture-going-global" target="_blank">ByteByteGo: Multi-Region Architecture — Going Global Without Going Broke ↗</a></div>
+          <div class="dive-why">Staff-engineer-level systems design reference covering the conflict-resolution and consistency cost ladder from single-region to active-active, useful for fintech infrastructure decisions involving data residency and high-availability requirements.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 02 Jul 2026 · sources: morningbrew.com, krebsonsecurity.com, cloud.google.com, blog.bytebytego.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

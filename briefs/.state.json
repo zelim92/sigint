@@ -1,7 +1,7 @@
 {
   "https://blog.bytebytego.com/feed": {
-    "last_seen_guid": "https://blog.bytebytego.com/p/how-openai-delivers-low-latency-voice",
-    "last_seen_pubdate": "2026-07-01T15:31:13+00:00"
+    "last_seen_guid": "https://blog.bytebytego.com/p/multi-region-architecture-going-global",
+    "last_seen_pubdate": "2026-07-02T15:30:30+00:00"
   },
   "https://kill-the-newsletter.com/feeds/4mlcln371y9x3o3b6f8x.xml": {
     "last_seen_guid": "urn:kill-the-newsletter:bppceoi0r9kg9z0xzsmw",
@@ -12,11 +12,11 @@
     "last_seen_pubdate": "2026-06-30T10:07:13+00:00"
   },
   "https://kill-the-newsletter.com/feeds/t2olffhzq2jccn9t0a93.xml": {
-    "last_seen_guid": "urn:kill-the-newsletter:66z44158g4vvuryq51y7",
-    "last_seen_pubdate": "2026-06-30T09:33:32+00:00"
+    "last_seen_guid": "urn:kill-the-newsletter:ez4d92hu2kbuh6u0mfq0",
+    "last_seen_pubdate": "2026-07-02T09:42:48+00:00"
   },
   "https://krebsonsecurity.com/feed/": {
-    "last_seen_guid": "https://krebsonsecurity.com/?p=73876",
-    "last_seen_pubdate": "2026-06-23T16:12:49+00:00"
+    "last_seen_guid": "https://krebsonsecurity.com/?p=73923",
+    "last_seen_pubdate": "2026-07-02T19:27:33+00:00"
   }
 }
