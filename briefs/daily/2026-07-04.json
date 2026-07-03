@@ -1,0 +1,265 @@
+{
+  "date": "2026-07-04",
+  "threadCount": 18,
+  "storyCount": 25,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Devin Security Swarm: Agentic MapReduce for whole-codebase vulnerability detection",
+        "body": "Cognition launched Devin Security Swarm, which uses an 'Agentic MapReduce' architecture: it maps signals across a repo, fans out focused agents over bounded shards, reduces findings, then verifies serious vulnerabilities in isolated sandboxes before confirming them. This is a meaningful architectural pattern for AI-assisted security work — parallelised, bounded agents with a verification step rather than one monolithic scan. Directly relevant to fintech codebase security at scale.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://threadreaderapp.com/thread/2072368168182432109.html"
+      },
+      {
+        "headline": "Claude Fable 5 returns with tighter cybersecurity classifiers and US government pre-release access commitment",
+        "body": "After an 18-day export control suspension, Anthropic redeployed Fable 5 with stricter cybersecurity classifiers (blocking prohibited requests >99% of the time) and committed to giving the US government pre-release access to future frontier models. Fable 5 is capped at 50% of weekly usage limits until July 7, then via usage credits; Mythos 5 restored for select US orgs. The pre-release access commitment sets a precedent for all future frontier model launches.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundown.ai"
+        ],
+        "url": "https://www.anthropic.com/news/redeploying-fable-5"
+      },
+      {
+        "headline": "Anthropic launches Claude Sonnet 5: near-Opus performance at $2/$10 per M tokens",
+        "body": "Claude Sonnet 5 delivers near-flagship agentic performance (planning, tool use, browser/terminal operation, coding) at mid-tier pricing — $2/$10 per M input/output tokens until Aug 31, rising to $3/$15 after. Capabilities approach Opus 4.8 while substantially outpacing Sonnet 4.6, but cybersecurity benchmarks regressed versus 4.6 as a deliberate trade-off from the Fable/Mythos entanglement. Now the default model for Free and Pro plans.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundown.ai"
+        ],
+        "url": "https://www.anthropic.com/news/claude-sonnet-5"
+      },
+      {
+        "headline": "Unit 42: LLM-hallucinated 'phantom domains' are a live supply chain attack vector with 18–51 day prediction windows",
+        "body": "Unit 42 generated 2.1 million URLs from two LLMs across 913 brands, finding 13,229 confirmed malicious and ~250,000 unregistered 'phantom' domains. Adversaries are registering hallucinated domains 18–51 days after prediction — Unit 42 flagged the Montana Empire phishing kit domain 23 days before registration. Actionable defence: treat LLM-generated URLs as untrusted, preemptively register high-risk brand permutations, and monitor DNS registration streams for known hallucination patterns.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/"
+      },
+      {
+        "headline": "Agent-assisted SGLang development: SKILL.md files and benchmark contracts as reusable agent knowledge",
+        "body": "The LMSYS SGLang team published how they encode agent workflows into reusable SKILL.md files, benchmark contracts, and production debugging playbooks — framing agent value around procedural engineering knowledge that can be executed, tested, and reviewed rather than ad-hoc prompting. This is an emerging pattern for institutionalising agentic work in engineering teams.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.lmsys.org/blog/2026-07-02-agent-assisted-sglang-development"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "DuneSlide: Zero-click prompt injection achieves CVSS 9.8 RCE in Cursor IDE via MCP server and symlink exploitation",
+        "body": "Cato AI Labs discovered CVE-2026-50548 and CVE-2026-50549 in Cursor IDE — zero-click prompt injection delivered via a poisoned MCP server or web result can escape the terminal sandbox and overwrite the cursorsandbox binary for full system compromise, exploiting working directory parameter manipulation and symlink canonicalization fallback. Cursor initially rejected the report because its threat model excluded MCP server misuse, then shipped fixes in Cursor 3.0. This is the first public case of prompt injection crossing from the LLM layer into classical binary exploitation within a coding agent.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.catonetworks.com/blog/duneslide-two-critical-rce-vulnerabilities/"
+      },
+      {
+        "headline": "SharePoint RCE CVE-2026-45659 (CVSS 8.8) actively exploited — CISA KEV, FCEB deadline July 4",
+        "body": "A deserialization RCE flaw in SharePoint Server (Subscription Edition, 2019, and 2016) requires only Site Member permissions and is actively exploited by an unidentified threat actor. Patched by Microsoft in May; FCEB agencies were ordered to remediate by July 4. Defenders with internet-facing SharePoint should prioritise patching and audit for anomalous authenticated activity immediately.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/07/sharepoint-rce-cve-2026-45659-added-to.html"
+      },
+      {
+        "headline": "Azure CLI password spray: 81M+ attempts via deprecated ROPC OAuth flow compromise 78 accounts across 64 orgs",
+        "body": "An automated attack from an IPv6 range (LSHIY LLC) abused the deprecated Resource Owner Password Credentials OAuth flow to bypass misconfigured Conditional Access and weak MFA, achieving 78 account compromises across 64 organisations in two weeks. The attack vector is the ROPC flow — a legacy OAuth grant that bypasses modern MFA policies when Conditional Access is misconfigured. Huntress recommends strict MFA for all users and apps, and restricting Azure CLI access for non-admins.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/07/azure-cli-password-spray-hits-at-least.html"
+      },
+      {
+        "headline": "Attackers hijacking exposed Ollama and LiteLLM inference endpoints to power offensive AI operations",
+        "body": "Threat actors are scanning for and abusing misconfigured Ollama and LiteLLM instances — endpoints often lacking authentication or using placeholder keys — to run autonomous pentest frameworks and a Codex-based agent for web reverse-engineering. Three distinct operator clusters observed. Defenders should never expose inference endpoints to the internet, enforce real authentication, inspect request bodies, and monitor known abused ports.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "DHS Homeland Security Information Network (HSIN) breached — unclassified but sensitive operational data exposed",
+        "body": "An unknown threat actor accessed HSIN, the DHS network used for cross-agency and private sector information sharing covering event coordination, mission-critical data, and partner requests. No classified systems accessed. The breach is significant for fintech and critical infrastructure operators who are HSIN partners.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.nextgov.com/cybersecurity/2026/06/hackers-breached-dhs-information-sharing-network-people-familiar-say/414534/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Visa, Stripe, BlackRock, Coinbase, Klarna, Alphabet and 100+ firms back Open USD stablecoin consortium",
+        "body": "Open Standard is launching Open USD, a dollar-backed stablecoin with neutral governance and yield distributed to participating firms, directly challenging Tether and Circle by integrating across payment, banking, and fintech platforms from day one. The coalition breadth — spanning issuing banks (BNY), card networks (Visa), fintechs (Stripe, Klarna, Chime), and asset managers (BlackRock) — signals this is a serious infrastructure play rather than another crypto project.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "World Cup fraud wave: AI-powered phishing and fake domains elevating chargeback risk for merchants",
+        "body": "Payments security firms warn of elevated World Cup fraud across tickets, travel, streaming, and hospitality channels, with AI-generated fake websites and spoofed domains making detection harder for both consumers and fraud models. Risk is two-sided: merchants face chargebacks while legitimate fans face false declines from overly aggressive rules. Fraud teams should tighten rules on event-adjacent MCC codes and spike monitoring.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.paymentsdive.com/news/world-cup-chargebacks-coming/823962/"
+      },
+      {
+        "headline": "Quantifind raises $200M to scale AI-native AML/KYC platform with agentic orchestration layer",
+        "body": "Summit Partners backed Quantifind's $200M growth round to expand its Graphyte Agentic Middleware — an orchestration layer for financial crime workflows using explainable AI, entity resolution, and relationship intelligence to reduce false positives in AML, KYC, and sanctions screening while preserving auditability. The agentic middleware framing is significant: it positions AI as a first-class participant in compliance workflows rather than a scoring overlay.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://fintech.global/2026/06/29/summit-partners-backs-quantifind-in-200m-growth-round/"
+      },
+      {
+        "headline": "UK FCA halves stablecoin capital requirement to 1% of outstanding issuance in final crypto rulebook",
+        "body": "The FCA reduced its proposed stablecoin issuer capital requirement from 2% to 1% after industry pushback, completing the UK's crypto regulatory framework. The move reflects competitive pressure from potentially lighter US stablecoin rules; even 1% may remain burdensome for large-volume issuers and could disadvantage UK-regulated stablecoins in the Open USD-style consortium era.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Swedish court orders Google to pay Klarna $1.5B in antitrust damages over shopping search results",
+        "body": "A Swedish court ruled Google must pay Klarna $1.5 billion, stemming from Google unfairly prioritising its own shopping comparison service in European search results, reducing Klarna's traffic and profits. Relevant to GOOGL holders as a signal of continued European antitrust exposure.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "OpenAI delivers WebRTC voice AI to 900M users: stateless edge relay + stateful transceiver, routing via ICE ufrag",
+        "body": "OpenAI's production WebRTC architecture splits into a stateless edge relay (packet routing) and a stateful transceiver (heavy WebRTC state), sidestepping Kubernetes port-exhaustion and state-stickiness. The key innovation: routing metadata is encoded into the ICE ufrag field so the relay routes the first packet by reading the initial STUN request with no database lookup required. A clean production case study for WebRTC at hyperscale.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.bytebytego.com/p/how-openai-delivers-low-latency-voice"
+      },
+      {
+        "headline": "Zalando client-side load balancer: occupancy-based bounded load + AZ-aware routing at 1M+ RPS",
+        "body": "Zalando migrated routing decisions from shared edge load balancer (Skipper) to a client-side load balancer handling over 1M RPS of internal traffic, implementing occupancy-based bounded load and AZ-aware routing strategies to cut latency and costs. A detailed production case study in client-side load balancing trade-offs at significant scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://engineering.zalando.com/posts/2026/06/client-side-load-balancing.html"
+      },
+      {
+        "headline": "Meta's AI storage blueprint: rebuilt metadata subsystem with tiered caching and prefetching for GPU utilisation",
+        "body": "Meta rebuilt its BLOB-storage metadata subsystem with a tiered caching approach featuring prefetching and on-demand hydration to maximise GPU utilisation and reduce data ingestion times for AI workloads. A production post-mortem on the storage architecture trade-offs when training at Meta's scale.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale/"
+      },
+      {
+        "headline": "Databricks GPU reliability: proactive stress testing + continuous monitoring to catch crashed jobs, silent slowdowns, and numerical corruption",
+        "body": "Databricks classifies GPU failures into three categories — crashed jobs, silent slowdowns, and numerical corruption — each requiring distinct detection strategies. Their health check system combines proactive stress testing before workloads and continuous monitoring to catch silent failures that don't crash the job but produce wrong results. Directly applicable to any team running distributed ML training.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.databricks.com/blog/how-we-keep-gpus-reliable-across-databricks-ai"
+      },
+      {
+        "headline": "Anthropic's Fable 5 cybersecurity jailbreak framework: Cyber Jailbreak Severity scale with capability gain, breadth, weaponization, and discoverability axes",
+        "body": "Anthropic published its Cyber Jailbreak Severity scale and the technical approach used to redeploy Fable 5 with stricter classifiers. The framework rates jailbreaks on four axes (capability gain, breadth, weaponization, discoverability) and is being developed as a consensus standard in collaboration with the US government. Directly relevant for anyone building AI safety/red-teaming programmes.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Meta planning cloud business to monetise surplus AI compute — direct challenge to AWS, Azure, and GCP",
+        "body": "Meta is developing plans to sell access to surplus AI compute capacity and hosted models, with two options under consideration: a hosted models service (like AWS Bedrock) and raw compute capacity (like CoreWeave). This would monetise Meta's multi-billion-dollar data centre investment and represents a meaningful new revenue stream beyond advertising. Relevant to AMZN, MSFT, and GOOGL as competitive pressure on cloud margins.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundown.ai"
+        ],
+        "url": "https://spyglass.org/meta-cloud/"
+      },
+      {
+        "headline": "OpenAI proposes 5% US government stake worth ~$42.6B as part of broader AI industry equity-sharing plan",
+        "body": "OpenAI pitched the Trump administration a 5% stake in each of the leading US AI developers via a government vehicle, framed as sharing AI upside with the public. The proposal emerged alongside Sam Altman's FT op-ed calling for a US-led international AI safety forum modelled on the IAEA, with democratic institutions setting rules rather than labs. This is the most concrete signal yet of how AI labs are negotiating their regulatory relationship with Washington post-Fable.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundown.ai",
+          "morningbrew.com"
+        ],
+        "url": "https://www.cnbc.com/2026/07/02/openai-proposes-us-government-own-5percent-stake-to-address-political-blowback.html"
+      },
+      {
+        "headline": "Meta's Watermelon model claims GPT-5.5 benchmark parity; still in training",
+        "body": "Meta's superintelligence chief Alexandr Wang claims Watermelon has caught up with OpenAI's GPT-5.5 on closely followed benchmarks, using an order of magnitude more compute than Muse Spark. No release timeline given. If true, this is Meta's strongest frontier model position to date and relevant to the compute arms race.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://letsdatascience.com/news/metas-watermelon-matches-gpt-55-benchmarks-76a9460e"
+      },
+      {
+        "headline": "Microsoft launches $2.5B 'Frontier Company' to embed AI engineers inside enterprise customers",
+        "body": "Microsoft is standing up a new $2.5B unit that embeds engineers inside customers to build and run AI systems, a services model that deepens enterprise lock-in beyond Azure and Copilot licensing. Relevant to MSFT holders as a signal of how the company is competing for enterprise AI wallet share against hyperscaler-neutral consultancies.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.geekwire.com/2026/microsoft-announces-2-5b-frontier-company-to-embed-ai-engineers-inside-customers/"
+      },
+      {
+        "headline": "US jobs report: 57K jobs added in June vs 114K forecast; unemployment ticks down to 4.2%; rate hike odds drop below 18%",
+        "body": "The June payrolls print missed badly — 57K actual vs ~114K expected — with April and May revised down significantly. Average wage growth of 3.5% remains below 4.2% inflation. Rate hike odds for July fell to below 18% from 29%, which initially lifted equities before chipmaker sell-offs (Micron -5.5%) dragged markets flat. Labour force participation shrank by 720K, potentially reflecting stricter immigration policy and boomer retirements.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "DuneSlide: Zero-Click Prompt Injection RCE in Cursor IDE (CVE-2026-50548/50549)",
+      "why": "Primary technical writeup from Cato AI Labs detailing the first documented case of prompt injection crossing from the LLM layer into classical binary exploitation within a production coding agent — directly actionable for any team using Cursor or evaluating MCP-connected coding tools.",
+      "url": "https://www.catonetworks.com/blog/duneslide-two-critical-rce-vulnerabilities/"
+    },
+    {
+      "title": "Phantom Squatting: AI-Hallucinated Domains as a Software Supply Chain Attack Vector (Unit 42)",
+      "why": "Primary research from Palo Alto Unit 42 mapping 2.1M LLM-generated URLs to confirmed malicious infrastructure, with a concrete 18–51 day prediction window that enables proactive DNS watchlisting — a novel, actionable defensive technique for security and fraud teams.",
+      "url": "https://unit42.paloaltonetworks.com/phantom-squatting-hallucinated-web-domains/"
+    },
+    {
+      "title": "Anthropic: Fable 5 Cyber Safeguards and Jailbreak Framework",
+      "why": "Official Anthropic engineering post detailing their Cyber Jailbreak Severity scale and classifier architecture — the closest thing to a published industry standard for AI model cybersecurity red-teaming, being co-developed with the US government as a consensus framework.",
+      "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework"
+    }
+  ]
+}
