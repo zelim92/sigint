@@ -1,0 +1,65 @@
+{
+  "date": "2026-07-05",
+  "threadCount": 1,
+  "storyCount": 4,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Delegated Human Credentials for AI Agents: World ID's Quota Architecture",
+        "body": "As AI agents act autonomously on behalf of users, World ID is introducing delegated quota systems where a verified human can grant an agent a scoped share of their 'one-per-human' proof — preventing agents from circumventing per-human caps at scale. This is architecturally distinct from OAuth delegation: rather than delegating permissions to resources, it delegates a fraction of a uniqueness proof. The abuse surface here is novel and largely untested at scale.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://world.org/blog/engineering/private-proof-of-human"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Proof-of-Human Identity Layer: Iris-Based SMPC Uniqueness at Billion-Person Scale",
+        "body": "World ID's architecture addresses a structural gap in IAM: existing systems (SSO, passkeys, OAuth) solve authentication (1-to-1 credential match) but not uniqueness (1-to-many deduplication across global population). At billion-person scale, per-comparison iris error rates must be ~1-in-100-billion; they achieve this via multispectral hardware (the Orb) combined with anonymized multi-party computation (AMPC) where no single party ever holds a reconstructible biometric. The nullifier pattern — scoped, unlinkable tokens per application — means a user's activity across relying parties cannot be correlated, a property absent from standard federated identity flows.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://world.org/blog/engineering/private-proof-of-human"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Bot-Resistant Checkout Infrastructure: Why Standard Fraud Controls Fail Inventory Attacks",
+        "body": "IP rate limits, CAPTCHAs, phone verification, and device fingerprinting all fail because they bind verification to cheap-to-acquire proxies rather than to a unique person — residential proxy networks, bulk SIMs, and randomised fingerprints defeat each layer systematically. For fintech and e-commerce fraud teams, the implication is that bot-resistant gating on high-value scarce inventory requires a uniqueness primitive, not just stronger authentication. World ID's approach is one candidate; the unlinkability and recovery properties are the key differentiators from existing KYC flows.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Secret-Shared Biometric Recovery: Treating Verified Identity as Account-Style Key Rotation",
+        "body": "Rather than anchoring a lifelong credential to a single device private key (catastrophic on device loss), World ID's recovery model treats the verified human as an abstract account — keys can be rotated while the underlying uniqueness proof persists, using secret sharing across independent custodians in separate legal jurisdictions. This is analogous to SSS-based wallet recovery but applied to biometric-derived identity roots. The AMPC cryptographic paper underpinning this is at https://eprint.iacr.org/2024/705 and is worth reviewing for teams building high-assurance non-hardware-bound identity.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://eprint.iacr.org/2024/705"
+      }
+    ],
+    "mkt": []
+  },
+  "deepDives": [
+    {
+      "title": "World ID: Private Proof of Human — Engineering Deep Dive",
+      "why": "Primary engineering post from Tools for Humanity detailing the AMPC architecture, nullifier scoping, and hardware trust model — directly relevant to anyone designing non-human identity controls or bot-resistant IAM systems.",
+      "url": "https://world.org/blog/engineering/private-proof-of-human"
+    },
+    {
+      "title": "Anonymized Multi-Party Computation (AMPC) — IACR ePrint 2024/705",
+      "why": "The foundational cryptographic paper behind World ID's secret-shared biometric deduplication; essential reading for evaluating whether the unlinkability claims hold and for assessing applicability to privacy-preserving fraud detection pipelines.",
+      "url": "https://eprint.iacr.org/2024/705"
+    }
+  ]
+}
