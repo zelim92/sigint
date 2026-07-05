@@ -1,0 +1,24 @@
+{
+  "date": "2026-07-06",
+  "threadCount": 1,
+  "storyCount": 1,
+  "sourceCount": 1,
+  "sections": {
+    "ai": [],
+    "sec": [],
+    "fin": [],
+    "swe": [],
+    "mkt": [
+      {
+        "headline": "US manufacturing jobs fell 108k in Trump tariff year one despite 'reshoring' goal",
+        "body": "A Joint Economic Committee analysis found the US lost 108,000 manufacturing jobs in the first year of Trump's second term, contrary to the intended effect of Liberation Day tariffs. Trade deals secured foreign investment commitments, but structural impact is measured in years, not months. Relevant context for any portfolio thesis built around domestic manufacturing or tariff-driven supply chain repatriation.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": []
+}
