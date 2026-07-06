@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // TUE 07 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">TUE 07 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">20</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">16</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/EtnIFd" target="_blank">JadePuffer: First LLM-Automated Ransomware Attack Exploits CVE-2025-3248 with Zero Human Intervention</a></div>
+        <div class="story-body">JadePuffer conducted a fully autonomous ransomware operation using an LLM-driven agent that exploited CVE-2025-3248 in Langflow — performing reconnaissance, credential theft, lateral movement to an internet-exposed MySQL/Nacos server, encrypting 1,342 config items, and demanding Bitcoin payment. No human operator was involved at any stage. This is a landmark event: AI has crossed from assisting attackers to autonomously executing end-to-end intrusion chains.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/EtnIFd" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/tech-policy/2026/06/anthropic-claims-alibaba-defied-trump-to-attack-claude-and-steal-capabilities/" target="_blank">Anthropic Accuses Alibaba of 28.8M-Interaction Claude Distillation Campaign via 25,000 Fake Accounts</a></div>
+        <div class="story-body">Anthropic alleges Alibaba&#x27;s Qwen team ran a large-scale model distillation attack from April 22–June 5, using ~25,000 fake accounts and proxy networks to extract Claude&#x27;s agentic reasoning and software engineering capabilities through 28.8 million interactions. The incident has been reported to the US Senate and White House; Anthropic is urging Congress to reform antitrust laws. Alibaba subsequently restricted employee use of Claude Code, redirecting to its own Qoder tool.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><span class="chip">techcrunch.com</span><div class="ref-links"><a class="ref-link ai" href="https://arstechnica.com/tech-policy/2026/06/anthropic-claims-alibaba-defied-trump-to-attack-claude-and-steal-capabilities/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Meta&#x27;s &#x27;Watermelon&#x27; Model Claims GPT-5.5 Parity; Opus-Level Coder Teased</div>
+        <div class="story-body">Meta superintelligence chief Alexandr Wang told employees that Watermelon — still in training on ~10x the compute of Muse Spark — has matched GPT-5.5 performance. Wang additionally teased an Opus-level coding model arriving &#x27;pretty soon,&#x27; with a Muse Spark update featuring &#x27;big coding and agentic gains&#x27; imminent across Meta AI and its new API. Zuckerberg separately acknowledged that industry-wide agent progress &#x27;hasn&#x27;t really accelerated in the way we expected.&#x27;</div>
+        <div class="story-meta"><span class="chip">therundown.ai</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.testingcatalog.com/openai-might-be-preparing-gpt-5-6-for-next-weeks-release/" target="_blank">OpenAI GPT-5.6 Enters Narrow Preview with Three-Tier Architecture and Reasoning-Effort Slider</a></div>
+        <div class="story-body">OpenAI has moved GPT-5.6 into a narrow preview split into Sol, Terra, and Luna tiers, adding a reasoning-effort control slider and an &#x27;ultra&#x27; mode for complex tasks. Broad access is pending US government review approvals. The release has implications for Codex users and arrives as Anthropic&#x27;s Fable 5 changes the competitive landscape.</div>
+        <div class="story-meta"><span class="chip">testingcatalog.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.testingcatalog.com/openai-might-be-preparing-gpt-5-6-for-next-weeks-release/" target="_blank">testingcatalog.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.reco.ai/blog/claude-mythos-saas-security-risks" target="_blank">Claude Mythos (Project Glasswing) Found 10,000+ Critical Vulns; Restricted to Vetted Partners</a></div>
+        <div class="story-body">Anthropic and ~150 partner orgs used Claude Mythos under Project Glasswing to identify over 10,000 high/critical severity vulnerabilities across major software systems, compressing the discovery-to-exploitation gap from weeks to minutes. Anthropic has restricted Mythos to a vetted partner program due to the risk. The key finding: AI attackers skip over hardened environments and target orphaned accounts and over-privileged tokens — non-human identity hygiene is now a direct deterrent.</div>
+        <div class="story-meta"><span class="chip">reco.ai</span><div class="ref-links"><a class="ref-link ai" href="https://www.reco.ai/blog/claude-mythos-saas-security-risks" target="_blank">reco.ai ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/security/2026/07/new-pamstealer-macos-malware-uses-clever-tradecraft-to-remain-stealthy/" target="_blank">PamStealer macOS Malware Uses PAM Credential Capture, Bypasses Quarantine, Targets Ethereum Wallets</a></div>
+        <div class="story-body">PamStealer distributes via a trojanized Maccy clipboard manager disk image, using AppleScript to launch a JS-for-Automation downloader and a Rust payload that calls native Objective-C APIs. It bypasses quarantine flags by hiding within app bundles mimicking Finder or Software Update, captures credentials via a realistic PAM password prompt, then seeks full disk access and targets Ethereum wallets. The tradecraft — native API use, bundle impersonation, PAM abuse — makes it significantly stealthier than typical macOS stealers.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><div class="ref-links"><a class="ref-link sec" href="https://arstechnica.com/security/2026/07/new-pamstealer-macos-malware-uses-clever-tradecraft-to-remain-stealthy/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/mkT74O" target="_blank">Medtronic Breach: ShinyHunters Steals PII + Health Data on 3.8 Million Patients</a></div>
+        <div class="story-body">ShinyHunters accessed Medtronic&#x27;s corporate IT systems in April, exfiltrating names, contact details, DOBs, SSNs, and health information for 3,834,294 individuals. Medtronic reports no evidence of public data posting and is offering 24 months of credit and dark web monitoring. This follows a pattern of healthcare infrastructure being a high-value target for ShinyHunters.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://links.tldrnewsletter.com/mkT74O" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://detect.fyi/the-blind-spot-in-the-watchtower-detections-for-when-someone-attacks-your-sentinel-897709f0dcd9" target="_blank">Attackers Can Blind Microsoft Sentinel by Tampering with Detection Rules and Log Retention</a></div>
+        <div class="story-body">Threat actors with elevated Azure access can sabotage Sentinel by altering detection rules, disabling data connectors, or modifying log retention — effectively using the SIEM against itself. Detection relies on monitoring AzureActivity, SentinelAudit, and SentinelHealth logs with targeted KQL queries flagging unauthorized configuration changes. This is a meaningful insider/post-compromise threat vector for SOC teams.</div>
+        <div class="story-meta"><span class="chip">detect.fyi</span><div class="ref-links"><a class="ref-link sec" href="https://detect.fyi/the-blind-spot-in-the-watchtower-detections-for-when-someone-attacks-your-sentinel-897709f0dcd9" target="_blank">detect.fyi ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.crowdstrike.com/en-us/blog/new-in-falcon-cloud-security-expanding-multi-cloud-coverage/" target="_blank">CrowdStrike Falcon Cloud Security Extends CSPM/CIEM/DSPM to Azure and Google Cloud</a></div>
+        <div class="story-body">CrowdStrike&#x27;s June 2026 release brings real-time CSPM, Cloud Risks correlation, DSPM, and CIEM to Azure and GCP, unifying misconfiguration detection, breach-path correlation, and entitlement analysis across all three major clouds under one workflow. Windows container image scanning is also added alongside existing Linux coverage. The update consolidates existing single-cloud capabilities rather than introducing new detection logic.</div>
+        <div class="story-meta"><span class="chip">crowdstrike.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.crowdstrike.com/en-us/blog/new-in-falcon-cloud-security-expanding-multi-cloud-coverage/" target="_blank">crowdstrike.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.pymnts.com/news/investment-tracker/ipo/2026/plaid-talks-with-banks-about-potential-ipo/" target="_blank">Plaid Begins IPO Bank Discussions; AI Risk Models and New Products Underpin Valuation Case</a></div>
+        <div class="story-body">Plaid has started preliminary IPO conversations with investment banks, with no timeline set. The company has been strengthening its business with new AI-powered risk models and product launches since its last private funding round. This is a significant signal for open banking infrastructure valuations in the current market.</div>
+        <div class="story-meta"><span class="chip">pymnts.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.pymnts.com/news/investment-tracker/ipo/2026/plaid-talks-with-banks-about-potential-ipo/" target="_blank">pymnts.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.insurancejournal.com/news/national/2026/07/02/875989.htm" target="_blank">Finance and Tech Sectors Shedding 28,000 Jobs/Month in 2026 as AI Displaces Office and Admin Roles</a></div>
+        <div class="story-body">Financial activities and information sectors are averaging 28,000 job losses per month in 2026, concentrated in customer service, bank teller, and claims processing roles — roughly 25% of finance&#x27;s workforce. JPMorgan, Citi, and Goldman Sachs have explicitly acknowledged AI-driven position eliminations. This is a leading indicator of structural cost reduction that will flow through to earnings.</div>
+        <div class="story-meta"><span class="chip">insurancejournal.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.insurancejournal.com/news/national/2026/07/02/875989.htm" target="_blank">insurancejournal.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.pymnts.com/blockchain/2026/robinhood-launches-blockchain-designed-for-real-world-assets/" target="_blank">Robinhood Launches L2 Blockchain (Robinhood Chain) with Stock Tokens, Crypto Lending, and AI Trading Accounts</a></div>
+        <div class="story-body">Robinhood launched Robinhood Chain, a Layer 2 blockchain for tokenized real-world assets supporting 24/7 investing, alongside stock tokens, crypto lending, perpetual futures, and AI-powered trading accounts. The platform is expanding to Canada, Singapore, and the UK. The move positions Robinhood as a full-stack financial platform competing with both traditional brokerages and DeFi infrastructure.</div>
+        <div class="story-meta"><span class="chip">pymnts.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.pymnts.com/blockchain/2026/robinhood-launches-blockchain-designed-for-real-world-assets/" target="_blank">pymnts.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://squareup.com/us/en/press/claude-chatgpt-integrations" target="_blank">Square Integrates ChatGPT and Claude for Agentic Commerce: Orders Direct from AI Conversations</a></div>
+        <div class="story-body">Square launched ChatGPT and Claude integrations allowing eligible US food and beverage sellers to be discovered, display menus, and receive orders directly through AI conversations with no added setup or marketplace commissions. Square acts as the connective layer syncing menu, POS, kitchen, and reporting data through existing infrastructure. This is an early production deployment of agentic commerce at merchant scale.</div>
+        <div class="story-meta"><span class="chip">squareup.com</span><div class="ref-links"><a class="ref-link fin" href="https://squareup.com/us/en/press/claude-chatgpt-integrations" target="_blank">squareup.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/04/2026-fifa-world-cup-boosts-prediction-market-volumes.html" target="_blank">World Cup Drives Record Prediction Market Volumes: Kalshi $31B, Polymarket $10.8B in June</a></div>
+        <div class="story-body">The 2026 FIFA World Cup drove record trading across prediction platforms — Kalshi hit $31B+ in June volume, Polymarket $10.8B internationally, and new entrant Rothera surpassed $2B. Meta is reportedly in talks to acquire Kalshi. The surge is a live stress test for regulatory and market-integrity frameworks as institutions evaluate the category.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/07/04/2026-fifa-world-cup-boosts-prediction-market-volumes.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected" target="_blank">16-Year SQLite WAL Corruption Bug Investigated Against dqlite via TLA+ Modeling</a></div>
+        <div class="story-body">SQLite patched a long-standing WAL bug capable of causing database corruption, present for 16 years. The dqlite team modeled SQLite&#x27;s behavior in TLA+ to determine whether dqlite is affected, concluding it is not due to stricter locking mechanisms preventing simultaneous writes and checkpoints. The post is a strong example of formal methods applied to production database correctness.</div>
+        <div class="story-meta"><span class="chip">ubuntu.com</span><div class="ref-links"><a class="ref-link swe" href="https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected" target="_blank">ubuntu.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/" target="_blank">Anthropic Opus 4.8 / Sonnet 5 Regression: Models Emit Malformed Tool Calls with Extraneous Schema Fields</a></div>
+        <div class="story-body">Recent Anthropic models (Opus 4.8, Sonnet 5) are producing malformed tool calls that append extraneous fields non-conformant with expected schemas when interacting with structured editing tools. The regression appears linked to training environments that tolerate looser tool call schemas. Teams building structured output pipelines on Claude need stronger validation harnesses to compensate.</div>
+        <div class="story-meta"><span class="chip">lucumr.pocoo.org</span><div class="ref-links"><a class="ref-link swe" href="https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/" target="_blank">lucumr.pocoo.org ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.ubicloud.com/blog/postgresql-and-the-oom-killer-why-we-use-strict-memory-overcommit" target="_blank">PostgreSQL + OOM Killer: Why Strict Memory Overcommit Is Non-Negotiable in Production</a></div>
+        <div class="story-body">Ubicloud documents why strict memory overcommit is essential for PostgreSQL — it allows graceful allocation failure handling rather than catastrophic OOM kills across all connections. A kernel bug temporarily disabled this configuration in their environment, demonstrating the fragility of the default Linux overcommit behaviour for database workloads. A must-read for anyone running PostgreSQL in containerised or shared-memory environments.</div>
+        <div class="story-meta"><span class="chip">ubicloud.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.ubicloud.com/blog/postgresql-and-the-oom-killer-why-we-use-strict-memory-overcommit" target="_blank">ubicloud.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash/" target="_blank">Meta and SpaceX Selling Excess AI Compute Signals Potential Capex Revision Pressure on Hyperscalers</a></div>
+        <div class="story-body">Meta is exploring a cloud infrastructure business to monetize excess GPU capacity and hosted AI models for enterprise customers, following SpaceX and CoreWeave&#x27;s model of treating data center ownership as a revenue asset. If two of the largest AI compute buyers are selling surplus capacity, it may foreshadow downward capex revisions across hyperscalers — though anyone willing to sell finds buyers immediately, suggesting demand absorption is still holding. Relevant for AMZN, MSFT, GOOGL, and NVDA positions.</div>
+        <div class="story-meta"><span class="chip">techcrunch.com</span><span class="chip">cloudedjudgement.substack.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/02/nvidia-plans-to-offer-start-up-customers-access-to-revenue-sharing-deals.html" target="_blank">Nvidia Launches Revenue-Sharing Program with AI Cloud Providers for Startup Compute Access; Plans $20B Debt Raise</a></div>
+        <div class="story-body">Nvidia is offering startups access to GPU infrastructure through its cloud provider network under a revenue and equity-sharing model, helping firms bypass liquidity constraints. Nvidia separately plans to raise at least $20B in debt for general corporate purposes. The revenue-sharing structure deepens Nvidia&#x27;s lock-in across the AI stack beyond hardware sales.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.cnbc.com/2026/07/02/nvidia-plans-to-offer-start-up-customers-access-to-revenue-sharing-deals.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/02/amazon-has-deployed-enough-satellites-to-launch-leo-service-this-year.html" target="_blank">Amazon Leo Satellite Constellation (390+ Satellites) Ready to Launch Commercial Service</a></div>
+        <div class="story-body">Amazon&#x27;s Project Kuiper / Leo constellation now exceeds 390 satellites — sufficient to begin commercial service later in 2026, initially limited to select geographic regions. Enterprise preview has been live since last year. This directly competes with SpaceX Starlink and is relevant to AMZN&#x27;s long-term infrastructure revenue thesis.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.cnbc.com/2026/07/02/amazon-has-deployed-enough-satellites-to-launch-leo-service-this-year.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/" target="_blank">Better Models: Worse Tools — Anthropic Model Regression in Structured Tool Calls ↗</a></div>
+          <div class="dive-why">Primary engineering post documenting a reproducible regression in Opus 4.8 and Sonnet 5 tool call schema conformance — directly actionable for any team building structured output pipelines or agentic systems on Claude.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected" target="_blank">Hunting a 16-year-old SQLite WAL Bug with TLA+: Is dqlite Affected? ↗</a></div>
+          <div class="dive-why">Canonical example of TLA+ formal verification applied to a real production database correctness problem; the SQLite WAL bug is an active patch with broad infrastructure implications for anyone running SQLite-backed systems.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.reco.ai/blog/claude-mythos-saas-security-risks" target="_blank">Claude Mythos and SaaS Security: AI-Driven Vulnerability Chaining Compresses Discovery-to-Exploit Gap to Minutes ↗</a></div>
+          <div class="dive-why">Detailed analysis of how AI-powered vuln chaining via Project Glasswing changes the threat model for non-human identities and SaaS misconfigurations — directly relevant to IAM/zero-trust posture assessment.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 06 Jul 2026 · sources: tldrnewsletter.com, arstechnica.com, techcrunch.com, therundown.ai, testingcatalog.com, reco.ai, detect.fyi, crowdstrike.com, pymnts.com, insurancejournal.com, squareup.com, cnbc.com, ubuntu.com, lucumr.pocoo.org, ubicloud.com, cloudedjudgement.substack.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

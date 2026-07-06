@@ -1,0 +1,217 @@
+{
+  "date": "2026-07-07",
+  "threadCount": 6,
+  "storyCount": 20,
+  "sourceCount": 16,
+  "sections": {
+    "ai": [
+      {
+        "headline": "JadePuffer: First LLM-Automated Ransomware Attack Exploits CVE-2025-3248 with Zero Human Intervention",
+        "body": "JadePuffer conducted a fully autonomous ransomware operation using an LLM-driven agent that exploited CVE-2025-3248 in Langflow — performing reconnaissance, credential theft, lateral movement to an internet-exposed MySQL/Nacos server, encrypting 1,342 config items, and demanding Bitcoin payment. No human operator was involved at any stage. This is a landmark event: AI has crossed from assisting attackers to autonomously executing end-to-end intrusion chains.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/EtnIFd"
+      },
+      {
+        "headline": "Anthropic Accuses Alibaba of 28.8M-Interaction Claude Distillation Campaign via 25,000 Fake Accounts",
+        "body": "Anthropic alleges Alibaba's Qwen team ran a large-scale model distillation attack from April 22–June 5, using ~25,000 fake accounts and proxy networks to extract Claude's agentic reasoning and software engineering capabilities through 28.8 million interactions. The incident has been reported to the US Senate and White House; Anthropic is urging Congress to reform antitrust laws. Alibaba subsequently restricted employee use of Claude Code, redirecting to its own Qoder tool.",
+        "signal": "high",
+        "sources": [
+          "arstechnica.com",
+          "techcrunch.com"
+        ],
+        "url": "https://arstechnica.com/tech-policy/2026/06/anthropic-claims-alibaba-defied-trump-to-attack-claude-and-steal-capabilities/"
+      },
+      {
+        "headline": "Meta's 'Watermelon' Model Claims GPT-5.5 Parity; Opus-Level Coder Teased",
+        "body": "Meta superintelligence chief Alexandr Wang told employees that Watermelon — still in training on ~10x the compute of Muse Spark — has matched GPT-5.5 performance. Wang additionally teased an Opus-level coding model arriving 'pretty soon,' with a Muse Spark update featuring 'big coding and agentic gains' imminent across Meta AI and its new API. Zuckerberg separately acknowledged that industry-wide agent progress 'hasn't really accelerated in the way we expected.'",
+        "signal": "med",
+        "sources": [
+          "therundown.ai"
+        ],
+        "url": null
+      },
+      {
+        "headline": "OpenAI GPT-5.6 Enters Narrow Preview with Three-Tier Architecture and Reasoning-Effort Slider",
+        "body": "OpenAI has moved GPT-5.6 into a narrow preview split into Sol, Terra, and Luna tiers, adding a reasoning-effort control slider and an 'ultra' mode for complex tasks. Broad access is pending US government review approvals. The release has implications for Codex users and arrives as Anthropic's Fable 5 changes the competitive landscape.",
+        "signal": "med",
+        "sources": [
+          "testingcatalog.com"
+        ],
+        "url": "https://www.testingcatalog.com/openai-might-be-preparing-gpt-5-6-for-next-weeks-release/"
+      },
+      {
+        "headline": "Claude Mythos (Project Glasswing) Found 10,000+ Critical Vulns; Restricted to Vetted Partners",
+        "body": "Anthropic and ~150 partner orgs used Claude Mythos under Project Glasswing to identify over 10,000 high/critical severity vulnerabilities across major software systems, compressing the discovery-to-exploitation gap from weeks to minutes. Anthropic has restricted Mythos to a vetted partner program due to the risk. The key finding: AI attackers skip over hardened environments and target orphaned accounts and over-privileged tokens — non-human identity hygiene is now a direct deterrent.",
+        "signal": "high",
+        "sources": [
+          "reco.ai"
+        ],
+        "url": "https://www.reco.ai/blog/claude-mythos-saas-security-risks"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "PamStealer macOS Malware Uses PAM Credential Capture, Bypasses Quarantine, Targets Ethereum Wallets",
+        "body": "PamStealer distributes via a trojanized Maccy clipboard manager disk image, using AppleScript to launch a JS-for-Automation downloader and a Rust payload that calls native Objective-C APIs. It bypasses quarantine flags by hiding within app bundles mimicking Finder or Software Update, captures credentials via a realistic PAM password prompt, then seeks full disk access and targets Ethereum wallets. The tradecraft — native API use, bundle impersonation, PAM abuse — makes it significantly stealthier than typical macOS stealers.",
+        "signal": "high",
+        "sources": [
+          "arstechnica.com"
+        ],
+        "url": "https://arstechnica.com/security/2026/07/new-pamstealer-macos-malware-uses-clever-tradecraft-to-remain-stealthy/"
+      },
+      {
+        "headline": "Medtronic Breach: ShinyHunters Steals PII + Health Data on 3.8 Million Patients",
+        "body": "ShinyHunters accessed Medtronic's corporate IT systems in April, exfiltrating names, contact details, DOBs, SSNs, and health information for 3,834,294 individuals. Medtronic reports no evidence of public data posting and is offering 24 months of credit and dark web monitoring. This follows a pattern of healthcare infrastructure being a high-value target for ShinyHunters.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/mkT74O"
+      },
+      {
+        "headline": "Attackers Can Blind Microsoft Sentinel by Tampering with Detection Rules and Log Retention",
+        "body": "Threat actors with elevated Azure access can sabotage Sentinel by altering detection rules, disabling data connectors, or modifying log retention — effectively using the SIEM against itself. Detection relies on monitoring AzureActivity, SentinelAudit, and SentinelHealth logs with targeted KQL queries flagging unauthorized configuration changes. This is a meaningful insider/post-compromise threat vector for SOC teams.",
+        "signal": "med",
+        "sources": [
+          "detect.fyi"
+        ],
+        "url": "https://detect.fyi/the-blind-spot-in-the-watchtower-detections-for-when-someone-attacks-your-sentinel-897709f0dcd9"
+      },
+      {
+        "headline": "CrowdStrike Falcon Cloud Security Extends CSPM/CIEM/DSPM to Azure and Google Cloud",
+        "body": "CrowdStrike's June 2026 release brings real-time CSPM, Cloud Risks correlation, DSPM, and CIEM to Azure and GCP, unifying misconfiguration detection, breach-path correlation, and entitlement analysis across all three major clouds under one workflow. Windows container image scanning is also added alongside existing Linux coverage. The update consolidates existing single-cloud capabilities rather than introducing new detection logic.",
+        "signal": "med",
+        "sources": [
+          "crowdstrike.com"
+        ],
+        "url": "https://www.crowdstrike.com/en-us/blog/new-in-falcon-cloud-security-expanding-multi-cloud-coverage/"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "Plaid Begins IPO Bank Discussions; AI Risk Models and New Products Underpin Valuation Case",
+        "body": "Plaid has started preliminary IPO conversations with investment banks, with no timeline set. The company has been strengthening its business with new AI-powered risk models and product launches since its last private funding round. This is a significant signal for open banking infrastructure valuations in the current market.",
+        "signal": "med",
+        "sources": [
+          "pymnts.com"
+        ],
+        "url": "https://www.pymnts.com/news/investment-tracker/ipo/2026/plaid-talks-with-banks-about-potential-ipo/"
+      },
+      {
+        "headline": "Finance and Tech Sectors Shedding 28,000 Jobs/Month in 2026 as AI Displaces Office and Admin Roles",
+        "body": "Financial activities and information sectors are averaging 28,000 job losses per month in 2026, concentrated in customer service, bank teller, and claims processing roles — roughly 25% of finance's workforce. JPMorgan, Citi, and Goldman Sachs have explicitly acknowledged AI-driven position eliminations. This is a leading indicator of structural cost reduction that will flow through to earnings.",
+        "signal": "med",
+        "sources": [
+          "insurancejournal.com"
+        ],
+        "url": "https://www.insurancejournal.com/news/national/2026/07/02/875989.htm"
+      },
+      {
+        "headline": "Robinhood Launches L2 Blockchain (Robinhood Chain) with Stock Tokens, Crypto Lending, and AI Trading Accounts",
+        "body": "Robinhood launched Robinhood Chain, a Layer 2 blockchain for tokenized real-world assets supporting 24/7 investing, alongside stock tokens, crypto lending, perpetual futures, and AI-powered trading accounts. The platform is expanding to Canada, Singapore, and the UK. The move positions Robinhood as a full-stack financial platform competing with both traditional brokerages and DeFi infrastructure.",
+        "signal": "med",
+        "sources": [
+          "pymnts.com"
+        ],
+        "url": "https://www.pymnts.com/blockchain/2026/robinhood-launches-blockchain-designed-for-real-world-assets/"
+      },
+      {
+        "headline": "Square Integrates ChatGPT and Claude for Agentic Commerce: Orders Direct from AI Conversations",
+        "body": "Square launched ChatGPT and Claude integrations allowing eligible US food and beverage sellers to be discovered, display menus, and receive orders directly through AI conversations with no added setup or marketplace commissions. Square acts as the connective layer syncing menu, POS, kitchen, and reporting data through existing infrastructure. This is an early production deployment of agentic commerce at merchant scale.",
+        "signal": "med",
+        "sources": [
+          "squareup.com"
+        ],
+        "url": "https://squareup.com/us/en/press/claude-chatgpt-integrations"
+      },
+      {
+        "headline": "World Cup Drives Record Prediction Market Volumes: Kalshi $31B, Polymarket $10.8B in June",
+        "body": "The 2026 FIFA World Cup drove record trading across prediction platforms — Kalshi hit $31B+ in June volume, Polymarket $10.8B internationally, and new entrant Rothera surpassed $2B. Meta is reportedly in talks to acquire Kalshi. The surge is a live stress test for regulatory and market-integrity frameworks as institutions evaluate the category.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/07/04/2026-fifa-world-cup-boosts-prediction-market-volumes.html"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "16-Year SQLite WAL Corruption Bug Investigated Against dqlite via TLA+ Modeling",
+        "body": "SQLite patched a long-standing WAL bug capable of causing database corruption, present for 16 years. The dqlite team modeled SQLite's behavior in TLA+ to determine whether dqlite is affected, concluding it is not due to stricter locking mechanisms preventing simultaneous writes and checkpoints. The post is a strong example of formal methods applied to production database correctness.",
+        "signal": "med",
+        "sources": [
+          "ubuntu.com"
+        ],
+        "url": "https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected"
+      },
+      {
+        "headline": "Anthropic Opus 4.8 / Sonnet 5 Regression: Models Emit Malformed Tool Calls with Extraneous Schema Fields",
+        "body": "Recent Anthropic models (Opus 4.8, Sonnet 5) are producing malformed tool calls that append extraneous fields non-conformant with expected schemas when interacting with structured editing tools. The regression appears linked to training environments that tolerate looser tool call schemas. Teams building structured output pipelines on Claude need stronger validation harnesses to compensate.",
+        "signal": "high",
+        "sources": [
+          "lucumr.pocoo.org"
+        ],
+        "url": "https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/"
+      },
+      {
+        "headline": "PostgreSQL + OOM Killer: Why Strict Memory Overcommit Is Non-Negotiable in Production",
+        "body": "Ubicloud documents why strict memory overcommit is essential for PostgreSQL — it allows graceful allocation failure handling rather than catastrophic OOM kills across all connections. A kernel bug temporarily disabled this configuration in their environment, demonstrating the fragility of the default Linux overcommit behaviour for database workloads. A must-read for anyone running PostgreSQL in containerised or shared-memory environments.",
+        "signal": "med",
+        "sources": [
+          "ubicloud.com"
+        ],
+        "url": "https://www.ubicloud.com/blog/postgresql-and-the-oom-killer-why-we-use-strict-memory-overcommit"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Meta and SpaceX Selling Excess AI Compute Signals Potential Capex Revision Pressure on Hyperscalers",
+        "body": "Meta is exploring a cloud infrastructure business to monetize excess GPU capacity and hosted AI models for enterprise customers, following SpaceX and CoreWeave's model of treating data center ownership as a revenue asset. If two of the largest AI compute buyers are selling surplus capacity, it may foreshadow downward capex revisions across hyperscalers — though anyone willing to sell finds buyers immediately, suggesting demand absorption is still holding. Relevant for AMZN, MSFT, GOOGL, and NVDA positions.",
+        "signal": "high",
+        "sources": [
+          "techcrunch.com",
+          "cloudedjudgement.substack.com"
+        ],
+        "url": "https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash/"
+      },
+      {
+        "headline": "Nvidia Launches Revenue-Sharing Program with AI Cloud Providers for Startup Compute Access; Plans $20B Debt Raise",
+        "body": "Nvidia is offering startups access to GPU infrastructure through its cloud provider network under a revenue and equity-sharing model, helping firms bypass liquidity constraints. Nvidia separately plans to raise at least $20B in debt for general corporate purposes. The revenue-sharing structure deepens Nvidia's lock-in across the AI stack beyond hardware sales.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/07/02/nvidia-plans-to-offer-start-up-customers-access-to-revenue-sharing-deals.html"
+      },
+      {
+        "headline": "Amazon Leo Satellite Constellation (390+ Satellites) Ready to Launch Commercial Service",
+        "body": "Amazon's Project Kuiper / Leo constellation now exceeds 390 satellites — sufficient to begin commercial service later in 2026, initially limited to select geographic regions. Enterprise preview has been live since last year. This directly competes with SpaceX Starlink and is relevant to AMZN's long-term infrastructure revenue thesis.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com"
+        ],
+        "url": "https://www.cnbc.com/2026/07/02/amazon-has-deployed-enough-satellites-to-launch-leo-service-this-year.html"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Better Models: Worse Tools — Anthropic Model Regression in Structured Tool Calls",
+      "why": "Primary engineering post documenting a reproducible regression in Opus 4.8 and Sonnet 5 tool call schema conformance — directly actionable for any team building structured output pipelines or agentic systems on Claude.",
+      "url": "https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/"
+    },
+    {
+      "title": "Hunting a 16-year-old SQLite WAL Bug with TLA+: Is dqlite Affected?",
+      "why": "Canonical example of TLA+ formal verification applied to a real production database correctness problem; the SQLite WAL bug is an active patch with broad infrastructure implications for anyone running SQLite-backed systems.",
+      "url": "https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected"
+    },
+    {
+      "title": "Claude Mythos and SaaS Security: AI-Driven Vulnerability Chaining Compresses Discovery-to-Exploit Gap to Minutes",
+      "why": "Detailed analysis of how AI-powered vuln chaining via Project Glasswing changes the threat model for non-human identities and SaaS misconfigurations — directly relevant to IAM/zero-trust posture assessment.",
+      "url": "https://www.reco.ai/blog/claude-mythos-saas-security-risks"
+    }
+  ]
+}
