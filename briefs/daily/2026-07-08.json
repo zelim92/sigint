@@ -1,0 +1,181 @@
+{
+  "date": "2026-07-08",
+  "threadCount": 6,
+  "storyCount": 15,
+  "sourceCount": 14,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Anthropic discovers emergent 'J-space' workspace inside Claude — not designed, but critical for multi-step reasoning",
+        "body": "Anthropic's research identifies a small internal neural pattern set ('J-space') that acts as Claude's working memory for deliberate reasoning — it emerged during training without explicit design, mirroring neuroscience's global workspace theory of consciousness. Ablating J-space collapses multi-step problem-solving while leaving basic chat and recall intact. Critically, editing J-space activations (e.g. swapping an internal 'spider' concept for 'ant') directly flips outputs, opening a mechanistic path to detecting AI misbehavior before it surfaces in text.",
+        "signal": "high",
+        "sources": [
+          "anthropic.com",
+          "tldrnewsletter.com",
+          "rundownai.com"
+        ],
+        "url": "https://www.anthropic.com/research/global-workspace"
+      },
+      {
+        "headline": "Replit's continual learning stack for production agents: ViBench + Telescope",
+        "body": "Since developers can't retrain closed frontier model weights in production, Replit built harness-level and context-level continual learning instead. ViBench evaluates functional app-building success from natural-language specs; Telescope auto-clusters production failure traces into actionable issue groups. This is a rare, concrete engineering case study on keeping agentic systems improving post-deployment without model access.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/9cFmcx"
+      },
+      {
+        "headline": "Tencent open-sources Hy3: 295B MoE model matching flagships at a fraction of the active parameter cost",
+        "body": "Hy3 activates only 21B of its 295B parameters per forward pass, outperforming similarly-sized models and rivalling open-source flagships with 2–5× more active parameters. It is available on Hugging Face and free on OpenRouter until July 21. Continued Chinese open-source releases at this capability level accelerate the margin compression dynamic already visible with GLM 5.2.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com",
+          "simonwillison.net"
+        ],
+        "url": "https://simonwillison.net/2026/Jul/6/hy3/"
+      },
+      {
+        "headline": "AI training shifts from compute-limited to data-limited: $100B/yr data spend projected by 2030",
+        "body": "Public internet data is now insufficient for frontier AI training, repositioning proprietary datasets as the primary strategic moat. AI labs are projected to exceed $100B/year in data acquisition by 2030, potentially spawning a 'Stargate for Data' build-out analogous to current compute infrastructure investments. This is a direct upstream risk/opportunity for cloud providers (AMZN, MSFT, GOOGL) who control large proprietary data reservoirs.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/yOPIwd"
+      },
+      {
+        "headline": "Architectural comparison: GPT-5 vs Gemini 3 vs Claude Opus 4.8 — MoE, native multimodality, and context strategies diverge",
+        "body": "Gemini uses native MoE and trains all modalities (text, image, audio, video) jointly from inception, enabling 10.5-hour video ingestion in a single pass. GPT-5 uses a runtime router selecting between sub-models; Claude maintains a dense, text-first architecture with strong vision (3.75MP). These architectural forks produce predictable, consistent behavioral differences that persist across model generations — relevant for platform selection in enterprise AI deployments.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "sec": [
+      {
+        "headline": "SKILLCLOAK: malicious AI agent skills evade static scanners >90% of the time via self-extracting packing",
+        "body": "Researchers demonstrate that trivial byte changes plus a self-extracting packing technique (SKILLCLOAK) bypass eight popular static scanners in over 90% of tests — a direct threat to any agentic pipeline that relies on static analysis for skill/plugin vetting. Sandboxed runtime monitoring (SKILLDETONATE) catches most cloaked skills, signalling that dynamic analysis is now non-optional for agentic security. Directly relevant to any IAM or fraud team deploying AI agents with third-party skill ecosystems.",
+        "signal": "high",
+        "sources": [
+          "thehackernews.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://thehackernews.com/2026/07/new-skillcloak-technique-lets-malicious.html"
+      },
+      {
+        "headline": "FortiBleed exploitation: UK government credentials sold on dark web for $60K",
+        "body": "Russian-speaking (but apparently non-state) threat actors exploited FortiBleed vulnerabilities to compromise multiple UK government officials' email accounts; credentials are being sold on dark web markets at $60K per set. FortiBleed follows the pattern of Fortinet VPN/SSL appliance vulnerabilities being harvested for credential theft — patch cadence and MFA enforcement on government SSO remain the primary mitigations.",
+        "signal": "high",
+        "sources": [
+          "telegraph.co.uk",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.telegraph.co.uk/news/2026/07/05/russian-hackers-steal-government-logins/"
+      },
+      {
+        "headline": "Three identity models for AI agents: borrow user identity, own API key, or own IdP identity — with SPIFFE/SPIRE and Okta Cross App Access as plumbing",
+        "body": "A practitioner post maps the three structural approaches to granting AI agents identity: delegating the invoking user's token, issuing the agent a dedicated API key/service account, or provisioning the agent a full IdP identity (the direction cloud providers are moving with managed workload identity). Okta Cross App Access, SPIFFE/SPIRE, and agent control planes are identified as the key connective tissue. This is the clearest taxonomy of non-human identity patterns currently in circulation — directly actionable for IAM architects.",
+        "signal": "high",
+        "sources": [
+          "kanenarraway.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://kanenarraway.com/posts/agent-identity-models/"
+      },
+      {
+        "headline": "Veil#Drop: Blogspot-hosted PowerShell loader delivers PureLog Stealer via XOR-encoded in-memory .NET payloads",
+        "body": "A multi-stage attack chain begins with a JavaScript file masquerading as a document, uses Windows Script Host to pull stages from attacker-controlled Blogspot pages, and loads XOR-decoded .NET assemblies entirely in-memory via reflection — never touching disk. The campaign uses LOLBIN fallbacks, multi-extension filenames, decoy content, and cleanup of the initial launcher before deploying PureLog Stealer for browser credentials, cookies, and crypto wallets. Fintech SOC teams should treat Blogspot as an untrusted payload host and prioritise in-memory execution detection.",
+        "signal": "med",
+        "sources": [
+          "securonix.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.securonix.com/blog/veildrop-blogspot-hosted-powershell-loader/"
+      },
+      {
+        "headline": "LLM-generated vulnerability reports are flooding triage queues — coordinated disclosure's scarcity assumption is broken",
+        "body": "Filippo Valsorda argues that LLMs now surface security issues at the same rate for attackers and defenders, eliminating the information asymmetry that justified prioritising coordinated disclosure. The operational bottleneck has shifted from finding vulnerabilities to triaging the flood of technically valid but low-impact LLM-generated reports. Security teams need triage automation and clearer impact-severity criteria; the coordinated disclosure SLA model needs rethinking.",
+        "signal": "med",
+        "sources": [
+          "filippo.io",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://words.filippo.io/vuln-reports/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Small LLM as a RAG context pruner: 68% chunk discard with 96% recall maintained",
+        "body": "Kapa.ai fine-tuned a small, cheap LLM specifically to judge relevance of retrieved RAG chunks before passing them to a larger generation model, discarding 68% of chunks while maintaining 96% recall. This directly reduces inference cost and latency in production Q&A systems with large, heterogeneous knowledge bases. The pattern generalises to any retrieval-augmented pipeline where context window cost is a budget constraint.",
+        "signal": "med",
+        "sources": [
+          "kapa.ai",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.kapa.ai/blog/how-we-prune-rag-context"
+      },
+      {
+        "headline": "PyTorch Monarch distributed training ported to AMD ROCm",
+        "body": "Monarch's single-controller distributed training model, which collapses the per-worker Python interpreter overhead of multi-controller approaches, now runs on AMD ROCm GPUs. This is architecturally significant because it reduces the NVIDIA lock-in for large-scale LLM training infrastructure and is relevant for TSMC (GPU substrate supplier to both) and AMZN/MSFT (cloud GPU fleet diversification).",
+        "signal": "med",
+        "sources": [
+          "pytorch.org",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://pytorch.org/blog/bringing-pytorch-monarch-to-amd-gpus-single-controller-distributed-training-on-rocm/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Nvidia Kyber rack system delayed 12+ months to 2028 on manufacturing snags — Rubin Ultra roadmap slips",
+        "body": "Nvidia's Kyber rack-scale cabinet (144 Rubin Ultra chips operating as a single compute unit) is delayed over a year due to circuit board manufacturing difficulties, a direct signal that Nvidia's annual release cadence is hitting hard physical limits. This is the first concrete evidence of roadmap slippage in the Rubin generation and may shift hyperscaler AI capex timing. Watch for downstream effects on TSMC advanced packaging utilisation.",
+        "signal": "high",
+        "sources": [
+          "cnbc.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.cnbc.com/2026/07/06/nvidia-kyber-rack-system-delays-manufacturing-taiwan-rubin-chips-.html"
+      },
+      {
+        "headline": "Microsoft Xbox: 3,000+ layoffs, studio divestitures, 3% margin — part of 6,400-cut broader restructure",
+        "body": "Xbox CEO Asha Sharma declared it 'the most significant restructure' in Xbox history: 1,600 immediate layoffs, 1,250 more over the next year, and divestiture of 4–5 studios; Game Pass has 30M subscribers vs. the 77M projected for this year. The restructuring is part of Microsoft's broader 6,400-job cut program as massive AI capex weighs on margins — MSFT is the worst-performing megacap tech stock YTD. Investors should monitor whether AI infrastructure spend is cannibalising the consumer/gaming P&L.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com",
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.morningbrew.com/c/R_H"
+      },
+      {
+        "headline": "Apple–Broadcom partnership extended to 2031 with multi-generation custom AI ASICs; Apple AI servers targeted for 2027",
+        "body": "Apple and Broadcom extended their ASIC co-development agreement through 2031, covering multiple product generations of Apple-custom silicon optimised for AI inference workloads. Apple plans to deploy its own advanced AI server infrastructure as early as 2027, signalling a serious push toward vertically integrated AI compute — a direct competitive dynamic for MSFT Azure and AMZN AWS cloud AI services.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/CnPNuf"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "A Global Workspace in Language Models — Anthropic Research",
+      "why": "Primary Anthropic research paper introducing J-space: a mechanistically interpretable, emergent internal reasoning structure in Claude with direct implications for AI safety monitoring and non-human identity/behaviour auditing.",
+      "url": "https://www.anthropic.com/research/global-workspace"
+    },
+    {
+      "title": "Three Ways to Give an AI Agent an Identity",
+      "why": "Practitioner-level taxonomy of non-human identity models for agentic systems (user delegation, API key, IdP identity), naming specific standards (SPIFFE/SPIRE, Okta Cross App Access) — essential reference for IAM architects designing agentic pipelines.",
+      "url": "https://kanenarraway.com/posts/agent-identity-models/"
+    },
+    {
+      "title": "Veil#Drop: Blogspot-Hosted PowerShell Loader — Securonix Technical Analysis",
+      "why": "Full technical breakdown of an in-memory, disk-less .NET payload delivery chain abusing legitimate CDN infrastructure; directly actionable for SOC detection engineering in fintech environments targeting credential and cookie theft.",
+      "url": "https://www.securonix.com/blog/veildrop-blogspot-hosted-powershell-loader/"
+    }
+  ]
+}

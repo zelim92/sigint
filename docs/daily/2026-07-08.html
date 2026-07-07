@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 08 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 08 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.anthropic.com/research/global-workspace" target="_blank">Anthropic discovers emergent &#x27;J-space&#x27; workspace inside Claude — not designed, but critical for multi-step reasoning</a></div>
+        <div class="story-body">Anthropic&#x27;s research identifies a small internal neural pattern set (&#x27;J-space&#x27;) that acts as Claude&#x27;s working memory for deliberate reasoning — it emerged during training without explicit design, mirroring neuroscience&#x27;s global workspace theory of consciousness. Ablating J-space collapses multi-step problem-solving while leaving basic chat and recall intact. Critically, editing J-space activations (e.g. swapping an internal &#x27;spider&#x27; concept for &#x27;ant&#x27;) directly flips outputs, opening a mechanistic path to detecting AI misbehavior before it surfaces in text.</div>
+        <div class="story-meta"><span class="chip">anthropic.com</span><span class="chip">tldrnewsletter.com</span><span class="chip">rundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/research/global-workspace" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/9cFmcx" target="_blank">Replit&#x27;s continual learning stack for production agents: ViBench + Telescope</a></div>
+        <div class="story-body">Since developers can&#x27;t retrain closed frontier model weights in production, Replit built harness-level and context-level continual learning instead. ViBench evaluates functional app-building success from natural-language specs; Telescope auto-clusters production failure traces into actionable issue groups. This is a rare, concrete engineering case study on keeping agentic systems improving post-deployment without model access.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/9cFmcx" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://simonwillison.net/2026/Jul/6/hy3/" target="_blank">Tencent open-sources Hy3: 295B MoE model matching flagships at a fraction of the active parameter cost</a></div>
+        <div class="story-body">Hy3 activates only 21B of its 295B parameters per forward pass, outperforming similarly-sized models and rivalling open-source flagships with 2–5× more active parameters. It is available on Hugging Face and free on OpenRouter until July 21. Continued Chinese open-source releases at this capability level accelerate the margin compression dynamic already visible with GLM 5.2.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">simonwillison.net</span><div class="ref-links"><a class="ref-link ai" href="https://simonwillison.net/2026/Jul/6/hy3/" target="_blank">simonwillison.net ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/yOPIwd" target="_blank">AI training shifts from compute-limited to data-limited: $100B/yr data spend projected by 2030</a></div>
+        <div class="story-body">Public internet data is now insufficient for frontier AI training, repositioning proprietary datasets as the primary strategic moat. AI labs are projected to exceed $100B/year in data acquisition by 2030, potentially spawning a &#x27;Stargate for Data&#x27; build-out analogous to current compute infrastructure investments. This is a direct upstream risk/opportunity for cloud providers (AMZN, MSFT, GOOGL) who control large proprietary data reservoirs.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/yOPIwd" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Architectural comparison: GPT-5 vs Gemini 3 vs Claude Opus 4.8 — MoE, native multimodality, and context strategies diverge</div>
+        <div class="story-body">Gemini uses native MoE and trains all modalities (text, image, audio, video) jointly from inception, enabling 10.5-hour video ingestion in a single pass. GPT-5 uses a runtime router selecting between sub-models; Claude maintains a dense, text-first architecture with strong vision (3.75MP). These architectural forks produce predictable, consistent behavioral differences that persist across model generations — relevant for platform selection in enterprise AI deployments.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/07/new-skillcloak-technique-lets-malicious.html" target="_blank">SKILLCLOAK: malicious AI agent skills evade static scanners &gt;90% of the time via self-extracting packing</a></div>
+        <div class="story-body">Researchers demonstrate that trivial byte changes plus a self-extracting packing technique (SKILLCLOAK) bypass eight popular static scanners in over 90% of tests — a direct threat to any agentic pipeline that relies on static analysis for skill/plugin vetting. Sandboxed runtime monitoring (SKILLDETONATE) catches most cloaked skills, signalling that dynamic analysis is now non-optional for agentic security. Directly relevant to any IAM or fraud team deploying AI agents with third-party skill ecosystems.</div>
+        <div class="story-meta"><span class="chip">thehackernews.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/07/new-skillcloak-technique-lets-malicious.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.telegraph.co.uk/news/2026/07/05/russian-hackers-steal-government-logins/" target="_blank">FortiBleed exploitation: UK government credentials sold on dark web for $60K</a></div>
+        <div class="story-body">Russian-speaking (but apparently non-state) threat actors exploited FortiBleed vulnerabilities to compromise multiple UK government officials&#x27; email accounts; credentials are being sold on dark web markets at $60K per set. FortiBleed follows the pattern of Fortinet VPN/SSL appliance vulnerabilities being harvested for credential theft — patch cadence and MFA enforcement on government SSO remain the primary mitigations.</div>
+        <div class="story-meta"><span class="chip">telegraph.co.uk</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.telegraph.co.uk/news/2026/07/05/russian-hackers-steal-government-logins/" target="_blank">telegraph.co.uk ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://kanenarraway.com/posts/agent-identity-models/" target="_blank">Three identity models for AI agents: borrow user identity, own API key, or own IdP identity — with SPIFFE/SPIRE and Okta Cross App Access as plumbing</a></div>
+        <div class="story-body">A practitioner post maps the three structural approaches to granting AI agents identity: delegating the invoking user&#x27;s token, issuing the agent a dedicated API key/service account, or provisioning the agent a full IdP identity (the direction cloud providers are moving with managed workload identity). Okta Cross App Access, SPIFFE/SPIRE, and agent control planes are identified as the key connective tissue. This is the clearest taxonomy of non-human identity patterns currently in circulation — directly actionable for IAM architects.</div>
+        <div class="story-meta"><span class="chip">kanenarraway.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://kanenarraway.com/posts/agent-identity-models/" target="_blank">kanenarraway.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.securonix.com/blog/veildrop-blogspot-hosted-powershell-loader/" target="_blank">Veil#Drop: Blogspot-hosted PowerShell loader delivers PureLog Stealer via XOR-encoded in-memory .NET payloads</a></div>
+        <div class="story-body">A multi-stage attack chain begins with a JavaScript file masquerading as a document, uses Windows Script Host to pull stages from attacker-controlled Blogspot pages, and loads XOR-decoded .NET assemblies entirely in-memory via reflection — never touching disk. The campaign uses LOLBIN fallbacks, multi-extension filenames, decoy content, and cleanup of the initial launcher before deploying PureLog Stealer for browser credentials, cookies, and crypto wallets. Fintech SOC teams should treat Blogspot as an untrusted payload host and prioritise in-memory execution detection.</div>
+        <div class="story-meta"><span class="chip">securonix.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.securonix.com/blog/veildrop-blogspot-hosted-powershell-loader/" target="_blank">securonix.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://words.filippo.io/vuln-reports/" target="_blank">LLM-generated vulnerability reports are flooding triage queues — coordinated disclosure&#x27;s scarcity assumption is broken</a></div>
+        <div class="story-body">Filippo Valsorda argues that LLMs now surface security issues at the same rate for attackers and defenders, eliminating the information asymmetry that justified prioritising coordinated disclosure. The operational bottleneck has shifted from finding vulnerabilities to triaging the flood of technically valid but low-impact LLM-generated reports. Security teams need triage automation and clearer impact-severity criteria; the coordinated disclosure SLA model needs rethinking.</div>
+        <div class="story-meta"><span class="chip">filippo.io</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://words.filippo.io/vuln-reports/" target="_blank">words.filippo.io ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.kapa.ai/blog/how-we-prune-rag-context" target="_blank">Small LLM as a RAG context pruner: 68% chunk discard with 96% recall maintained</a></div>
+        <div class="story-body">Kapa.ai fine-tuned a small, cheap LLM specifically to judge relevance of retrieved RAG chunks before passing them to a larger generation model, discarding 68% of chunks while maintaining 96% recall. This directly reduces inference cost and latency in production Q&amp;A systems with large, heterogeneous knowledge bases. The pattern generalises to any retrieval-augmented pipeline where context window cost is a budget constraint.</div>
+        <div class="story-meta"><span class="chip">kapa.ai</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://www.kapa.ai/blog/how-we-prune-rag-context" target="_blank">kapa.ai ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://pytorch.org/blog/bringing-pytorch-monarch-to-amd-gpus-single-controller-distributed-training-on-rocm/" target="_blank">PyTorch Monarch distributed training ported to AMD ROCm</a></div>
+        <div class="story-body">Monarch&#x27;s single-controller distributed training model, which collapses the per-worker Python interpreter overhead of multi-controller approaches, now runs on AMD ROCm GPUs. This is architecturally significant because it reduces the NVIDIA lock-in for large-scale LLM training infrastructure and is relevant for TSMC (GPU substrate supplier to both) and AMZN/MSFT (cloud GPU fleet diversification).</div>
+        <div class="story-meta"><span class="chip">pytorch.org</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://pytorch.org/blog/bringing-pytorch-monarch-to-amd-gpus-single-controller-distributed-training-on-rocm/" target="_blank">pytorch.org ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/06/nvidia-kyber-rack-system-delays-manufacturing-taiwan-rubin-chips-.html" target="_blank">Nvidia Kyber rack system delayed 12+ months to 2028 on manufacturing snags — Rubin Ultra roadmap slips</a></div>
+        <div class="story-body">Nvidia&#x27;s Kyber rack-scale cabinet (144 Rubin Ultra chips operating as a single compute unit) is delayed over a year due to circuit board manufacturing difficulties, a direct signal that Nvidia&#x27;s annual release cadence is hitting hard physical limits. This is the first concrete evidence of roadmap slippage in the Rubin generation and may shift hyperscaler AI capex timing. Watch for downstream effects on TSMC advanced packaging utilisation.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.cnbc.com/2026/07/06/nvidia-kyber-rack-system-delays-manufacturing-taiwan-rubin-chips-.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/R_H" target="_blank">Microsoft Xbox: 3,000+ layoffs, studio divestitures, 3% margin — part of 6,400-cut broader restructure</a></div>
+        <div class="story-body">Xbox CEO Asha Sharma declared it &#x27;the most significant restructure&#x27; in Xbox history: 1,600 immediate layoffs, 1,250 more over the next year, and divestiture of 4–5 studios; Game Pass has 30M subscribers vs. the 77M projected for this year. The restructuring is part of Microsoft&#x27;s broader 6,400-job cut program as massive AI capex weighs on margins — MSFT is the worst-performing megacap tech stock YTD. Investors should monitor whether AI infrastructure spend is cannibalising the consumer/gaming P&amp;L.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/R_H" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/CnPNuf" target="_blank">Apple–Broadcom partnership extended to 2031 with multi-generation custom AI ASICs; Apple AI servers targeted for 2027</a></div>
+        <div class="story-body">Apple and Broadcom extended their ASIC co-development agreement through 2031, covering multiple product generations of Apple-custom silicon optimised for AI inference workloads. Apple plans to deploy its own advanced AI server infrastructure as early as 2027, signalling a serious push toward vertically integrated AI compute — a direct competitive dynamic for MSFT Azure and AMZN AWS cloud AI services.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/CnPNuf" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.anthropic.com/research/global-workspace" target="_blank">A Global Workspace in Language Models — Anthropic Research ↗</a></div>
+          <div class="dive-why">Primary Anthropic research paper introducing J-space: a mechanistically interpretable, emergent internal reasoning structure in Claude with direct implications for AI safety monitoring and non-human identity/behaviour auditing.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://kanenarraway.com/posts/agent-identity-models/" target="_blank">Three Ways to Give an AI Agent an Identity ↗</a></div>
+          <div class="dive-why">Practitioner-level taxonomy of non-human identity models for agentic systems (user delegation, API key, IdP identity), naming specific standards (SPIFFE/SPIRE, Okta Cross App Access) — essential reference for IAM architects designing agentic pipelines.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://www.securonix.com/blog/veildrop-blogspot-hosted-powershell-loader/" target="_blank">Veil#Drop: Blogspot-Hosted PowerShell Loader — Securonix Technical Analysis ↗</a></div>
+          <div class="dive-why">Full technical breakdown of an in-memory, disk-less .NET payload delivery chain abusing legitimate CDN infrastructure; directly actionable for SOC detection engineering in fintech environments targeting credential and cookie theft.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 07 Jul 2026 · sources: anthropic.com, tldrnewsletter.com, rundownai.com, simonwillison.net, bytebytego.com, thehackernews.com, telegraph.co.uk, kanenarraway.com, securonix.com, filippo.io, kapa.ai, pytorch.org, cnbc.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
