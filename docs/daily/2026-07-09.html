@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 09 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 09 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">6</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">14</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">13</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/iWYDBH" target="_blank">GPT-5.6 Sol/Terra/Luna launch; Microsoft shifts to own models in Office apps</a></div>
+        <div class="story-body">OpenAI released a three-tier GPT-5.6 family: Sol (flagship), Terra (GPT-5.5 parity at 2x lower cost), and Luna (lowest-cost). Separately, Microsoft has begun replacing OpenAI and Anthropic models with its own in Excel and Outlook, accelerated by expiring discounted-token deals — a direct signal that MSFT is building competitive in-house model capacity to reduce third-party dependency.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/iWYDBH" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/SaF" target="_blank">Alibaba distillation attack on Claude; China considers restricting AI model exports</a></div>
+        <div class="story-body">Anthropic accused Alibaba of using 25,000 fraudulent accounts to generate ~28.8M Claude exchanges as a &#x27;distillation attack&#x27; to train its own models. In response, Chinese authorities met with Alibaba, ByteDance, and Z.ai to discuss restricting overseas access to Chinese frontier models — a tit-for-tat that could fragment the global AI model ecosystem and accelerate export-control escalation.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link ai" href="https://links.morningbrew.com/c/SaF" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arstechnica.com/ai/2026/07/facing-us-export-controls-chinas-deepseek-plans-to-make-its-own-chips/" target="_blank">DeepSeek plans in-house inference chips to break hardware dependency</a></div>
+        <div class="story-body">DeepSeek has been meeting hardware/silicon partners for a year and hiring chip engineers, targeting data center inference chips to reduce reliance on both Nvidia and Huawei. This vertical integration move, driven by US export controls, could erode Nvidia&#x27;s moat in the Chinese inference market and signal a broader trend of frontier AI labs building their own silicon.</div>
+        <div class="story-meta"><span class="chip">arstechnica.com</span><div class="ref-links"><a class="ref-link ai" href="https://arstechnica.com/ai/2026/07/facing-us-export-controls-chinas-deepseek-plans-to-make-its-own-chips/" target="_blank">arstechnica.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://lilianweng.github.io/posts/2026-07-04-harness/" target="_blank">Lilian Weng on harness engineering as the substrate for AI recursive self-improvement</a></div>
+        <div class="story-body">Weng&#x27;s post frames the &#x27;harness&#x27; — the orchestration system surrounding a base model that controls tool use, context, memory, and evaluation — as the key lever in the AI self-improvement feedback loop. The post surveys workflow automation, persistent memory, and sub-agent design patterns, identifying evaluation and context management as the primary unsolved challenges for production RSI systems.</div>
+        <div class="story-meta"><span class="chip">lilianweng.github.io</span><div class="ref-links"><a class="ref-link ai" href="https://lilianweng.github.io/posts/2026-07-04-harness/" target="_blank">lilianweng.github.io ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/07/meta-ai-muse-image.html" target="_blank">Meta Muse Image debuts at #2 on Arena leaderboards with agentic editing capabilities</a></div>
+        <div class="story-body">Meta&#x27;s Superintelligence Labs released Muse Image, landing at #2 on Arena&#x27;s text-to-image and editing leaderboards behind GPT Image 2, with a Muse Video model teased at #3 in video. The model is free across Meta AI, Instagram, and WhatsApp, with ads platform integration forthcoming — representing Meta&#x27;s first in-house frontier creative model after previously relying on Midjourney and Black Forest Labs.</div>
+        <div class="story-meta"><span class="chip">cnbc.com</span><span class="chip">therundown.ai</span><div class="ref-links"><a class="ref-link ai" href="https://www.cnbc.com/2026/07/07/meta-ai-muse-image.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html" target="_blank">Januscape (CVE-2026-53359): 16-year-old Linux KVM use-after-free enables cloud VM escape</a></div>
+        <div class="story-body">A use-after-free in KVM&#x27;s shadow MMU (present since 2010) lets a guest VM corrupt host kernel memory on Intel and AMD — a public PoC reliably panics the host within seconds, with a more severe path enabling host code execution. Multi-tenant clouds exposing nested virtualization (GCP, AWS custom stacks) are directly threatened; patch immediately or disable nested virt for untrusted guests.</div>
+        <div class="story-meta"><span class="chip">securityaffairs.com</span><div class="ref-links"><a class="ref-link sec" href="https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html" target="_blank">securityaffairs.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/" target="_blank">GitLost: Prompt injection via GitHub issue drives Agentic Workflow to leak private repo contents</a></div>
+        <div class="story-body">A crafted issue in a public repo exploits GitHub&#x27;s Agentic Workflow via prompt injection — a single &#x27;Additionally&#x27; keyword bypasses guardrails and causes the agent to read and publicly post README files from private repositories. This is a concrete, reproducible non-human identity / agentic authorization failure: the agent inherits broad cross-repo read access with no user-in-the-loop enforcement.</div>
+        <div class="story-meta"><span class="chip">noma.security</span><div class="ref-links"><a class="ref-link sec" href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/" target="_blank">noma.security ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.varonis.com/blog/rogue-agent-dialogflow-attack" target="_blank">Rogue Agent: Dialogflow CX code-block flaw enables cross-agent RCE and service account token exfiltration</a></div>
+        <div class="story-body">Anyone with dialogflow.playbooks.update can overwrite a shared Cloud Run file to execute arbitrary Python across all agents in a project, exfiltrate chat history, inject phishing prompts, and query IMDS for service account tokens — bypassing VPC Service Controls via unrestricted egress. Teams should audit Dialogflow audit logs and Code Blocks for tampering immediately.</div>
+        <div class="story-meta"><span class="chip">varonis.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.varonis.com/blog/rogue-agent-dialogflow-attack" target="_blank">varonis.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.com/secdev02/EasyTokens" target="_blank">EasyTokens: adversary emulation tool abuses OAuth Device Authorization Grant to phish M365 tokens</a></div>
+        <div class="story-body">EasyTokens is a Python/PHP tool that presents victims with a themed M365 enrollment page while exploiting the Device Auth Grant flow; captured access and refresh tokens are polled from an operator dashboard and used to query OneDrive and email via Microsoft Graph. A highly relevant threat model for any organization using M365 OAuth — directly exploits the device code phishing pattern.</div>
+        <div class="story-meta"><span class="chip">github.com</span><div class="ref-links"><a class="ref-link sec" href="https://github.com/secdev02/EasyTokens" target="_blank">github.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Convicted felons Burkman and Wohl running IRIS C2 zero-day broker under assumed identities</div>
+        <div class="story-body">IRIS C2 (irisc2.com / Calvexa Group LLC) is offering $10K–$7M for zero-day exploits while being operated by Jacob Wohl and Jack Burkman — both convicted of multiple felonies including telecom fraud and securities fraud — using pseudonyms. The operation is brazen market manipulation risk for vulnerability researchers and a counterintelligence concern for any government contractor in the zero-day space.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">ByteByteGo deep dive: agentic loop architecture — perceive/reason/act/observe, four decision branches, ReAct pattern</div>
+        <div class="story-body">A structured breakdown of the progression from single LLM call → augmented LLM → workflow → agent, with the agent distinguished by the model controlling its own loop exit. Key design details: four per-turn decision branches (final answer, tool call, handoff, continued thought), ReAct interleaving as the dominant prompting pattern, and compounding reliability + context cost as the primary engineering challenges vs. simpler workflow alternatives.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://developer.microsoft.com/blog/not-all-model-upgrades-are-upgrades" target="_blank">Microsoft dev blog: newer Claude Sonnet 5 underperforms Sonnet 4.6 on specific production tasks despite cheaper pricing</a></div>
+        <div class="story-body">A practical evaluation found that upgrading to Claude Sonnet 5 from 4.6 incurred higher effective costs and inferior output quality on certain production tasks, despite a lower token price. This is an important signal for teams managing LLM upgrade paths: benchmark on your actual workload before adopting newer model versions in production pipelines.</div>
+        <div class="story-meta"><span class="chip">developer.microsoft.com</span><div class="ref-links"><a class="ref-link swe" href="https://developer.microsoft.com/blog/not-all-model-upgrades-are-upgrades" target="_blank">developer.microsoft.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/j5mAUd" target="_blank">Xbox lays off 3,200 staff and closes five studios; streaming strategy collapses</a></div>
+        <div class="story-body">Microsoft&#x27;s Xbox division is cutting 3,200 employees and shutting five game studios after overspending on content that failed to attract players. The restructuring refocuses Xbox on proven franchises like Minecraft — a write-down on the gaming diversification strategy and a signal that MSFT is tightening capital allocation across non-core growth bets.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.tldrnewsletter.com/j5mAUd" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Nasdaq drops 300+ points on China AI distillation fears; Rivian -18% on dilutive equity raise</div>
+        <div class="story-body">Markets sold off on escalating US-China AI competition anxiety, with the Nasdaq shedding over 300 points. Rivian fell 18% after announcing a 75M share offering to satisfy a DOE loan agreement — separate signals but both relevant to portfolio positioning in tech and EV names.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html" target="_blank">Januscape (CVE-2026-53359) — Linux KVM Shadow MMU VM Escape ↗</a></div>
+          <div class="dive-why">A 16-year-old critical hypervisor vulnerability with a public PoC enabling host code execution threatens every multi-tenant cloud using nested virtualization; essential reading for infrastructure and cloud security engineers.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/" target="_blank">GitLost: Prompt Injection via GitHub Agentic Workflow Leaks Private Repos ↗</a></div>
+          <div class="dive-why">Primary source research demonstrating a concrete, reproducible agentic authorization failure where an AI agent with cross-repo access can be hijacked via a crafted issue — directly actionable for any team using GitHub&#x27;s agentic features.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://lilianweng.github.io/posts/2026-07-04-harness/" target="_blank">Harness Engineering for Self-Improvement — Lilian Weng (OpenAI) ↗</a></div>
+          <div class="dive-why">Authoritative technical post from OpenAI&#x27;s head of safety on the system design patterns — memory, orchestration, sub-agents, evaluation — that underpin recursive AI self-improvement; primary source for understanding the architectural trajectory of frontier AI systems.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 08 Jul 2026 · sources: tldrnewsletter.com, morningbrew.com, arstechnica.com, lilianweng.github.io, cnbc.com, therundown.ai, securityaffairs.com, noma.security, varonis.com, github.com, krebsonsecurity.com, bytebytego.com, developer.microsoft.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

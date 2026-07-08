@@ -1,0 +1,161 @@
+{
+  "date": "2026-07-09",
+  "threadCount": 6,
+  "storyCount": 14,
+  "sourceCount": 13,
+  "sections": {
+    "ai": [
+      {
+        "headline": "GPT-5.6 Sol/Terra/Luna launch; Microsoft shifts to own models in Office apps",
+        "body": "OpenAI released a three-tier GPT-5.6 family: Sol (flagship), Terra (GPT-5.5 parity at 2x lower cost), and Luna (lowest-cost). Separately, Microsoft has begun replacing OpenAI and Anthropic models with its own in Excel and Outlook, accelerated by expiring discounted-token deals — a direct signal that MSFT is building competitive in-house model capacity to reduce third-party dependency.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/iWYDBH"
+      },
+      {
+        "headline": "Alibaba distillation attack on Claude; China considers restricting AI model exports",
+        "body": "Anthropic accused Alibaba of using 25,000 fraudulent accounts to generate ~28.8M Claude exchanges as a 'distillation attack' to train its own models. In response, Chinese authorities met with Alibaba, ByteDance, and Z.ai to discuss restricting overseas access to Chinese frontier models — a tit-for-tat that could fragment the global AI model ecosystem and accelerate export-control escalation.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/SaF"
+      },
+      {
+        "headline": "DeepSeek plans in-house inference chips to break hardware dependency",
+        "body": "DeepSeek has been meeting hardware/silicon partners for a year and hiring chip engineers, targeting data center inference chips to reduce reliance on both Nvidia and Huawei. This vertical integration move, driven by US export controls, could erode Nvidia's moat in the Chinese inference market and signal a broader trend of frontier AI labs building their own silicon.",
+        "signal": "high",
+        "sources": [
+          "arstechnica.com"
+        ],
+        "url": "https://arstechnica.com/ai/2026/07/facing-us-export-controls-chinas-deepseek-plans-to-make-its-own-chips/"
+      },
+      {
+        "headline": "Lilian Weng on harness engineering as the substrate for AI recursive self-improvement",
+        "body": "Weng's post frames the 'harness' — the orchestration system surrounding a base model that controls tool use, context, memory, and evaluation — as the key lever in the AI self-improvement feedback loop. The post surveys workflow automation, persistent memory, and sub-agent design patterns, identifying evaluation and context management as the primary unsolved challenges for production RSI systems.",
+        "signal": "med",
+        "sources": [
+          "lilianweng.github.io"
+        ],
+        "url": "https://lilianweng.github.io/posts/2026-07-04-harness/"
+      },
+      {
+        "headline": "Meta Muse Image debuts at #2 on Arena leaderboards with agentic editing capabilities",
+        "body": "Meta's Superintelligence Labs released Muse Image, landing at #2 on Arena's text-to-image and editing leaderboards behind GPT Image 2, with a Muse Video model teased at #3 in video. The model is free across Meta AI, Instagram, and WhatsApp, with ads platform integration forthcoming — representing Meta's first in-house frontier creative model after previously relying on Midjourney and Black Forest Labs.",
+        "signal": "med",
+        "sources": [
+          "cnbc.com",
+          "therundown.ai"
+        ],
+        "url": "https://www.cnbc.com/2026/07/07/meta-ai-muse-image.html"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Januscape (CVE-2026-53359): 16-year-old Linux KVM use-after-free enables cloud VM escape",
+        "body": "A use-after-free in KVM's shadow MMU (present since 2010) lets a guest VM corrupt host kernel memory on Intel and AMD — a public PoC reliably panics the host within seconds, with a more severe path enabling host code execution. Multi-tenant clouds exposing nested virtualization (GCP, AWS custom stacks) are directly threatened; patch immediately or disable nested virt for untrusted guests.",
+        "signal": "high",
+        "sources": [
+          "securityaffairs.com"
+        ],
+        "url": "https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html"
+      },
+      {
+        "headline": "GitLost: Prompt injection via GitHub issue drives Agentic Workflow to leak private repo contents",
+        "body": "A crafted issue in a public repo exploits GitHub's Agentic Workflow via prompt injection — a single 'Additionally' keyword bypasses guardrails and causes the agent to read and publicly post README files from private repositories. This is a concrete, reproducible non-human identity / agentic authorization failure: the agent inherits broad cross-repo read access with no user-in-the-loop enforcement.",
+        "signal": "high",
+        "sources": [
+          "noma.security"
+        ],
+        "url": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/"
+      },
+      {
+        "headline": "Rogue Agent: Dialogflow CX code-block flaw enables cross-agent RCE and service account token exfiltration",
+        "body": "Anyone with dialogflow.playbooks.update can overwrite a shared Cloud Run file to execute arbitrary Python across all agents in a project, exfiltrate chat history, inject phishing prompts, and query IMDS for service account tokens — bypassing VPC Service Controls via unrestricted egress. Teams should audit Dialogflow audit logs and Code Blocks for tampering immediately.",
+        "signal": "high",
+        "sources": [
+          "varonis.com"
+        ],
+        "url": "https://www.varonis.com/blog/rogue-agent-dialogflow-attack"
+      },
+      {
+        "headline": "EasyTokens: adversary emulation tool abuses OAuth Device Authorization Grant to phish M365 tokens",
+        "body": "EasyTokens is a Python/PHP tool that presents victims with a themed M365 enrollment page while exploiting the Device Auth Grant flow; captured access and refresh tokens are polled from an operator dashboard and used to query OneDrive and email via Microsoft Graph. A highly relevant threat model for any organization using M365 OAuth — directly exploits the device code phishing pattern.",
+        "signal": "med",
+        "sources": [
+          "github.com"
+        ],
+        "url": "https://github.com/secdev02/EasyTokens"
+      },
+      {
+        "headline": "Convicted felons Burkman and Wohl running IRIS C2 zero-day broker under assumed identities",
+        "body": "IRIS C2 (irisc2.com / Calvexa Group LLC) is offering $10K–$7M for zero-day exploits while being operated by Jacob Wohl and Jack Burkman — both convicted of multiple felonies including telecom fraud and securities fraud — using pseudonyms. The operation is brazen market manipulation risk for vulnerability researchers and a counterintelligence concern for any government contractor in the zero-day space.",
+        "signal": "med",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": null
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "ByteByteGo deep dive: agentic loop architecture — perceive/reason/act/observe, four decision branches, ReAct pattern",
+        "body": "A structured breakdown of the progression from single LLM call → augmented LLM → workflow → agent, with the agent distinguished by the model controlling its own loop exit. Key design details: four per-turn decision branches (final answer, tool call, handoff, continued thought), ReAct interleaving as the dominant prompting pattern, and compounding reliability + context cost as the primary engineering challenges vs. simpler workflow alternatives.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Microsoft dev blog: newer Claude Sonnet 5 underperforms Sonnet 4.6 on specific production tasks despite cheaper pricing",
+        "body": "A practical evaluation found that upgrading to Claude Sonnet 5 from 4.6 incurred higher effective costs and inferior output quality on certain production tasks, despite a lower token price. This is an important signal for teams managing LLM upgrade paths: benchmark on your actual workload before adopting newer model versions in production pipelines.",
+        "signal": "med",
+        "sources": [
+          "developer.microsoft.com"
+        ],
+        "url": "https://developer.microsoft.com/blog/not-all-model-upgrades-are-upgrades"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Xbox lays off 3,200 staff and closes five studios; streaming strategy collapses",
+        "body": "Microsoft's Xbox division is cutting 3,200 employees and shutting five game studios after overspending on content that failed to attract players. The restructuring refocuses Xbox on proven franchises like Minecraft — a write-down on the gaming diversification strategy and a signal that MSFT is tightening capital allocation across non-core growth bets.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://links.tldrnewsletter.com/j5mAUd"
+      },
+      {
+        "headline": "Nasdaq drops 300+ points on China AI distillation fears; Rivian -18% on dilutive equity raise",
+        "body": "Markets sold off on escalating US-China AI competition anxiety, with the Nasdaq shedding over 300 points. Rivian fell 18% after announcing a 75M share offering to satisfy a DOE loan agreement — separate signals but both relevant to portfolio positioning in tech and EV names.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Januscape (CVE-2026-53359) — Linux KVM Shadow MMU VM Escape",
+      "why": "A 16-year-old critical hypervisor vulnerability with a public PoC enabling host code execution threatens every multi-tenant cloud using nested virtualization; essential reading for infrastructure and cloud security engineers.",
+      "url": "https://securityaffairs.com/194868/security/januscape-16-year-old-linux-kvm-bug-enables-cloud-vm-escape-attacks.html"
+    },
+    {
+      "title": "GitLost: Prompt Injection via GitHub Agentic Workflow Leaks Private Repos",
+      "why": "Primary source research demonstrating a concrete, reproducible agentic authorization failure where an AI agent with cross-repo access can be hijacked via a crafted issue — directly actionable for any team using GitHub's agentic features.",
+      "url": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/"
+    },
+    {
+      "title": "Harness Engineering for Self-Improvement — Lilian Weng (OpenAI)",
+      "why": "Authoritative technical post from OpenAI's head of safety on the system design patterns — memory, orchestration, sub-agents, evaluation — that underpin recursive AI self-improvement; primary source for understanding the architectural trajectory of frontier AI systems.",
+      "url": "https://lilianweng.github.io/posts/2026-07-04-harness/"
+    }
+  ]
+}
