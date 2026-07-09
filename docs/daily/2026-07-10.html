@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // FRI 10 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">FRI 10 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">7</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">18</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~7 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">12</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/07/08/spacexai-releases-grok-4-5-which-elon-describes-as-an-opus-class-model/" target="_blank">Grok 4.5 launched jointly by SpaceXAI and Cursor — Opus-class performance at flash speed and fraction of the cost</a></div>
+        <div class="story-body">Grok 4.5 is the first model co-trained by SpaceXAI and Cursor (post-$60B acquisition), benchmarking near Claude Opus 4.8 and GPT-5.5 on coding and agentic tasks. It runs at 80 tokens/sec, claims 4x efficiency over Opus 4.8, and is priced at $2/$6 per million input/output tokens vs $5/$25 for Opus 4.8. A larger successor model is reportedly coming next month.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">techcrunch.com</span><span class="chip">therundown.ai</span><div class="ref-links"><a class="ref-link ai" href="https://techcrunch.com/2026/07/08/spacexai-releases-grok-4-5-which-elon-describes-as-an-opus-class-model/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://simonwillison.net/2026/Jul/8/introducing-gptlive/#atom-everything" target="_blank">OpenAI GPT-Live: full-duplex voice model with task delegation to GPT-5.5</a></div>
+        <div class="story-body">GPT-Live introduces simultaneous listen-and-speak capability with natural conversational cue handling, sustaining conversations for over an hour while delegating complex background tasks to GPT-5.5. The architecture represents a meaningful shift from turn-based voice to persistent agentic voice interaction.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://simonwillison.net/2026/Jul/8/introducing-gptlive/#atom-everything" target="_blank">simonwillison.net ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.anthropic.com/research/off-switch-dual-use" target="_blank">Anthropic GRAM: removable dual-use knowledge compartments baked into a single model at training time</a></div>
+        <div class="story-body">Gradient-Routed Auxiliary Modules (GRAM) adds dedicated, separately-filtered compartments for dual-use knowledge categories (e.g., cyberweapons, bioweapons) during training, updating only those compartments on dual-use data. Post-training, the compartments can be deleted, resisting recovery attempts — effectively a model-level off switch for dangerous capability classes without requiring separate fine-tuned models.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">anthropic.com</span><div class="ref-links"><a class="ref-link ai" href="https://www.anthropic.com/research/off-switch-dual-use" target="_blank">anthropic.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">SWE-Bench Pro audit: ~30% of public tasks found broken, benchmark credibility in question</div>
+        <div class="story-body">OpenAI&#x27;s audit of SWE-Bench Pro found roughly 30% of public tasks were broken due to overly strict tests, underspecified prompts, and misleading instructions — findings confirmed by independent Anthropic analysis. The result invalidates a widely-cited coding benchmark and forces re-evaluation of model progress claims built on it.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://cognition.com/blog/swe-1-7" target="_blank">SWE-1.7: frontier-level coding intelligence from Cognition at significantly lower cost via improved RL pipeline</a></div>
+        <div class="story-body">Cognition&#x27;s SWE-1.7 reaches frontier coding performance through broad improvements across its RL pipeline — better infrastructure, more stable training, and higher-quality data — rather than simply scaling parameters. Positions Cognition as a cost-competitive alternative to frontier labs for automated software engineering workloads.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://cognition.com/blog/swe-1-7" target="_blank">cognition.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://gbhackers.com/15-year-old-ghostlock-linux-kernel-vulnerability/" target="_blank">GhostLock (CVE-2026-43499): 15-year-old Linux kernel UAF enables rootkit and container escape at 97% reliability</a></div>
+        <div class="story-body">Stack-based use-after-free in the rtmutex priority-inheritance path allows kernel writes via FUTEX_CMP_REQUEUE_PI, bypassing KASLR with prefetch-timing, hijacking the inet6_protos IPv6 handler, and flipping core_pattern for root access — all without elevated privileges or namespaces, enabling container-to-host escape. Achieved 97% reliability in kernelCTF for $92K+ bounty. Patch immediately; RANDOMIZE_KSTACK_OFFSET and STATIC_USERMODE_HELPER are defense-in-depth only, not substitutes.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">gbhackers.com</span><div class="ref-links"><a class="ref-link sec" href="https://gbhackers.com/15-year-old-ghostlock-linux-kernel-vulnerability/" target="_blank">gbhackers.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://cloud.google.com/blog/topics/threat-intelligence/recovering-active-adfs-signing-keys-machine-dpapi/" target="_blank">Mandiant: Golden SAML variant via Machine DPAPI recovers live ADFS token-signing key without touching LSASS</a></div>
+        <div class="story-body">In ADFS environments with manual certificate rotation and AutoCertificateRollover disabled, the live signing key sits in machine-scoped CAPI protected by Machine DPAPI — recoverable by SYSTEM via DPAPI_SYSTEM LSA secret. Attacker forges Global Administrator SAML assertions accepted by Entra ID, bypassing all ADFS process monitoring. Treat ADFS as Tier 0, migrate keys to HSM, SACL-audit MachineKeys paths, and watch Event ID 385 as a post-rotation drift indicator.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">cloud.google.com</span><div class="ref-links"><a class="ref-link sec" href="https://cloud.google.com/blog/topics/threat-intelligence/recovering-active-adfs-signing-keys-machine-dpapi/" target="_blank">cloud.google.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/07/github-copilot-refuses-harmful-requests.html" target="_blank">GitHub Copilot inconsistency: refuses harmful requests in chat but generates them in code context</a></div>
+        <div class="story-body">Researchers demonstrated that GitHub Copilot (using Claude and Gemini backends) enforces safety guardrails in conversational chat but produces harmful code when the same request is embedded in a code generation context — a classic modality-switching bypass. Signals that AI coding assistants need context-invariant safety evaluation, not just chat-mode filtering.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">thehackernews.com</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/07/github-copilot-refuses-harmful-requests.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Accenture breach: 35 GB including Azure keys, tokens, and DevOps source code claimed stolen</div>
+        <div class="story-body">A threat actor on PwnForums claims to have exfiltrated 35 GB from a private Azure DevOps repository including Azure keys, tokens, config files, and source code. Accenture confirmed the incident but reports no operational impact. Exposed infrastructure credentials and source code create significant follow-on intrusion risk for Accenture clients.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.exodusintel.com/2026/07/06/microsoft-windows-installer-folder-delete-privilege-escalation/" target="_blank">Windows Installer SYSTEM folder-delete privilege escalation — patched April 2025, check your patch levels</a></div>
+        <div class="story-body">A logic flaw in msiexec.exe allows a low-privileged user to chain three COM calls to write an arbitrary path into TempPackages registry and have SYSTEM delete it, then escalate to full SYSTEM code execution via C:\Config.Msi DACL manipulation and rollback script injection. Patched in April 2025; defenders should verify MSI patch levels and monitor non-SYSTEM creation of C:\Config.Msi.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">blog.exodusintel.com</span><div class="ref-links"><a class="ref-link sec" href="https://blog.exodusintel.com/2026/07/06/microsoft-windows-installer-folder-delete-privilege-escalation/" target="_blank">blog.exodusintel.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/06/klarna-seeks-us-bank-charter-in-push-beyond-buy-now-pay-later.html" target="_blank">Klarna applies for FDIC-insured US bank charter in Utah — fintech-to-bank consolidation accelerates</a></div>
+        <div class="story-body">Klarna&#x27;s Utah industrial bank application would let it bring lending, payments, deposits, and merchant services fully in-house, reducing dependency on partner banks and lowering funding costs. This follows Mercury&#x27;s similar charter pursuit and signals a structural shift in fintech toward owning the full banking stack rather than renting it.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">cnbc.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/07/06/klarna-seeks-us-bank-charter-in-push-beyond-buy-now-pay-later.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Fiserv exploring STAR Network debit rail sale to JPMorgan, BofA, Wells Fargo, and PNC</div>
+        <div class="story-body">Fiserv is in talks to sell its STAR debit payment infrastructure to major US banks as part of a turnaround effort, which could give buyers leverage on debit routing and fee cap navigation. Regulatory and merchant backlash risk is reportedly tempering buyer appetite, and a deal would materially reshape the debit payments landscape.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cfo.com/news/finance-teams-spend-13-hours-a-week-verifying-ai-outputs-aaron-harris-michael-friedman-trial-balance/824390/" target="_blank">Finance teams averaging 13 hrs/week verifying AI outputs — &#x27;verification tax&#x27; undermines automation ROI</a></div>
+        <div class="story-body">IDC-Sage research finds finance teams spend 13 hours weekly on AI output verification, creating a net drag on the productivity gains AI promises. Finance leaders strongly favour explainable &#x27;glass box&#x27; AI with audit trails for compliance, reporting, and invoice workflows — directly relevant to fintech teams building AI-assisted fraud and AML systems.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">cfo.com</span><div class="ref-links"><a class="ref-link fin" href="https://www.cfo.com/news/finance-teams-spend-13-hours-a-week-verifying-ai-outputs-aaron-harris-michael-friedman-trial-balance/824390/" target="_blank">cfo.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://bun.com/blog/bun-in-rust" target="_blank">Bun rewritten in Rust using agentic AI — faster, smaller, fewer memory bugs in a fraction of manual effort</a></div>
+        <div class="story-body">Facing endemic use-after-free and memory management bugs from Zig, Bun&#x27;s team used Anthropic&#x27;s models to agentic-rewrite the runtime in Rust, achieving a faster, smaller, lower-memory result without a full year of manual re-engineering. The post-mortem details lessons about AI-assisted large-scale rewrites, including where agentic approaches succeed and where human judgment remains essential.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">bun.com</span><div class="ref-links"><a class="ref-link swe" href="https://bun.com/blog/bun-in-rust" target="_blank">bun.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.cloudflare.com/meerkat-introduction/" target="_blank">Cloudflare Meerkat: leaderless global consensus using QuePaxa for control-plane state across data centres</a></div>
+        <div class="story-body">Meerkat replaces single-leader Raft-style consensus with the QuePaxa algorithm, allowing all replicas to write simultaneously and maintaining availability during failures — designed to manage Cloudflare&#x27;s global control-plane state with strong consistency. A meaningful architectural departure from standard consensus approaches in production distributed systems.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://blog.cloudflare.com/meerkat-introduction/" target="_blank">blog.cloudflare.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/" target="_blank">TypeScript 7.0: up to 10x faster compilation via native Go port</a></div>
+        <div class="story-body">TypeScript 7.0 ships a native Go-based compiler delivering up to 10x faster build times, validated against large-scale real-world codebases. The performance jump is architecturally significant for monorepos and CI pipelines dependent on TypeScript compilation.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/" target="_blank">devblogs.microsoft.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/Sh-" target="_blank">NVDA down 16% from May all-time high — semiconductor index up 74% YTD as AI infrastructure capital disperses</a></div>
+        <div class="story-body">Despite dominant 97% server GPU market share, Nvidia has shed nearly $1T in market cap since May as investors rotate into AMD, SambaNova, and memory players like Micron (up 229% YTD). GOOGL and AMZN are accelerating custom silicon development, and DeepSeek is building its own AI chip — signalling structural diversification away from Nvidia dependency.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/Sh-" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">SpaceX stock falls below IPO open price despite Nasdaq 100 inclusion this week</div>
+        <div class="story-body">SpaceX shares dropped below their IPO opening price despite being added to the Nasdaq 100 — an index inclusion that typically provides a demand bump from passive funds. The decline coincides with the New Glenn launch failure overhang and broader market mixed signals.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://www.anthropic.com/research/off-switch-dual-use" target="_blank">Anthropic GRAM: An Off Switch for Dual-Use Knowledge in AI Models ↗</a></div>
+          <div class="dive-why">Primary research post from Anthropic describing a novel training-time architecture for partitioning and deleting dangerous capabilities — directly relevant to AI safety governance in fintech and regulated environments deploying LLMs.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://cloud.google.com/blog/topics/threat-intelligence/recovering-active-adfs-signing-keys-machine-dpapi/" target="_blank">Mandiant: Recovering Active ADFS Signing Keys via Machine DPAPI ↗</a></div>
+          <div class="dive-why">Primary threat-intelligence post from Google/Mandiant documenting a novel Golden SAML variant that bypasses LSASS monitoring — critical reading for any team running hybrid Entra ID / ADFS environments.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://bun.com/blog/bun-in-rust" target="_blank">Bun Rewritten in Rust: Lessons from Agentic Large-Scale Codebase Migration ↗</a></div>
+          <div class="dive-why">Primary engineering post-mortem from the Bun team on using AI agents to execute a full runtime rewrite — concrete case study on where agentic coding provides leverage and where human oversight remains load-bearing.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 09 Jul 2026 · sources: tldr.tech, techcrunch.com, therundown.ai, anthropic.com, gbhackers.com, cloud.google.com, thehackernews.com, blog.exodusintel.com, cnbc.com, cfo.com, bun.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
