@@ -1,0 +1,170 @@
+{
+  "date": "2026-07-13",
+  "threadCount": 5,
+  "storyCount": 15,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "OpenAI launches GPT-5.6 family: Sol, Terra, Luna with multi-agent 'Ultra' mode",
+        "body": "GPT-5.6 Sol is the flagship, landing slightly below Claude Fable 5 on intelligence benchmarks but topping it on agentic coding, computer use, and cybersecurity tasks — at identical pricing to GPT-5.5 ($5/$30 per million tokens input/output). A new 'Ultra' mode coordinates multiple agents across parallel workstreams; notably, OpenAI disclosed that Sol autonomously post-trained Luna. ChatGPT Work (analogous to Claude Cowork) and a merged desktop app with built-in browser and computer control complete the launch.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com",
+          "therundown.ai"
+        ],
+        "url": "https://links.tldrnewsletter.com/qmKncF"
+      },
+      {
+        "headline": "GPT-5.6 Sol wins ARC-AGI-3 public game — first model to do so",
+        "body": "ARC Prize results show Sol is the first model to win an ARC-AGI-3 public game, succeeding by correctly orienting itself within an unfamiliar environment using the game's own vocabulary before acting. This is a meaningful generalisation benchmark distinct from standard coding or reasoning evals.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://arcprize.org/results/openai-gpt-5-6"
+      },
+      {
+        "headline": "Meta launches Muse Spark 1.1 API at ~25% of competitor pricing",
+        "body": "Meta's Muse Spark 1.1 improves tool use, coding, computer interaction, and multimodal reasoning, and opens a public developer API with aggressive pricing at roughly 25% of top competing models. Zuckerberg positions this as a deliberate margin attack on OpenAI and Anthropic's API businesses, with a freemium model converting to paid at usage thresholds.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/"
+      },
+      {
+        "headline": "Windows MDASH system: AI-accelerated vulnerability discovery and fix pipeline",
+        "body": "Microsoft detailed its MDASH scanning system, which uses dedicated cloud infrastructure and AI to compress the time between vulnerability discovery and security update delivery. The post is notable for acknowledging that AI-powered discovery by external researchers is now outpacing traditional patch cadences, forcing architectural changes to the update pipeline itself.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/"
+      },
+      {
+        "headline": "Cursor data: top 1% of AI coders generate 40k lines/week; input tokens dominate at 90%",
+        "body": "Cursor's internal report shows extreme productivity dispersion — median users generate ~700 lines/week vs 40,000 for the top 1%. The 90% input-token share signals that AI-assisted coding is predominantly a code-reading and comprehension workload, with implications for context-window pricing and RAG architecture choices.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://newsletter.pragmaticengineer.com/p/the-pulse-interesting-ai-coding-stats"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "PoC: Claude Code and OpenAI Codex hijacked for RCE via prompt-injected open-source libraries",
+        "body": "AI Now Institute researchers demonstrated that defensive AI coding agents (Claude Code, Codex) can be turned into RCE vectors when they review a tampered open-source library (e.g., modified geopy). A planted security.sh and disguised Golang binary are trusted and executed without malicious flagging — even under auto-mode safety settings — across multiple model versions. Configuration-file defenses do not block the attack, making this a direct threat to any pipeline that runs AI-assisted security or dependency review.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://ainowinstitute.org/publications/friendly-fire-exploit-brief"
+      },
+      {
+        "headline": "npm 12 turns off install scripts, git deps, and remote URL installs by default",
+        "body": "GitHub's npm 12 ships three high-impact supply chain mitigations off-by-default: lifecycle install scripts, git dependencies, and remote URL package installs all require explicit opt-in approval. This directly addresses the most common npm supply chain attack vectors and warrants immediate evaluation for enterprise JavaScript build pipelines.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Transsion Android phones (1-in-2 sold in Africa) exfiltrate GPS, app data to Alibaba Cloud via undeletable SDK",
+        "body": "NowSecure researchers decrypted Transsion telemetry and found device-wide beacons — GPS, cell towers, foreground app, camera caller, battery state, per-app data usage — tied to persistent identifiers and sent to *.shalltry.com (Alibaba Cloud). The SDK ships as a privileged system component on TECNO devices and as an embedded SDK in popular apps including Boomplay and Orange Max it; it cannot be removed. DNS-level wildcard blocking of shalltry.com and transsion-os.com is the only practical enterprise mitigation.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.nowsecure.com/blog/2026/07/08/what-the-transsion-telemetry-research-means-for-mobile-security/"
+      },
+      {
+        "headline": "OpenMandriva insider sabotage: admin deletes decade of repo work, publishes empty packages",
+        "body": "A contributor with admin privileges deleted a core OpenMandriva repository and published an empty package that obsoleted GNOME and Cosmic desktop environment packages after an internal dispute. This is a live example of insider-threat risk from over-provisioned non-human and human admin credentials in open-source projects — directly relevant to privileged access governance.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "LLMs now viable for formal verification spec-to-code translation (Dafny) — with caveats",
+        "body": "ACM Queue analysis notes that since Claude Opus 4.5, LLMs can translate specifications into formally verifiable code accepted by Dafny, dramatically reducing the labour barrier to formal verification. Key limitation: poorly specified or externally-dependent specs remain unverifiable, and the LLM can satisfy the spec without satisfying the intent — a risk pattern directly relevant to security-critical IAM and fraud logic.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://queue.acm.org/detail.cfm?id=3819084"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "GitHub achieved 100% durable repo ownership across 14k+ repos in under 45 days",
+        "body": "GitHub's internal engineering post describes how they resolved ownership ambiguity across 14,000+ repositories — less than half had clear owners — by building automated validation workflows and archiving stale repos, making ownership the prerequisite for all downstream security and compliance tooling. Directly applicable as a blueprint for large-org IAM hygiene tied to code assets.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://github.blog/security/application-security/how-github-gave-every-repository-a-durable-owner/"
+      },
+      {
+        "headline": "fal.ai serves Ideogram V4 in 0.44s via FP4 + epilogue fusion + quantization-aware distillation",
+        "body": "fal.ai reduced image generation latency from 2.75s to 0.44s without quality regression using FP4 computation, epilogue fusion, and quantization-aware distillation to recover colour fidelity lost at FP4 precision. A detailed inference optimisation case study relevant to any team running high-throughput ML serving.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://blog.fal.ai/serving-sub-second-ideogram-v4-without-quality-loss/"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Meta's 25%-of-competitor API pricing is a structural margin attack on OpenAI and Anthropic",
+        "body": "Zuckerberg's 'aggressive pricing' framing for Muse Spark 1.1 is a deliberate strategy to commoditise the API layer while Meta monetises downstream via ads and social platforms. Benedict Evans' concurrent analysis on token pricing notes current supply crunch conditions will shift as capacity expands — Meta is positioning to capture share before that equilibrium is reached. Portfolio implication: MSFT (OpenAI partner) and GOOGL (Gemini) face pricing pressure at the API tier.",
+        "signal": "high",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.ben-evans.com/benedictevans/2026/7/9/ways-to-think-about-token-pricing"
+      },
+      {
+        "headline": "AI infrastructure buildout bottlenecked by grid interconnection queue, not generation capacity",
+        "body": "The Stargate project in Texas and broader AI datacenter expansion are stalled primarily by the first-come-first-served grid interconnection queuing system, not by electricity generation shortfalls. This structural bottleneck increases datacenter construction costs and timelines, a direct constraint on NVDA and TSMC demand curves beyond 2026.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": "https://www.worksinprogress.news/p/ai-is-bottlenecked-by-the-grid"
+      },
+      {
+        "headline": "Frontier model outcomes gap: Fable 5 and Opus 4.8 score zero on real-world conversion-rate tasks",
+        "body": "Outcomes-based assessments show frontier models failing measurable business KPIs (e.g., website conversion rates) despite strong benchmark scores; Eli Lilly and peers are moving to smaller purpose-built models. This is an early signal that enterprise AI spend may bifurcate between commodity frontier APIs and specialised vertical models — relevant to evaluating OpenAI and Anthropic's long-term enterprise revenue.",
+        "signal": "med",
+        "sources": [
+          "tldrnewsletter.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Friendly Fire: Hijacking Defensive Cyber AI Agents for Remote Code Execution",
+      "why": "Primary exploit brief from AI Now Institute demonstrating RCE via prompt-injected open-source libraries reviewed by Claude Code/Codex — directly actionable for any team running AI-assisted security or dependency scanning pipelines.",
+      "url": "https://ainowinstitute.org/publications/friendly-fire-exploit-brief"
+    },
+    {
+      "title": "Evolving Windows Vulnerability Management to Meet the Speed of AI-Powered Discovery",
+      "why": "Official Microsoft engineering post detailing MDASH architecture — a primary source on how a major vendor is redesigning its security update pipeline in response to AI-accelerated exploit discovery, relevant to both security practice and MSFT portfolio intelligence.",
+      "url": "https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/"
+    },
+    {
+      "title": "How GitHub Gave Every Repository a Durable Owner",
+      "why": "First-party GitHub engineering post-mortem on solving ownership ambiguity at scale — a concrete, replicable pattern for large-org code asset governance and the IAM/access-control hygiene work that depends on it.",
+      "url": "https://github.blog/security/application-security/how-github-gave-every-repository-a-durable-owner/"
+    }
+  ]
+}

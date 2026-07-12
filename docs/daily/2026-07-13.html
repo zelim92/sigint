@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // MON 13 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">MON 13 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">5</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">15</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~6 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">2</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/qmKncF" target="_blank">OpenAI launches GPT-5.6 family: Sol, Terra, Luna with multi-agent &#x27;Ultra&#x27; mode</a></div>
+        <div class="story-body">GPT-5.6 Sol is the flagship, landing slightly below Claude Fable 5 on intelligence benchmarks but topping it on agentic coding, computer use, and cybersecurity tasks — at identical pricing to GPT-5.5 ($5/$30 per million tokens input/output). A new &#x27;Ultra&#x27; mode coordinates multiple agents across parallel workstreams; notably, OpenAI disclosed that Sol autonomously post-trained Luna. ChatGPT Work (analogous to Claude Cowork) and a merged desktop app with built-in browser and computer control complete the launch.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><span class="chip">therundown.ai</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/qmKncF" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://arcprize.org/results/openai-gpt-5-6" target="_blank">GPT-5.6 Sol wins ARC-AGI-3 public game — first model to do so</a></div>
+        <div class="story-body">ARC Prize results show Sol is the first model to win an ARC-AGI-3 public game, succeeding by correctly orienting itself within an unfamiliar environment using the game&#x27;s own vocabulary before acting. This is a meaningful generalisation benchmark distinct from standard coding or reasoning evals.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://arcprize.org/results/openai-gpt-5-6" target="_blank">arcprize.org ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/" target="_blank">Meta launches Muse Spark 1.1 API at ~25% of competitor pricing</a></div>
+        <div class="story-body">Meta&#x27;s Muse Spark 1.1 improves tool use, coding, computer interaction, and multimodal reasoning, and opens a public developer API with aggressive pricing at roughly 25% of top competing models. Zuckerberg positions this as a deliberate margin attack on OpenAI and Anthropic&#x27;s API businesses, with a freemium model converting to paid at usage thresholds.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/" target="_blank">ai.meta.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">Windows MDASH system: AI-accelerated vulnerability discovery and fix pipeline</a></div>
+        <div class="story-body">Microsoft detailed its MDASH scanning system, which uses dedicated cloud infrastructure and AI to compress the time between vulnerability discovery and security update delivery. The post is notable for acknowledging that AI-powered discovery by external researchers is now outpacing traditional patch cadences, forcing architectural changes to the update pipeline itself.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">blogs.windows.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-interesting-ai-coding-stats" target="_blank">Cursor data: top 1% of AI coders generate 40k lines/week; input tokens dominate at 90%</a></div>
+        <div class="story-body">Cursor&#x27;s internal report shows extreme productivity dispersion — median users generate ~700 lines/week vs 40,000 for the top 1%. The 90% input-token share signals that AI-assisted coding is predominantly a code-reading and comprehension workload, with implications for context-window pricing and RAG architecture choices.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link ai" href="https://newsletter.pragmaticengineer.com/p/the-pulse-interesting-ai-coding-stats" target="_blank">newsletter.pragmaticengineer.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://ainowinstitute.org/publications/friendly-fire-exploit-brief" target="_blank">PoC: Claude Code and OpenAI Codex hijacked for RCE via prompt-injected open-source libraries</a></div>
+        <div class="story-body">AI Now Institute researchers demonstrated that defensive AI coding agents (Claude Code, Codex) can be turned into RCE vectors when they review a tampered open-source library (e.g., modified geopy). A planted security.sh and disguised Golang binary are trusted and executed without malicious flagging — even under auto-mode safety settings — across multiple model versions. Configuration-file defenses do not block the attack, making this a direct threat to any pipeline that runs AI-assisted security or dependency review.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://ainowinstitute.org/publications/friendly-fire-exploit-brief" target="_blank">ainowinstitute.org ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline">npm 12 turns off install scripts, git deps, and remote URL installs by default</div>
+        <div class="story-body">GitHub&#x27;s npm 12 ships three high-impact supply chain mitigations off-by-default: lifecycle install scripts, git dependencies, and remote URL package installs all require explicit opt-in approval. This directly addresses the most common npm supply chain attack vectors and warrants immediate evaluation for enterprise JavaScript build pipelines.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.nowsecure.com/blog/2026/07/08/what-the-transsion-telemetry-research-means-for-mobile-security/" target="_blank">Transsion Android phones (1-in-2 sold in Africa) exfiltrate GPS, app data to Alibaba Cloud via undeletable SDK</a></div>
+        <div class="story-body">NowSecure researchers decrypted Transsion telemetry and found device-wide beacons — GPS, cell towers, foreground app, camera caller, battery state, per-app data usage — tied to persistent identifiers and sent to *.shalltry.com (Alibaba Cloud). The SDK ships as a privileged system component on TECNO devices and as an embedded SDK in popular apps including Boomplay and Orange Max it; it cannot be removed. DNS-level wildcard blocking of shalltry.com and transsion-os.com is the only practical enterprise mitigation.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://www.nowsecure.com/blog/2026/07/08/what-the-transsion-telemetry-research-means-for-mobile-security/" target="_blank">nowsecure.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">OpenMandriva insider sabotage: admin deletes decade of repo work, publishes empty packages</div>
+        <div class="story-body">A contributor with admin privileges deleted a core OpenMandriva repository and published an empty package that obsoleted GNOME and Cosmic desktop environment packages after an internal dispute. This is a live example of insider-threat risk from over-provisioned non-human and human admin credentials in open-source projects — directly relevant to privileged access governance.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://queue.acm.org/detail.cfm?id=3819084" target="_blank">LLMs now viable for formal verification spec-to-code translation (Dafny) — with caveats</a></div>
+        <div class="story-body">ACM Queue analysis notes that since Claude Opus 4.5, LLMs can translate specifications into formally verifiable code accepted by Dafny, dramatically reducing the labour barrier to formal verification. Key limitation: poorly specified or externally-dependent specs remain unverifiable, and the LLM can satisfy the spec without satisfying the intent — a risk pattern directly relevant to security-critical IAM and fraud logic.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link sec" href="https://queue.acm.org/detail.cfm?id=3819084" target="_blank">queue.acm.org ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.blog/security/application-security/how-github-gave-every-repository-a-durable-owner/" target="_blank">GitHub achieved 100% durable repo ownership across 14k+ repos in under 45 days</a></div>
+        <div class="story-body">GitHub&#x27;s internal engineering post describes how they resolved ownership ambiguity across 14,000+ repositories — less than half had clear owners — by building automated validation workflows and archiving stale repos, making ownership the prerequisite for all downstream security and compliance tooling. Directly applicable as a blueprint for large-org IAM hygiene tied to code assets.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://github.blog/security/application-security/how-github-gave-every-repository-a-durable-owner/" target="_blank">github.blog ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://blog.fal.ai/serving-sub-second-ideogram-v4-without-quality-loss/" target="_blank">fal.ai serves Ideogram V4 in 0.44s via FP4 + epilogue fusion + quantization-aware distillation</a></div>
+        <div class="story-body">fal.ai reduced image generation latency from 2.75s to 0.44s without quality regression using FP4 computation, epilogue fusion, and quantization-aware distillation to recover colour fidelity lost at FP4 precision. A detailed inference optimisation case study relevant to any team running high-throughput ML serving.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link swe" href="https://blog.fal.ai/serving-sub-second-ideogram-v4-without-quality-loss/" target="_blank">blog.fal.ai ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.ben-evans.com/benedictevans/2026/7/9/ways-to-think-about-token-pricing" target="_blank">Meta&#x27;s 25%-of-competitor API pricing is a structural margin attack on OpenAI and Anthropic</a></div>
+        <div class="story-body">Zuckerberg&#x27;s &#x27;aggressive pricing&#x27; framing for Muse Spark 1.1 is a deliberate strategy to commoditise the API layer while Meta monetises downstream via ads and social platforms. Benedict Evans&#x27; concurrent analysis on token pricing notes current supply crunch conditions will shift as capacity expands — Meta is positioning to capture share before that equilibrium is reached. Portfolio implication: MSFT (OpenAI partner) and GOOGL (Gemini) face pricing pressure at the API tier.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.ben-evans.com/benedictevans/2026/7/9/ways-to-think-about-token-pricing" target="_blank">ben-evans.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.worksinprogress.news/p/ai-is-bottlenecked-by-the-grid" target="_blank">AI infrastructure buildout bottlenecked by grid interconnection queue, not generation capacity</a></div>
+        <div class="story-body">The Stargate project in Texas and broader AI datacenter expansion are stalled primarily by the first-come-first-served grid interconnection queuing system, not by electricity generation shortfalls. This structural bottleneck increases datacenter construction costs and timelines, a direct constraint on NVDA and TSMC demand curves beyond 2026.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span><div class="ref-links"><a class="ref-link mkt" href="https://www.worksinprogress.news/p/ai-is-bottlenecked-by-the-grid" target="_blank">worksinprogress.news ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">Frontier model outcomes gap: Fable 5 and Opus 4.8 score zero on real-world conversion-rate tasks</div>
+        <div class="story-body">Outcomes-based assessments show frontier models failing measurable business KPIs (e.g., website conversion rates) despite strong benchmark scores; Eli Lilly and peers are moving to smaller purpose-built models. This is an early signal that enterprise AI spend may bifurcate between commodity frontier APIs and specialised vertical models — relevant to evaluating OpenAI and Anthropic&#x27;s long-term enterprise revenue.</div>
+        <div class="story-meta"><span class="chip">tldrnewsletter.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://ainowinstitute.org/publications/friendly-fire-exploit-brief" target="_blank">Friendly Fire: Hijacking Defensive Cyber AI Agents for Remote Code Execution ↗</a></div>
+          <div class="dive-why">Primary exploit brief from AI Now Institute demonstrating RCE via prompt-injected open-source libraries reviewed by Claude Code/Codex — directly actionable for any team running AI-assisted security or dependency scanning pipelines.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">Evolving Windows Vulnerability Management to Meet the Speed of AI-Powered Discovery ↗</a></div>
+          <div class="dive-why">Official Microsoft engineering post detailing MDASH architecture — a primary source on how a major vendor is redesigning its security update pipeline in response to AI-accelerated exploit discovery, relevant to both security practice and MSFT portfolio intelligence.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://github.blog/security/application-security/how-github-gave-every-repository-a-durable-owner/" target="_blank">How GitHub Gave Every Repository a Durable Owner ↗</a></div>
+          <div class="dive-why">First-party GitHub engineering post-mortem on solving ownership ambiguity at scale — a concrete, replicable pattern for large-org code asset governance and the IAM/access-control hygiene work that depends on it.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 12 Jul 2026 · sources: tldrnewsletter.com, therundown.ai · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
