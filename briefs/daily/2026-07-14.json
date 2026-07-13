@@ -1,0 +1,92 @@
+{
+  "date": "2026-07-14",
+  "threadCount": 3,
+  "storyCount": 7,
+  "sourceCount": 3,
+  "sections": {
+    "ai": [
+      {
+        "headline": "Microsoft Foundry: Production Agent Architecture at Enterprise Scale",
+        "body": "Microsoft's Marco Casalaina (VP Core AI) details why production agents fail — not because of the model, but because of the harness: context retrieval, identity layer, guardrails, evaluators, and observability. Key architectural signals: retrieval-as-a-subagent (planner-driven, multi-source, retry-capable), agents assigned their own identities with audit trails, and rubric-based evals with auto-improvement loops. When Anthropic released Claude Opus 4.8, GitHub Copilot CLI had to re-tune its harness and re-run all evaluations before shipping — models are not like database versions.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Apple Sues OpenAI for Systematic Trade Secret Theft via Hiring Pipeline",
+        "body": "Apple filed a federal lawsuit alleging OpenAI orchestrated a coordinated scheme using 400+ former Apple employees — including former VP Tang Tan (now OpenAI's chief hardware officer) — to extract trade secrets during and after job transitions. Specific allegations include coaching departing employees to retain system access, stealing a laptop, and exfiltrating internal presentations and manufacturing details from network storage after departure. The suit also names io Products (Jony Ive's company); OpenAI denies all charges.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/Ss1?mblid=bf3238e95a11&mbcid=46542986.3961091&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "CISA Publishes Postmortem on 6-Month GitHub Credential Leak — AWS GovCloud Keys Exposed",
+        "body": "A contractor published a public GitHub repo ('Private CISA') containing 844 MB of sensitive data including AWS GovCloud admin keys and a plaintext CSV of internal system credentials; it sat exposed for ~6 months. CISA ignored nine automated GitGuardian alerts before KrebsOnSecurity notified them directly, then took 48+ hours to rotate the AWS keys. The official postmortem — the first time a national cybersecurity agency has publicly advocated for continuous secrets scanning — cites lack of distinct internal vs. external incident reporting channels and no GitHub/cloud-services playbook as root causes.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://www.cisa.gov/news-events/news/lessons-cisas-cyber-incident"
+      },
+      {
+        "headline": "GitGuardian Analysis: Nine Ignored Alerts and the Case for Continuous Secrets Scanning",
+        "body": "GitGuardian's Guillaume Valadon notes the core failure mode: automated secret-scanning alerts treated as noise, allowing a one-day incident to become a six-month exposure. His recommendation is continuous (not quarterly) scanning of public repos, internal scanning to catch secrets before they leave the perimeter, and distinct inbound reporting channels for infrastructure incidents separate from product vulnerability disclosures. CISA's zero-trust logging posture did allow post-hoc confirmation that no credentials were used outside its environments.",
+        "signal": "med",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://blog.gitguardian.com/cisa-github-leak-incident-response-lessons/"
+      }
+    ],
+    "fin": [],
+    "swe": [
+      {
+        "headline": "Microsoft Foundry's Agent Identity Pattern: Non-Human Identities with Org-Recognized Audit Trails",
+        "body": "A recurring production failure mode in enterprise agents is running as a shared system principal with no audit trail — creating compliance and forensics gaps. Microsoft Foundry's pattern assigns each agent its own identity recognized by the organization, enabling action-level audit trails that survive compliance review. This directly mirrors IAM best practices for non-human identities (service accounts, workload identity) applied to agentic systems.",
+        "signal": "high",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Earnings Season Opens Against Inflation Data and Geopolitical Disruption to Strait of Hormuz",
+        "body": "S&P 500 is +10.66% YTD at 7,575; Nasdaq +13.08% at 26,281. Earnings season kicks off this week alongside fresh inflation prints. US-Iran military exchanges over the Strait of Hormuz — a critical oil shipping corridor — escalated over the weekend with 140+ US strikes and Iranian strikes on Qatar, Kuwait, Jordan, Oman, and Bahrain; supply chain and energy price risk is elevated.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Meta Erases YTD Losses on AI Narrative Revival; Seahawks Sold for Record $9.6B to Khosla Family",
+        "body": "Meta closed ~6% higher Friday — its best week in over two years — as investors re-engaged with its AI story despite recent negative headlines. Separately, VC Vinod Khosla's family agreed to buy the Seattle Seahawks for a record $9.6B (NFL franchise record), selling the team from the Paul Allen estate which is donating proceeds to charity.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "CISA Official Postmortem: Lessons from the GitHub Credential Leak",
+      "why": "Primary source government incident postmortem — directly actionable for any security team managing secrets, contractor access, and external researcher disclosure channels.",
+      "url": "https://www.cisa.gov/news-events/news/lessons-cisas-cyber-incident"
+    },
+    {
+      "title": "GitGuardian: CISA GitHub Leak — Incident Response Lessons",
+      "why": "Technical analysis from the researcher who found the exposure; concrete recommendations on continuous secrets scanning, security.txt, and separating infrastructure incident channels from product bug queues.",
+      "url": "https://blog.gitguardian.com/cisa-github-leak-incident-response-lessons/"
+    }
+  ]
+}
