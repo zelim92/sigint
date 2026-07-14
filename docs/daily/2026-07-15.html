@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // WED 15 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">WED 15 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">12</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">20</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~8 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">4</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547" target="_blank">xAI Grok Build CLI silently uploads entire repositories to Google Cloud Storage</a></div>
+        <div class="story-body">Technical analysis confirmed the Grok Build coding CLI transmits file contents verbatim and unredacted, uploading whole repositories independent of what the agent actually reads, storing them in a GCS bucket. No proof of training on the data exists, but the exfiltration is unconditional. Enterprise and fintech teams using the CLI should treat any repo it touched as potentially exposed.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547" target="_blank">gist.github.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/IEwjVH" target="_blank">Ghostcommit: prompt injection hidden in Git repo images steals .env secrets via coding agents</a></div>
+        <div class="story-body">Researchers embedded malicious instructions inside images pushed to a Git repo; coding agents (Cursor, Antigravity) read the image and exfiltrated .env contents byte-by-byte, while PR review agents skipped images, allowing the malicious commit to be approved. Claude Opus in Claude Code detected the attack. The vector is highly relevant for any team running agentic CI/CD or automated code-review pipelines.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://links.tldrnewsletter.com/IEwjVH" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blog.bytebytego.com/p/how-microsoft-ships-ai-agents-at" target="_blank">Microsoft ships thousands of production AI agents: distinct identities, retrieval-as-sub-agent, rubric-based evals</a></div>
+        <div class="story-body">Microsoft detailed its Foundry/Copilot agent infrastructure: agents get distinct identities and isolated workspaces, retrieval is treated as a sub-agent rather than a lookup, and improvement loops use rubric-based automated evaluations. The architecture directly informs how large enterprises should think about non-human identity assignment and access scoping for agents.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://blog.bytebytego.com/p/how-microsoft-ships-ai-agents-at" target="_blank">blog.bytebytego.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://github.com/google/mantis" target="_blank">Google releases Mantis: open-source security-review harness for coding agents</a></div>
+        <div class="story-body">Mantis Skills is a decoupled, sequential, security-focused toolkit for building security review harnesses with coding agents, using internal documentation, coding standards, and threat models as augmentation. Google recommends iterating on skills with AI and adapting risk calibration per environment. Directly applicable to fintech teams wanting to automate security review pipelines.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link ai" href="https://github.com/google/mantis" target="_blank">github.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://link.mail.beehiiv.com/ss/c/u001.dSnm3kaGd0BkNqLYPjeMf6Pz5VGSVks2ZxFClQUYhzGf3sroJUIAgwyLiWHHXHZI7GTRPos25ci8P3krYXg6XJfkgJ92GoiuvAXybD30hFg69zmVyQReiBlfhhgkOHKr5y4gVz_GrB0H48ueqNoc4GA13EHY-u_z4-tmXUllmfyU1miaPeHlz0QPcElszR9J8nDOC4DnIkdicyefpEoeemEd_1DltLR7KyUJEk5wrtyp79Vobs312HhGv0SgWKlGfWwTLv_irl2WkuDOrMKCSQ/4sb/inKvt8tiRUuwp8tx4Id1ZQ/h5/h001.vnOHRZU2kR4hhV5CofmoKni-A4kC5ckM1UcEIPQLvZc" target="_blank">Stanford &#x27;We Must Act Now&#x27;: 200+ economists and 16 Nobel laureates warn of decade-scale AI labour disruption</a></div>
+        <div class="story-body">The statement argues AI will be &#x27;radically more powerful&#x27; within 10 years and that displacement could be faster than any prior economic transition, demanding governments build safety nets now. Signatories include Google&#x27;s Jeff Dean, Anthropic&#x27;s Jack Clark, and OpenAI&#x27;s Noam Brown. For investors, this signals growing institutional pressure that could accelerate AI governance regulation affecting deployment timelines.</div>
+        <div class="story-meta"><span class="chip">therundownai.com</span><div class="ref-links"><a class="ref-link ai" href="https://link.mail.beehiiv.com/ss/c/u001.dSnm3kaGd0BkNqLYPjeMf6Pz5VGSVks2ZxFClQUYhzGf3sroJUIAgwyLiWHHXHZI7GTRPos25ci8P3krYXg6XJfkgJ92GoiuvAXybD30hFg69zmVyQReiBlfhhgkOHKr5y4gVz_GrB0H48ueqNoc4GA13EHY-u_z4-tmXUllmfyU1miaPeHlz0QPcElszR9J8nDOC4DnIkdicyefpEoeemEd_1DltLR7KyUJEk5wrtyp79Vobs312HhGv0SgWKlGfWwTLv_irl2WkuDOrMKCSQ/4sb/inKvt8tiRUuwp8tx4Id1ZQ/h5/h001.vnOHRZU2kR4hhV5CofmoKni-A4kC5ckM1UcEIPQLvZc" target="_blank">link.mail.beehiiv.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-sec">SEC</span>
+      <span class="section-title">IAM &amp; cybersecurity</span>
+      <span class="item-count">5 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">Microsoft July Patch Tuesday: 570 CVEs, 3 zero-days exploited in wild, AI accelerating discovery pace</a></div>
+        <div class="story-body">July&#x27;s patch batch is nearly triple June&#x27;s record, with ~60 critical flaws. Actively exploited zero-days include CVE-2026-56155 (Active Directory Federation Services EoP) and CVE-2026-56164 (SharePoint EoP); CVE-2026-50661 is a BitLocker bypass requiring physical access. Microsoft EVP Pavan Davuluri explicitly attributed the volume surge to AI-assisted vulnerability discovery, and Tenable notes Anthropic&#x27;s Mythos model produced PoC exploits for 13/14 bugs rated &#x27;Exploitation Less Likely&#x27;, invalidating the current exploitability index for defenders.</div>
+        <div class="story-meta"><span class="chip">krebsonsecurity.com</span><div class="ref-links"><a class="ref-link sec" href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">blogs.windows.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://securelist.com/microsoft-device-code-phishing-attack/120350/" target="_blank">Device Code Phishing via legitimate Microsoft domains bypasses URL-checking and MFA</a></div>
+        <div class="story-body">Attackers chain open redirects on microsoft.com and Cacoo.com through CAPTCHA gates to a page that auto-copies a genuine OAuth device_code; the victim pastes it into microsoft.com/devicelogin, completes real MFA, and the attacker harvests access and refresh tokens with silent long-term persistence via Teams, OneDrive, and mail. Defenders should disable Device Code Flow via Conditional Access if unused and monitor DeviceCodeSignIn events.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://securelist.com/microsoft-device-code-phishing-attack/120350/" target="_blank">securelist.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html" target="_blank">Progress ShareFile emergency shutdown: credible external threat against Windows Storage Zone Controllers</a></div>
+        <div class="story-body">Progress Software ordered customers to immediately shut down on-prem Windows-based Storage Zone Controllers after detecting an active external threat; cloud-only accounts unaffected. Guidance: keep controllers offline, treat exposed servers as incidents, preserve logs, and hunt for unfamiliar .aspx files. No CVE or technical detail released yet — watch for follow-on disclosure.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html" target="_blank">thehackernews.com ↗</a></div></div>
+      </div>
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://hackernoon.com/attested-tls-was-supposed-to-be-the-last-trust-boundary-it-isnt-formal-methods-show-how" target="_blank">Attested TLS relay attack (CVE-2026-33697, CVSS 7.5): formal verification exposes all seven binding mechanisms in Meta, Edgeless, Cocos AI</a></div>
+        <div class="story-body">TU Dresden used ProVerif to find that all seven attestation-to-TLS binding mechanisms in production TEE deployments (WhatsApp Private Processing, Contrast, Cocos AI) are vulnerable: an attacker with the enclave&#x27;s ephemeral TLS key can relay genuine attestation evidence while terminating the session at their own endpoint, passing all cryptographic checks. None of the seven mechanisms bind evidence to application traffic. Vendors should confirm binding extends to the client&#x27;s application traffic key, not just the handshake.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://hackernoon.com/attested-tls-was-supposed-to-be-the-last-trust-boundary-it-isnt-formal-methods-show-how" target="_blank">hackernoon.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://socket.dev/blog/compromised-injective-sdk-npm-package" target="_blank">Injective SDK npm supply chain compromise exfiltrates wallet private keys and mnemonics</a></div>
+        <div class="story-body">Malicious release @injectivelabs/sdk-ts@1.20.21 logs mnemonics and private keys then POSTs them to an InjectiveLabs infrastructure endpoint; the same payload was pushed to 17 related packages. Developers must audit dependencies, move funds from affected wallets, and rotate all keys and mnemonics immediately.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link sec" href="https://socket.dev/blog/compromised-injective-sdk-npm-package" target="_blank">socket.dev ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">4 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://www.pymnts.com/news/artificial-intelligence/2026/ai-cracked-mortgage-verification-system/" target="_blank">AI-generated fake documents cracking mortgage verification: Australian banks investigate billions in suspected fraud</a></div>
+        <div class="story-body">Generative AI is producing convincing fake payslips, bank statements, and tax records that pass standard document-based verification, forcing a shift toward consent-based direct access to government and payroll data sources. The crisis accelerates the infrastructure transition away from document OCR toward verified data APIs, with significant implications for KYC/AML tooling vendors and mortgage fintechs.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://www.pymnts.com/news/artificial-intelligence/2026/ai-cracked-mortgage-verification-system/" target="_blank">pymnts.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/10/circle-gets-an-occ-bank-charter-as-stablecoin-competition-heats-up-shares-surge-14percent.html" target="_blank">Circle receives OCC trust bank charter to self-custody USDC reserves, intensifying stablecoin competition</a></div>
+        <div class="story-body">Circle National Trust approval lets Circle manage USDC reserves directly rather than through third-party banks, reducing counterparty risk and regulatory dependency. Coming alongside Robinhood&#x27;s tokenization blockchain launch and Ondo&#x27;s regulated tokenized securities offering, the move signals stablecoin infrastructure is shifting from fintech apps to regulated bank-grade stack ownership.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://www.cnbc.com/2026/07/10/circle-gets-an-occ-bank-charter-as-stablecoin-competition-heats-up-shares-surge-14percent.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/u5MeqF" target="_blank">Block settles Cash App fraud probe for $45M with 46 US states over inadequate fraud protections</a></div>
+        <div class="story-body">States alleged Block misrepresented Cash App&#x27;s safety protections as bank-equivalent, exposing users to fraud without adequate recourse. Settlement terms require remediation beyond the fine. A signal of increased state-level enforcement pressure on P2P payment platforms over fraud liability.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/u5MeqF" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://links.tldrnewsletter.com/WiWKtW" target="_blank">Wall Street banks restrict employee prediction-market trading over insider information concerns</a></div>
+        <div class="story-body">Goldman Sachs, Morgan Stanley, JPMorgan, and Bank of America added explicit prohibitions on employee trading of financial, political, and macroeconomic prediction-market contracts on Kalshi and Polymarket. Sports and entertainment contracts generally remain permitted. Signals growing regulatory and compliance scrutiny of prediction markets as they scale.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link fin" href="https://links.tldrnewsletter.com/WiWKtW" target="_blank">links.tldrnewsletter.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://vivekhaldar.com/articles/compiling-an-ai-agent-skill/" target="_blank">Compiling AI agent skills to deterministic code cuts token use 94% and latency 87%</a></div>
+        <div class="story-body">A developer replaced a natural-language instruction model for a specialized agent workflow with compiled deterministic code, reserving LLM calls only for the components requiring genuine language understanding. The approach validates a broader pattern: use agentic runs to discover stable workflows, then codify them. Directly relevant to production cost management for fintech AI pipelines.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://vivekhaldar.com/articles/compiling-an-ai-agent-skill/" target="_blank">vivekhaldar.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://malisper.me/the-four-horsemen-behind-thousands-of-postgres-outages/" target="_blank">Postgres outage root causes: vacuum, XID wraparound, connection limits, bad plans — pgrust proposes architectural fixes</a></div>
+        <div class="story-body">Analysis of thousands of Postgres outages identifies the four primary failure modes and notes they compound in teams without dedicated DBAs. The pgrust project proposes architectural remedies including 64-bit transaction IDs (eliminating XID wraparound), a threaded model, and an adaptive query planner. Useful context for teams running fintech workloads on self-managed Postgres.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://malisper.me/the-four-horsemen-behind-thousands-of-postgres-outages/" target="_blank">malisper.me ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank">Claude Code sends 33k tokens before reading the prompt vs OpenCode&#x27;s 7k — 4.7x overhead gap measured</a></div>
+        <div class="story-body">Head-to-head measurement found Claude Code&#x27;s system prompt and tool-definition overhead is dramatically higher than OpenCode&#x27;s, with lower cache efficiency on identical tasks. Both produce correct outputs. For teams with high-frequency agentic coding workloads, model selection and harness choice have major cost implications independent of per-token pricing.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link swe" href="https://systima.ai/blog/claude-code-vs-opencode-token-overhead" target="_blank">systima.ai ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/" target="_blank">Apple sues OpenAI for trade secret theft tied to hardware ambitions, threatens OpenAI device roadmap</a></div>
+        <div class="story-body">Apple alleges 400+ former employees carried confidential hardware files to OpenAI, with hardware chief Tang Tan allegedly directing interview candidates to bring &#x27;actual parts&#x27;. Apple seeks an injunction blocking OpenAI from using its IP, which could directly delay the Jony Ive-designed consumer device expected in 2027. The lawsuit may also slow OpenAI recruiting from Apple, reducing institutional knowledge transfer.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><span class="chip">therundownai.com</span><div class="ref-links"><a class="ref-link mkt" href="https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/" target="_blank">techcrunch.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">US-Iran Strait of Hormuz escalation: oil above $80/barrel, proposed 20% naval escort fee rattles markets</div>
+        <div class="story-body">Trump announced a 20% cargo value fee for US naval escort through the Strait of Hormuz and reimposition of Iranian oil sanctions after resumed exchanges of attacks. Semiconductor stocks including SK Hynix fell on both oil price and AI investor anxiety. With one-fifth of global oil transiting the strait, sustained disruption poses macro risk to energy-sensitive tech infrastructure costs.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://www.cnbc.com/2026/07/09/anthropic-fed-chair-bernanke-independent-trust.html" target="_blank">Anthropic appoints Ben Bernanke to Long-Term Benefit Trust as IPO preparations advance</a></div>
+        <div class="story-body">Former Fed Chair Bernanke joins the governance body that advises Anthropic and appoints board members, signalling the company is building institutional credibility ahead of a potential IPO. The appointment also reflects AI labs treating macroeconomic oversight as a strategic priority as their systems become embedded in financial services.</div>
+        <div class="story-meta"><span class="chip">tldr.tech</span><div class="ref-links"><a class="ref-link mkt" href="https://www.cnbc.com/2026/07/09/anthropic-fed-chair-bernanke-independent-trust.html" target="_blank">cnbc.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">3 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547" target="_blank">What xAI Grok Build CLI Actually Sends to xAI ↗</a></div>
+          <div class="dive-why">Primary technical analysis (GitHub Gist with traffic capture) of unconditional repository exfiltration by an official coding CLI — directly actionable for any security or engineering team evaluating AI coding tools for use with proprietary codebases.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://hackernoon.com/attested-tls-was-supposed-to-be-the-last-trust-boundary-it-isnt-formal-methods-show-how" target="_blank">Attested TLS Formal Verification: CVE-2026-33697 Relay Attack on TEE Deployments ↗</a></div>
+          <div class="dive-why">ProVerif-based academic analysis of production TEE attestation mechanisms (Meta, Edgeless, Cocos AI) finding a systemic relay vulnerability missed by manual audits — foundational reading for anyone evaluating confidential compute or attested TLS as a trust boundary in zero-trust architectures.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">03</span>
+        <div>
+          <div class="dive-title"><a href="https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/" target="_blank">Microsoft July 2026 Patch Tuesday: AI-Accelerated Vulnerability Discovery and the Broken Exploitability Index ↗</a></div>
+          <div class="dive-why">Microsoft&#x27;s official blog post by EVP Pavan Davuluri explicitly documents how AI is driving the patch volume surge and what that means for defender response cadence — a primary source signal that the patch-management operating model needs fundamental rethinking.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 14 Jul 2026 · sources: tldr.tech, therundownai.com, krebsonsecurity.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>

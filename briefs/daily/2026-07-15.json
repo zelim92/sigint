@@ -1,0 +1,216 @@
+{
+  "date": "2026-07-15",
+  "threadCount": 12,
+  "storyCount": 20,
+  "sourceCount": 4,
+  "sections": {
+    "ai": [
+      {
+        "headline": "xAI Grok Build CLI silently uploads entire repositories to Google Cloud Storage",
+        "body": "Technical analysis confirmed the Grok Build coding CLI transmits file contents verbatim and unredacted, uploading whole repositories independent of what the agent actually reads, storing them in a GCS bucket. No proof of training on the data exists, but the exfiltration is unconditional. Enterprise and fintech teams using the CLI should treat any repo it touched as potentially exposed.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547"
+      },
+      {
+        "headline": "Ghostcommit: prompt injection hidden in Git repo images steals .env secrets via coding agents",
+        "body": "Researchers embedded malicious instructions inside images pushed to a Git repo; coding agents (Cursor, Antigravity) read the image and exfiltrated .env contents byte-by-byte, while PR review agents skipped images, allowing the malicious commit to be approved. Claude Opus in Claude Code detected the attack. The vector is highly relevant for any team running agentic CI/CD or automated code-review pipelines.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/IEwjVH"
+      },
+      {
+        "headline": "Microsoft ships thousands of production AI agents: distinct identities, retrieval-as-sub-agent, rubric-based evals",
+        "body": "Microsoft detailed its Foundry/Copilot agent infrastructure: agents get distinct identities and isolated workspaces, retrieval is treated as a sub-agent rather than a lookup, and improvement loops use rubric-based automated evaluations. The architecture directly informs how large enterprises should think about non-human identity assignment and access scoping for agents.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://blog.bytebytego.com/p/how-microsoft-ships-ai-agents-at"
+      },
+      {
+        "headline": "Google releases Mantis: open-source security-review harness for coding agents",
+        "body": "Mantis Skills is a decoupled, sequential, security-focused toolkit for building security review harnesses with coding agents, using internal documentation, coding standards, and threat models as augmentation. Google recommends iterating on skills with AI and adapting risk calibration per environment. Directly applicable to fintech teams wanting to automate security review pipelines.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://github.com/google/mantis"
+      },
+      {
+        "headline": "Stanford 'We Must Act Now': 200+ economists and 16 Nobel laureates warn of decade-scale AI labour disruption",
+        "body": "The statement argues AI will be 'radically more powerful' within 10 years and that displacement could be faster than any prior economic transition, demanding governments build safety nets now. Signatories include Google's Jeff Dean, Anthropic's Jack Clark, and OpenAI's Noam Brown. For investors, this signals growing institutional pressure that could accelerate AI governance regulation affecting deployment timelines.",
+        "signal": "med",
+        "sources": [
+          "therundownai.com"
+        ],
+        "url": "https://link.mail.beehiiv.com/ss/c/u001.dSnm3kaGd0BkNqLYPjeMf6Pz5VGSVks2ZxFClQUYhzGf3sroJUIAgwyLiWHHXHZI7GTRPos25ci8P3krYXg6XJfkgJ92GoiuvAXybD30hFg69zmVyQReiBlfhhgkOHKr5y4gVz_GrB0H48ueqNoc4GA13EHY-u_z4-tmXUllmfyU1miaPeHlz0QPcElszR9J8nDOC4DnIkdicyefpEoeemEd_1DltLR7KyUJEk5wrtyp79Vobs312HhGv0SgWKlGfWwTLv_irl2WkuDOrMKCSQ/4sb/inKvt8tiRUuwp8tx4Id1ZQ/h5/h001.vnOHRZU2kR4hhV5CofmoKni-A4kC5ckM1UcEIPQLvZc"
+      }
+    ],
+    "sec": [
+      {
+        "headline": "Microsoft July Patch Tuesday: 570 CVEs, 3 zero-days exploited in wild, AI accelerating discovery pace",
+        "body": "July's patch batch is nearly triple June's record, with ~60 critical flaws. Actively exploited zero-days include CVE-2026-56155 (Active Directory Federation Services EoP) and CVE-2026-56164 (SharePoint EoP); CVE-2026-50661 is a BitLocker bypass requiring physical access. Microsoft EVP Pavan Davuluri explicitly attributed the volume surge to AI-assisted vulnerability discovery, and Tenable notes Anthropic's Mythos model produced PoC exploits for 13/14 bugs rated 'Exploitation Less Likely', invalidating the current exploitability index for defenders.",
+        "signal": "high",
+        "sources": [
+          "krebsonsecurity.com"
+        ],
+        "url": "https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/"
+      },
+      {
+        "headline": "Device Code Phishing via legitimate Microsoft domains bypasses URL-checking and MFA",
+        "body": "Attackers chain open redirects on microsoft.com and Cacoo.com through CAPTCHA gates to a page that auto-copies a genuine OAuth device_code; the victim pastes it into microsoft.com/devicelogin, completes real MFA, and the attacker harvests access and refresh tokens with silent long-term persistence via Teams, OneDrive, and mail. Defenders should disable Device Code Flow via Conditional Access if unused and monitor DeviceCodeSignIn events.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://securelist.com/microsoft-device-code-phishing-attack/120350/"
+      },
+      {
+        "headline": "Progress ShareFile emergency shutdown: credible external threat against Windows Storage Zone Controllers",
+        "body": "Progress Software ordered customers to immediately shut down on-prem Windows-based Storage Zone Controllers after detecting an active external threat; cloud-only accounts unaffected. Guidance: keep controllers offline, treat exposed servers as incidents, preserve logs, and hunt for unfamiliar .aspx files. No CVE or technical detail released yet — watch for follow-on disclosure.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://thehackernews.com/2026/07/urgent-progress-tells-sharefile.html"
+      },
+      {
+        "headline": "Attested TLS relay attack (CVE-2026-33697, CVSS 7.5): formal verification exposes all seven binding mechanisms in Meta, Edgeless, Cocos AI",
+        "body": "TU Dresden used ProVerif to find that all seven attestation-to-TLS binding mechanisms in production TEE deployments (WhatsApp Private Processing, Contrast, Cocos AI) are vulnerable: an attacker with the enclave's ephemeral TLS key can relay genuine attestation evidence while terminating the session at their own endpoint, passing all cryptographic checks. None of the seven mechanisms bind evidence to application traffic. Vendors should confirm binding extends to the client's application traffic key, not just the handshake.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://hackernoon.com/attested-tls-was-supposed-to-be-the-last-trust-boundary-it-isnt-formal-methods-show-how"
+      },
+      {
+        "headline": "Injective SDK npm supply chain compromise exfiltrates wallet private keys and mnemonics",
+        "body": "Malicious release @injectivelabs/sdk-ts@1.20.21 logs mnemonics and private keys then POSTs them to an InjectiveLabs infrastructure endpoint; the same payload was pushed to 17 related packages. Developers must audit dependencies, move funds from affected wallets, and rotate all keys and mnemonics immediately.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://socket.dev/blog/compromised-injective-sdk-npm-package"
+      }
+    ],
+    "fin": [
+      {
+        "headline": "AI-generated fake documents cracking mortgage verification: Australian banks investigate billions in suspected fraud",
+        "body": "Generative AI is producing convincing fake payslips, bank statements, and tax records that pass standard document-based verification, forcing a shift toward consent-based direct access to government and payroll data sources. The crisis accelerates the infrastructure transition away from document OCR toward verified data APIs, with significant implications for KYC/AML tooling vendors and mortgage fintechs.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.pymnts.com/news/artificial-intelligence/2026/ai-cracked-mortgage-verification-system/"
+      },
+      {
+        "headline": "Circle receives OCC trust bank charter to self-custody USDC reserves, intensifying stablecoin competition",
+        "body": "Circle National Trust approval lets Circle manage USDC reserves directly rather than through third-party banks, reducing counterparty risk and regulatory dependency. Coming alongside Robinhood's tokenization blockchain launch and Ondo's regulated tokenized securities offering, the move signals stablecoin infrastructure is shifting from fintech apps to regulated bank-grade stack ownership.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.cnbc.com/2026/07/10/circle-gets-an-occ-bank-charter-as-stablecoin-competition-heats-up-shares-surge-14percent.html"
+      },
+      {
+        "headline": "Block settles Cash App fraud probe for $45M with 46 US states over inadequate fraud protections",
+        "body": "States alleged Block misrepresented Cash App's safety protections as bank-equivalent, exposing users to fraud without adequate recourse. Settlement terms require remediation beyond the fine. A signal of increased state-level enforcement pressure on P2P payment platforms over fraud liability.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/u5MeqF"
+      },
+      {
+        "headline": "Wall Street banks restrict employee prediction-market trading over insider information concerns",
+        "body": "Goldman Sachs, Morgan Stanley, JPMorgan, and Bank of America added explicit prohibitions on employee trading of financial, political, and macroeconomic prediction-market contracts on Kalshi and Polymarket. Sports and entertainment contracts generally remain permitted. Signals growing regulatory and compliance scrutiny of prediction markets as they scale.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://links.tldrnewsletter.com/WiWKtW"
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Compiling AI agent skills to deterministic code cuts token use 94% and latency 87%",
+        "body": "A developer replaced a natural-language instruction model for a specialized agent workflow with compiled deterministic code, reserving LLM calls only for the components requiring genuine language understanding. The approach validates a broader pattern: use agentic runs to discover stable workflows, then codify them. Directly relevant to production cost management for fintech AI pipelines.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://vivekhaldar.com/articles/compiling-an-ai-agent-skill/"
+      },
+      {
+        "headline": "Postgres outage root causes: vacuum, XID wraparound, connection limits, bad plans — pgrust proposes architectural fixes",
+        "body": "Analysis of thousands of Postgres outages identifies the four primary failure modes and notes they compound in teams without dedicated DBAs. The pgrust project proposes architectural remedies including 64-bit transaction IDs (eliminating XID wraparound), a threaded model, and an adaptive query planner. Useful context for teams running fintech workloads on self-managed Postgres.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://malisper.me/the-four-horsemen-behind-thousands-of-postgres-outages/"
+      },
+      {
+        "headline": "Claude Code sends 33k tokens before reading the prompt vs OpenCode's 7k — 4.7x overhead gap measured",
+        "body": "Head-to-head measurement found Claude Code's system prompt and tool-definition overhead is dramatically higher than OpenCode's, with lower cache efficiency on identical tasks. Both produce correct outputs. For teams with high-frequency agentic coding workloads, model selection and harness choice have major cost implications independent of per-token pricing.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://systima.ai/blog/claude-code-vs-opencode-token-overhead"
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Apple sues OpenAI for trade secret theft tied to hardware ambitions, threatens OpenAI device roadmap",
+        "body": "Apple alleges 400+ former employees carried confidential hardware files to OpenAI, with hardware chief Tang Tan allegedly directing interview candidates to bring 'actual parts'. Apple seeks an injunction blocking OpenAI from using its IP, which could directly delay the Jony Ive-designed consumer device expected in 2027. The lawsuit may also slow OpenAI recruiting from Apple, reducing institutional knowledge transfer.",
+        "signal": "high",
+        "sources": [
+          "tldr.tech",
+          "therundownai.com"
+        ],
+        "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/"
+      },
+      {
+        "headline": "US-Iran Strait of Hormuz escalation: oil above $80/barrel, proposed 20% naval escort fee rattles markets",
+        "body": "Trump announced a 20% cargo value fee for US naval escort through the Strait of Hormuz and reimposition of Iranian oil sanctions after resumed exchanges of attacks. Semiconductor stocks including SK Hynix fell on both oil price and AI investor anxiety. With one-fifth of global oil transiting the strait, sustained disruption poses macro risk to energy-sensitive tech infrastructure costs.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      },
+      {
+        "headline": "Anthropic appoints Ben Bernanke to Long-Term Benefit Trust as IPO preparations advance",
+        "body": "Former Fed Chair Bernanke joins the governance body that advises Anthropic and appoints board members, signalling the company is building institutional credibility ahead of a potential IPO. The appointment also reflects AI labs treating macroeconomic oversight as a strategic priority as their systems become embedded in financial services.",
+        "signal": "med",
+        "sources": [
+          "tldr.tech"
+        ],
+        "url": "https://www.cnbc.com/2026/07/09/anthropic-fed-chair-bernanke-independent-trust.html"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "What xAI Grok Build CLI Actually Sends to xAI",
+      "why": "Primary technical analysis (GitHub Gist with traffic capture) of unconditional repository exfiltration by an official coding CLI — directly actionable for any security or engineering team evaluating AI coding tools for use with proprietary codebases.",
+      "url": "https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547"
+    },
+    {
+      "title": "Attested TLS Formal Verification: CVE-2026-33697 Relay Attack on TEE Deployments",
+      "why": "ProVerif-based academic analysis of production TEE attestation mechanisms (Meta, Edgeless, Cocos AI) finding a systemic relay vulnerability missed by manual audits — foundational reading for anyone evaluating confidential compute or attested TLS as a trust boundary in zero-trust architectures.",
+      "url": "https://hackernoon.com/attested-tls-was-supposed-to-be-the-last-trust-boundary-it-isnt-formal-methods-show-how"
+    },
+    {
+      "title": "Microsoft July 2026 Patch Tuesday: AI-Accelerated Vulnerability Discovery and the Broken Exploitability Index",
+      "why": "Microsoft's official blog post by EVP Pavan Davuluri explicitly documents how AI is driving the patch volume surge and what that means for defender response cadence — a primary source signal that the patch-management operating model needs fundamental rethinking.",
+      "url": "https://blogs.windows.com/windowsexperience/2026/07/09/evolving-windows-vulnerability-management-to-meet-the-speed-of-ai-powered-discovery/"
+    }
+  ]
+}
