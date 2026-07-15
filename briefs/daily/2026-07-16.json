@@ -1,0 +1,74 @@
+{
+  "date": "2026-07-16",
+  "threadCount": 2,
+  "storyCount": 5,
+  "sourceCount": 2,
+  "sections": {
+    "ai": [
+      {
+        "headline": "AI Customer Support Architecture: How Airbnb, Booking.com, and Expedia Handle the Automation Boundary",
+        "body": "All three platforms converge on the same structural insight: automation works well for retrieval-based cases (refund status, rebooking) but hits a hard ceiling at adjudication — disputes where competing party claims require judgment, not lookup. Airbnb uses layered intent models plus a refund-ratio predictor trained on historical agent decisions to attempt autonomous resolution; Expedia invests in 30-language conversation summaries to ensure escalated cases arrive with full context intact. The confidence threshold — the single scalar that routes a case to a human — is identified as the highest-leverage tuning parameter in the entire pipeline.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": "https://medium.com/airbnb-engineering/task-oriented-conversational-ai-in-airbnb-customer-support-5ebf49169eaa"
+      }
+    ],
+    "sec": [],
+    "fin": [
+      {
+        "headline": "Top 5 US Banks Post Combined $49B in Q2 Profits — AI Capex Cycle and Geopolitical Volatility Key Drivers",
+        "body": "JPMorgan, BofA, Goldman, Wells Fargo, and Citigroup combined for $49B in Q2 profits, beating expectations on trading revenue (Hormuz volatility, SpaceX's $85B IPO generating ~$500M in fees) and M&A/AI infrastructure deal flow. Goldman CEO David Solomon explicitly framed it as the banking industry being \"in the middle of an AI capex super cycle.\" Anthropic's upcoming IPO is being led by Goldman and Morgan Stanley; OpenAI's bank selection is still pending — both are material near-term fee events.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/SBD?mblid=dd8899358b8e&mbcid=46579033.4055761&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      },
+      {
+        "headline": "June Inflation Eased for First Time in Six Years, but Fed Chair Warsh Signals More Work Needed",
+        "body": "A brief US-Iran ceasefire drove energy prices down, producing the first month-on-month inflation decline in six years. With hostilities and the Hormuz blockade resuming, the disinflation is likely transitory — Fed Chair Warsh explicitly rejected a \"mission accomplished\" framing before Congress. Sticky inflation combined with elevated asset prices and large fiscal deficits are the risk cluster Jamie Dimon flagged as \"tectonic plates\" shifting beneath the surface.",
+        "signal": "med",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": null
+      }
+    ],
+    "swe": [
+      {
+        "headline": "Agentic Customer Support: The Handoff Payload as a First-Class Engineering Artifact",
+        "body": "ByteByteGo's breakdown of travel-platform AI support identifies the escalation handoff payload — conversation summary, structured booking facts, live reservation state, and translated thread — as the component that determines whether human-in-the-loop beats fully automated handling. A weak handoff (passing only 'escalated, please assist') can make the combined human+AI system perform worse than pure human support. This pattern is directly applicable to any fintech dispute or fraud escalation pipeline where AI triages and humans adjudicate.",
+        "signal": "med",
+        "sources": [
+          "bytebytego.com"
+        ],
+        "url": null
+      }
+    ],
+    "mkt": [
+      {
+        "headline": "Goldman Names AI Infrastructure Buildout an Industry 'Super Cycle'; Anthropic and OpenAI IPOs on Deck",
+        "body": "Goldman Sachs CEO David Solomon's 'AI capex super cycle' framing on the Q2 earnings call is the clearest Wall Street signal yet that AI infrastructure spend is being treated as a multi-year structural revenue driver, not a cyclical bump. Anthropic's IPO (Goldman + Morgan Stanley mandated) and OpenAI's (banks TBD) represent the next major liquidity events — relevant to MSFT (OpenAI stake), GOOGL (Anthropic investor), and broader AI infrastructure names like NVDA and AMZN. Jamie Dimon's simultaneous warning on geopolitical risk, sticky inflation, and elevated asset prices is a useful counterweight to the bullish read.",
+        "signal": "high",
+        "sources": [
+          "morningbrew.com"
+        ],
+        "url": "https://links.morningbrew.com/c/SBF?mblid=e7d1a5ed40bc&mbcid=46579033.4055761&mid=f033f6c7a84f8af3d055583115c61f32&mbuuid=s5BEvDcexJp7dN7gqDnjCLh7"
+      }
+    ]
+  },
+  "deepDives": [
+    {
+      "title": "Task-Oriented Conversational AI in Airbnb Customer Support (Airbnb Engineering Blog)",
+      "why": "Primary engineering source detailing Airbnb's layered intent detection, refund-ratio prediction model, and confidence threshold architecture — directly applicable to AI-assisted dispute resolution in fintech.",
+      "url": "https://medium.com/airbnb-engineering/task-oriented-conversational-ai-in-airbnb-customer-support-5ebf49169eaa"
+    },
+    {
+      "title": "Airbnb Q1 2026 Shareholder Letter (SEC Filing)",
+      "why": "Primary source quantifying the 40%+ agent-free resolution rate and the business impact of autonomous AI adjudication at scale — useful benchmark for fintech AI support ROI modelling.",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001559720/000119312526211816/d23351dex991.htm"
+    }
+  ]
+}

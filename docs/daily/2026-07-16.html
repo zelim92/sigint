@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIGINT // THU 16 JUL 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: #fff; color: #111; padding: 2rem; max-width: 720px; margin: 0 auto; }
+  :root { --accent: #1D9E75; --warn: #BA7517; --border: #e5e5e5; --muted: #888; --bg-secondary: #f7f7f5; }
+  .header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+  .tagline { font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-left: 12px; }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .meta-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .meta-card { background: var(--bg-secondary); border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 110px; }
+  .meta-card .val { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; }
+  .meta-card .lbl { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+  .brief-container { display: flex; flex-direction: column; gap: 1rem; }
+  .section-card { border: 0.5px solid var(--border); border-radius: 12px; background: #fff; overflow: hidden; }
+  .section-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 0.5px solid var(--border); background: var(--bg-secondary); }
+  .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.06em; flex-shrink: 0; }
+  .tag-ai  { background: #E1F5EE; color: #0F6E56; }
+  .tag-sec { background: #FCEBEB; color: #A32D2D; }
+  .tag-fin { background: #E6F1FB; color: #185FA5; }
+  .tag-swe { background: #EEEDFE; color: #534AB7; }
+  .tag-mkt { background: #FAEEDA; color: #854F0B; }
+  .tag-dive{ background: #F1EFE8; color: #5F5E5A; }
+  .section-title { font-size: 13px; font-weight: 500; flex: 1; }
+  .item-count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+  .section-body { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+  .story { border-left: 2px solid var(--border); padding-left: 12px; }
+  .story.high { border-left-color: var(--accent); }
+  .story.med  { border-left-color: var(--warn); }
+  .story-headline { font-size: 13px; font-weight: 500; margin-bottom: 5px; line-height: 1.4; }
+  .story-headline a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .story-headline a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .story-body { font-size: 13px; line-height: 1.68; color: #333; }
+  .story-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); background: var(--bg-secondary); padding: 2px 7px; border-radius: 3px; border: 0.5px solid var(--border); }
+  .ref-links { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ref-link { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-decoration: none; padding: 2px 8px; border-radius: 3px; transition: background 0.15s; }
+  .ref-link.ai      { color: #0F6E56; background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .ref-link.ai:hover{ background: #9FE1CB; }
+  .ref-link.sec     { color: #A32D2D; background: #FCEBEB; border: 0.5px solid #F7C1C1; }
+  .ref-link.sec:hover{ background: #F7C1C1; }
+  .ref-link.fin     { color: #185FA5; background: #E6F1FB; border: 0.5px solid #A8C8F0; }
+  .ref-link.fin:hover{ background: #A8C8F0; }
+  .ref-link.swe     { color: #534AB7; background: #EEEDFE; border: 0.5px solid #CECBF6; }
+  .ref-link.swe:hover{ background: #CECBF6; }
+  .ref-link.mkt     { color: #854F0B; background: #FAEEDA; border: 0.5px solid #FAC775; }
+  .ref-link.mkt:hover{ background: #FAC775; }
+  .ref-link.neutral { color: #5F5E5A; background: #F1EFE8; border: 0.5px solid #D3D1C7; }
+  .ref-link.neutral:hover{ background: #D3D1C7; }
+  .dive-item { display: flex; gap: 10px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border); }
+  .dive-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .dive-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); padding-top: 2px; flex-shrink: 0; width: 20px; }
+  .dive-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+  .dive-title a { color: inherit; text-decoration: none; border-bottom: 1px solid #d0d0d0; transition: border-color 0.15s, color 0.15s; }
+  .dive-title a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+  .dive-why { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .empty-state { padding: 32px; text-align: center; font-size: 13px; color: var(--muted); }
+  .footer { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:baseline;">
+    <span class="logo">SIGINT</span>
+    <span class="tagline">// daily intelligence brief</span>
+  </div>
+  <span class="date-stamp">THU 16 JUL 2026</span>
+</div>
+
+<div class="meta-row">
+  <div class="meta-card"><div class="val">2</div><div class="lbl">threads fetched</div></div>
+  <div class="meta-card"><div class="val">5</div><div class="lbl">stories surfaced</div></div>
+  <div class="meta-card"><div class="val">~3 min</div><div class="lbl">est. read time</div></div>
+  <div class="meta-card"><div class="val">2</div><div class="lbl">sources</div></div>
+</div>
+
+<div class="brief-container">
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-ai">AI</span>
+      <span class="section-title">Artificial intelligence</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline"><a href="https://medium.com/airbnb-engineering/task-oriented-conversational-ai-in-airbnb-customer-support-5ebf49169eaa" target="_blank">AI Customer Support Architecture: How Airbnb, Booking.com, and Expedia Handle the Automation Boundary</a></div>
+        <div class="story-body">All three platforms converge on the same structural insight: automation works well for retrieval-based cases (refund status, rebooking) but hits a hard ceiling at adjudication — disputes where competing party claims require judgment, not lookup. Airbnb uses layered intent models plus a refund-ratio predictor trained on historical agent decisions to attempt autonomous resolution; Expedia invests in 30-language conversation summaries to ensure escalated cases arrive with full context intact. The confidence threshold — the single scalar that routes a case to a human — is identified as the highest-leverage tuning parameter in the entire pipeline.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span><div class="ref-links"><a class="ref-link ai" href="https://medium.com/airbnb-engineering/task-oriented-conversational-ai-in-airbnb-customer-support-5ebf49169eaa" target="_blank">medium.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-fin">FIN</span>
+      <span class="section-title">Fintech &amp; fraud</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/SBD?mblid=dd8899358b8e&amp;mbcid=46579033.4055761&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Top 5 US Banks Post Combined $49B in Q2 Profits — AI Capex Cycle and Geopolitical Volatility Key Drivers</a></div>
+        <div class="story-body">JPMorgan, BofA, Goldman, Wells Fargo, and Citigroup combined for $49B in Q2 profits, beating expectations on trading revenue (Hormuz volatility, SpaceX&#x27;s $85B IPO generating ~$500M in fees) and M&amp;A/AI infrastructure deal flow. Goldman CEO David Solomon explicitly framed it as the banking industry being &quot;in the middle of an AI capex super cycle.&quot; Anthropic&#x27;s upcoming IPO is being led by Goldman and Morgan Stanley; OpenAI&#x27;s bank selection is still pending — both are material near-term fee events.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link fin" href="https://links.morningbrew.com/c/SBD?mblid=dd8899358b8e&amp;mbcid=46579033.4055761&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+      <div class="story med">
+        <div class="story-headline">June Inflation Eased for First Time in Six Years, but Fed Chair Warsh Signals More Work Needed</div>
+        <div class="story-body">A brief US-Iran ceasefire drove energy prices down, producing the first month-on-month inflation decline in six years. With hostilities and the Hormuz blockade resuming, the disinflation is likely transitory — Fed Chair Warsh explicitly rejected a &quot;mission accomplished&quot; framing before Congress. Sticky inflation combined with elevated asset prices and large fiscal deficits are the risk cluster Jamie Dimon flagged as &quot;tectonic plates&quot; shifting beneath the surface.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-swe">SWE</span>
+      <span class="section-title">Distributed systems &amp; SWE</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story med">
+        <div class="story-headline">Agentic Customer Support: The Handoff Payload as a First-Class Engineering Artifact</div>
+        <div class="story-body">ByteByteGo&#x27;s breakdown of travel-platform AI support identifies the escalation handoff payload — conversation summary, structured booking facts, live reservation state, and translated thread — as the component that determines whether human-in-the-loop beats fully automated handling. A weak handoff (passing only &#x27;escalated, please assist&#x27;) can make the combined human+AI system perform worse than pure human support. This pattern is directly applicable to any fintech dispute or fraud escalation pipeline where AI triages and humans adjudicate.</div>
+        <div class="story-meta"><span class="chip">bytebytego.com</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-mkt">MKT</span>
+      <span class="section-title">Market intelligence</span>
+      <span class="item-count">1 item</span>
+    </div>
+    <div class="section-body">
+
+      <div class="story high">
+        <div class="story-headline"><a href="https://links.morningbrew.com/c/SBF?mblid=e7d1a5ed40bc&amp;mbcid=46579033.4055761&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">Goldman Names AI Infrastructure Buildout an Industry &#x27;Super Cycle&#x27;; Anthropic and OpenAI IPOs on Deck</a></div>
+        <div class="story-body">Goldman Sachs CEO David Solomon&#x27;s &#x27;AI capex super cycle&#x27; framing on the Q2 earnings call is the clearest Wall Street signal yet that AI infrastructure spend is being treated as a multi-year structural revenue driver, not a cyclical bump. Anthropic&#x27;s IPO (Goldman + Morgan Stanley mandated) and OpenAI&#x27;s (banks TBD) represent the next major liquidity events — relevant to MSFT (OpenAI stake), GOOGL (Anthropic investor), and broader AI infrastructure names like NVDA and AMZN. Jamie Dimon&#x27;s simultaneous warning on geopolitical risk, sticky inflation, and elevated asset prices is a useful counterweight to the bullish read.</div>
+        <div class="story-meta"><span class="chip">morningbrew.com</span><div class="ref-links"><a class="ref-link mkt" href="https://links.morningbrew.com/c/SBF?mblid=e7d1a5ed40bc&amp;mbcid=46579033.4055761&amp;mid=f033f6c7a84f8af3d055583115c61f32&amp;mbuuid=s5BEvDcexJp7dN7gqDnjCLh7" target="_blank">links.morningbrew.com ↗</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <span class="section-tag tag-dive">DEEP DIVES</span>
+      <span class="section-title">Recommended deep dives</span>
+      <span class="item-count">2 items</span>
+    </div>
+    <div class="section-body">
+
+      <div class="dive-item">
+        <span class="dive-num">01</span>
+        <div>
+          <div class="dive-title"><a href="https://medium.com/airbnb-engineering/task-oriented-conversational-ai-in-airbnb-customer-support-5ebf49169eaa" target="_blank">Task-Oriented Conversational AI in Airbnb Customer Support (Airbnb Engineering Blog) ↗</a></div>
+          <div class="dive-why">Primary engineering source detailing Airbnb&#x27;s layered intent detection, refund-ratio prediction model, and confidence threshold architecture — directly applicable to AI-assisted dispute resolution in fintech.</div>
+        </div>
+      </div>
+
+      <div class="dive-item">
+        <span class="dive-num">02</span>
+        <div>
+          <div class="dive-title"><a href="https://www.sec.gov/Archives/edgar/data/0001559720/000119312526211816/d23351dex991.htm" target="_blank">Airbnb Q1 2026 Shareholder Letter (SEC Filing) ↗</a></div>
+          <div class="dive-why">Primary source quantifying the 40%+ agent-free resolution rate and the business impact of autonomous AI adjudication at scale — useful benchmark for fintech AI support ROI modelling.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <span class="footer-note">generated 15 Jul 2026 · sources: bytebytego.com, morningbrew.com · sigint pipeline v0.2</span>
+</div>
+
+</body>
+</html>
