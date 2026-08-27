@@ -1,8 +1,8 @@
 name: SIGINT Daily Brief
 
 on:
-  schedule:
-    - cron: '0 22 * * *'  # 22:00 UTC daily (06:00 MYT next day)
+  # schedule:
+  #   - cron: '0 22 * * *'  # 22:00 UTC daily (06:00 MYT next day)
   workflow_dispatch:
 
 permissions:
